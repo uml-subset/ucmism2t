@@ -1,0 +1,1344 @@
+<h1 id="ucmism2t-developer-guide">ucmism2t Developer Guide</h1>
+<p><strong>UML Class Model to Text - Developer Documentation</strong></p>
+<p>Version: 1.0.0<br />
+Last Updated: February 2026</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#project-overview">Project Overview</a></li>
+<li><a href="#directory-structure">Directory Structure</a></li>
+<li><a href="#prerequisites-installation">Prerequisites Installation</a></li>
+<li><a href="#eclipse-setup">Eclipse Setup</a></li>
+<li><a href="#importing-the-project">Importing the Project</a></li>
+<li><a href="#understanding-key-files">Understanding Key Files</a></li>
+<li><a href="#working-with-acceleo-templates-mtl">Working with Acceleo Templates (MTL)</a></li>
+<li><a href="#working-with-java-services">Working with Java Services</a></li>
+<li><a href="#running-and-testing">Running and Testing</a></li>
+<li><a href="#building-with-maven">Building with Maven</a></li>
+<li><a href="#using-the-cli">Using the CLI</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ol>
+<hr />
+<h2 id="project-overview">Project Overview</h2>
+<h3 id="what-is-ucmism2t">What is ucmism2t?</h3>
+<p><strong>ucmism2t</strong> (UML Class Model to Text) is a model-to-text transformation tool that generates text output from UML models using the Acceleo 4.2 template engine. It’s built on the Eclipse platform and can be used both as an Eclipse plugin and as a standalone command-line application.</p>
+<p><strong>Key Features:</strong> - Reads UML 2.5 models in XMI format - Uses Acceleo 4.2 templates with AQL (Acceleo Query Language) - Extensible via custom Java services - Configurable via external properties files - Generates any text-based output (code, documentation, schemas, etc.) - Cross-platform support (Linux, macOS, Windows)</p>
+<p><strong>Architecture:</strong></p>
+<pre><code>Input: UML Model (XMI) → Acceleo Templates (MTL) → Output: Generated Text Files
+                              ↓
+                       Java Services (custom operations)
+                              ↓
+                       Configuration (properties)</code></pre>
+<hr />
+<h2 id="directory-structure">Directory Structure</h2>
+<pre><code>ucmism2t/
+├── bundles/                           # OSGi bundles (Eclipse plugins)
+│   ├── ucmism2t.core/                # Core transformation logic
+│   │   ├── META-INF/
+│   │   │   └── MANIFEST.MF           # OSGi bundle manifest
+│   │   ├── plugin.xml                # Extension point registrations
+│   │   ├── src/
+│   │   │   └── ucmism2t/
+│   │   │       ├── services/         # Java services for templates
+│   │   │       │   ├── ConfigurationService.java
+│   │   │       │   ├── DateTimeService.java
+│   │   │       │   └── CustomServices.java
+│   │   │       ├── templates/        # Acceleo MTL templates
+│   │   │       │   └── m2t.mtl      # Main template file
+│   │   │       └── queries/          # Acceleo query libraries (optional)
+│   │   └── pom.xml
+│   │
+│   └── ucmism2t.cli/                 # Command-line interface
+│       ├── META-INF/
+│       │   └── MANIFEST.MF
+│       ├── plugin.xml                # Application definition
+│       ├── src/
+│       │   └── ucmism2t/cli/
+│       │       └── Main.java         # CLI entry point
+│       └── pom.xml
+│
+├── features/                          # Eclipse feature definitions
+│   └── ucmism2t.feature/
+│       ├── feature.xml               # Feature configuration
+│       └── pom.xml
+│
+├── releng/                           # Release engineering
+│   ├── ucmism2t.target/              # Target platform definition
+│   │   ├── ucmism2t.target          # Dependency specifications
+│   │   └── pom.xml
+│   │
+│   └── ucmism2t.product/             # Product configuration
+│       ├── ucmism2t.product         # Product definition
+│       ├── create-single-file.sh    # Packaging script
+│       └── pom.xml
+│
+├── pom.xml                           # Parent Maven POM
+├── README.md                         # Project documentation
+└── ECLIPSE_SETUP.md                  # Eclipse-specific setup guide</code></pre>
+<h3 id="key-directories-explained">Key Directories Explained</h3>
+<p><strong>bundles/ucmism2t.core/</strong> - Contains Acceleo templates and Java services - This is where you develop transformation logic - Templates in <code>src/ucmism2t/templates/*.mtl</code> - Services in <code>src/ucmism2t/services/*.java</code></p>
+<p><strong>bundles/ucmism2t.cli/</strong> - Command-line interface implementation - Coordinates model loading and template execution - Usually doesn’t need modification unless changing CLI behavior</p>
+<p><strong>releng/ucmism2t.target/</strong> - Defines Eclipse and Acceleo versions - Critical for dependency resolution - Must be set as active target platform in Eclipse</p>
+<hr />
+<h2 id="prerequisites-installation">Prerequisites Installation</h2>
+<h3 id="java-21-lts">1. Java 21 (LTS)</h3>
+<p><strong>Required Version:</strong> Java 21 or later<br />
+<strong>Used in Development:</strong> 21.0.7<br />
+<strong>Vendor:</strong> OpenLogic-OpenJDK<br />
+<strong>Runtime Path:</strong> <code>/usr/lib/jvm/openlogic-openjdk-21-hotspot-amd64</code></p>
+<p><strong>Installation:</strong></p>
+<p><strong>Linux (Ubuntu/Debian):</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Download and install OpenLogic OpenJDK 21</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="fu">wget</span> https://builds.openlogic.com/downloadJDK/openlogic-openjdk/21.0.7+7/openlogic-openjdk-21.0.7+7-linux-x64.tar.gz</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="fu">sudo</span> tar -xzf openlogic-openjdk-21.0.7+7-linux-x64.tar.gz -C /usr/lib/jvm/</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="fu">sudo</span> update-alternatives --install /usr/bin/java java /usr/lib/jvm/openlogic-openjdk-21-hotspot-amd64/bin/java 1</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="fu">sudo</span> update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/openlogic-openjdk-21-hotspot-amd64/bin/javac 1</a></code></pre></div>
+<p><strong>Verify Installation:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">java</span> -version</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co"># Expected output:</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co"># openjdk version &quot;21.0.7&quot; 2024-10-15 LTS</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># OpenJDK Runtime Environment (build 21.0.7+7-LTS)</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co"># OpenJDK 64-Bit Server VM (build 21.0.7+7-LTS, mixed mode, sharing)</span></a></code></pre></div>
+<p><strong>Alternative JDK Vendors:</strong> - Eclipse Temurin (AdoptOpenJDK) - Oracle OpenJDK - Amazon Corretto - Azul Zulu</p>
+<h3 id="maven-3.9.9">2. Maven 3.9.9+</h3>
+<p><strong>Minimum Version:</strong> 3.9.9<br />
+<strong>Used in Development:</strong> 3.9.11</p>
+<p><strong>Installation:</strong></p>
+<p><strong>Linux:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Download Maven</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="fu">wget</span> https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz</a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co"># Extract</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="fu">sudo</span> tar -xzf apache-maven-3.9.11-bin.tar.gz -C /opt/</a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co"># Add to PATH (add to ~/.bashrc or ~/.profile)</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="bu">export</span> <span class="va">PATH=</span>/opt/apache-maven-3.9.11/bin:<span class="va">$PATH</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="bu">export</span> <span class="va">M2_HOME=</span>/opt/apache-maven-3.9.11</a></code></pre></div>
+<p><strong>Verify Installation:</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">mvn</span> -version</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co"># Expected output:</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co"># Apache Maven 3.9.11</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># Maven home: /opt/apache-maven-3.9.11</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co"># Java version: 21.0.7, vendor: OpenLogic, runtime: /usr/lib/jvm/openlogic-openjdk-21-hotspot-amd64</span></a></code></pre></div>
+<h3 id="eclipse-ide">3. Eclipse IDE</h3>
+<p><strong>Required Version:</strong> Eclipse 2025-12 or later<br />
+<strong>Used in Development:</strong> 2025-12<br />
+<strong>Recommended Variant:</strong> Eclipse IDE for RCP and RAP Developers</p>
+<p><strong>Download:</strong></p>
+<pre><code>https://www.eclipse.org/downloads/packages/</code></pre>
+<p><strong>Select Package:</strong></p>
+<pre><code>┌────────────────────────────────────────────────────────┐
+│ Eclipse IDE for RCP and RAP Developers                │
+│                                                         │
+│ Tools for developers working on Eclipse plug-ins,     │
+│ RCP applications and RAP applications.                 │
+│                                                         │
+│ Includes:                                              │
+│ - Plugin Development Environment (PDE)                 │
+│ - Maven Integration (m2e)                              │
+│ - Tycho Integration                                    │
+│ - Target Platform Management                           │
+└────────────────────────────────────────────────────────┘</code></pre>
+<p><strong>Installation:</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Extract Eclipse</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="fu">tar</span> -xzf eclipse-rcp-2025-12-*.tar.gz -C ~/</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co"># Create desktop launcher (optional)</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="fu">cat</span> <span class="op">&gt;</span> ~/.local/share/applications/eclipse.desktop <span class="op">&lt;&lt; EOF</span></a>
+<a class="sourceLine" id="cb9-6" title="6">[Desktop Entry]</a>
+<a class="sourceLine" id="cb9-7" title="7">Type=Application</a>
+<a class="sourceLine" id="cb9-8" title="8">Name=Eclipse IDE</a>
+<a class="sourceLine" id="cb9-9" title="9">Exec=<span class="va">$HOME</span>/eclipse/eclipse</a>
+<a class="sourceLine" id="cb9-10" title="10">Icon=<span class="va">$HOME</span>/eclipse/icon.xpm</a>
+<a class="sourceLine" id="cb9-11" title="11">Terminal=false</a>
+<a class="sourceLine" id="cb9-12" title="12">Categories=Development;IDE;</a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="op">EOF</span></a></code></pre></div>
+<p><strong>First Launch Configuration:</strong></p>
+<pre><code>1. Launch Eclipse
+2. Select workspace: ~/eclipse-workspace
+3. Window → Preferences → Java → Installed JREs
+   → Add → Standard VM
+   → JRE home: /usr/lib/jvm/openlogic-openjdk-21-hotspot-amd64
+   → JRE name: OpenJDK 21
+   → Finish
+   → ☑ Check it as default
+   → Apply and Close</code></pre>
+<h3 id="acceleo-4.2">4. Acceleo 4.2</h3>
+<p><strong>Required Version:</strong> Acceleo 4.0 or later<br />
+<strong>Used in Development:</strong> 4.2 (R202602100910)<br />
+<strong>Repository:</strong> https://download.eclipse.org/acceleo/updates/releases/4.2/R202602100910/</p>
+<p><strong>Installation in Eclipse:</strong></p>
+<p><strong>Step 1: Open Install Dialog</strong></p>
+<pre><code>Help → Install New Software...</code></pre>
+<p><strong>Step 2: Add Update Site</strong></p>
+<pre><code>Click &quot;Add...&quot; button
+
+Name: Acceleo 4.2
+Location: https://download.eclipse.org/acceleo/updates/releases/4.2/R202602100910/
+
+Click &quot;Add&quot;</code></pre>
+<p><strong>Step 3: Select All Acceleo Features</strong></p>
+<pre><code>In the available software list, you&#39;ll see:
+
+☑ Acceleo
+  ☑ Acceleo (Required)
+  ☑ Acceleo Developer Resources
+  ☑ Acceleo Editor
+  ☑ Acceleo Query Language (AQL)
+  ☑ Acceleo Query Developer Resources
+  ☑ Acceleo Source
+
+Select ALL items by checking the top-level &quot;Acceleo&quot; box</code></pre>
+<p><strong>Step 4: Install</strong></p>
+<pre><code>Click &quot;Next&quot;
+Review licenses
+Accept license agreements
+Click &quot;Finish&quot;</code></pre>
+<p><strong>Step 5: Trust Unsigned Content</strong></p>
+<pre><code>⚠️ Warning dialog appears:
+&quot;Warning: You are installing software that contains unsigned content...&quot;
+
+☑ Check &quot;Trust unsigned content&quot;
+Click &quot;Trust Selected&quot;</code></pre>
+<p><strong>Step 6: Restart Eclipse</strong></p>
+<pre><code>Click &quot;Restart Now&quot; when prompted</code></pre>
+<p><strong>Verify Installation:</strong></p>
+<pre><code>After restart:
+Window → Preferences → Acceleo
+
+You should see Acceleo preferences with options for:
+- Code generation
+- Editor preferences
+- Template syntax</code></pre>
+<h3 id="maven-integration-for-eclipse-m2e">5. Maven Integration for Eclipse (m2e)</h3>
+<p><strong>Required Version:</strong> 2.0 or later<br />
+<strong>Used in Development:</strong> 2.10<br />
+<strong>Repository:</strong> https://download.eclipse.org/releases/2025-12/</p>
+<p><strong>Note:</strong> This is usually included in “Eclipse IDE for RCP and RAP Developers” but verify it’s present.</p>
+<p><strong>Verify Installation:</strong></p>
+<pre><code>Window → Preferences → Maven
+
+If you see Maven preferences, it&#39;s already installed. ✓</code></pre>
+<p><strong>If Missing, Install:</strong></p>
+<pre><code>1. Help → Install New Software...
+2. Work with: https://download.eclipse.org/releases/2025-12/
+3. Search for: &quot;Maven&quot;
+4. Select:
+   ☑ m2e - Maven Integration for Eclipse
+   ☑ m2e - PDE Integration (for Tycho)
+5. Click &quot;Next&quot; → &quot;Finish&quot;
+6. Trust unsigned content if prompted
+7. Restart Eclipse</code></pre>
+<h3 id="uninstall-old-tycho-connector">6. Uninstall Old Tycho Connector</h3>
+<p><strong>Why:</strong> Conflicting Tycho/m2e connectors cause lifecycle mapping warnings.</p>
+<p><strong>Check if Present:</strong></p>
+<pre><code>Help → About Eclipse IDE
+Click &quot;Installation Details&quot;
+Installed Software tab
+Search for: &quot;tycho&quot; or &quot;sonatype&quot;</code></pre>
+<p><strong>If you find:</strong> - <code>org.sonatype.tycho.m2e</code> (old connector) - <code>Tycho Configurator</code> (old connector)</p>
+<p><strong>Uninstall it:</strong></p>
+<pre><code>1. Select the old connector in the list
+2. Click &quot;Uninstall...&quot;
+3. Follow wizard
+4. Restart Eclipse when prompted</code></pre>
+<p><strong>Keep:</strong> - <code>org.eclipse.m2e.pde.connector</code> (new connector) ✓ - Any m2e components ✓</p>
+<hr />
+<h2 id="eclipse-setup">Eclipse Setup</h2>
+<h3 id="complete-setup-checklist">Complete Setup Checklist</h3>
+<p>After installing all prerequisites, configure Eclipse:</p>
+<p><strong>1. Set Java 21 as Default</strong></p>
+<pre><code>Window → Preferences → Java → Installed JREs
+☑ OpenJDK 21
+Apply and Close</code></pre>
+<p><strong>2. Configure Maven</strong></p>
+<pre><code>Window → Preferences → Maven
+☑ Download repository index updates on startup
+☑ Do not automatically update dependencies from remote repositories
+Apply and Close</code></pre>
+<p><strong>3. Verify Acceleo</strong></p>
+<pre><code>Window → Preferences → Acceleo
+Should show Acceleo configuration options ✓</code></pre>
+<p><strong>4. Configure Text Encoding (Optional but Recommended)</strong></p>
+<pre><code>Window → Preferences → General → Workspace
+Text file encoding: UTF-8
+Apply and Close</code></pre>
+<hr />
+<h2 id="importing-the-project">Importing the Project</h2>
+<h3 id="step-1-import-as-maven-project">Step 1: Import as Maven Project</h3>
+<pre><code>File → Import...
+Maven → Existing Maven Projects
+Click &quot;Next&quot;</code></pre>
+<p><strong>Browse to Project:</strong></p>
+<pre><code>Root Directory: /path/to/ucmism2t</code></pre>
+<p><strong>Select All Projects:</strong></p>
+<pre><code>Projects (select all 6):
+☑ ucmism2t (parent pom)
+☑ ucmism2t.core
+☑ ucmism2t.cli
+☑ ucmism2t.feature
+☑ ucmism2t.target
+☑ ucmism2t.product
+
+Click &quot;Finish&quot;</code></pre>
+<h3 id="step-2-automatic-tycho-components-installation">Step 2: Automatic Tycho Components Installation</h3>
+<p><strong>What Happens:</strong> Eclipse will automatically download and install Tycho components for Eclipse plugin development.</p>
+<p><strong>Dialog Appears:</strong></p>
+<pre><code>┌──────────────────────────────────────────────────────┐
+│ Install                                              │
+├──────────────────────────────────────────────────────┤
+│ The following components will be installed:          │
+│                                                       │
+│ ☑ Tycho Project Configurators                       │
+│ ☑ Maven Integration for Eclipse Tycho               │
+│ ☑ Tycho m2e Connector                               │
+│                                                       │
+│ ⚠️ Some content is unsigned                          │
+└──────────────────────────────────────────────────────┘
+
+Actions:
+1. ☑ Check &quot;Trust unsigned content&quot;
+2. Click &quot;Finish&quot;
+3. Wait for installation (progress shown in status bar)
+4. Click &quot;Restart Now&quot; when prompted</code></pre>
+<p><strong>Duration:</strong> 2-5 minutes (downloads and installs components)</p>
+<h3 id="step-3-initial-workspace-build">Step 3: Initial Workspace Build</h3>
+<p>After restart, Eclipse automatically builds the workspace.</p>
+<p><strong>What You’ll See:</strong></p>
+<pre><code>Bottom-right corner:
+┌────────────────────────────────────────┐
+│ Building workspace... 25%              │
+│ Resolving Maven dependencies...        │
+└────────────────────────────────────────┘</code></pre>
+<p><strong>Duration:</strong> 5-10 minutes on first build</p>
+<p><strong>Expected Status:</strong> - Many errors initially (normal - target platform not set yet) - Maven downloads dependencies - Projects compile</p>
+<h3 id="step-4-update-project-configuration">Step 4: Update Project Configuration</h3>
+<p><strong>Purpose:</strong> Synchronize Eclipse’s view of the projects with Maven/Tycho configuration.</p>
+<p><strong>Steps:</strong></p>
+<pre><code>1. Select all projects in Project Explorer
+   (Click first project, Shift+Click last project)
+
+2. Right-click → Maven → Update Project...
+
+3. In dialog:
+   Projects:
+   ☑ ucmism2t
+   ☑ ucmism2t.core
+   ☑ ucmism2t.cli
+   ☑ ucmism2t.feature
+   ☑ ucmism2t.target
+   ☑ ucmism2t.product
+
+   Options:
+   ☑ Update project configuration from pom.xml
+   ☑ Refresh workspace resources from local filesystem
+   ☐ Clean projects (we&#39;ll do this separately)
+   ☑ Force Update of Snapshots/Releases  ← Important!
+
+4. Click &quot;OK&quot;</code></pre>
+<p><strong>Duration:</strong> 2-5 minutes</p>
+<p><strong>What This Does:</strong> - Re-reads all pom.xml files - Updates Eclipse classpath from Maven dependencies - Resolves any configuration mismatches - Downloads latest versions if using force update</p>
+<h3 id="step-5-clean-projects">Step 5: Clean Projects</h3>
+<p><strong>Purpose:</strong> Remove all compiled artifacts and rebuild from scratch to ensure consistency.</p>
+<p><strong>Steps:</strong></p>
+<pre><code>Project → Clean...
+
+Clean:
+◉ Clean all projects
+
+Options:
+☑ Start a build immediately
+☑ Build the entire workspace
+
+Click &quot;Clean&quot;</code></pre>
+<p><strong>Duration:</strong> 3-7 minutes</p>
+<p><strong>What This Does:</strong> - Deletes all <code>.class</code> files - Deletes all temporary build artifacts - Rebuilds everything from source - Ensures no stale compiled code remains</p>
+<p><strong>Monitor Progress:</strong></p>
+<pre><code>Bottom-right: &quot;Building workspace... X%&quot;
+Problems view: Errors should reduce as build progresses</code></pre>
+<h3 id="step-6-set-target-platform">Step 6: Set Target Platform</h3>
+<p><strong>Critical Step:</strong> This resolves all Eclipse platform dependencies.</p>
+<p><strong>Open Target Definition:</strong></p>
+<pre><code>In Project Explorer:
+ucmism2t/
+└── releng/
+    └── ucmism2t.target/
+        └── ucmism2t.target
+
+Double-click: ucmism2t.target</code></pre>
+<p><strong>Target Definition Editor Opens:</strong></p>
+<pre><code>┌─────────────────────────────────────────────────────────┐
+│ ucmism2t.target                                         │
+├─────────────────────────────────────────────────────────┤
+│ Definition | Content | Environment                      │
+├─────────────────────────────────────────────────────────┤
+│ Locations:                                              │
+│                                                          │
+│ ▼ Eclipse 2025-12                                       │
+│   https://download.eclipse.org/releases/2025-12/       │
+│   Status: [Resolving...]                                │
+│                                                          │
+│ ▼ Acceleo 4.2                                           │
+│   https://download.eclipse.org/.../4.2/R202602100910/  │
+│   Status: [Resolving...]                                │
+└─────────────────────────────────────────────────────────┘</code></pre>
+<p><strong>Wait for Resolution:</strong></p>
+<p><strong>Monitor Progress:</strong></p>
+<pre><code>Bottom-right corner:
+┌────────────────────────────────────────┐
+│ Resolving target definition...         │
+│ ████████████░░░░░░░░ 67%              │
+└────────────────────────────────────────┘</code></pre>
+<p><strong>Duration:</strong> 5-15 minutes (first time, downloads ~500 bundles)</p>
+<p><strong>When Complete:</strong></p>
+<pre><code>Locations:
+▼ Eclipse 2025-12
+  Status: Resolved ✓ (462 plug-ins available)
+
+▼ Acceleo 4.2  
+  Status: Resolved ✓ (41 plug-ins available)</code></pre>
+<p><strong>Set as Active:</strong></p>
+<p>Look for the link/button in the top-right corner of the editor:</p>
+<pre><code>┌───────────────────────────────────────────┐
+│  [Set as Active Target Platform]  ← Click │
+└───────────────────────────────────────────┘</code></pre>
+<p><strong>Alternative Method (if link not visible):</strong></p>
+<pre><code>Window → Preferences
+→ Plug-in Development → Target Platform
+→ ☑ ucmism2t.target  ← Check this checkbox
+→ Apply and Close</code></pre>
+<p><strong>Verify Active:</strong></p>
+<pre><code>In target editor, you should see at top:
+✓ This target definition is currently active</code></pre>
+<p><strong>Workspace Rebuild:</strong></p>
+<p>After setting the target platform, Eclipse rebuilds:</p>
+<pre><code>Building workspace... (2-5 minutes)</code></pre>
+<p><strong>Most errors should disappear after this step!</strong></p>
+<h3 id="step-7-final-clean">Step 7: Final Clean</h3>
+<p>After target platform is set:</p>
+<pre><code>Project → Clean...
+Clean all projects
+Start a build immediately
+OK</code></pre>
+<p><strong>Expected Final Status:</strong></p>
+<pre><code>Problems View:
+- 0 errors ✓
+- 0 warnings ✓
+- 2 infos (lifecycle mapping - ignorable)</code></pre>
+<hr />
+<h2 id="understanding-key-files">Understanding Key Files</h2>
+<h3 id="acceleo-template-m2t.mtl">Acceleo Template: m2t.mtl</h3>
+<p><strong>Location:</strong> <code>ucmism2t.core/src/ucmism2t/templates/m2t.mtl</code></p>
+<p><strong>Purpose:</strong> Main template file for model-to-text transformation</p>
+<p><strong>Structure:</strong></p>
+<pre class="mtl"><code>[comment encoding = UTF-8 /]
+[module m2t(&#39;http://www.eclipse.org/uml2/5.0.0/UML&#39;)]
+
+[comment @main /]
+[template public generateModel(aModel : uml::Model)]
+  [file (&#39;output.txt&#39;, overwrite)]
+Model: [aModel.name/]
+Packages: [aModel.nestedPackage-&gt;size()/]
+  [/file]
+[/template]</code></pre>
+<p><strong>Key Components:</strong></p>
+<p><strong>1. Module Declaration:</strong></p>
+<pre class="mtl"><code>[module m2t(&#39;http://www.eclipse.org/uml2/5.0.0/UML&#39;)]</code></pre>
+<ul>
+<li>Module name must match file name</li>
+<li>URI imports UML metamodel</li>
+</ul>
+<p><strong>2. Main Annotation:</strong></p>
+<pre class="mtl"><code>[comment @main /]</code></pre>
+<ul>
+<li>Marks entry point template</li>
+<li>Called automatically by CLI</li>
+</ul>
+<p><strong>3. Template Declaration:</strong></p>
+<pre class="mtl"><code>[template public generateModel(aModel : uml::Model)]</code></pre>
+<ul>
+<li><code>public</code>: Visibility</li>
+<li><code>generateModel</code>: Template name</li>
+<li><code>aModel</code>: Parameter name</li>
+<li><code>uml::Model</code>: Parameter type (from UML metamodel)</li>
+</ul>
+<p><strong>4. File Generation:</strong></p>
+<pre class="mtl"><code>[file (&#39;output.txt&#39;, overwrite)]
+  Content here
+[/file]</code></pre>
+<ul>
+<li>Generates file in output directory</li>
+<li><code>overwrite</code>: Replace if exists</li>
+</ul>
+<p><strong>5. AQL Expressions:</strong></p>
+<pre class="mtl"><code>[aModel.name/]              ← Get property
+[aModel.nestedPackage/]     ← Navigate collection
+[aModel.eAllContents(Class)/]  ← Query all classes</code></pre>
+<h3 id="java-services">Java Services</h3>
+<p><strong>Location:</strong> <code>ucmism2t.core/src/ucmism2t/services/</code></p>
+<h4 id="configurationservice.java">ConfigurationService.java</h4>
+<p><strong>Purpose:</strong> Access configuration properties in templates</p>
+<p><strong>Key Methods:</strong></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getProperty</span>(<span class="bu">Object</span> context, <span class="bu">String</span> key)</a>
+<a class="sourceLine" id="cb50-2" title="2"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getProperty</span>(<span class="bu">Object</span> context, <span class="bu">String</span> key, <span class="bu">String</span> defaultValue)</a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">hasProperty</span>(<span class="bu">Object</span> context, <span class="bu">String</span> key)</a></code></pre></div>
+<p><strong>Template Usage:</strong></p>
+<pre class="mtl"><code>[aModel.getProperty(&#39;project.name&#39;)/]
+[aModel.getProperty(&#39;author&#39;, &#39;Unknown&#39;)/]
+[if (aModel.hasProperty(&#39;debug&#39;))]...[/if]</code></pre>
+<h4 id="datetimeservice.java">DateTimeService.java</h4>
+<p><strong>Purpose:</strong> Date/time formatting in templates</p>
+<p><strong>Key Methods:</strong></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getCurrentDate</span>(<span class="bu">Object</span> context)</a>
+<a class="sourceLine" id="cb52-2" title="2"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getCurrentTime</span>(<span class="bu">Object</span> context)</a>
+<a class="sourceLine" id="cb52-3" title="3"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getCurrentDateTime</span>(<span class="bu">Object</span> context)</a></code></pre></div>
+<p><strong>Template Usage:</strong></p>
+<pre class="mtl"><code>Generated on: [aModel.getCurrentDate()/]
+Time: [aModel.getCurrentTime()/]</code></pre>
+<h4 id="customservices.java">CustomServices.java</h4>
+<p><strong>Purpose:</strong> Domain-specific utility methods</p>
+<p><strong>Key Methods:</strong></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getQualifiedName</span>(NamedElement element, <span class="bu">String</span> separator)</a>
+<a class="sourceLine" id="cb54-2" title="2"><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">hasStereotype</span>(<span class="bu">Element</span> element, <span class="bu">String</span> stereotypeName)</a>
+<a class="sourceLine" id="cb54-3" title="3"><span class="kw">public</span> <span class="bu">List</span>&lt;Property&gt; <span class="fu">getAttributesByType</span>(<span class="bu">Class</span> clazz, <span class="bu">String</span> typeName)</a></code></pre></div>
+<p><strong>Template Usage:</strong></p>
+<pre class="mtl"><code>[cls.getQualifiedName(&#39;.&#39;)/]
+[if (cls.hasStereotype(&#39;Entity&#39;))]...[/if]
+[cls.getAttributesByType(&#39;String&#39;)-&gt;size()/]</code></pre>
+<h3 id="configuration-properties">Configuration Properties</h3>
+<p><strong>Location:</strong> Can be anywhere (passed via CLI <code>-config</code> argument)</p>
+<p><strong>Format:</strong> Java Properties</p>
+<pre class="properties"><code># project.properties
+project.name=MyProject
+author=John Doe
+version=1.0.0
+package.prefix=com.example.generated
+output.encoding=UTF-8</code></pre>
+<p><strong>Usage in Templates:</strong></p>
+<pre class="mtl"><code>[comment Project metadata /]
+Project: [aModel.getProperty(&#39;project.name&#39;)/]
+Author: [aModel.getProperty(&#39;author&#39;, &#39;Unknown&#39;)/]
+Version: [aModel.getProperty(&#39;version&#39;)/]
+
+[comment Conditional features /]
+[if (aModel.getProperty(&#39;generate.tests&#39;, &#39;false&#39;) = &#39;true&#39;)]
+  [generateTests()/]
+[/if]</code></pre>
+<h3 id="plugin-configuration-plugin.xml">Plugin Configuration: plugin.xml</h3>
+<p><strong>Location:</strong> <code>ucmism2t.core/plugin.xml</code></p>
+<p><strong>Purpose:</strong> Register Java services with Acceleo</p>
+<p><strong>Structure:</strong></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="kw">&lt;plugin&gt;</span></a>
+<a class="sourceLine" id="cb58-3" title="3">   <span class="co">&lt;!-- Register services --&gt;</span></a>
+<a class="sourceLine" id="cb58-4" title="4">   <span class="kw">&lt;extension</span><span class="ot"> point=</span><span class="st">&quot;org.eclipse.acceleo.query.service&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb58-5" title="5">      <span class="kw">&lt;service</span><span class="ot"> class=</span><span class="st">&quot;ucmism2t.services.ConfigurationService&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb58-6" title="6">   <span class="kw">&lt;/extension&gt;</span></a>
+<a class="sourceLine" id="cb58-7" title="7">   </a>
+<a class="sourceLine" id="cb58-8" title="8">   <span class="kw">&lt;extension</span><span class="ot"> point=</span><span class="st">&quot;org.eclipse.acceleo.query.service&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb58-9" title="9">      <span class="kw">&lt;service</span><span class="ot"> class=</span><span class="st">&quot;ucmism2t.services.DateTimeService&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb58-10" title="10">   <span class="kw">&lt;/extension&gt;</span></a>
+<a class="sourceLine" id="cb58-11" title="11">   </a>
+<a class="sourceLine" id="cb58-12" title="12">   <span class="kw">&lt;extension</span><span class="ot"> point=</span><span class="st">&quot;org.eclipse.acceleo.query.service&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb58-13" title="13">      <span class="kw">&lt;service</span><span class="ot"> class=</span><span class="st">&quot;ucmism2t.services.CustomServices&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb58-14" title="14">   <span class="kw">&lt;/extension&gt;</span></a>
+<a class="sourceLine" id="cb58-15" title="15"><span class="kw">&lt;/plugin&gt;</span></a></code></pre></div>
+<p><strong>Important:</strong> Any new Java service must be registered here to be available in templates.</p>
+<h3 id="osgi-manifest-manifest.mf">OSGi Manifest: MANIFEST.MF</h3>
+<p><strong>Location:</strong> <code>ucmism2t.core/META-INF/MANIFEST.MF</code></p>
+<p><strong>Purpose:</strong> Define bundle dependencies and exports</p>
+<p><strong>Key Sections:</strong></p>
+<pre><code>Bundle-SymbolicName: ucmism2t.core
+Bundle-Version: 1.0.0.qualifier
+
+Require-Bundle: 
+ org.eclipse.acceleo.aql,
+ org.eclipse.acceleo.query,
+ org.eclipse.emf.ecore,
+ org.eclipse.uml2.uml
+
+Export-Package: 
+ ucmism2t.services,
+ ucmism2t.templates</code></pre>
+<hr />
+<h2 id="working-with-acceleo-templates-mtl">Working with Acceleo Templates (MTL)</h2>
+<h3 id="creating-a-new-template">Creating a New Template</h3>
+<p><strong>Step 1: Create .mtl File</strong></p>
+<pre><code>Right-click: ucmism2t.core/src/ucmism2t/templates/
+New → File
+File name: mytemplate.mtl
+Finish</code></pre>
+<p><strong>Step 2: Define Module</strong></p>
+<pre class="mtl"><code>[comment encoding = UTF-8 /]
+[module mytemplate(&#39;http://www.eclipse.org/uml2/5.0.0/UML&#39;)]
+
+[comment @main /]
+[template public generate(aModel : uml::Model)]
+  [file (&#39;myoutput.txt&#39;, overwrite)]
+    Content goes here
+  [/file]
+[/template]</code></pre>
+<p><strong>Step 3: Save</strong></p>
+<p>Eclipse automatically validates syntax.</p>
+<h3 id="template-syntax-basics">Template Syntax Basics</h3>
+<h4 id="property-access">Property Access</h4>
+<pre class="mtl"><code>[aModel.name/]
+[aClass.isAbstract/]
+[aProperty.type.name/]</code></pre>
+<h4 id="navigation">Navigation</h4>
+<pre class="mtl"><code>[aModel.nestedPackage/]           ← Collection of packages
+[aClass.ownedAttribute/]          ← Collection of attributes
+[aOperation.ownedParameter/]      ← Collection of parameters</code></pre>
+<h4 id="filtering">Filtering</h4>
+<pre class="mtl"><code>[comment Get all classes /]
+[aModel.eAllContents(Class)/]
+
+[comment Filter by visibility /]
+[aClass.ownedOperation-&gt;select(op | op.visibility = VisibilityKind::public)/]</code></pre>
+<h4 id="iteration">Iteration</h4>
+<pre class="mtl"><code>[for (pkg : Package | aModel.nestedPackage)]
+  Package: [pkg.name/]
+[/for]</code></pre>
+<h4 id="conditionals">Conditionals</h4>
+<pre class="mtl"><code>[if (aClass.isAbstract)]
+  abstract class
+[else]
+  concrete class
+[/if]</code></pre>
+<h4 id="let-bindings">Let Bindings</h4>
+<pre class="mtl"><code>[let qualifiedName : String = aClass.qualifiedName]
+  QN: [qualifiedName/]
+[/let]</code></pre>
+<h3 id="complete-example-java-class-generation">Complete Example: Java Class Generation</h3>
+<pre class="mtl"><code>[comment encoding = UTF-8 /]
+[module javaGen(&#39;http://www.eclipse.org/uml2/5.0.0/UML&#39;)]
+
+[comment @main /]
+[template public generateModel(aModel : uml::Model)]
+  [for (pkg : Package | aModel.nestedPackage)]
+    [for (cls : Class | pkg.ownedType-&gt;filter(Class))]
+      [generateClass(cls)/]
+    [/for]
+  [/for]
+[/template]
+
+[template private generateClass(cls : Class)]
+  [file (cls.getQualifiedName(&#39;/&#39;) + &#39;.java&#39;, overwrite)]
+package [cls.package.getQualifiedName(&#39;.&#39;)/];
+
+[if (cls.isAbstract)]abstract [/if]class [cls.name/] {
+    
+    // Attributes
+[for (attr : Property | cls.ownedAttribute)]
+    private [attr.type.name/] [attr.name/];
+[/for]
+
+    // Getters
+[for (attr : Property | cls.ownedAttribute)]
+    public [attr.type.name/] get[attr.name.toUpperFirst()/]() {
+        return this.[attr.name/];
+    }
+[/for]
+
+    // Setters
+[for (attr : Property | cls.ownedAttribute)]
+    public void set[attr.name.toUpperFirst()/]([attr.type.name/] [attr.name/]) {
+        this.[attr.name/] = [attr.name/];
+    }
+[/for]
+}
+  [/file]
+[/template]</code></pre>
+<h3 id="acceleo-editor-features">Acceleo Editor Features</h3>
+<p><strong>Syntax Highlighting:</strong> - Template blocks: <code>[template]...[/template]</code> (blue) - AQL expressions: <code>[expression/]</code> (green) - Comments: <code>[comment]...[/comment]</code> (gray)</p>
+<p><strong>Content Assist (Ctrl+Space):</strong></p>
+<pre><code>Type: [aModel.
+Press: Ctrl+Space
+
+Shows:
+- name : String
+- nestedPackage : Package[*]
+- ownedType : Type[*]
+- eAllContents(EClass) : EObject[*]
+- getCurrentDate() : String  ← From DateTimeService</code></pre>
+<p><strong>Error Markers:</strong> - Red X: Syntax error - Yellow warning: Type mismatch or undefined variable</p>
+<p><strong>Quick Fixes:</strong> - Right-click error → Quick Fix - Suggests corrections</p>
+<hr />
+<h2 id="working-with-java-services">Working with Java Services</h2>
+<h3 id="creating-a-new-service">Creating a New Service</h3>
+<p><strong>Step 1: Create Java Class</strong></p>
+<pre><code>Right-click: ucmism2t.core/src/ucmism2t/services/
+New → Class
+Name: MyService
+Package: ucmism2t.services
+Finish</code></pre>
+<p><strong>Step 2: Implement Service Methods</strong></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">package</span><span class="im"> ucmism2t.services;</span></a>
+<a class="sourceLine" id="cb71-2" title="2"></a>
+<a class="sourceLine" id="cb71-3" title="3"><span class="kw">import</span><span class="im"> org.eclipse.uml2.uml.Class;</span></a>
+<a class="sourceLine" id="cb71-4" title="4"><span class="kw">import</span><span class="im"> org.eclipse.uml2.uml.NamedElement;</span></a>
+<a class="sourceLine" id="cb71-5" title="5"></a>
+<a class="sourceLine" id="cb71-6" title="6"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb71-7" title="7"> <span class="co">*</span> Custom service methods for Acceleo templates<span class="co">.</span></a>
+<a class="sourceLine" id="cb71-8" title="8"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb71-9" title="9"> <span class="co">*</span> All public methods are automatically available in templates</a>
+<a class="sourceLine" id="cb71-10" title="10"> <span class="co">*</span> on the type of their first parameter<span class="co">.</span></a>
+<a class="sourceLine" id="cb71-11" title="11"> <span class="co">*/</span></a>
+<a class="sourceLine" id="cb71-12" title="12"><span class="kw">public</span> <span class="kw">class</span> MyService {</a>
+<a class="sourceLine" id="cb71-13" title="13">    </a>
+<a class="sourceLine" id="cb71-14" title="14">    <span class="co">/**</span></a>
+<a class="sourceLine" id="cb71-15" title="15">     <span class="co">*</span> Count attributes in a class<span class="co">.</span></a>
+<a class="sourceLine" id="cb71-16" title="16">     <span class="co">*</span> </a>
+<a class="sourceLine" id="cb71-17" title="17">     <span class="co">*</span> Template usage<span class="co">:</span> <span class="co">[</span>aClass<span class="co">.</span>countAttributes<span class="co">()/]</span></a>
+<a class="sourceLine" id="cb71-18" title="18">     <span class="co">*</span> </a>
+<a class="sourceLine" id="cb71-19" title="19">     <span class="co">*</span> <span class="an">@param clazz </span>The UML class</a>
+<a class="sourceLine" id="cb71-20" title="20">     <span class="co">*</span> <span class="an">@return </span>Number of attributes</a>
+<a class="sourceLine" id="cb71-21" title="21">     <span class="co">*/</span></a>
+<a class="sourceLine" id="cb71-22" title="22">    <span class="kw">public</span> <span class="dt">int</span> <span class="fu">countAttributes</span>(<span class="bu">Class</span> clazz) {</a>
+<a class="sourceLine" id="cb71-23" title="23">        <span class="kw">return</span> clazz.<span class="fu">getOwnedAttributes</span>().<span class="fu">size</span>();</a>
+<a class="sourceLine" id="cb71-24" title="24">    }</a>
+<a class="sourceLine" id="cb71-25" title="25">    </a>
+<a class="sourceLine" id="cb71-26" title="26">    <span class="co">/**</span></a>
+<a class="sourceLine" id="cb71-27" title="27">     <span class="co">*</span> Convert name to snake_case<span class="co">.</span></a>
+<a class="sourceLine" id="cb71-28" title="28">     <span class="co">*</span> </a>
+<a class="sourceLine" id="cb71-29" title="29">     <span class="co">*</span> Template usage<span class="co">:</span> <span class="co">[</span>element<span class="co">.</span>toSnakeCase<span class="co">()/]</span></a>
+<a class="sourceLine" id="cb71-30" title="30">     <span class="co">*</span> </a>
+<a class="sourceLine" id="cb71-31" title="31">     <span class="co">*</span> <span class="an">@param element </span>Any named element</a>
+<a class="sourceLine" id="cb71-32" title="32">     <span class="co">*</span> <span class="an">@return </span>Name in snake_case format</a>
+<a class="sourceLine" id="cb71-33" title="33">     <span class="co">*/</span></a>
+<a class="sourceLine" id="cb71-34" title="34">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">toSnakeCase</span>(NamedElement element) {</a>
+<a class="sourceLine" id="cb71-35" title="35">        <span class="kw">return</span> element.<span class="fu">getName</span>()</a>
+<a class="sourceLine" id="cb71-36" title="36">            .<span class="fu">replaceAll</span>(<span class="st">&quot;([A-Z])&quot;</span>, <span class="st">&quot;_$1&quot;</span>)</a>
+<a class="sourceLine" id="cb71-37" title="37">            .<span class="fu">toLowerCase</span>()</a>
+<a class="sourceLine" id="cb71-38" title="38">            .<span class="fu">replaceFirst</span>(<span class="st">&quot;^_&quot;</span>, <span class="st">&quot;&quot;</span>);</a>
+<a class="sourceLine" id="cb71-39" title="39">    }</a>
+<a class="sourceLine" id="cb71-40" title="40">}</a></code></pre></div>
+<p><strong>Step 3: Register in plugin.xml</strong></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">&lt;extension</span><span class="ot"> point=</span><span class="st">&quot;org.eclipse.acceleo.query.service&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb72-2" title="2">   <span class="kw">&lt;service</span><span class="ot"> class=</span><span class="st">&quot;ucmism2t.services.MyService&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb72-3" title="3"><span class="kw">&lt;/extension&gt;</span></a></code></pre></div>
+<p><strong>Step 4: Save and Rebuild</strong></p>
+<pre><code>File → Save All
+Project → Clean → Clean all projects</code></pre>
+<p><strong>Step 5: Use in Template</strong></p>
+<pre class="mtl"><code>[for (cls : Class | aModel.eAllContents(Class))]
+  [cls.name/] has [cls.countAttributes()/] attributes
+  Table name: [cls.toSnakeCase()/]
+[/for]</code></pre>
+<h3 id="service-method-rules">Service Method Rules</h3>
+<p><strong>1. First Parameter = Context Type</strong></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb75-1" title="1"><span class="co">// Called on Class elements</span></a>
+<a class="sourceLine" id="cb75-2" title="2"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">doSomething</span>(<span class="bu">Class</span> clazz, <span class="bu">String</span> arg) { <span class="kw">... </span>}</a>
+<a class="sourceLine" id="cb75-3" title="3"></a>
+<a class="sourceLine" id="cb75-4" title="4"><span class="co">// Template: [aClass.doSomething(&#39;value&#39;)/]</span></a></code></pre></div>
+<p><strong>2. Return Type</strong></p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb76-1" title="1"><span class="co">// Returns can be:</span></a>
+<a class="sourceLine" id="cb76-2" title="2"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getValue</span>(...) { <span class="kw">... </span>}           <span class="co">// String</span></a>
+<a class="sourceLine" id="cb76-3" title="3"><span class="kw">public</span> <span class="dt">int</span> <span class="fu">getCount</span>(...) { <span class="kw">... </span>}              <span class="co">// int</span></a>
+<a class="sourceLine" id="cb76-4" title="4"><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isValid</span>(...) { <span class="kw">... </span>}           <span class="co">// boolean</span></a>
+<a class="sourceLine" id="cb76-5" title="5"><span class="kw">public</span> <span class="bu">List</span>&lt;Property&gt; <span class="fu">getProps</span>(...) { <span class="kw">... </span>}  <span class="co">// Collections</span></a>
+<a class="sourceLine" id="cb76-6" title="6"><span class="kw">public</span> Property <span class="fu">getProp</span>(...) { <span class="kw">... </span>}         <span class="co">// UML types</span></a></code></pre></div>
+<p><strong>3. Multiple Parameters</strong></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">format</span>(NamedElement elem, <span class="bu">String</span> pattern, <span class="dt">boolean</span> upper) {</a>
+<a class="sourceLine" id="cb77-2" title="2">    <span class="co">// Template: [element.format(&#39;%s_CLASS&#39;, true)/]</span></a>
+<a class="sourceLine" id="cb77-3" title="3">}</a></code></pre></div>
+<h3 id="best-practices">Best Practices</h3>
+<p><strong>Document Service Methods:</strong></p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb78-1" title="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb78-2" title="2"> <span class="co">*</span> Clear description of what it does<span class="co">.</span></a>
+<a class="sourceLine" id="cb78-3" title="3"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb78-4" title="4"> <span class="co">*</span> Template usage<span class="co">:</span> <span class="co">[</span>element<span class="co">.</span>methodName<span class="co">(</span>arg<span class="co">)/]</span></a>
+<a class="sourceLine" id="cb78-5" title="5"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb78-6" title="6"> <span class="co">*</span> <span class="an">@param element </span>First parameter description</a>
+<a class="sourceLine" id="cb78-7" title="7"> <span class="co">*</span> <span class="an">@param arg </span>Second parameter description</a>
+<a class="sourceLine" id="cb78-8" title="8"> <span class="co">*</span> <span class="an">@return </span>What it returns</a>
+<a class="sourceLine" id="cb78-9" title="9"> <span class="co">*/</span></a>
+<a class="sourceLine" id="cb78-10" title="10"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">methodName</span>(<span class="bu">Type</span> element, <span class="bu">String</span> arg) { <span class="kw">... </span>}</a></code></pre></div>
+<p><strong>Handle Null Values:</strong></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb79-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getQualifiedName</span>(NamedElement element, <span class="bu">String</span> sep) {</a>
+<a class="sourceLine" id="cb79-2" title="2">    <span class="kw">if</span> (element == <span class="kw">null</span>) {</a>
+<a class="sourceLine" id="cb79-3" title="3">        <span class="kw">return</span> <span class="st">&quot;&quot;</span>;</a>
+<a class="sourceLine" id="cb79-4" title="4">    }</a>
+<a class="sourceLine" id="cb79-5" title="5">    <span class="bu">String</span> qn = element.<span class="fu">getQualifiedName</span>();</a>
+<a class="sourceLine" id="cb79-6" title="6">    <span class="kw">return</span> qn != <span class="kw">null</span> ? qn.<span class="fu">replace</span>(<span class="st">&quot;::&quot;</span>, sep) : element.<span class="fu">getName</span>();</a>
+<a class="sourceLine" id="cb79-7" title="7">}</a></code></pre></div>
+<p><strong>Use Descriptive Names:</strong></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb80-1" title="1"><span class="co">// Good</span></a>
+<a class="sourceLine" id="cb80-2" title="2"><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">hasStereotype</span>(<span class="bu">Element</span> element, <span class="bu">String</span> name) { <span class="kw">... </span>}</a>
+<a class="sourceLine" id="cb80-3" title="3"></a>
+<a class="sourceLine" id="cb80-4" title="4"><span class="co">// Bad</span></a>
+<a class="sourceLine" id="cb80-5" title="5"><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">check</span>(<span class="bu">Element</span> e, <span class="bu">String</span> s) { <span class="kw">... </span>}</a></code></pre></div>
+<hr />
+<h2 id="running-and-testing">Running and Testing</h2>
+<h3 id="setting-up-run-configuration">Setting Up Run Configuration</h3>
+<p><strong>Step 1: Create Launch Configuration</strong></p>
+<pre><code>Run → Run Configurations...
+Eclipse Application → New (right-click or click icon)</code></pre>
+<p><strong>Step 2: Configure Main Tab</strong></p>
+<pre><code>Name: ucmism2t Development
+
+Program to Run:
+◉ Run an application
+Application: ucmism2t.cli.app</code></pre>
+<p><strong>Step 3: Configure Arguments Tab</strong></p>
+<pre><code>Program arguments:
+-input ${workspace_loc}/test-models/sample.xmi
+-output ${workspace_loc}/generated
+-config ${workspace_loc}/test-configs/test.properties
+
+Working directory:
+◉ Default
+
+Note: ${workspace_loc} expands to your workspace path</code></pre>
+<p><strong>Step 4: Configure Plug-ins Tab</strong></p>
+<pre><code>Launch with: plugins selected below only
+
+Workspace:
+☑ ucmism2t.core
+☑ ucmism2t.cli
+
+Target Platform:
+☑ (all required bundles automatically selected by Eclipse)
+
+Click &quot;Add Required Plug-ins&quot; to ensure all dependencies are included</code></pre>
+<p><strong>Step 5: Apply and Run</strong></p>
+<pre><code>Click &quot;Apply&quot;
+Click &quot;Run&quot;</code></pre>
+<h3 id="what-happens-when-you-run">What Happens When You Run</h3>
+<p><strong>1. New Eclipse Runtime Launches</strong></p>
+<pre><code>A second Eclipse instance starts with your application loaded</code></pre>
+<p><strong>2. Console Output Appears</strong></p>
+<pre><code>Console (in first Eclipse):
+┌──────────────────────────────────────────────┐
+│ Configuration:                               │
+│   Input model: .../sample.xmi               │
+│   Output path: .../generated                │
+│   Config files: [test.properties]           │
+│                                              │
+│ Initializing EMF and UML2 framework...      │
+│ Loading UML model: sample.xmi               │
+│ Model loaded successfully: MyModel           │
+│ Executing Acceleo transformation...         │
+│ ✓ Template executed                         │
+│ Generated 1 file(s):                        │
+│   - output.txt (1245 bytes)                 │
+└──────────────────────────────────────────────┘</code></pre>
+<p><strong>3. Output Files Generated</strong></p>
+<pre><code>Workspace files refresh automatically:
+generated/
+└── output.txt  ← Your generated file</code></pre>
+<h3 id="running-a-specific-mtl-file">Running a Specific MTL File</h3>
+<p><strong>To use a different template module:</strong></p>
+<p><strong>Step 1: Edit Main.java</strong> (for permanent change)</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb89-1" title="1"><span class="co">// In Main.java, find this line:</span></a>
+<a class="sourceLine" id="cb89-2" title="2"><span class="bu">String</span> moduleQualifiedName = <span class="st">&quot;ucmism2t::templates::m2t&quot;</span>;</a>
+<a class="sourceLine" id="cb89-3" title="3"></a>
+<a class="sourceLine" id="cb89-4" title="4"><span class="co">// Change to your template module:</span></a>
+<a class="sourceLine" id="cb89-5" title="5"><span class="bu">String</span> moduleQualifiedName = <span class="st">&quot;ucmism2t::templates::mytemplate&quot;</span>;</a></code></pre></div>
+<p><strong>Or Step 2: Create New Launch Configuration</strong> (for testing)</p>
+<pre><code>1. Duplicate existing run configuration
+2. Rename: &quot;ucmism2t - MyTemplate&quot;
+3. Keep same configuration
+4. Edit Main.java temporarily for this module
+5. Run the new configuration</code></pre>
+<h3 id="debugging-templates">Debugging Templates</h3>
+<p><strong>Set Breakpoints in Java Services:</strong></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb91-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">toSnakeCase</span>(NamedElement element) {</a>
+<a class="sourceLine" id="cb91-2" title="2">    <span class="co">// Click in left margin to set breakpoint here ←</span></a>
+<a class="sourceLine" id="cb91-3" title="3">    <span class="bu">String</span> name = element.<span class="fu">getName</span>();</a>
+<a class="sourceLine" id="cb91-4" title="4">    <span class="kw">return</span> name.<span class="fu">replaceAll</span>(<span class="st">&quot;([A-Z])&quot;</span>, <span class="st">&quot;_$1&quot;</span>).<span class="fu">toLowerCase</span>();</a>
+<a class="sourceLine" id="cb91-5" title="5">}</a></code></pre></div>
+<p><strong>Debug Launch:</strong></p>
+<pre><code>Debug → Debug Configurations...
+Select your run configuration
+Click &quot;Debug&quot;</code></pre>
+<p><strong>When Breakpoint Hits:</strong> - Variables view shows: element, name, etc. - Step Over (F6): Execute line - Step Into (F5): Enter method calls - Resume (F8): Continue execution</p>
+<p><strong>Template Debugging (Limited):</strong></p>
+<pre><code>Acceleo doesn&#39;t support breakpoints in .mtl files
+
+Instead:
+1. Add debug output in template:
+   [file (&#39;debug.txt&#39;, overwrite)]
+     Current class: [aClass.name/]
+     Attribute count: [aClass.ownedAttribute-&gt;size()/]
+   [/file]
+
+2. Check debug.txt in output directory
+
+3. Use Java service methods and debug those</code></pre>
+<h3 id="common-test-scenarios">Common Test Scenarios</h3>
+<p><strong>Test 1: Simple Model</strong></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb94-1" title="1"><span class="co">&lt;!-- test-models/simple.xmi --&gt;</span></a>
+<a class="sourceLine" id="cb94-2" title="2"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb94-3" title="3"><span class="kw">&lt;uml:Model</span><span class="ot"> xmi:version=</span><span class="st">&quot;2.0&quot;</span><span class="ot"> name=</span><span class="st">&quot;TestModel&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb94-4" title="4">  <span class="kw">&lt;packagedElement</span><span class="ot"> xmi:type=</span><span class="st">&quot;uml:Package&quot;</span><span class="ot"> name=</span><span class="st">&quot;testpkg&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb94-5" title="5">    <span class="kw">&lt;packagedElement</span><span class="ot"> xmi:type=</span><span class="st">&quot;uml:Class&quot;</span><span class="ot"> name=</span><span class="st">&quot;TestClass&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb94-6" title="6">      <span class="kw">&lt;ownedAttribute</span><span class="ot"> name=</span><span class="st">&quot;id&quot;</span><span class="ot"> type=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb94-7" title="7">    <span class="kw">&lt;/packagedElement&gt;</span></a>
+<a class="sourceLine" id="cb94-8" title="8">  <span class="kw">&lt;/packagedElement&gt;</span></a>
+<a class="sourceLine" id="cb94-9" title="9"><span class="kw">&lt;/uml:Model&gt;</span></a></code></pre></div>
+<p><strong>Test 2: With Configuration</strong></p>
+<pre class="properties"><code># test-configs/test.properties
+project.name=Test Project
+author=Developer
+version=1.0.0
+debug=true</code></pre>
+<p><strong>Test 3: Multiple Outputs</strong></p>
+<pre class="mtl"><code>[template public generateModel(aModel : Model)]
+  [file (&#39;summary.txt&#39;, overwrite)]
+    Model Summary
+  [/file]
+  
+  [file (&#39;details.txt&#39;, overwrite)]
+    Detailed Information
+  [/file]
+[/template]</code></pre>
+<hr />
+<h2 id="building-with-maven">Building with Maven</h2>
+<h3 id="command-line-build">Command-Line Build</h3>
+<p><strong>Basic Build (Linux only):</strong></p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb97-1" title="1"><span class="bu">cd</span> ucmism2t</a>
+<a class="sourceLine" id="cb97-2" title="2"><span class="ex">mvn</span> clean verify</a></code></pre></div>
+<p><strong>Platform-Specific Builds:</strong></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb98-1" title="1"><span class="co"># Windows</span></a>
+<a class="sourceLine" id="cb98-2" title="2"><span class="ex">mvn</span> clean verify -Dbuild.platform=windows</a>
+<a class="sourceLine" id="cb98-3" title="3"></a>
+<a class="sourceLine" id="cb98-4" title="4"><span class="co"># macOS Intel</span></a>
+<a class="sourceLine" id="cb98-5" title="5"><span class="ex">mvn</span> clean verify -Dbuild.platform=macos-x86</a>
+<a class="sourceLine" id="cb98-6" title="6"></a>
+<a class="sourceLine" id="cb98-7" title="7"><span class="co"># macOS ARM</span></a>
+<a class="sourceLine" id="cb98-8" title="8"><span class="ex">mvn</span> clean verify -Dbuild.platform=macos-arm</a>
+<a class="sourceLine" id="cb98-9" title="9"></a>
+<a class="sourceLine" id="cb98-10" title="10"><span class="co"># All platforms</span></a>
+<a class="sourceLine" id="cb98-11" title="11"><span class="ex">mvn</span> clean verify -Dbuild.platform=all</a></code></pre></div>
+<h3 id="build-output-locations">Build Output Locations</h3>
+<p><strong>Full Installation:</strong></p>
+<pre><code>releng/ucmism2t.product/target/products/ucmism2t.product/
+└── linux/gtk/x86_64/
+    ├── ucmism2t                (launcher executable)
+    ├── ucmism2t.ini           (launcher configuration)
+    ├── plugins/               (100+ JAR files)
+    │   ├── org.eclipse.osgi_*.jar
+    │   ├── org.eclipse.acceleo.aql_*.jar
+    │   ├── ucmism2t.core_1.0.0.jar
+    │   └── ...
+    ├── configuration/
+    │   └── config.ini
+    └── features/</code></pre>
+<p><strong>Archived Product:</strong></p>
+<pre><code>releng/ucmism2t.product/target/products/
+└── ucmism2t.product-linux.gtk.x86_64.tar.gz</code></pre>
+<p><strong>Single-File Executable:</strong></p>
+<pre><code>releng/ucmism2t.product/target/
+└── ucmism2t-standalone  (self-extracting executable)</code></pre>
+<h3 id="build-phases-explained">Build Phases Explained</h3>
+<p><strong>1. Validate (validates pom.xml)</strong></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb102-1" title="1"><span class="ex">mvn</span> validate</a></code></pre></div>
+<p><strong>2. Compile (compiles Java sources)</strong></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb103-1" title="1"><span class="ex">mvn</span> compile</a></code></pre></div>
+<p><strong>3. Test (runs unit tests if present)</strong></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb104-1" title="1"><span class="ex">mvn</span> test</a></code></pre></div>
+<p><strong>4. Package (creates JAR bundles)</strong></p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb105-1" title="1"><span class="ex">mvn</span> package</a></code></pre></div>
+<p><strong>5. Verify (runs integration tests, creates products)</strong></p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb106-1" title="1"><span class="ex">mvn</span> verify  ← This is what you typically run</a></code></pre></div>
+<p><strong>6. Install (installs to local Maven repo)</strong></p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb107-1" title="1"><span class="ex">mvn</span> install</a></code></pre></div>
+<h3 id="troubleshooting-maven-builds">Troubleshooting Maven Builds</h3>
+<p><strong>Problem: Build fails with “package org.eclipse.uml2.uml does not exist”</strong></p>
+<p><strong>Solution:</strong> Target platform resolution issue</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb108-1" title="1"><span class="co"># Clean and rebuild</span></a>
+<a class="sourceLine" id="cb108-2" title="2"><span class="ex">mvn</span> clean verify</a>
+<a class="sourceLine" id="cb108-3" title="3"></a>
+<a class="sourceLine" id="cb108-4" title="4"><span class="co"># If still fails, check network connection to Eclipse repositories</span></a>
+<a class="sourceLine" id="cb108-5" title="5"><span class="ex">curl</span> -I https://download.eclipse.org/releases/2025-12/</a></code></pre></div>
+<p><strong>Problem: Out of memory during build</strong></p>
+<p><strong>Solution:</strong> Increase Maven memory</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb109-1" title="1"><span class="bu">export</span> <span class="va">MAVEN_OPTS=</span><span class="st">&quot;-Xmx2048m -XX:MaxPermSize=512m&quot;</span></a>
+<a class="sourceLine" id="cb109-2" title="2"><span class="ex">mvn</span> clean verify</a></code></pre></div>
+<p><strong>Problem: Build succeeds but executable doesn’t run</strong></p>
+<p><strong>Solution:</strong> Check Java version</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb110-1" title="1"><span class="co"># Executable requires Java 21</span></a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="ex">java</span> -version</a>
+<a class="sourceLine" id="cb110-3" title="3"><span class="co"># Should show 21.x.x</span></a></code></pre></div>
+<hr />
+<h2 id="using-the-cli">Using the CLI</h2>
+<h3 id="command-line-syntax">Command-Line Syntax</h3>
+<p><strong>Basic Usage:</strong></p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb111-1" title="1"><span class="ex">./ucmism2t</span> -input <span class="op">&lt;</span>model.xmi<span class="op">&gt;</span> -output <span class="op">&lt;</span>directory<span class="op">&gt;</span></a></code></pre></div>
+<p><strong>With Configuration:</strong></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb112-1" title="1"><span class="ex">./ucmism2t</span> -input model.xmi -output gen/ -config settings.properties</a></code></pre></div>
+<p><strong>Multiple Configurations:</strong></p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb113-1" title="1"><span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb113-2" title="2">  -input model.xmi \</a>
+<a class="sourceLine" id="cb113-3" title="3">  -output generated/ \</a>
+<a class="sourceLine" id="cb113-4" title="4">  -config base.properties project.properties</a></code></pre></div>
+<h3 id="using-full-installation">Using Full Installation</h3>
+<p><strong>After Maven build:</strong></p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb114-1" title="1"><span class="bu">cd</span> releng/ucmism2t.product/target/products/ucmism2t.product/linux/gtk/x86_64/</a>
+<a class="sourceLine" id="cb114-2" title="2"></a>
+<a class="sourceLine" id="cb114-3" title="3"><span class="co"># Run transformation</span></a>
+<a class="sourceLine" id="cb114-4" title="4"><span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb114-5" title="5">  -input /path/to/model.xmi \</a>
+<a class="sourceLine" id="cb114-6" title="6">  -output /path/to/output/</a></code></pre></div>
+<h3 id="using-single-file-executable">Using Single-File Executable</h3>
+<p><strong>Run directly:</strong></p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb115-1" title="1"><span class="bu">cd</span> releng/ucmism2t.product/target/</a>
+<a class="sourceLine" id="cb115-2" title="2"></a>
+<a class="sourceLine" id="cb115-3" title="3"><span class="co"># Make executable (first time only)</span></a>
+<a class="sourceLine" id="cb115-4" title="4"><span class="fu">chmod</span> +x ucmism2t-standalone</a>
+<a class="sourceLine" id="cb115-5" title="5"></a>
+<a class="sourceLine" id="cb115-6" title="6"><span class="co"># Run transformation</span></a>
+<a class="sourceLine" id="cb115-7" title="7"><span class="ex">./ucmism2t-standalone</span> \</a>
+<a class="sourceLine" id="cb115-8" title="8">  -input /path/to/model.xmi \</a>
+<a class="sourceLine" id="cb115-9" title="9">  -output /path/to/output/</a></code></pre></div>
+<p><strong>Extract for permanent installation:</strong></p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb116-1" title="1"><span class="ex">./ucmism2t-standalone</span> --extract ~/ucmism2t-install</a>
+<a class="sourceLine" id="cb116-2" title="2"></a>
+<a class="sourceLine" id="cb116-3" title="3"><span class="co"># Now use the installation</span></a>
+<a class="sourceLine" id="cb116-4" title="4"><span class="ex">~/ucmism2t-install/ucmism2t</span> \</a>
+<a class="sourceLine" id="cb116-5" title="5">  -input model.xmi \</a>
+<a class="sourceLine" id="cb116-6" title="6">  -output gen/</a></code></pre></div>
+<h3 id="cli-arguments-reference">CLI Arguments Reference</h3>
+<p><strong>Required Arguments:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-input &lt;file&gt;</code></td>
+<td>Path to UML model (XMI)</td>
+<td><code>-input model.xmi</code></td>
+</tr>
+<tr class="even">
+<td><code>-output &lt;dir&gt;</code></td>
+<td>Output directory for generated files</td>
+<td><code>-output generated/</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional Arguments:</strong></p>
+<table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 40%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-config &lt;file&gt; [&lt;file&gt; ...]</code></td>
+<td>Configuration files (properties)</td>
+<td><code>-config base.properties local.properties</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Paths:</strong> - Can be absolute or relative - Relative paths are resolved from current working directory</p>
+<h3 id="examples">Examples</h3>
+<p><strong>Example 1: Basic Code Generation</strong></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb117-1" title="1"><span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb117-2" title="2">  -input models/system.xmi \</a>
+<a class="sourceLine" id="cb117-3" title="3">  -output src/generated/</a></code></pre></div>
+<p><strong>Example 2: With Project Configuration</strong></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb118-1" title="1"><span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb118-2" title="2">  -input models/domain.xmi \</a>
+<a class="sourceLine" id="cb118-3" title="3">  -output target/generated-sources/ \</a>
+<a class="sourceLine" id="cb118-4" title="4">  -config config/project.properties</a></code></pre></div>
+<p><strong>Example 3: Multiple Configurations (Override Pattern)</strong></p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb119-1" title="1"><span class="co"># Base config + environment-specific overrides</span></a>
+<a class="sourceLine" id="cb119-2" title="2"><span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb119-3" title="3">  -input model.xmi \</a>
+<a class="sourceLine" id="cb119-4" title="4">  -output gen/ \</a>
+<a class="sourceLine" id="cb119-5" title="5">  -config defaults.properties \</a>
+<a class="sourceLine" id="cb119-6" title="6">          production.properties</a></code></pre></div>
+<p><strong>Example 4: CI/CD Integration</strong></p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb120-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb120-2" title="2"><span class="co"># generate.sh - CI/CD script</span></a>
+<a class="sourceLine" id="cb120-3" title="3"></a>
+<a class="sourceLine" id="cb120-4" title="4"><span class="kw">set</span> <span class="ex">-e</span>  <span class="co"># Exit on error</span></a>
+<a class="sourceLine" id="cb120-5" title="5"></a>
+<a class="sourceLine" id="cb120-6" title="6"><span class="va">MODEL_DIR=</span><span class="st">&quot;models&quot;</span></a>
+<a class="sourceLine" id="cb120-7" title="7"><span class="va">OUTPUT_DIR=</span><span class="st">&quot;src/generated&quot;</span></a>
+<a class="sourceLine" id="cb120-8" title="8"><span class="va">CONFIG=</span><span class="st">&quot;ci-config.properties&quot;</span></a>
+<a class="sourceLine" id="cb120-9" title="9"></a>
+<a class="sourceLine" id="cb120-10" title="10"><span class="kw">for</span> <span class="ex">model</span> in <span class="va">$MODEL_DIR</span>/*.xmi<span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb120-11" title="11">    <span class="bu">echo</span> <span class="st">&quot;Processing: </span><span class="va">$model</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb120-12" title="12">    <span class="ex">./ucmism2t</span> \</a>
+<a class="sourceLine" id="cb120-13" title="13">      -input <span class="st">&quot;</span><span class="va">$model</span><span class="st">&quot;</span> \</a>
+<a class="sourceLine" id="cb120-14" title="14">      -output <span class="st">&quot;</span><span class="va">$OUTPUT_DIR</span><span class="st">&quot;</span> \</a>
+<a class="sourceLine" id="cb120-15" title="15">      -config <span class="st">&quot;</span><span class="va">$CONFIG</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb120-16" title="16"><span class="kw">done</span></a>
+<a class="sourceLine" id="cb120-17" title="17"></a>
+<a class="sourceLine" id="cb120-18" title="18"><span class="bu">echo</span> <span class="st">&quot;Generation complete!&quot;</span></a></code></pre></div>
+<h3 id="exit-codes">Exit Codes</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>Success</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Error (file not found, transformation failed, etc.)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage in Scripts:</strong></p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb121-1" title="1"><span class="ex">./ucmism2t</span> -input model.xmi -output gen/</a>
+<a class="sourceLine" id="cb121-2" title="2"></a>
+<a class="sourceLine" id="cb121-3" title="3"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb121-4" title="4">    <span class="bu">echo</span> <span class="st">&quot;✓ Generation successful&quot;</span></a>
+<a class="sourceLine" id="cb121-5" title="5">    <span class="co"># Continue with next steps</span></a>
+<a class="sourceLine" id="cb121-6" title="6"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb121-7" title="7">    <span class="bu">echo</span> <span class="st">&quot;✗ Generation failed&quot;</span></a>
+<a class="sourceLine" id="cb121-8" title="8">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb121-9" title="9"><span class="kw">fi</span></a></code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="unknown-extension-point-errors">“Unknown extension point” Errors</h3>
+<p><strong>Problem:</strong></p>
+<pre><code>Unknown extension point: &#39;org.eclipse.acceleo.query.service&#39;
+plugin.xml /ucmism2t.core line 37</code></pre>
+<p><strong>Cause:</strong> This is a PDE (Plugin Development Environment) validation issue. The extension point exists in the target platform, but PDE’s XML validator can’t see it because it only looks in workspace projects.</p>
+<p><strong>This is SAFE TO IGNORE</strong> - the extension point works perfectly at runtime.</p>
+<p><strong>To Remove the Warning (Optional):</strong></p>
+<p><strong>Project-Specific Setting (Recommended):</strong></p>
+<pre><code>1. Right-click ucmism2t.core project
+2. Properties
+3. Plug-in Development → Compilers
+4. ☑ Enable project specific settings
+5. Expand: Extensions and Extension Points
+6. Find: Unknown extension point
+7. Change from &quot;Error&quot; to &quot;Ignore&quot;
+8. Apply and Close</code></pre>
+<p><strong>Workspace-Wide Setting:</strong></p>
+<pre><code>Window → Preferences
+→ Plug-in Development → Compilers
+→ Extensions and Extension Points
+→ Unknown extension point: Error → Ignore
+→ Apply and Close</code></pre>
+<h3 id="target-platform-not-resolving">Target Platform Not Resolving</h3>
+<p><strong>Problem:</strong> Target definition stuck on “Resolving…” or shows errors.</p>
+<p><strong>Solution 1: Check Network</strong></p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb125-1" title="1"><span class="co"># Verify access to Eclipse repositories</span></a>
+<a class="sourceLine" id="cb125-2" title="2"><span class="ex">curl</span> -I https://download.eclipse.org/releases/2025-12/</a>
+<a class="sourceLine" id="cb125-3" title="3"><span class="ex">curl</span> -I https://download.eclipse.org/acceleo/updates/releases/4.2/</a></code></pre></div>
+<p><strong>Solution 2: Reload Target</strong></p>
+<pre><code>1. In target editor, click &quot;Reload Target Platform&quot;
+2. Wait for new resolution attempt</code></pre>
+<p><strong>Solution 3: Clear P2 Cache</strong></p>
+<pre><code>1. Close Eclipse
+2. Delete: &lt;workspace&gt;/.metadata/.plugins/org.eclipse.pde.core/.bundle_pool
+3. Restart Eclipse
+4. Open ucmism2t.target
+5. Wait for resolution</code></pre>
+<h3 id="maven-build-fails">Maven Build Fails</h3>
+<p><strong>Problem:</strong></p>
+<pre><code>[ERROR] Failed to execute goal org.eclipse.tycho:tycho-compiler-plugin:5.0.0:compile</code></pre>
+<p><strong>Solution:</strong></p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb129-1" title="1"><span class="co"># Clean and rebuild</span></a>
+<a class="sourceLine" id="cb129-2" title="2"><span class="ex">mvn</span> clean verify</a>
+<a class="sourceLine" id="cb129-3" title="3"></a>
+<a class="sourceLine" id="cb129-4" title="4"><span class="co"># If still fails, ensure Java 21</span></a>
+<a class="sourceLine" id="cb129-5" title="5"><span class="ex">java</span> -version</a>
+<a class="sourceLine" id="cb129-6" title="6"></a>
+<a class="sourceLine" id="cb129-7" title="7"><span class="co"># Should show: openjdk version &quot;21.0.7&quot;</span></a></code></pre></div>
+<h3 id="template-syntax-errors">Template Syntax Errors</h3>
+<p><strong>Problem:</strong> Red X markers in .mtl file</p>
+<p><strong>Common Causes:</strong></p>
+<p><strong>1. Missing closing tag:</strong></p>
+<pre class="mtl"><code>[for (cls : Class | model.eAllContents(Class))]
+  [cls.name/]
+  # Missing [/for] here! ← Error</code></pre>
+<p><strong>Fix:</strong> Add closing tag</p>
+<pre class="mtl"><code>[for (cls : Class | model.eAllContents(Class))]
+  [cls.name/]
+[/for]</code></pre>
+<p><strong>2. Type mismatch:</strong></p>
+<pre class="mtl"><code>[let count : String = model.nestedPackage-&gt;size()/]
+# Error: size() returns Integer, not String</code></pre>
+<p><strong>Fix:</strong> Correct type</p>
+<pre class="mtl"><code>[let count : Integer = model.nestedPackage-&gt;size()/]</code></pre>
+<p><strong>3. Undefined variable:</strong></p>
+<pre class="mtl"><code>[template public generate(aModel : Model)]
+  [aClass.name/]  ← Error: aClass not defined
+[/template]</code></pre>
+<p><strong>Fix:</strong> Define in loop</p>
+<pre class="mtl"><code>[template public generate(aModel : Model)]
+  [for (aClass : Class | aModel.eAllContents(Class))]
+    [aClass.name/]
+  [/for]
+[/template]</code></pre>
+<h3 id="java-service-not-available-in-template">Java Service Not Available in Template</h3>
+<p><strong>Problem:</strong> Template shows error: “Unknown method: myMethod”</p>
+<p><strong>Checklist:</strong></p>
+<p><strong>1. Service registered in plugin.xml?</strong></p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb136-1" title="1"><span class="kw">&lt;extension</span><span class="ot"> point=</span><span class="st">&quot;org.eclipse.acceleo.query.service&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb136-2" title="2">   <span class="kw">&lt;service</span><span class="ot"> class=</span><span class="st">&quot;ucmism2t.services.MyService&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb136-3" title="3"><span class="kw">&lt;/extension&gt;</span></a></code></pre></div>
+<p><strong>2. Method is public?</strong></p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb137-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">myMethod</span>(<span class="bu">Class</span> clazz) { <span class="kw">... </span>}  <span class="co">// ✓ Works</span></a>
+<a class="sourceLine" id="cb137-2" title="2"><span class="kw">private</span> <span class="bu">String</span> <span class="fu">myMethod</span>(<span class="bu">Class</span> clazz) { <span class="kw">... </span>} <span class="co">// ✗ Not visible</span></a></code></pre></div>
+<p><strong>3. Workspace rebuilt?</strong></p>
+<pre><code>Project → Clean → Clean all projects</code></pre>
+<p><strong>4. Correct first parameter type?</strong></p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb139-1" title="1"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">myMethod</span>(<span class="bu">Class</span> clazz) { <span class="kw">... </span>}</a>
+<a class="sourceLine" id="cb139-2" title="2"><span class="co">// Call on Class: [aClass.myMethod()/] ✓</span></a>
+<a class="sourceLine" id="cb139-3" title="3"></a>
+<a class="sourceLine" id="cb139-4" title="4"><span class="kw">public</span> <span class="bu">String</span> <span class="fu">myMethod</span>(<span class="bu">Package</span> pkg) { <span class="kw">... </span>}</a>
+<a class="sourceLine" id="cb139-5" title="5"><span class="co">// Call on Package: [aPackage.myMethod()/] ✓</span></a>
+<a class="sourceLine" id="cb139-6" title="6"><span class="co">// Call on Class: [aClass.myMethod()/] ✗ Won&#39;t work</span></a></code></pre></div>
+<hr />
+<h2 id="additional-resources">Additional Resources</h2>
+<h3 id="official-acceleo-4-documentation">Official Acceleo 4 Documentation</h3>
+<p><strong>Main Documentation:</strong></p>
+<pre><code>Acceleo 4.2.1 Documentation
+https://github.com/eclipse-acceleo/acceleo/blob/4.2.1/plugins/org.eclipse.acceleo.aql.doc/pages/index.adoc
+
+Contents:
+- Getting Started
+- Template Syntax
+- AQL Expressions
+- File Generation
+- Module System
+- Best Practices</code></pre>
+<p><strong>Acceleo Query Language (AQL) Reference:</strong></p>
+<pre><code>AQL Documentation
+https://github.com/eclipse-acceleo/acceleo/blob/4.2.1/query/plugins/org.eclipse.acceleo.query.doc/pages/index.adoc
+
+Contents:
+- AQL Syntax
+- Type System
+- Collection Operations
+- String Operations
+- Service Calls
+- Lambda Expressions</code></pre>
+<h3 id="useful-links">Useful Links</h3>
+<p><strong>Eclipse Modeling:</strong> - EMF Documentation: https://www.eclipse.org/modeling/emf/ - UML2 Documentation: https://wiki.eclipse.org/MDT/UML2 - Eclipse PDE Guide: https://www.eclipse.org/pde/</p>
+<p><strong>Maven/Tycho:</strong> - Tycho Documentation: https://tycho.eclipseprojects.io/ - m2e Documentation: https://www.eclipse.org/m2e/</p>
+<p><strong>Community:</strong> - Eclipse Forums: https://www.eclipse.org/forums/ - Acceleo Discussions: https://github.com/eclipse-acceleo/acceleo/discussions - Stack Overflow: Tag <code>[acceleo]</code> or <code>[eclipse-modeling]</code></p>
+<h3 id="sample-projects">Sample Projects</h3>
+<p><strong>Acceleo Examples:</strong></p>
+<pre><code>https://github.com/eclipse-acceleo/acceleo/tree/master/examples</code></pre>
+<p><strong>UML Model Examples:</strong> Check the Eclipse UML2 project for sample .uml files that can be exported to XMI.</p>
+<hr />
+<h2 id="appendix-quick-reference">Appendix: Quick Reference</h2>
+<h3 id="common-aql-operations">Common AQL Operations</h3>
+<p><strong>Collections:</strong></p>
+<pre class="mtl"><code>[collection-&gt;size()/]
+[collection-&gt;isEmpty()/]
+[collection-&gt;notEmpty()/]
+[collection-&gt;first()/]
+[collection-&gt;last()/]
+[collection-&gt;select(x | condition)/]
+[collection-&gt;reject(x | condition)/]
+[collection-&gt;collect(x | expression)/]
+[collection-&gt;forAll(x | condition)/]
+[collection-&gt;exists(x | condition)/]</code></pre>
+<p><strong>Strings:</strong></p>
+<pre class="mtl"><code>[string.toUpperCase()/]
+[string.toLowerCase()/]
+[string.toUpperFirst()/]
+[string.substring(start, end)/]
+[string.concat(&#39;suffix&#39;)/]
+[string.size()/]</code></pre>
+<p><strong>Conditionals:</strong></p>
+<pre class="mtl"><code>[if (condition)]...[elseif (condition)]...[else]...[/if]
+[if (x = y)]...[/if]
+[if (x &lt;&gt; y)]...[/if]
+[if (x &gt; y)]...[/if]</code></pre>
+<h3 id="file-generation-patterns">File Generation Patterns</h3>
+<p><strong>Simple File:</strong></p>
+<pre class="mtl"><code>[file (&#39;output.txt&#39;, overwrite)]
+  Content
+[/file]</code></pre>
+<p><strong>Dynamic Filename:</strong></p>
+<pre class="mtl"><code>[file (aClass.name + &#39;.java&#39;, overwrite)]
+  public class [aClass.name/] { }
+[/file]</code></pre>
+<p><strong>Subdirectory:</strong></p>
+<pre class="mtl"><code>[file (&#39;com/example/&#39; + aClass.name + &#39;.java&#39;, overwrite)]
+  package com.example;
+  public class [aClass.name/] { }
+[/file]</code></pre>
+<p><strong>Conditional Generation:</strong></p>
+<pre class="mtl"><code>[for (cls : Class | model.eAllContents(Class))]
+  [if (not cls.isAbstract)]
+    [file (cls.name + &#39;.java&#39;, overwrite)]
+      // Only concrete classes
+    [/file]
+  [/if]
+[/for]</code></pre>
+<h3 id="keyboard-shortcuts-eclipse">Keyboard Shortcuts (Eclipse)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Ctrl+Space</code></td>
+<td>Content assist in .mtl files</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl+Shift+O</code></td>
+<td>Organize imports (Java)</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl+Shift+F</code></td>
+<td>Format code (Java)</td>
+</tr>
+<tr class="even">
+<td><code>F3</code></td>
+<td>Go to definition</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl+/</code></td>
+<td>Toggle comment</td>
+</tr>
+<tr class="even">
+<td><code>F5</code></td>
+<td>Step into (debugging)</td>
+</tr>
+<tr class="odd">
+<td><code>F6</code></td>
+<td>Step over (debugging)</td>
+</tr>
+<tr class="even">
+<td><code>F8</code></td>
+<td>Resume (debugging)</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl+F11</code></td>
+<td>Run last launch</td>
+</tr>
+<tr class="even">
+<td><code>F11</code></td>
+<td>Debug last launch</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>End of Developer Guide</strong></p>
+<p>For additional help, consult: - README.md (project overview) - ECLIPSE_SETUP.md (Eclipse-specific details) - Official Acceleo documentation (links above)</p>
+<p>Happy coding! 🚀</p>

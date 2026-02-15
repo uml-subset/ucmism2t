@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Feature Definition
+  
+  A feature is a logical grouping of bundles that are deployed together.
+  This feature includes both the core and CLI bundles for ucmism2t.
+-->
+<feature
+      id="ucmism2t.feature"
+      label="ucmism2t Feature"
+      version="1.0.0.qualifier"
+      provider-name="Example Organization">
+
+   <description>
+      UML to Text Model-to-Text Transformation Tool
+      
+      Transforms UML 2.5 models to text using Acceleo 4.2 templates.
+      Supports multi-platform command-line execution.
+   </description>
+
+   <copyright>
+      Copyright (c) 2025 Example Organization
+   </copyright>
+
+   <license>
+      This software is provided &quot;as is&quot; without warranty of any kind.
+   </license>
+
+   <!-- Core bundle containing templates and services -->
+   <plugin
+         id="ucmism2t.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <!-- CLI bundle for command-line execution -->
+   <plugin
+         id="ucmism2t.cli"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

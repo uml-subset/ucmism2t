@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Parent POM for ucmism2t project
+  
+  This is the root Maven POM that defines:
+  - Tycho 5.0 for OSGi bundle builds
+  - Java 21 compilation settings
+  - Target platform configuration pointing to Eclipse 2025-12 and Acceleo 4.2
+  - Multi-platform build environments (Linux, Windows, macOS x64/arm64)
+  - Module structure for all sub-projects
+  
+  Build command: mvn clean verify
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Project Coordinates -->
+    <groupId>ucmism2t</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+    <name>ucmism2t Parent</name>
+    <description>UML to Text Model-to-Text Transformation Tool using Acceleo 4.2</description>
+    
+    <!-- Build Properties -->
+    <properties>
+        <!-- Tycho version compatible with Eclipse 2025-12 -->
+        <tycho.version>5.0.0</tycho.version>
+        
+        <!-- Java 21 compilation settings -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        
+        <!-- Platform selection: linux, windows, macos-x86, macos-arm, all -->
+        <!-- Usage: mvn clean verify -Dbuild.platform=windows -->
+        <!-- Default: linux only -->
+        <build.platform>linux</build.platform>
+        <maven.compiler.release>21</maven.compiler.release>
+        
+        <!-- Encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+    
+    <!-- 
+      Module Declaration
+      Build order is managed by Tycho based on dependencies
+    -->
+    <modules>
+        <!-- Target platform must be first to resolve dependencies -->
+        <module>releng/ucmism2t.target</module>
+        
+        <!-- Core bundles -->
+        <module>bundles/ucmism2t.core</module>
+        <module>bundles/ucmism2t.cli</module>
+        
+        <!-- Feature for product packaging -->
+        <module>features/ucmism2t.feature</module>
+        
+        <!-- Product definition for executable generation -->
+        <module>releng/ucmism2t.product</module>
+        
+        <!-- P2 repository (optional, for Eclipse installation) -->
+        <module>repository/ucmism2t.repository</module>
+    </modules>
+    
+    <build>
+        <plugins>
+            <!-- 
+              Tycho Maven Plugin
+              Enables Eclipse/OSGi build capabilities in Maven
+            -->
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <extensions>true</extensions>
+            </plugin>
+            
+            <!-- 
+              Target Platform Configuration
+              Defines the Eclipse platform and dependencies to build against
+            -->
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <!-- Reference to target definition file -->
+                    <target>
+                        <artifact>
+                            <groupId>ucmism2t</groupId>
+                            <artifactId>ucmism2t.target</artifactId>
+                            <version>1.0.0-SNAPSHOT</version>
+                        </artifact>
+                    </target>
+                    
+                    <!-- 
+                      Platform Environments
+                      Controlled by build.platform property (default: linux)
+                      Use: mvn clean verify -Dbuild.platform=windows
+                      Options: linux, windows, macos-x86, macos-arm, all
+                    -->
+                    <environments>
+                        <!-- Environments are added via profiles below -->
+                    </environments>
+                </configuration>
+            </plugin>
+            
+            <!-- 
+              Tycho Compiler Plugin
+              Ensures Java 21 bytecode generation
+            -->
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <release>21</release>
+                    <useProjectSettings>false</useProjectSettings>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <!-- Platform Selection Profiles -->
+    <profiles>
+        <!-- Linux (default) -->
+        <profile>
+            <id>platform-linux</id>
+            <activation>
+                <property>
+                    <name>build.platform</name>
+                    <value>linux</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.tycho</groupId>
+                            <artifactId>target-platform-configuration</artifactId>
+                            <configuration>
+                                <environments>
+                                    <environment>
+                                        <os>linux</os>
+                                        <ws>gtk</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                </environments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        
+        <!-- Windows -->
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <property>
+                    <name>build.platform</name>
+                    <value>windows</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.tycho</groupId>
+                            <artifactId>target-platform-configuration</artifactId>
+                            <configuration>
+                                <environments>
+                                    <environment>
+                                        <os>win32</os>
+                                        <ws>win32</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                </environments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        
+        <!-- macOS Intel -->
+        <profile>
+            <id>platform-macos-x86</id>
+            <activation>
+                <property>
+                    <name>build.platform</name>
+                    <value>macos-x86</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.tycho</groupId>
+                            <artifactId>target-platform-configuration</artifactId>
+                            <configuration>
+                                <environments>
+                                    <environment>
+                                        <os>macosx</os>
+                                        <ws>cocoa</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                </environments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        
+        <!-- macOS Apple Silicon -->
+        <profile>
+            <id>platform-macos-arm</id>
+            <activation>
+                <property>
+                    <name>build.platform</name>
+                    <value>macos-arm</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.tycho</groupId>
+                            <artifactId>target-platform-configuration</artifactId>
+                            <configuration>
+                                <environments>
+                                    <environment>
+                                        <os>macosx</os>
+                                        <ws>cocoa</ws>
+                                        <arch>aarch64</arch>
+                                    </environment>
+                                </environments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        
+        <!-- All platforms -->
+        <profile>
+            <id>platform-all</id>
+            <activation>
+                <property>
+                    <name>build.platform</name>
+                    <value>all</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.tycho</groupId>
+                            <artifactId>target-platform-configuration</artifactId>
+                            <configuration>
+                                <environments>
+                                    <environment>
+                                        <os>linux</os>
+                                        <ws>gtk</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                    <environment>
+                                        <os>win32</os>
+                                        <ws>win32</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                    <environment>
+                                        <os>macosx</os>
+                                        <ws>cocoa</ws>
+                                        <arch>x86_64</arch>
+                                    </environment>
+                                    <environment>
+                                        <os>macosx</os>
+                                        <ws>cocoa</ws>
+                                        <arch>aarch64</arch>
+                                    </environment>
+                                </environments>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+    
+</project>

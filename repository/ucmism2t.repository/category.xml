@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  P2 Repository Categories
+  
+  Defines how features are categorized in the P2 repository.
+-->
+<site>
+   <category-def name="ucmism2t" label="ucmism2t Tools">
+      <description>
+         UML to Text Model-to-Text Transformation Tools
+      </description>
+   </category-def>
+   
+   <feature 
+      id="ucmism2t.feature" 
+      version="0.0.0">
+      <category name="ucmism2t"/>
+   </feature>
+</site>

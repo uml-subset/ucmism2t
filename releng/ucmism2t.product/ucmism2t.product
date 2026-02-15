@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+<!--
+  Product Definition
+  
+  Defines how to package the application as a standalone product
+  with platform-specific launchers for Linux, Windows, and macOS.
+  
+  The product includes:
+  - Minimal Eclipse runtime (Equinox OSGi)
+  - EMF and UML2 bundles
+  - Acceleo runtime
+  - Application bundles (core + CLI)
+-->
+<product name="ucmism2t" uid="ucmism2t.product" 
+         id="ucmism2t.cli.product"
+         application="ucmism2t.cli.app" 
+         version="1.0.0.qualifier" 
+         useFeatures="true" 
+         includeLaunchers="true">
+
+   <aboutInfo>
+      <text>
+         ucmism2t - UML to Text Transformation Tool
+         Version 1.0.0
+         
+         Eclipse 2025-12 | Acceleo 4.2 | Java 21
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-nosplash
+--launcher.suppressErrors
+      </programArgs>
+      <vmArgs>-Xms256m
+-Xmx1024m
+-Dfile.encoding=UTF-8
+      </vmArgs>
+   </launcherArgs>
+
+   <launcher name="ucmism2t">
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+      <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</linux>
+      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</macos>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</windows>
+   </vm>
+
+   <plugins>
+      <!-- Acceleo 4.2 main bundles -->
+      <plugin id="org.eclipse.acceleo.aql"/>
+      <plugin id="org.eclipse.acceleo.query"/>
+   </plugins>
+
+   <features>
+      <feature id="ucmism2t.feature" installMode="root"/>
+      <feature id="org.eclipse.emf.ecore" installMode="root"/>
+      <feature id="org.eclipse.emf.common" installMode="root"/>
+      
+      <!-- Eclipse launcher required for standalone executables -->
+      <feature id="org.eclipse.equinox.executable" installMode="root"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+   </configurations>
+
+</product>

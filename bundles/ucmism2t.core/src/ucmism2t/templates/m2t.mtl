@@ -1,0 +1,9 @@
+[comment encoding = UTF-8 /]
+[module m2t('http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[comment @main /]
+[template public generateModel(aModel : uml::Model)]
+  [file ( 'test.txt', overwrite )]
+    Model Name: [aModel.name/]
+  [/file]
+[/template]

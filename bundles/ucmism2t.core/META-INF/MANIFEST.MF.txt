@@ -1,0 +1,28 @@
+MANIFEST.MF Comments for ucmism2t.core
+
+Bundle-ManifestVersion: 2
+  - OSGi R4 manifest format
+
+Bundle-SymbolicName: ucmism2t.core;singleton:=true
+  - Unique identifier for this bundle
+  - singleton:=true ensures only one version can be active at runtime
+  - Required for bundles with extension points or UI contributions
+
+Automatic-Module-Name: ucmism2t.core
+  - Java 9+ module name for JPMS compatibility
+  - Allows this bundle to be used as an automatic module
+
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+  - Specifies minimum Java version required
+  - Ensures Java 21 features can be used
+
+Require-Bundle:
+  - Lists all OSGi bundles this bundle depends on
+  - Version ranges use [min,max) notation
+  - Acceleo 4.2.x and AQL 8.x for template processing
+  - EMF for model handling
+  - UML2 5.x for UML model support
+
+Export-Package:
+  - Makes these packages available to other bundles
+  - Templates, queries, and services can be imported by CLI bundle

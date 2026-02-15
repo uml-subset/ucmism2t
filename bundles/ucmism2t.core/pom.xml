@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Core Bundle POM
+  
+  This module contains:
+  - Acceleo .mtl templates for text generation
+  - Custom Java service classes callable from templates
+  - Utility classes for configuration and date/time handling
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>ucmism2t</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    
+    <artifactId>ucmism2t.core</artifactId>
+    <packaging>eclipse-plugin</packaging>
+    
+    <name>ucmism2t Core Bundle</name>
+    <description>Core transformation logic with Acceleo templates and Java services</description>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--
+                  m2e (Maven Eclipse Integration) Lifecycle Mapping
+                  
+                  Tells Eclipse's Maven integration to ignore certain Tycho plugins
+                  that are meant for command-line builds only. This prevents
+                  "Plugin execution not covered by lifecycle" warnings in Eclipse.
+                  
+                  These plugins are still executed during command-line Maven builds,
+                  but Eclipse's incremental builder ignores them.
+                -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <!-- Ignore tycho-packaging-plugin in Eclipse -->
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.eclipse.tycho</groupId>
+                                        <artifactId>tycho-packaging-plugin</artifactId>
+                                        <versionRange>[5.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>package-plugin</goal>
+                                            <goal>build-qualifier</goal>
+                                            <goal>validate-id</goal>
+                                            <goal>validate-version</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                                <!-- Ignore tycho-bnd-plugin in Eclipse -->
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.eclipse.tycho</groupId>
+                                        <artifactId>tycho-bnd-plugin</artifactId>
+                                        <versionRange>[5.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>process</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
