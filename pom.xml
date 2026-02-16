@@ -18,8 +18,8 @@
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Project Coordinates -->
-    <groupId>ucmism2t</groupId>
-    <artifactId>parent</artifactId>
+    <groupId>ucmis</groupId>
+    <artifactId>ucmism2t-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     
@@ -93,7 +93,7 @@
                     <!-- Reference to target definition file -->
                     <target>
                         <artifact>
-                            <groupId>ucmism2t</groupId>
+                            <groupId>ucmis</groupId>
                             <artifactId>ucmism2t.target</artifactId>
                             <version>1.0.0-SNAPSHOT</version>
                         </artifact>
