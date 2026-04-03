@@ -2,55 +2,55 @@
 <?eclipse version="3.4"?>
 <!--
   Plugin Extensions for ucmism2t Core
-  
+
   This file registers custom Java services with the Acceleo Query Language (AQL)
   runtime, making them callable from .mtl templates.
-  
+
   ECLIPSE PDE WARNING - "Unknown extension point":
-  
+
   If Eclipse shows "Unknown extension point: org.eclipse.acceleo.query.service"
   warnings here, this is a PDE (Plugin Development Environment) validation issue.
-  
+
   The extension point IS valid and WILL work at runtime because:
   1. org.eclipse.acceleo.query bundle is in the target platform
   2. org.eclipse.acceleo.query bundle is in MANIFEST.MF Require-Bundle
   3. The extension point is defined in org.eclipse.acceleo.query/plugin.xml
-  
+
   Why PDE shows the warning:
   - PDE's XML validator looks for extension point definitions in the workspace
   - Since org.eclipse.acceleo.query is from the target platform (not workspace),
     PDE can't find its plugin.xml to validate against
   - This is a known limitation of PDE validation
-  
+
   To remove the warnings (optional):
   Window → Preferences → Plug-in Development → Compilers
   → Extensions and Extension Points → Unknown extension point
   → Change from "Error" to "Ignore"
-  
+
   The extension point WILL work at runtime - you can safely ignore these warnings.
 -->
 <plugin>
-   <!-- 
+   <!--
      Register ConfigurationService
      Provides access to configuration properties in Acceleo templates
    -->
-   <extension point="org.eclipse.acceleo.query.service">
+   <extension point="org.eclipse.acceleo.query.services">
       <service class="ucmism2t.services.ConfigurationService"/>
    </extension>
-   
-   <!-- 
+
+   <!--
      Register DateTimeService
      Provides ISO 8601 date/time formatting in Acceleo templates
    -->
-   <extension point="org.eclipse.acceleo.query.service">
+   <extension point="org.eclipse.acceleo.query.services">
       <service class="ucmism2t.services.DateTimeService"/>
    </extension>
-   
-   <!-- 
+
+   <!--
      Register CustomServices
      Provides additional utility methods for UML model processing
    -->
-   <extension point="org.eclipse.acceleo.query.service">
+   <extension point="org.eclipse.acceleo.query.services">
       <service class="ucmism2t.services.CustomServices"/>
    </extension>
 </plugin>
