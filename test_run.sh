@@ -1,0 +1,1 @@
+./ucmism2t-wrapper_test.sh -input ./model/ddi-cdi_canonical-unique-names-eclipse.xmi -output ./generated
