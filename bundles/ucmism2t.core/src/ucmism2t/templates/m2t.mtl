@@ -1,9 +1,14 @@
 [comment encoding = UTF-8 /]
 [module m2t('http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
 
+[import ucmism2t::services::DateTimeService /]
+
 [comment @main /]
 [template public generateModel(aModel : uml::Model)]
   [file ( 'test.txt', overwrite )]
     Model Name: [aModel.name/]
+    Package count: [aModel.nestedPackage->size()/]
+    time: [aModel.getCurrentDateTime()/]
+    jsonschema: ['jsonschema'.getProperty() /]
   [/file]
 [/template]
