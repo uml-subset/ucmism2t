@@ -1,0 +1,42 @@
+When running the Eclipse Application in the Eclipse IDE the messages below are shown. They can be ignored.
+
+WARNING: Using incubator modules: jdk.incubator.vector
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+
+These are all harmless informational warnings. The application is working correctly!
+
+1. WARNING: Using incubator modules: jdk.incubator.vector
+What it means:
+
+Java 21 has experimental "Vector API" for SIMD operations (fast parallel computations)
+Some Eclipse/OSGi component is using this experimental API
+The JVM is warning that this API might change in future Java versions
+
+Impact: ✅ None - This is just a heads-up that some code uses preview features
+Why it appears:
+
+Eclipse platform or some dependency uses vector operations for performance
+Common in Eclipse 2025-12 with Java 21
+
+Can you suppress it?
+Yes, but not recommended. If it bothers you:
+  Add to VM arguments in run configuration:
+  --add-exports java.base/jdk.internal.vm.vector=ALL-UNNAMED
+Recommendation: Ignore it - it's harmless and will disappear when the Vector API becomes stable.
+
+2. SLF4J Warnings (3 messages)
+What it means:
+
+SLF4J = Simple Logging Facade for Java (a logging framework)
+Your application or dependencies expect SLF4J logging
+No actual SLF4J implementation is configured
+Defaulting to NOP (No-Operation) logger = all log messages are discarded
+
+Impact: ✅ None for functionality - but you won't see debug/trace logs from libraries
+Why it appears:
+
+Some OSGi bundle requires SLF4J (probably Acceleo or EMF components)
+No SLF4J provider bundle is in your target platform
+This is very common in minimal Eclipse applications
