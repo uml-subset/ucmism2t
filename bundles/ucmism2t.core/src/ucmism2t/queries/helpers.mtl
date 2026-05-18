@@ -1,24 +1,25 @@
 [comment encoding = UTF-8 /]
-[comment 
-  Helper Queries Module
-  
-  This module contains reusable AQL queries that can be imported
-  and used across multiple templates. Queries are pure functions
-  that return computed values without generating text.
-  
-  Import with:
-    [import ucmism2t::queries::helpers /]
-/]
+[**
+ * The documentation of the module m2t.
+ * Helper Queries Module
+ * 
+ * This module contains reusable AQL queries that can be imported
+ * and used across multiple templates. Queries are pure functions
+ * that return computed values without generating text.
+ * 
+ * Import with:
+ *   [import ucmism2t::queries::helpers /]
+ */]
 [module helpers('http://www.eclipse.org/uml2/5.0.0/UML')]
 
-[comment 
-  Query: Get All Classes
-  
-  Returns all Class elements contained anywhere in the model hierarchy.
-  Uses allOwnedElements() to recursively traverse the model tree.
-  
-  @param model The root UML Model
-  @return Sequence of all Class elements in the model
+[** 
+ * Query: Get All Classes
+ * 
+ * Returns all Class elements contained anywhere in the model hierarchy.
+ * Uses allOwnedElements() to recursively traverse the model tree.
+ * 
+ * @param model The root UML Model
+ * @return Sequence of all Class elements in the model
 /]
 [query public getAllClasses(model : Model) : Sequence(Class) = 
     model.allOwnedElements()->filter(Class)

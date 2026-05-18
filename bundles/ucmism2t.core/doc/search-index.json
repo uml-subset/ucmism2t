@@ -1,0 +1,4 @@
+[
+  {"id":"m2t","kind":"module","name":"m2t","moduleName":"m2t","description":"The documentation of the module m2t.","params":"","url":"m2t.html"},
+  {"id":"m2t#generateModel","kind":"template","name":"generateModel","moduleName":"m2t","description":"The documentation of the template generateElement.","params":"aModel The Model","url":"m2t.html#generateModel"}
+]

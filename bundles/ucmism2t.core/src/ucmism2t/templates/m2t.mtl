@@ -1,10 +1,20 @@
 [comment encoding = UTF-8 /]
+[**
+ * The documentation of the module m2t.
+ * @author wackerow
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
 [module m2t('http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
 
 [import ucmism2t::services::DateTimeService /]
 
-[comment @main /]
-[template public generateModel(aModel : uml::Model)]
+[**
+ * The documentation of the template generateElement.
+ * @param The Model
+ * @main
+ */]
+ [template public generateModel(aModel : uml::Model)]
   [file ( 'test.txt', overwrite )]
     Model Name: [aModel.name/]
     Package count: [aModel.nestedPackage->size()/]
