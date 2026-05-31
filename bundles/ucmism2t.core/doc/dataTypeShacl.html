@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::m2t — Acceleo Documentation</title>
+    <title>ucmism2t::templates::target::shacl::dataTypeShacl — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <li>
                 <a href="h2.html">h2</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="m2t.html">m2t</a>
             </li>
             <li>
@@ -145,7 +145,7 @@
             <li>
                 <a href="commonShacl.html">commonShacl</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="dataTypeShacl.html">dataTypeShacl</a>
             </li>
             <li>
@@ -201,17 +201,16 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::m2t
+            ucmism2t::templates::target::shacl::dataTypeShacl
         </h1>
 
 
-        <div class="description">The documentation of the module m2t.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/m2t.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/shacl/dataTypeShacl.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
@@ -223,12 +222,21 @@
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#generateModel"><code>generateModel(aModel)</code></a>
+                    <td><a href="#dataTypeShacl"><code>dataTypeShacl(aDataType)</code></a>
                         
                         
                         
                     </td>
-                    <td>The documentation of the template generateElement.</td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#datatypePropertiesShacl"><code>datatypePropertiesShacl(aDataType)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
             </tbody>
         </table>
@@ -237,26 +245,47 @@
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="generateModel">
+        <div class="element-detail" id="dataTypeShacl">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                generateModel
+                dataTypeShacl
             </h3>
 
             <div class="signature">
-                <code>[template public generateModel(aModel : uml::Model)]</code>
+                <code>[template public dataTypeShacl(aDataType : uml::DataType)]</code>
             </div>
 
 
-            <div class="description">The documentation of the template generateElement.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>The Model</dd>
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="datatypePropertiesShacl">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                datatypePropertiesShacl
+            </h3>
+
+            <div class="signature">
+                <code>[template public datatypePropertiesShacl(aDataType : uml::DataType)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
         </div>

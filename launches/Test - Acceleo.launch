@@ -2,11 +2,11 @@
 <launchConfiguration type="org.eclipse.acceleo.aql.ls.debug.ide.launchConfigurationType">
     <stringAttribute key="destination" value="/ucmism2t-parent/generated"/>
     <stringAttribute key="model" value="/ucmism2t-parent/model/ddi-cdi_canonical-unique-names-eclipse.xmi"/>
-    <stringAttribute key="module" value="/ucmism2t.core/src/ucmism2t/templates/m2t.mtl"/>
+    <stringAttribute key="module" value="/ucmism2t.core/src/ucmism2t/templates/m2tMaster.mtl"/>
     <stringAttribute key="options" value="{&quot;newLine&quot;:&quot;\n&quot;,&quot;logURI&quot;:&quot;acceleo.log&quot;}"/>
     <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/ucmism2t.core/src/ucmism2t/templates/m2t.mtl"/>
+        <listEntry value="/ucmism2t.core/src/ucmism2t/templates/m2tMaster.mtl"/>
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>
@@ -14,7 +14,7 @@
     <booleanAttribute key="org.eclipse.lsp4e.debug.model.ATTR_CUSTOM_LAUNCH_PARAMS" value="true"/>
     <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_MODE" value="connect to server"/>
     <booleanAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_MONITOR_ADAPTER" value="true"/>
-    <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_PARAM" value="{&quot;module&quot;:&quot;file:/home/wackerow/Downloads/u/ucmism2t/bundles/ucmism2t.core/src/ucmism2t/templates/m2t.mtl&quot;,&quot;model&quot;:&quot;file:/home/wackerow/Downloads/u/ucmism2t/model/ddi-cdi_canonical-unique-names-eclipse.xmi&quot;,&quot;destination&quot;:&quot;file:/home/wackerow/Downloads/u/ucmism2t/generated/&quot;,&quot;options&quot;:&quot;{\&quot;newLine\&quot;:\&quot;\\n\&quot;,\&quot;logURI\&quot;:\&quot;acceleo.log\&quot;}&quot;}"/>
+    <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_PARAM" value="{&quot;module&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/bundles/ucmism2t.core/src/ucmism2t/templates/m2tMaster.mtl&quot;,&quot;model&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/model/ddi-cdi_canonical-unique-names-eclipse.xmi&quot;,&quot;destination&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/generated/&quot;,&quot;options&quot;:&quot;{\&quot;newLine\&quot;:\&quot;\\n\&quot;,\&quot;logURI\&quot;:\&quot;acceleo.log\&quot;}&quot;}"/>
     <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_HOST" value="127.0.0.1"/>
-    <intAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_PORT" value="35415"/>
+    <intAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_PORT" value="40079"/>
 </launchConfiguration>

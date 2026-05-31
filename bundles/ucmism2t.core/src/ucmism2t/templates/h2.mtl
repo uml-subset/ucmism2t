@@ -1,0 +1,13 @@
+[comment encoding = UTF-8 /]
+[**
+The documentation of the module m2t.
+ /]
+[module h2('http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::services::PropertiesService /]
+
+[template public ht2(aModel : uml::Model)]
+  TEST
+  h2: Model Name: [aModel.name/]
+  h2: jsonschema: ['jsonschema'.getPropertyValue() /]
+[/template]

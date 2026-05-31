@@ -1,0 +1,61 @@
+[module testFile2('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::modelQuery/]
+
+[comment encoding = UTF-8 /]
+[template public processModelTest2(aModel : uml::Model)]
+  [file ('test.txt', overwrite, 'UTF-8')]
+    text
+    
+    getProperty MAIN_PACKAGE: '['MAIN_PACKAGE'.getPropertyValue()/]'
+    propertyValues MAIN_PACKAGE: '['MAIN_PACKAGE'.e_propertyValues()/]'
+    getProperty XX: ['XX'.getPropertyValue()/]
+    propertyValues XX: ['XX'.e_propertyValues()/]
+    
+    
+    propertyValues MAIN_PACKAGE: '['IGNORE_PACKAGE'.e_propertyValues()/]'
+    [for (propertyValue : String | 'IGNORE_PACKAGE'.e_propertyValues())]
+      	package: '[propertyValue/]'
+    [/for]
+    
+    
+    
+    T1 '['T1'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T1'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    T2 '['T2'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T2'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    T3 '['T3'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T3'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    T4 '['T4'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T4'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    T5 '['T5'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T5'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    T6 '['T6'.e_propertyValues()/]'
+    [for (propertyValue : String | 'T6'.e_propertyValues())]
+      	value: '[propertyValue/]'
+    [/for]
+    
+    [for (aPackage : uml::Package | aModel.eAllContents(uml::Package))]
+      [aPackage.qualifiedName/]:
+      	e_isAllowedPackage  [aPackage.e_isAllowedPackage()/]
+      	e_isNotIgnoredPackage  [aPackage.e_isNotIgnoredPackage()/]
+      	e_isNotInIgnoredPackage  [aPackage.e_isNotInIgnoredPackage()/]
+    [/for]
+  [/file]
+[/template]

@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::query::modelQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="h2.html">h2</a>
+            </li>
+            <li>
+                <a href="m2t.html">m2t</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li class="active">
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="propertiesQuery.html">propertiesQuery</a>
+            </li>
+            <li>
+                <a href="ucmisUtility.html">ucmisUtility</a>
+            </li>
+            <li>
+                <a href="h.html">h</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="test4.html">test4</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+            <li>
+                <a href="testFile2.html">testFile2</a>
+            </li>
+            <li>
+                <a href="testFile3.html">testFile3</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::query::modelQuery
+        </h1>
+
+
+        <div class="description">Module contains all model queries. Queries with prefix &quot;e_&quot; are migrated from Acceleo 3.7. Queries with prefix &quot;u_&quot; are written for Acceleo 4.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/query/modelQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template summary table -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Visibility</th><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#e_simpleQualifiedClassName"><code>e_simpleQualifiedClassName(aClass)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>Returns the simple qualified name of a class in the form &quot;packageName::className&quot;.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#e_onlyDefinition"><code>e_onlyDefinition(aNamedElement)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>Returns the definition text extracted from the first owned comment of a named element. Strips section headings (Definition, Examples, Explanatory notes), normalises whitespace, and escapes curly braces. Truncates to 300 characters if longer.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#e_fixClassDocumentation"><code>e_fixClassDocumentation(aNamedElement)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>Returns the body text of all owned comments of a named element, concatenated. Returns an empty string if there are no comments.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Package</code></td>
+                    <td><a href="#e_mainPackage"><code>e_mainPackage(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the package identified by the main package name. The main package name is specified by the property MAIN_PACKAGE_NAME. Returns the model object if MAIN_PACKAGE_NAME is not found or not specified. Note: A package is a generalization of the model in the UML metamodel.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isChildOfMainPackage"><code>e_isChildOfMainPackage(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified named element is a direct or indirect child of the main package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(String)</code></td>
+                    <td><a href="#e_propertyValues"><code>e_propertyValues(propertyKey)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of strings for the comma-separated values of a property key, sorted by value.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Package)</code></td>
+                    <td><a href="#e_packageObjects"><code>e_packageObjects(aPackage, packagesAsString)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of package objects, sorted by package name, for the specified ordered set of package names.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Package</code></td>
+                    <td><a href="#e_packageObject"><code>e_packageObject(aPackage, aName)</code></a>
+                        
+                    </td>
+                    <td>Returns a package object of the specified name that is a direct or indirect child of the specified package. Returns undefined if the name is not found. Note: Works only for unique package names in the model.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::NamedElement</code></td>
+                    <td><a href="#e_namedElementObject"><code>e_namedElementObject(aNamedElement, aString)</code></a>
+                        
+                    </td>
+                    <td>Returns a named element object of the specified name that is a direct or indirect child of the specified named element.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isInAllowedPackage"><code>e_isInAllowedPackage(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified named element is a child of the main package and not in any ignored package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isAllowedPackage"><code>e_isAllowedPackage(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified package is the main package or a child of the main package and not an ignored package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isNotIgnoredPackage"><code>e_isNotIgnoredPackage(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified package is not an ignored package. Ignored packages are specified by the property IGNORE_PACKAGE.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isNotInIgnoredPackage"><code>e_isNotInIgnoredPackage(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified named element is not contained in any ignored package. Ignored packages are specified by the property IGNORE_PACKAGE.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#e_allClasses"><code>e_allClasses(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all classes in the model, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::DataType)</code></td>
+                    <td><a href="#e_allDataTypes"><code>e_allDataTypes(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all data types in the model, sorted by data type name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Enumeration)</code></td>
+                    <td><a href="#e_allEnumerations"><code>e_allEnumerations(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all enumerations in the model, sorted by enumeration name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Package)</code></td>
+                    <td><a href="#e_allPackages"><code>e_allPackages(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all packages in the model, sorted by package name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::NamedElement)</code></td>
+                    <td><a href="#u_allAbstractionClients"><code>u_allAbstractionClients(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all abstraction client classes or data types in the model.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::NamedElement)</code></td>
+                    <td><a href="#u_allAbstractionSuppliers"><code>u_allAbstractionSuppliers(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all abstraction supplier classes or data types in the model.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#u_allTopSuperClasses"><code>u_allTopSuperClasses(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all top-level super classes in a package, sorted by class name. Top-level super classes have no superclass themselves but have at least one subclass.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Property)</code></td>
+                    <td><a href="#e_associationProperties"><code>e_associationProperties(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of association-end properties of a class. Note: A simpler approach using eInverse(Association) may be possible.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Property)</code></td>
+                    <td><a href="#e_associationsFromOtherPackages"><code>e_associationsFromOtherPackages(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of association-end properties from other packages that reference the specified class.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Property)</code></td>
+                    <td><a href="#e_associationsToOtherPackages"><code>e_associationsToOtherPackages(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of association-end properties of a class that point to classes in other packages.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Property)</code></td>
+                    <td><a href="#u_attributes"><code>u_attributes(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of owned attributes of a classifier, sorted by attribute name. Note: Intended for use with classes and data types only.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#e_childrenClasses"><code>e_childrenClasses(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of classes directly contained in a package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::DataType)</code></td>
+                    <td><a href="#e_childrenDataTypes"><code>e_childrenDataTypes(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of data types directly contained in a package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Enumeration)</code></td>
+                    <td><a href="#e_childrenEnumeration"><code>e_childrenEnumeration(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of enumerations directly contained in a package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Package)</code></td>
+                    <td><a href="#e_childrenPackages"><code>e_childrenPackages(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of packages directly contained in a package.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Package)</code></td>
+                    <td><a href="#e_packagesWithClasses"><code>e_packagesWithClasses(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of packages that directly contain at least one class, sorted by package name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_path"><code>e_path(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns the path of the specified element below the model root, using &quot;/&quot; as the separator between path segments.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_relativePath"><code>e_relativePath(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns a shortened relative path of the specified element, using the first character of each intermediate segment. Note: Under test.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_filePath"><code>e_filePath(aNamedElement, target)</code></a>
+                        
+                    </td>
+                    <td>Returns the output file path for the specified element and target format. For the &quot;doc&quot; target the model name is replaced with &quot;_rst&quot;.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#e_topSuperClasses"><code>e_topSuperClasses(aPackage)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of classes that have no superclass (or only DDI-CDI base classes as superclass) and have at least one subclass. These are the top-level classes in the inheritance hierarchy. Note: TODO: Remove hardcoded Identifiable and AnnotatedIdentifiable.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Property)</code></td>
+                    <td><a href="#u_inheritedAttributes"><code>u_inheritedAttributes(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of inherited attributes of a classifier, sorted by attribute name. Excludes association-end properties. Note: Intended for use with classes and data types.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Association)</code></td>
+                    <td><a href="#e_inheritedAssociations"><code>e_inheritedAssociations(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of inherited associations of a class. Note: TODO: probably not complete, both directions?, non-inherited assoc?</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_multiplicity"><code>e_multiplicity(aProperty)</code></a>
+                        
+                    </td>
+                    <td>Returns a string with the multiplicity of a property in the format &quot;lower..upper&quot;, with -1 replaced by &quot;*&quot;.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#e_allSuperclassesSecondAncestor"><code>e_allSuperclassesSecondAncestor(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all superclasses of a class starting at the second ancestor (i.e. excluding the direct parent). Note: TODO: should the else not be null?</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isSuperClass"><code>e_isSuperClass(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified class has at least one subclass. TODO review eInverse</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#e_subClassifiers"><code>e_subClassifiers(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of direct sub classifiers of a classifier, sorted by classifier name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#e_subClassesOrSubDataTypes"><code>e_subClassesOrSubDataTypes(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Classifier)</code></td>
+                    <td><a href="#e_subClassesOrSubDataTypes2"><code>e_subClassesOrSubDataTypes2(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of direct sub classifiers of a classifier via the generalization relationship, sorted by classifier name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_typeName"><code>e_typeName(aType)</code></a>
+                        
+                    </td>
+                    <td>Returns the simple type name of a UML type. This is a workaround for UML primitive type names, which are not directly accessible as a name property on the type object.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_typeQualifiedName"><code>e_typeQualifiedName(aType)</code></a>
+                        
+                    </td>
+                    <td>Returns the qualified type name of a UML type. This is a workaround for UML primitive type names.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_simpleQualifiedClassifierName"><code>e_simpleQualifiedClassifierName(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns the simple qualified name of a classifier in the form &quot;packageName::classifierName&quot;.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#e_contextClasses"><code>e_contextClasses(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of classes related to the specified class via associations, inheritance, and abstraction relationships. Used for diagram context scoping.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#e_contextClassesOrDataTypes"><code>e_contextClassesOrDataTypes(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of classifiers related to the specified data type via usage, inheritance, and abstraction relationships. Used for diagram context scoping.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Association)</code></td>
+                    <td><a href="#e_limitedAssociations2"><code>e_limitedAssociations2(aSuperClass, aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of associations of a superclass that are not between the superclass and any of the subclass&#39;s ancestors. Used to reduce diagram clutter by excluding associations that are already represented through the inheritance path.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Association)</code></td>
+                    <td><a href="#e_limitedAssociations3"><code>e_limitedAssociations3(aSuperClass, aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns at most 3 associations from e_limitedAssociations2 to keep diagrams manageable.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#targetClassesOfAllAssociations"><code>targetClassesOfAllAssociations(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of unique target classes of all associations of the specified class, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#e_ownedEndClass"><code>e_ownedEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the class at the owned end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#sourceClass"><code>sourceClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the class at the source (owned) end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#targetClass"><code>targetClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the class at the target (other) end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Property</code></td>
+                    <td><a href="#e_ownedEnd"><code>e_ownedEnd(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the property at the owned end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#e_otherEndClass"><code>e_otherEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the class at the other (non-owned) end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Property</code></td>
+                    <td><a href="#e_otherEnd"><code>e_otherEnd(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the property at the other (non-owned) end of an association.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Property)</code></td>
+                    <td><a href="#e_dataTypeUseProperties"><code>e_dataTypeUseProperties(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of properties that use the specified data type as their type, excluding association ends and properties owned by the data type itself.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Property)</code></td>
+                    <td><a href="#e_limitedDataTypeUseProperties"><code>e_limitedDataTypeUseProperties(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns at most 3 properties that use the specified data type, to keep diagrams manageable.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#e_allSubclassesPlusSelf"><code>e_allSubclassesPlusSelf(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of all subclasses of a class plus the class itself, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#e_allSubclassesPlusSelfNonAbstract"><code>e_allSubclassesPlusSelfNonAbstract(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of all non-abstract subclasses of a class plus the class itself if it is non-abstract, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Package)</code></td>
+                    <td><a href="#e_contextPackages"><code>e_contextPackages(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of packages of the context classes of the specified class, excluding the class&#39;s own package, sorted by package name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Package)</code></td>
+                    <td><a href="#e_contextPackages"><code>e_contextPackages(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of packages of the context classifiers of the specified data type, excluding the data type&#39;s own package, sorted by package name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_shortDocumentation"><code>e_shortDocumentation(aNamedElement)</code></a>
+                        
+                    </td>
+                    <td>Returns the first 100 characters of the first owned comment body of a named element, followed by a newline and &quot;...&quot; if truncated. Returns an empty string if there are no owned comments.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::DataType</code></td>
+                    <td><a href="#e_modelIdentication"><code>e_modelIdentication(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the ModelIdentification data type from a model. This data type contains model metadata such as acronym, version, and title as owned properties with default values.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelShortName"><code>e_modelShortName(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the short model name including version, derived from the model acronym, major version, and minor version. Format: ACRONYM_MAJOR-MINOR.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelAcronym"><code>e_modelAcronym(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model acronym. The value is determined in order of priority: (1) MODEL_ACRONYM property, (2) ModelIdentification data type in the model, (3) model name as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelLanguage"><code>e_modelLanguage(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model language. The value is determined in order of priority: (1) MODEL_LANGUAGE property, (2) ModelIdentification data type in the model, (3) &#39;en&#39; as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelMajorVersion"><code>e_modelMajorVersion(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model major version. The value is determined in order of priority: (1) MODEL_MAJOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelMinorVersion"><code>e_modelMinorVersion(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model minor version. The value is determined in order of priority: (1) MODEL_MINOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelUri"><code>e_modelUri(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model URI. The value is determined in order of priority: (1) MODEL_URI property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL URI&#39; as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_modelTitle"><code>e_modelTitle(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns the model title. The value is determined in order of priority: (1) MODEL_TITLE property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL TITLE&#39; as fallback.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_mappedUcmisItemsRdfTokens"><code>e_mappedUcmisItemsRdfTokens(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of RDF mapping token strings from the property &quot;uml-map-rdf&quot;, split by comma.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_mappedUcmisItemsRdf"><code>e_mappedUcmisItemsRdf(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of source IRI strings from the RDF mapping tokens (the part before &quot;&gt;&quot;).</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_mappedUcmisItemsRdfTargets"><code>e_mappedUcmisItemsRdfTargets(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of target IRI strings from the RDF mapping tokens (the part after &quot;&gt;&quot;).</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_primitive"><code>e_primitive(aType)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified type is a UML primitive type. Primitive types have no ancestors in the containment hierarchy.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_notPrimitive"><code>e_notPrimitive(aType)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified type is not a UML primitive type.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_isGeneralDataType"><code>e_isGeneralDataType(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns true if the specified data type is a general (parent) data type, i.e. it has at least one sub data type.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#u_repeatChar"><code>u_repeatChar(char, n)</code></a>
+                        
+                    </td>
+                    <td>Returns a string consisting of n repetitions of char.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#u_shexCardinality"><code>u_shexCardinality(aProperty)</code></a>
+                        
+                    </td>
+                    <td>Returns the cardinality of a property in ShEx syntax: &quot;?&quot; for 0..1, &quot;*&quot; for 0..*, &quot;+&quot; for 1..*, &quot;&quot; for all other cases.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#u_subClasses"><code>u_subClasses(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of direct subclasses of a class, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::Class)</code></td>
+                    <td><a href="#u_allSubClasses"><code>u_allSubClasses(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of all subclasses of a class, recursively, sorted by class name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::DataType)</code></td>
+                    <td><a href="#u_subDataTypes"><code>u_subDataTypes(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of direct sub data types of a data type, sorted by data type name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(uml::DataType)</code></td>
+                    <td><a href="#u_allSubDataTypes"><code>u_allSubDataTypes(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns an ordered set of all sub data types of a data type, recursively, sorted by data type name.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Class)</code></td>
+                    <td><a href="#u_allSuperClasses"><code>u_allSuperClasses(aClass)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all superclasses of a class, starting at the direct parent. Note: Works only for single inheritance.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::DataType)</code></td>
+                    <td><a href="#u_allSuperDataTypes"><code>u_allSuperDataTypes(aDataType)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all super data types of a data type, starting at the direct parent. Note: Works only for single inheritance.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(uml::Classifier)</code></td>
+                    <td><a href="#u_allSuperClassifiers"><code>u_allSuperClassifiers(aClassifier)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of all super classifiers of a classifier, starting at the direct parent. Note: Works only with classes and data types.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="e_simpleQualifiedClassName">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                e_simpleQualifiedClassName
+            </h3>
+
+            <div class="signature">
+                <code>[template public e_simpleQualifiedClassName(aClass : uml::Class)]</code>
+            </div>
+
+
+            <div class="description">Returns the simple qualified name of a class in the form &quot;packageName::className&quot;.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="e_onlyDefinition">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                e_onlyDefinition
+            </h3>
+
+            <div class="signature">
+                <code>[template public e_onlyDefinition(aNamedElement : uml::NamedElement)]</code>
+            </div>
+
+
+            <div class="description">Returns the definition text extracted from the first owned comment of a named element. Strips section headings (Definition, Examples, Explanatory notes), normalises whitespace, and escapes curly braces. Truncates to 300 characters if longer.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="e_fixClassDocumentation">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                e_fixClassDocumentation
+            </h3>
+
+            <div class="signature">
+                <code>[template public e_fixClassDocumentation(aNamedElement : uml::NamedElement)]</code>
+            </div>
+
+
+            <div class="description">Returns the body text of all owned comments of a named element, concatenated. Returns an empty string if there are no comments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+        </div>
+
+        <!-- ═════════════════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="e_mainPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_mainPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_mainPackage(aModel : uml::Model) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the package identified by the main package name. The main package name is specified by the property MAIN_PACKAGE_NAME. Returns the model object if MAIN_PACKAGE_NAME is not found or not specified. Note: A package is a generalization of the model in the UML metamodel.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Package</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isChildOfMainPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isChildOfMainPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isChildOfMainPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is a direct or indirect child of the main package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_propertyValues">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_propertyValues
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_propertyValues(propertyKey : String) : OrderedSet(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of strings for the comma-separated values of a property key, sorted by value.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>propertyKey</code> <span class="param-type">: String</span></dt>
+                <dd>propertyKey A property key string</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_packageObjects">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_packageObjects
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_packageObjects(aPackage : uml::Package, packagesAsString : OrderedSet(String)) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of package objects, sorted by package name, for the specified ordered set of package names.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package used as search root</dd>
+                <dt><code>packagesAsString</code> <span class="param-type">: OrderedSet(String)</span></dt>
+                <dd>packagesAsString An ordered set of package name strings</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_packageObject">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_packageObject
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_packageObject(aPackage : uml::Package, aName : String) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a package object of the specified name that is a direct or indirect child of the specified package. Returns undefined if the name is not found. Note: Works only for unique package names in the model.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package used as search root</dd>
+                <dt><code>aName</code> <span class="param-type">: String</span></dt>
+                <dd>aName The package name to search for</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Package</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_namedElementObject">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_namedElementObject
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_namedElementObject(aNamedElement : uml::NamedElement, aString : String) : uml::NamedElement = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a named element object of the specified name that is a direct or indirect child of the specified named element.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element used as search root</dd>
+                <dt><code>aString</code> <span class="param-type">: String</span></dt>
+                <dd>aString The name to search for</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::NamedElement</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isInAllowedPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isInAllowedPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isInAllowedPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is a child of the main package and not in any ignored package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isAllowedPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isAllowedPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isAllowedPackage(aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified package is the main package or a child of the main package and not an ignored package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isNotIgnoredPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isNotIgnoredPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isNotIgnoredPackage(aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified package is not an ignored package. Ignored packages are specified by the property IGNORE_PACKAGE.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isNotInIgnoredPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isNotInIgnoredPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isNotInIgnoredPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is not contained in any ignored package. Ignored packages are specified by the property IGNORE_PACKAGE.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allClasses(aModel : uml::Model) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all classes in the model, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allDataTypes(aModel : uml::Model) : Sequence(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all data types in the model, sorted by data type name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::DataType)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allEnumerations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allEnumerations
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allEnumerations(aModel : uml::Model) : Sequence(uml::Enumeration) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all enumerations in the model, sorted by enumeration name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Enumeration)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allPackages(aModel : uml::Model) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all packages in the model, sorted by package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allAbstractionClients">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allAbstractionClients
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allAbstractionClients(aModel : uml::Model) : Sequence(uml::NamedElement) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all abstraction client classes or data types in the model.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::NamedElement)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allAbstractionSuppliers">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allAbstractionSuppliers
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allAbstractionSuppliers(aModel : uml::Model) : Sequence(uml::NamedElement) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all abstraction supplier classes or data types in the model.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::NamedElement)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allTopSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allTopSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allTopSuperClasses(aPackage : uml::Package) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all top-level super classes in a package, sorted by class name. Top-level super classes have no superclass themselves but have at least one subclass.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_associationProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_associationProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_associationProperties(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of association-end properties of a class. Note: A simpler approach using eInverse(Association) may be possible.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_associationsFromOtherPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_associationsFromOtherPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_associationsFromOtherPackages(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of association-end properties from other packages that reference the specified class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_associationsToOtherPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_associationsToOtherPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_associationsToOtherPackages(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of association-end properties of a class that point to classes in other packages.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_attributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_attributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_attributes(aClassifier : uml::Classifier) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of owned attributes of a classifier, sorted by attribute name. Note: Intended for use with classes and data types only.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_childrenClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_childrenClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_childrenClasses(aPackage : uml::Package) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of classes directly contained in a package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_childrenDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_childrenDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_childrenDataTypes(aPackage : uml::Package) : Sequence(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of data types directly contained in a package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::DataType)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_childrenEnumeration">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_childrenEnumeration
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_childrenEnumeration(aPackage : uml::Package) : Sequence(uml::Enumeration) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of enumerations directly contained in a package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Enumeration)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_childrenPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_childrenPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_childrenPackages(aPackage : uml::Package) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of packages directly contained in a package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_packagesWithClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_packagesWithClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_packagesWithClasses(aModel : uml::Model) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of packages that directly contain at least one class, sorted by package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_path">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_path
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_path(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the path of the specified element below the model root, using &quot;/&quot; as the separator between path segments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_relativePath">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_relativePath
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_relativePath(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a shortened relative path of the specified element, using the first character of each intermediate segment. Note: Under test.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_filePath">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_filePath
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_filePath(aNamedElement : uml::NamedElement, target : String) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the output file path for the specified element and target format. For the &quot;doc&quot; target the model name is replaced with &quot;_rst&quot;.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+                <dt><code>target</code> <span class="param-type">: String</span></dt>
+                <dd>target The generation target format identifier (e.g. &quot;xsd&quot;, &quot;doc&quot;)</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_topSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_topSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_topSuperClasses(aPackage : uml::Package) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of classes that have no superclass (or only DDI-CDI base classes as superclass) and have at least one subclass. These are the top-level classes in the inheritance hierarchy. Note: TODO: Remove hardcoded Identifiable and AnnotatedIdentifiable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage A UML package</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_inheritedAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_inheritedAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_inheritedAttributes(aClassifier : uml::Classifier) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of inherited attributes of a classifier, sorted by attribute name. Excludes association-end properties. Note: Intended for use with classes and data types.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_inheritedAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_inheritedAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_inheritedAssociations(aClass : uml::Class) : Sequence(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of inherited associations of a class. Note: TODO: probably not complete, both directions?, non-inherited assoc?</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Association)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_multiplicity">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_multiplicity
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_multiplicity(aProperty : uml::Property) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a string with the multiplicity of a property in the format &quot;lower..upper&quot;, with -1 replaced by &quot;*&quot;.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProperty</code> <span class="param-type">: uml::Property</span></dt>
+                <dd>aProperty A UML property</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allSuperclassesSecondAncestor">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allSuperclassesSecondAncestor
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allSuperclassesSecondAncestor(aClass : uml::Class) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all superclasses of a class starting at the second ancestor (i.e. excluding the direct parent). Note: TODO: should the else not be null?</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isSuperClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isSuperClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isSuperClass(aClass : uml::Class) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified class has at least one subclass. TODO review eInverse</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subClassifiers">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subClassifiers
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subClassifiers(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct sub classifiers of a classifier, sorted by classifier name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subClassesOrSubDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subClassesOrSubDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subClassesOrSubDataTypes(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subClassesOrSubDataTypes2">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subClassesOrSubDataTypes2
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subClassesOrSubDataTypes2(aClassifier : uml::Classifier) : Sequence(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of direct sub classifiers of a classifier via the generalization relationship, sorted by classifier name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_typeName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_typeName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_typeName(aType : uml::Type) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the simple type name of a UML type. This is a workaround for UML primitive type names, which are not directly accessible as a name property on the type object.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd>aType A UML type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_typeQualifiedName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_typeQualifiedName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_typeQualifiedName(aType : uml::Type) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the qualified type name of a UML type. This is a workaround for UML primitive type names.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd>aType A UML type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_simpleQualifiedClassifierName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_simpleQualifiedClassifierName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_simpleQualifiedClassifierName(aClassifier : uml::Classifier) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the simple qualified name of a classifier in the form &quot;packageName::classifierName&quot;.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_contextClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_contextClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_contextClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of classes related to the specified class via associations, inheritance, and abstraction relationships. Used for diagram context scoping.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_contextClassesOrDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_contextClassesOrDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_contextClassesOrDataTypes(aDataType : uml::DataType) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of classifiers related to the specified data type via usage, inheritance, and abstraction relationships. Used for diagram context scoping.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_limitedAssociations2">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_limitedAssociations2
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_limitedAssociations2(aSuperClass : uml::Class, aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of associations of a superclass that are not between the superclass and any of the subclass&#39;s ancestors. Used to reduce diagram clutter by excluding associations that are already represented through the inheritance path.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aSuperClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aSuperClass A UML class that is a superclass of aClass</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Association)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_limitedAssociations3">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_limitedAssociations3
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_limitedAssociations3(aSuperClass : uml::Class, aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns at most 3 associations from e_limitedAssociations2 to keep diagrams manageable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aSuperClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aSuperClass A UML class that is a superclass of aClass</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Association)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="targetClassesOfAllAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                targetClassesOfAllAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public targetClassesOfAllAssociations(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of unique target classes of all associations of the specified class, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_ownedEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_ownedEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_ownedEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the class at the owned end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="sourceClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                sourceClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public sourceClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the class at the source (owned) end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="targetClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                targetClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public targetClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the class at the target (other) end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_ownedEnd">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_ownedEnd
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_ownedEnd(anAssociation : uml::Association) : uml::Property = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the property at the owned end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Property</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_otherEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_otherEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_otherEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the class at the other (non-owned) end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_otherEnd">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_otherEnd
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_otherEnd(anAssociation : uml::Association) : uml::Property = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the property at the other (non-owned) end of an association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation A UML association</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Property</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_dataTypeUseProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_dataTypeUseProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_dataTypeUseProperties(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of properties that use the specified data type as their type, excluding association ends and properties owned by the data type itself.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_limitedDataTypeUseProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_limitedDataTypeUseProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_limitedDataTypeUseProperties(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns at most 3 properties that use the specified data type, to keep diagrams manageable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Property)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allSubclassesPlusSelf">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allSubclassesPlusSelf
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allSubclassesPlusSelf(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all subclasses of a class plus the class itself, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_allSubclassesPlusSelfNonAbstract">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_allSubclassesPlusSelfNonAbstract
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_allSubclassesPlusSelfNonAbstract(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all non-abstract subclasses of a class plus the class itself if it is non-abstract, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_contextPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_contextPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_contextPackages(aClass : uml::Class) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of packages of the context classes of the specified class, excluding the class&#39;s own package, sorted by package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_contextPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_contextPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_contextPackages(aDataType : uml::DataType) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of packages of the context classifiers of the specified data type, excluding the data type&#39;s own package, sorted by package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Package)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_shortDocumentation">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_shortDocumentation
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_shortDocumentation(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the first 100 characters of the first owned comment body of a named element, followed by a newline and &quot;...&quot; if truncated. Returns an empty string if there are no owned comments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>aNamedElement A UML named element</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelIdentication">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelIdentication
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelIdentication(aModel : uml::Model) : uml::DataType = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the ModelIdentification data type from a model. This data type contains model metadata such as acronym, version, and title as owned properties with default values.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::DataType</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelShortName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelShortName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelShortName(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the short model name including version, derived from the model acronym, major version, and minor version. Format: ACRONYM_MAJOR-MINOR.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelAcronym">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelAcronym
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelAcronym(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model acronym. The value is determined in order of priority: (1) MODEL_ACRONYM property, (2) ModelIdentification data type in the model, (3) model name as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelLanguage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelLanguage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelLanguage(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model language. The value is determined in order of priority: (1) MODEL_LANGUAGE property, (2) ModelIdentification data type in the model, (3) &#39;en&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelMajorVersion">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelMajorVersion
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelMajorVersion(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model major version. The value is determined in order of priority: (1) MODEL_MAJOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelMinorVersion">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelMinorVersion
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelMinorVersion(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model minor version. The value is determined in order of priority: (1) MODEL_MINOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelUri">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelUri
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelUri(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model URI. The value is determined in order of priority: (1) MODEL_URI property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL URI&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_modelTitle">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelTitle
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelTitle(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model title. The value is determined in order of priority: (1) MODEL_TITLE property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL TITLE&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>aModel A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_mappedUcmisItemsRdfTokens">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_mappedUcmisItemsRdfTokens
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_mappedUcmisItemsRdfTokens(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of RDF mapping token strings from the property &quot;uml-map-rdf&quot;, split by comma.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any EMF object (used as receiver only)</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_mappedUcmisItemsRdf">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_mappedUcmisItemsRdf
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_mappedUcmisItemsRdf(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of source IRI strings from the RDF mapping tokens (the part before &quot;&gt;&quot;).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any EMF object (used as receiver only)</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_mappedUcmisItemsRdfTargets">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_mappedUcmisItemsRdfTargets
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_mappedUcmisItemsRdfTargets(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of target IRI strings from the RDF mapping tokens (the part after &quot;&gt;&quot;).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any EMF object (used as receiver only)</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_primitive">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_primitive
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_primitive(aType : uml::Type) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified type is a UML primitive type. Primitive types have no ancestors in the containment hierarchy.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd>aType A UML type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_notPrimitive">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_notPrimitive
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_notPrimitive(aType : uml::Type) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified type is not a UML primitive type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd>aType A UML type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_isGeneralDataType">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_isGeneralDataType
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_isGeneralDataType(aDataType : uml::DataType) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified data type is a general (parent) data type, i.e. it has at least one sub data type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_repeatChar">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_repeatChar
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_repeatChar(char : String, n : Integer) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a string consisting of n repetitions of char.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>char</code> <span class="param-type">: String</span></dt>
+                <dd>char The character or string to repeat</dd>
+                <dt><code>n</code> <span class="param-type">: Integer</span></dt>
+                <dd>n The number of repetitions</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_shexCardinality">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_shexCardinality
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_shexCardinality(aProperty : uml::Property) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the cardinality of a property in ShEx syntax: &quot;?&quot; for 0..1, &quot;*&quot; for 0..*, &quot;+&quot; for 1..*, &quot;&quot; for all other cases.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProperty</code> <span class="param-type">: uml::Property</span></dt>
+                <dd>aProperty A UML property</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_subClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct subclasses of a class, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allSubClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSubClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSubClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all subclasses of a class, recursively, sorted by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_subDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct sub data types of a data type, sorted by data type name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::DataType)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allSubDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSubDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSubDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all sub data types of a data type, recursively, sorted by data type name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>aDataType A UML data type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::DataType)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSuperClasses(aClass : uml::Class) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all superclasses of a class, starting at the direct parent. Note: Works only for single inheritance.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>aClass A UML class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Class)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allSuperDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSuperDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSuperDataTypes(aDataType : uml::DataType) : Sequence(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all super data types of a data type, starting at the direct parent. Note: Works only for single inheritance.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::DataType)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_allSuperClassifiers">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSuperClassifiers
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSuperClassifiers(aClassifier : uml::Classifier) : Sequence(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all super classifiers of a classifier, starting at the direct parent. Note: Works only with classes and data types.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(uml::Classifier)</code>
+            </p>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

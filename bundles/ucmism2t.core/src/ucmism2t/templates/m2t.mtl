@@ -1,24 +1,34 @@
 [comment encoding = UTF-8 /]
 [**
- * The documentation of the module m2t.
- * @author wackerow
- * @version 1.0.0
- * @since 1.0.0
- */]
+The documentation of the module m2t.
+ /]
 [module m2t('http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
 
 [import ucmism2t::services::DateTimeService /]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::sub::h /]
+[import ucmism2t::templates::h2 /]
 
 [**
- * The documentation of the template generateElement.
- * @param The Model
- * @main
- */]
- [template public generateModel(aModel : uml::Model)]
+The documentation of the template generateElement.
+
+@param aClass - Description
+/]
+[template public generateModel(aModel : uml::Model)]
+  [aModel.initProperties()/]
   [file ( 'test.txt', overwrite )]
-    Model Name: [aModel.name/]
+    main: Model Name: [aModel.name/]
     Package count: [aModel.nestedPackage->size()/]
     time: [aModel.getCurrentDateTime()/]
-    jsonschema: ['jsonschema'.getProperty() /]
+    main: jsonschema: ['jsonschema'.getProperty() /]
+    [aModel.ht()/]
+    [aModel.ht2()/]
+    bb: ['bb'.isPropertyTrue()/]
+    z1: ['z1'.isPropertyTrue()/]
+    z2: ['z2'.getPropertyValue()/]
+    'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
+    'xx'.getPropertyValue() ['x'.getPropertyValue()/]
+    Agents: [aModel.eAllContents(uml::Package)->select(p | p.name = 'Agents')->first()/]
+    Model: [aModel.eAllContents(uml::Package)->first() /]
   [/file]
 [/template]

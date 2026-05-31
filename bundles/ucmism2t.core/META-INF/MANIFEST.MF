@@ -17,4 +17,5 @@ Require-Bundle: org.eclipse.core.runtime,
  acceleodoc.core;bundle-version="[1.0.0,2.0.0)"
 Export-Package: ucmism2t.services,
  ucmism2t.templates,
+ ucmism2t.templates.sub,
  ucmism2t.queries

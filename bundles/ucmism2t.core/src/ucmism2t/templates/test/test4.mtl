@@ -1,0 +1,18 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module test4.
+ * @author wackerow
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module test4('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[**
+ * The documentation of the template generateElement.
+ * @param parameter
+ */]
+[template public generateElement(aModel : uml::Model)]
+  [file ('file.txt', overwrite, 'UTF-8')]
+    
+  [/file]
+[/template]

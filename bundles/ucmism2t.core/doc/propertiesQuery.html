@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::query::propertiesQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="h2.html">h2</a>
+            </li>
+            <li>
+                <a href="m2t.html">m2t</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li class="active">
+                <a href="propertiesQuery.html">propertiesQuery</a>
+            </li>
+            <li>
+                <a href="ucmisUtility.html">ucmisUtility</a>
+            </li>
+            <li>
+                <a href="h.html">h</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="test4.html">test4</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+            <li>
+                <a href="testFile2.html">testFile2</a>
+            </li>
+            <li>
+                <a href="testFile3.html">testFile3</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::query::propertiesQuery
+        </h1>
+
+
+        <div class="description">Module contains all additional model queries. Their names start with &quot;e_&quot;.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/query/propertiesQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template summary table -->
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Boolean</code></td>
+                    <td><a href="#e_includeAllItems"><code>e_includeAllItems(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a Boolean if all items of the model should be included or not</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_subsetName"><code>e_subsetName(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns the name of the subset</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>String</code></td>
+                    <td><a href="#e_subsetTitle"><code>e_subsetTitle(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns the title of the subset</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetClasses"><code>e_subsetClasses(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of the subset classes</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetGeneralizedClasses"><code>e_subsetGeneralizedClasses(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of the generalized subset classes</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetAllClasses"><code>e_subsetAllClasses(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of all subset classes</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetDataTypes"><code>e_subsetDataTypes(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of the subset data types</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetEnumerations"><code>e_subsetEnumerations(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of the subset enumerations</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetItems"><code>e_subsetItems(anOclAny)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of all subset items (classes, data types, enumerations)</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetClassAttributes"><code>e_subsetClassAttributes(aClassName)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of attributes of a specific class of the subset</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>Sequence(String)</code></td>
+                    <td><a href="#e_subsetDataTypeAttributes"><code>e_subsetDataTypeAttributes(aDataTypeName)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of names of attributes of a specific data type of the subset</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(String)</code></td>
+                    <td><a href="#e_subsetPackages"><code>e_subsetPackages(aModel)</code></a>
+                        
+                    </td>
+                    <td>Returns a sequence of packages relevant to the subset</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>OrderedSet(String)</code></td>
+                    <td><a href="#Xe_subsetPackages"><code>Xe_subsetPackages(aModel)</code></a>
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template detail -->
+
+        <!-- ═════════════════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="e_includeAllItems">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_includeAllItems
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_includeAllItems(anOclAny : ecore::EObject) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a Boolean if all items of the model should be included or not</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Boolean</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetName(anOclAny : ecore::EObject) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the name of the subset</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetTitle">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetTitle
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetTitle(anOclAny : ecore::EObject) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the title of the subset</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetClasses(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of the subset classes</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetGeneralizedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetGeneralizedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetGeneralizedClasses(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of the generalized subset classes</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetAllClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetAllClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetAllClasses(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of all subset classes</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetDataTypes(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of the subset data types</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetEnumerations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetEnumerations
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetEnumerations(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of the subset enumerations</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetItems">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetItems
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetItems(anOclAny : ecore::EObject) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of all subset items (classes, data types, enumerations)</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetClassAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetClassAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetClassAttributes(aClassName : String) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of attributes of a specific class of the subset</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassName</code> <span class="param-type">: String</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetDataTypeAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetDataTypeAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetDataTypeAttributes(aDataTypeName : String) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of names of attributes of a specific data type of the subset</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataTypeName</code> <span class="param-type">: String</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>Sequence(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="e_subsetPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_subsetPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_subsetPackages(aModel : uml::Model) : OrderedSet(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of packages relevant to the subset</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>anOclAny Any type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(String)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="Xe_subsetPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                Xe_subsetPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public Xe_subsetPackages(aModel : uml::Model) : OrderedSet(String) = ...]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(String)</code>
+            </p>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

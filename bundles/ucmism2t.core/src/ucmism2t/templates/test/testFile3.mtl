@@ -1,0 +1,53 @@
+[module testFile3('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::modelQuery/]
+
+[comment encoding = UTF-8 /]
+[template public processModelTest(aModel : uml::Model)]
+  [file ('test.txt', overwrite, 'UTF-8')]
+    
+    propertyValues IGNORE_PACKAGE: '['IGNORE_PACKAGE'.e_propertyValues()/]'
+    [for (propertyValue : String | 'IGNORE_PACKAGE'.e_propertyValues())]
+      	package: '[propertyValue/]'
+    [/for]
+    
+    OK e_packageObject XMLSchemaDataTypes '[aModel.e_packageObject('XMLSchemaDataTypes')/]'
+    OK e_packageObject X '[aModel.e_packageObject('X')/]'
+    OK e_packageObjects '[aModel.e_packageObjects(OrderedSet{'Process', 'Agents'})/]'
+    OK e_packageObjects '[aModel.e_packageObjects(OrderedSet{'Process', 'XAgents'})/]'
+    OK size [aModel.e_packageObjects(OrderedSet{'Process', 'XAgents'})->size()/]
+    OK e_packageObjects '[aModel.e_packageObjects('IGNORE_PACKAGE'.e_propertyValues())/]'
+    
+    OK e_isInAllowedPackage [aModel.e_packageObject('Process').e_isInAllowedPackage()/]
+    NOT OK e_isInAllowedPackage [aModel.e_packageObject('Agents').e_isInAllowedPackage()/]
+    
+    CONTINUE with testing e_isInAllowedPackage
+    
+    
+    Process: [aModel.e_packageObject('Process').e_isNotInIgnoredPackage()/]
+    Agents: [aModel.e_packageObject('Agents').e_isNotInIgnoredPackage()/]
+    XMLSchemaDataTypes: [aModel.e_packageObject('XMLSchemaDataTypes').e_isNotInIgnoredPackage()/]
+    
+    Context: [aModel.e_packageObject('Context').e_isInAllowedPackage()/]
+    Process: [aModel.e_packageObject('Process').e_isInAllowedPackage()/]
+    Agents: [aModel.e_packageObject('Agents').e_isInAllowedPackage()/]
+    XMLSchemaDataTypes: [aModel.e_packageObject('XMLSchemaDataTypes').e_isInAllowedPackage()/]
+    
+    Context: [aModel.e_packageObject('Context').e_isNotIgnoredPackage()/]
+    Process: [aModel.e_packageObject('Process').e_isNotIgnoredPackage()/]
+    Agents: [aModel.e_packageObject('Agents').e_isNotIgnoredPackage()/]
+    XMLSchemaDataTypes: [aModel.e_packageObject('XMLSchemaDataTypes').e_isNotIgnoredPackage()/]
+    
+    XMLSchemaDataTypes: [aModel.e_packageObject('XMLSchemaDataTypes')/]
+    1: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')/]
+    2: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))/]
+    3: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->collect(aPackage | aPackage.eAllContents(uml::Package)->includes(aModel.e_packageObject('XMLSchemaDataTypes')))/]
+    3b: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->includes(aModel.e_packageObject('XMLSchemaDataTypes'))/]
+    3c: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->includes(aModel.e_packageObject('Process'))/]
+    3d: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->includes(aModel.e_packageObject('Agents'))/]
+    3e: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->includes(aModel.e_packageObject('X'))/]
+    4: ['IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->collect(aPackage | aModel.e_packageObject(aPackage))->collect(aPackage | aPackage.eAllContents(uml::Package)->includes(aModel.e_packageObject('XMLSchemaDataTypes')))->excludes(true)/]
+    
+  [/file]
+[/template]

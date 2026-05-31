@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::m2t — Acceleo Documentation</title>
+    <title>ucmism2t::templates::mapping::representation — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,13 +22,13 @@
             <li>
                 <a href="h2.html">h2</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="m2t.html">m2t</a>
             </li>
             <li>
                 <a href="m2tMaster.html">m2tMaster</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="representation.html">representation</a>
             </li>
             <li>
@@ -201,17 +201,17 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::m2t
+            ucmism2t::templates::mapping::representation
         </h1>
 
 
-        <div class="description">The documentation of the module m2t.</div>
+        <div class="description">All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/m2t.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/mapping/representation.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
@@ -223,12 +223,30 @@
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#generateModel"><code>generateModel(aModel)</code></a>
+                    <td><a href="#encodingMapping"><code>encodingMapping(aModel)</code></a>
                         
                         
                         
                     </td>
-                    <td>The documentation of the template generateElement.</td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#processClassifier"><code>processClassifier(aClassifier)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#encodingTabSet"><code>encodingTabSet(aClassifier, number, xmiSelected, xsdSelected)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
             </tbody>
         </table>
@@ -237,26 +255,75 @@
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="generateModel">
+        <div class="element-detail" id="encodingMapping">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                generateModel
+                encodingMapping
             </h3>
 
             <div class="signature">
-                <code>[template public generateModel(aModel : uml::Model)]</code>
+                <code>[template public encodingMapping(aModel : uml::Model)]</code>
             </div>
 
 
-            <div class="description">The documentation of the template generateElement.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>The Model</dd>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="processClassifier">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                processClassifier
+            </h3>
+
+            <div class="signature">
+                <code>[template public processClassifier(aClassifier : uml::Classifier)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="encodingTabSet">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                encodingTabSet
+            </h3>
+
+            <div class="signature">
+                <code>[template public encodingTabSet(aClassifier : uml::Classifier, number : String, xmiSelected : String, xsdSelected : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>number</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>xmiSelected</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>xsdSelected</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
         </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::m2t — Acceleo Documentation</title>
+    <title>ucmism2t::templates::target::doc::modelDocFile — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <li>
                 <a href="h2.html">h2</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="m2t.html">m2t</a>
             </li>
             <li>
@@ -73,7 +73,7 @@
             <li>
                 <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="modelDocFile.html">modelDocFile</a>
             </li>
             <li>
@@ -201,17 +201,17 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::m2t
+            ucmism2t::templates::target::doc::modelDocFile
         </h1>
 
 
-        <div class="description">The documentation of the module m2t.</div>
+        <div class="description">All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/m2t.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/doc/modelDocFile.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
@@ -223,12 +223,57 @@
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#generateModel"><code>generateModel(aModel)</code></a>
+                    <td><a href="#processModelDoc"><code>processModelDoc(aModel)</code></a>
                         
                         
                         
                     </td>
-                    <td>The documentation of the template generateElement.</td>
+                    <td>Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#modelInformationJs"><code>modelInformationJs(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#modelUrlJsFile"><code>modelUrlJsFile(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>Writes the model URL to a Javascript file which is used by the generated documentation as logo link.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#addLinksInSpecificationOverview"><code>addLinksInSpecificationOverview(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#createRedirectHtml"><code>createRedirectHtml(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#XcreateRedirectHtml"><code>XcreateRedirectHtml(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
             </tbody>
         </table>
@@ -237,26 +282,137 @@
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="generateModel">
+        <div class="element-detail" id="processModelDoc">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                generateModel
+                processModelDoc
             </h3>
 
             <div class="signature">
-                <code>[template public generateModel(aModel : uml::Model)]</code>
+                <code>[template public processModelDoc(aModel : uml::Model)]</code>
             </div>
 
 
-            <div class="description">The documentation of the template generateElement.</div>
+            <div class="description">Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>The Model</dd>
+                <dd>aModel a model</dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="modelInformationJs">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                modelInformationJs
+            </h3>
+
+            <div class="signature">
+                <code>[template public modelInformationJs(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="modelUrlJsFile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                modelUrlJsFile
+            </h3>
+
+            <div class="signature">
+                <code>[template public modelUrlJsFile(aModel : uml::Model)]</code>
+            </div>
+
+
+            <div class="description">Writes the model URL to a Javascript file which is used by the generated documentation as logo link.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="addLinksInSpecificationOverview">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                addLinksInSpecificationOverview
+            </h3>
+
+            <div class="signature">
+                <code>[template public addLinksInSpecificationOverview(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="createRedirectHtml">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                createRedirectHtml
+            </h3>
+
+            <div class="signature">
+                <code>[template public createRedirectHtml(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="XcreateRedirectHtml">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                XcreateRedirectHtml
+            </h3>
+
+            <div class="signature">
+                <code>[template public XcreateRedirectHtml(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
         </div>

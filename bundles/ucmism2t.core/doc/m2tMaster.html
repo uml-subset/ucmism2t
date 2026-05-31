@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::m2t — Acceleo Documentation</title>
+    <title>ucmism2t::templates::m2tMaster — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,10 +22,10 @@
             <li>
                 <a href="h2.html">h2</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="m2t.html">m2t</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="m2tMaster.html">m2tMaster</a>
             </li>
             <li>
@@ -201,17 +201,17 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::m2t
+            ucmism2t::templates::m2tMaster
         </h1>
 
 
-        <div class="description">The documentation of the module m2t.</div>
+        <div class="description">Master for generating target languages on the basis of a UML class model  The model should comply to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/m2t.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/m2tMaster.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
@@ -223,12 +223,30 @@
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#generateModel"><code>generateModel(aModel)</code></a>
+                    <td><a href="#processModel"><code>processModel(aModel)</code></a>
+                        <span class="badge main">@main</span>
+                        
+                        
+                    </td>
+                    <td>Process a UML class model Options can be set in a property file. Current options are: ootest, doc. ootest - template for the generation of object-oriented languages It generates a file hierarchy corresponding to the package/class hierarchy in the model. This results in a file per package, per class, and per data type with detailed information.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#writeModelProperties"><code>writeModelProperties(aModel)</code></a>
                         
                         
                         
                     </td>
-                    <td>The documentation of the template generateElement.</td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#writeModelPropertiesPy"><code>writeModelPropertiesPy(aModel)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
             </tbody>
         </table>
@@ -237,26 +255,70 @@
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="generateModel">
+        <div class="element-detail" id="processModel">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
+                <span class="badge main">@main</span>
                 
-                
-                generateModel
+                processModel
             </h3>
 
             <div class="signature">
-                <code>[template public generateModel(aModel : uml::Model)]</code>
+                <code>[template public processModel(aModel : uml::Model)]</code>
             </div>
 
 
-            <div class="description">The documentation of the template generateElement.</div>
+            <div class="description">Process a UML class model Options can be set in a property file. Current options are: ootest, doc. ootest - template for the generation of object-oriented languages It generates a file hierarchy corresponding to the package/class hierarchy in the model. This results in a file per package, per class, and per data type with detailed information.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
                 <dd>The Model</dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="writeModelProperties">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                writeModelProperties
+            </h3>
+
+            <div class="signature">
+                <code>[template public writeModelProperties(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="writeModelPropertiesPy">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                writeModelPropertiesPy
+            </h3>
+
+            <div class="signature">
+                <code>[template public writeModelPropertiesPy(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
         </div>

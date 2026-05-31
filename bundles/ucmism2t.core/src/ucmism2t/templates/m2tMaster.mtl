@@ -1,0 +1,100 @@
+[comment encoding = UTF-8 /]
+[**
+ * Master for generating target languages on the basis of a UML class model
+ * 
+ * The model should comply to UCMIS.
+ * See: https://bitbucket.org/ddi-alliance/ucmis/ 
+ * 
+ */]
+[module m2tMaster('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::modelQuery/]
+[import ucmism2t::templates::target::doc::modelDocFile/]
+[import ucmism2t::templates::target::jsonld::modelJsonldFile/]
+[import ucmism2t::templates::target::jsonschema::modelJschFile/]
+[import ucmism2t::templates::target::onto::processModelOnto/]
+[import ucmism2t::templates::target::shacl::modelShaclFile/]
+[import ucmism2t::templates::target::shex::modelShexFile/]
+[import ucmism2t::templates::target::xsd::modelXsdFile/]
+[import ucmism2t::templates::test::testFile/]
+[import ucmism2t::templates::mapping::representation/]
+
+[**
+Process a UML class model
+Options can be set in a property file.
+Current options are: ootest, doc.
+ootest - template for the generation of object-oriented languages
+It generates a file hierarchy corresponding to the package/class hierarchy
+in the model. This results in a file per package, per class, and per
+data type with detailed information.
+@param The Model
+@main
+/]
+[template public processModel(aModel : uml::Model)]
+  [aModel.writeModelProperties()/]
+  [aModel.writeModelPropertiesPy()/]
+  MODEL :  [aModel.name/]
+  [if (aModel.name = 'Mapping')]
+    	[aModel.encodingMapping()/]
+    	[aModel.processModelTest()/]
+  [else]
+    [if ('doc'.isPropertyTrue())]
+      		[aModel.processModelDoc()/]
+    [/if]
+    [if ('jsonld'.isPropertyTrue())]
+      		[aModel.generateJsonld()/]
+    [/if]
+    [if ('jsonschema'.isPropertyTrue())]
+      		[aModel.generateJsonSchema()/]
+    [/if]
+    [if ('onto'.isPropertyTrue())]
+      		[aModel.packageOntoFile()/]
+    [/if]
+    [if ('shacl'.isPropertyTrue())]
+      		[aModel.packageShaclFile()/]
+    [/if]
+    [if ('shex'.isPropertyTrue())]
+      		[aModel.processModelShex()/]
+    [/if]
+    [if ('xsd'.isPropertyTrue())]
+      		[aModel.processModelXsd()/]
+    [/if]
+    [if ('test'.isPropertyTrue())]
+      		[aModel.processModelTest()/]
+    [/if]
+  [/if]
+      		[aModel.processModelTest()/]
+[/template]
+
+[template public writeModelProperties(aModel : uml::Model)]
+  [file ('_currentModel.properties', overwrite, 'UTF-8')]
+    # Temporary properties file for Ant tasks with information extracted from the model and
+    # the model properties file. 
+    COPYRIGHT = ['COPYRIGHT'.getPropertyValue()/]
+    LOGO_PATH = ['LOGO_PATH'.getPropertyValue()/]
+    MODEL_ACRONYM = [aModel.e_modelAcronym()/]
+    MODEL_ACRONYM_LOWERCASE = [aModel.e_modelAcronym().toLower()/]
+    MODEL_MAJORVERSION = [aModel.e_modelMajorVersion()/]
+    MODEL_MINORVERSION = [aModel.e_modelMinorVersion()/]
+    MODEL_SHORTNAME = [aModel.e_modelShortName()/]
+    MODEL_SHORTNAME_LOWERCASE = [aModel.e_modelShortName().toLower()/]
+    MODEL_TITLE = [aModel.e_modelTitle()/]
+    MODEL_TOPPACKAGENAME = [aModel.name/]
+    MAIN_PACKAGE_XMI_ID = [aModel.e_mainPackage().qualifiedName.replaceAll('::', '-')/]
+    MAIN_PACKAGE_NAME = [aModel.e_mainPackage().name/]
+    SPHINX_CONF_DIR = ['SPHINX_CONF_DIR'.getPropertyValue()/]
+  [/file]
+[/template]
+
+[template public writeModelPropertiesPy(aModel : uml::Model)]
+  [file ('_currentModelProperties.py', overwrite, 'UTF-8')]
+    # Temporary properties file for Sphinx configuration
+    model_acronym = '[aModel.e_modelAcronym()/]'
+    model_uri = '[aModel.e_modelUri()/]'
+    model_major_version = '[aModel.e_modelMajorVersion()/]'
+    model_minor_version = '[aModel.e_modelMinorVersion()/]'
+    model_title = '[aModel.e_modelTitle()/]'
+    repository_url = '['REPOSITORY_URL'.getPropertyValue()/]'
+  [/file]
+[/template]

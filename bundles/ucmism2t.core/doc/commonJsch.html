@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::m2t — Acceleo Documentation</title>
+    <title>ucmism2t::templates::target::jsonschema::commonJsch — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <li>
                 <a href="h2.html">h2</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="m2t.html">m2t</a>
             </li>
             <li>
@@ -106,7 +106,7 @@
             <li>
                 <a href="classJsch.html">classJsch</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="commonJsch.html">commonJsch</a>
             </li>
             <li>
@@ -201,17 +201,17 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::m2t
+            ucmism2t::templates::target::jsonschema::commonJsch
         </h1>
 
 
-        <div class="description">The documentation of the module m2t.</div>
+        <div class="description">Module for generating XML Schema.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/m2t.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/jsonschema/commonJsch.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
@@ -223,12 +223,39 @@
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#generateModel"><code>generateModel(aModel)</code></a>
+                    <td><a href="#arrayClassSchemas"><code>arrayClassSchemas(aModel)</code></a>
                         
                         
                         
                     </td>
-                    <td>The documentation of the template generateElement.</td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#requiredAttributes"><code>requiredAttributes(aClassifier)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>List-items of the names of the required attributes</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#genAttributes"><code>genAttributes(aClassifier)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility protected">protected</span></td>
+                    <td><a href="#ref"><code>ref(anAttribute)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
             </tbody>
         </table>
@@ -237,26 +264,92 @@
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="generateModel">
+        <div class="element-detail" id="arrayClassSchemas">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                generateModel
+                arrayClassSchemas
             </h3>
 
             <div class="signature">
-                <code>[template public generateModel(aModel : uml::Model)]</code>
+                <code>[template public arrayClassSchemas(aModel : uml::Model)]</code>
             </div>
 
 
-            <div class="description">The documentation of the template generateElement.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>The Model</dd>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="requiredAttributes">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                requiredAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[template public requiredAttributes(aClassifier : uml::Classifier)]</code>
+            </div>
+
+
+            <div class="description">List-items of the names of the required attributes</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="genAttributes">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                genAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[template public genAttributes(aClassifier : uml::Classifier)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="ref">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                ref
+            </h3>
+
+            <div class="signature">
+                <code>[template protected ref(anAttribute : uml::Property)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAttribute</code> <span class="param-type">: uml::Property</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
         </div>

@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::target::doc::puUtilityDoc — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="h2.html">h2</a>
+            </li>
+            <li>
+                <a href="m2t.html">m2t</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="propertiesQuery.html">propertiesQuery</a>
+            </li>
+            <li>
+                <a href="ucmisUtility.html">ucmisUtility</a>
+            </li>
+            <li>
+                <a href="h.html">h</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li class="active">
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="test4.html">test4</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+            <li>
+                <a href="testFile2.html">testFile2</a>
+            </li>
+            <li>
+                <a href="testFile3.html">testFile3</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::target::doc::puUtilityDoc
+        </h1>
+
+
+        <div class="description">The documentation of the module textBlocks.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/doc/puUtilityDoc.mtl</code></td></tr>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template summary table -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Visibility</th><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_options"><code>pu_options(anOcLAny)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#X2pu_options"><code>X2pu_options(anOcLAny)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_options"><code>Xpu_options(indent)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_link"><code>Xpu_link(url)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_linkWithLabel"><code>pu_linkWithLabel(url, label)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_link"><code>pu_link(url, tooltip)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_attributeLinkNew"><code>pu_attributeLinkNew(url, tooltip)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_link"><code>Xpu_link(url, label, tooltip)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#TESTpu_internalLink"><code>TESTpu_internalLink(referrer, anNamedElement)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_internalLink"><code>pu_internalLink(anNamedElement)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_internalLink"><code>pu_internalLink(anAssociation)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_internalLinkType"><code>pu_internalLinkType(aType)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_attributeLink"><code>pu_attributeLink(url, tooltip)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_elementWithLink"><code>pu_elementWithLink(aClassifier, color, prefix)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_elementWithLink"><code>Xpu_elementWithLink(aClass, color, prefix)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_typeWithLink"><code>pu_typeWithLink(aType)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_elementWithLink"><code>Xpu_elementWithLink(aPackage, color)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xpu_elementWithLink"><code>Xpu_elementWithLink(aClassifier, color)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#e_conditionalQualifiedClassName"><code>e_conditionalQualifiedClassName(aClassifier, aPackage)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td>Returns a string with the puml class definition.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#Xe_conditionalQualifiedClassNamePuml"><code>Xe_conditionalQualifiedClassNamePuml(aClass, aPackage)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_classifierNameWithLabel"><code>pu_classifierNameWithLabel(aClassifier, color, prefix)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_packageNameWithLabel"><code>pu_packageNameWithLabel(aPackage)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_aggregationKind"><code>pu_aggregationKind(anAggregationKind)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_generationMessageDoc"><code>pu_generationMessageDoc(aNamedElement)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#pu_dataTypeNotation"><code>pu_dataTypeNotation(aDataType)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#e_removeWhitespace"><code>e_removeWhitespace(txt)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+
+        <!-- ══════════════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="pu_options">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_options
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_options(anOcLAny : ecore::EObject)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOcLAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="X2pu_options">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                X2pu_options
+            </h3>
+
+            <div class="signature">
+                <code>[template public X2pu_options(anOcLAny : ecore::EObject)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anOcLAny</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_options">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_options
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_options(indent : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>indent</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_link">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_link
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_link(url : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_linkWithLabel">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_linkWithLabel
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_linkWithLabel(url : String, label : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>label</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_link">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_link
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_link(url : String, tooltip : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>tooltip</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_attributeLinkNew">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_attributeLinkNew
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_attributeLinkNew(url : String, tooltip : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>tooltip</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_link">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_link
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_link(url : String, label : String, tooltip : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>label</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>tooltip</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="TESTpu_internalLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                TESTpu_internalLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public TESTpu_internalLink(referrer : uml::NamedElement, anNamedElement : uml::NamedElement)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>referrer</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>anNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_internalLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_internalLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_internalLink(anNamedElement : uml::NamedElement)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_internalLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_internalLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_internalLink(anAssociation : uml::Association)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_internalLinkType">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_internalLinkType
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_internalLinkType(aType : uml::Type)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_attributeLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_attributeLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_attributeLink(url : String, tooltip : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>url</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>tooltip</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_elementWithLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_elementWithLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>color</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>prefix</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_elementWithLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_elementWithLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_elementWithLink(aClass : uml::Class, color : String, prefix : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>color</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>prefix</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_typeWithLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_typeWithLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_typeWithLink(aType : uml::Type)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_elementWithLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_elementWithLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_elementWithLink(aPackage : uml::Package, color : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>color</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xpu_elementWithLink">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xpu_elementWithLink
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xpu_elementWithLink(aClassifier : uml::Classifier, color : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>color</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="e_conditionalQualifiedClassName">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                e_conditionalQualifiedClassName
+            </h3>
+
+            <div class="signature">
+                <code>[template public e_conditionalQualifiedClassName(aClassifier : uml::Classifier, aPackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Returns a string with the puml class definition.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClass A class.</dd>
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>aPackage Current package.</dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="Xe_conditionalQualifiedClassNamePuml">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                Xe_conditionalQualifiedClassNamePuml
+            </h3>
+
+            <div class="signature">
+                <code>[template public Xe_conditionalQualifiedClassNamePuml(aClass : uml::Class, aPackage : uml::Package)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_classifierNameWithLabel">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_classifierNameWithLabel
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_classifierNameWithLabel(aClassifier : uml::Classifier, color : String, prefix : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>color</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>prefix</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_packageNameWithLabel">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_packageNameWithLabel
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_packageNameWithLabel(aPackage : uml::Package)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_aggregationKind">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_aggregationKind
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_aggregationKind(anAggregationKind : uml::AggregationKind)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAggregationKind</code> <span class="param-type">: uml::AggregationKind</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_generationMessageDoc">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_generationMessageDoc
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_generationMessageDoc(aNamedElement : uml::NamedElement)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="pu_dataTypeNotation">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                pu_dataTypeNotation
+            </h3>
+
+            <div class="signature">
+                <code>[template public pu_dataTypeNotation(aDataType : uml::DataType)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="e_removeWhitespace">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                e_removeWhitespace
+            </h3>
+
+            <div class="signature">
+                <code>[template public e_removeWhitespace(txt : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>txt</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+
+        <!-- ═════════════════════════════════════════════ Query detail -->
+
+    </main>
+</div>
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+[**
+ * The documentation of the module ucmisUtility.
+ */]
+[module ucmisUtility('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[comment encoding = UTF-8 /]
+[**
+ * Returns a short association name.
+ * This short name is not unique in the scope of the model. It is extracted from the long unique association name.
+ * Example of a long association name: InstanceVariable_measures_Population.
+ * @param anAssociation An association object.
+*/]
+[query public ucmis_shortAssociationName(anAssociation : uml::Association) : String = if anAssociation.name.contains('_') then let sAfterUnderscore : String = anAssociation.name.substring(anAssociation.name.index('_') + 1) in sAfterUnderscore.first(sAfterUnderscore.index('_') - 1) else anAssociation.name endif/]
+
+[query public Xucmis_shortAssociationName(anAssociation : uml::Association) : String = let sAfterUnderscore : String = anAssociation.name.substring(anAssociation.name.index('_') + 1) in sAfterUnderscore.first(sAfterUnderscore.index('_') - 1)/]

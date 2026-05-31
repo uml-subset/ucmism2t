@@ -1,0 +1,196 @@
+[**
+ * All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.
+ */]
+[module representation('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::templates::query::modelQuery/]
+[import ucmism2t::templates::target::xsd::classXsd/]
+[import ucmism2t::templates::target::xsd::dataTypeXsd/]
+[import ucmism2t::templates::target::xsd::enumerationXsd/]
+[import ucmism2t::templates::target::jsonschema::classJsch/]
+[import ucmism2t::templates::target::jsonschema::dataTypeJsch/]
+[import ucmism2t::templates::target::jsonschema::enumerationJsch/]
+[import ucmism2t::templates::target::jsonld::classJsonld/]
+[import ucmism2t::templates::target::jsonld::dataTypeJsonld/]
+[import ucmism2t::templates::target::onto::classOnto/]
+[import ucmism2t::templates::target::onto::dataTypeOnto/]
+[import ucmism2t::templates::target::onto::enumerationOnto/]
+[import ucmism2t::templates::target::shacl::classShacl/]
+[import ucmism2t::templates::target::shacl::dataTypeShacl/]
+[import ucmism2t::templates::target::shex::classShex/]
+[import ucmism2t::templates::target::shex::dataTypeShex/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+[template public encodingMapping(aModel : uml::Model)]
+  [file (aModel.e_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
+    Mapping UML to Encodings
+    ************************
+    
+    [aModel.eAllContents(uml::Class)->select(temp1 | temp1.name = 'Class')->collect(temp2 | temp2.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp3 | temp3.name = 'ClassWithPrimitiveAttribute')->collect(temp4 | temp4.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp5 | temp5.name = 'ClassWithEnumerationAttribute')->collect(temp6 | temp6.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp7 | temp7.name = 'ClassWithDataTypeAttribute')->collect(temp8 | temp8.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp9 | temp9.name = 'AssociatedClass')->collect(temp10 | temp10.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp11 | temp11.name = 'AggregationWhole')->collect(temp12 | temp12.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp13 | temp13.name = 'CompositeWhole')->collect(temp14 | temp14.processClassifier())/]
+    [aModel.eAllContents(uml::Class)->select(temp15 | temp15.name = 'SubClass')->collect(temp16 | temp16.processClassifier())/]
+    [aModel.eAllContents(uml::DataType)->select(temp17 | temp17.name = 'StructuredDataType')->collect(temp18 | temp18.processClassifier())/]
+    [aModel.eAllContents(uml::DataType)->select(temp19 | temp19.name = 'Enumeration')->collect(temp20 | temp20.processClassifier())/]
+  [/file]
+[/template]
+
+[template public processClassifier(aClassifier : uml::Classifier)]
+  [file (aClassifier.e_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classXsd()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationXsd()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeXsd()/]
+    [/if]
+  [/file]
+  [file (aClassifier.e_filePath('doc').concat('.schema.json'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classJsch()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationJsch()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeJsch()/]
+    [/if]
+  [/file]
+  [file (aClassifier.e_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classOnto()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationOnto()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeOnto()/]
+    [/if]
+  [/file]
+  [file (aClassifier.e_filePath('doc').concat('.jsonld'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classJsonldModular()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeJsonldModular()/]
+    [/if]
+  [/file]
+  [file (aClassifier.e_filePath('doc').concat('.shacl.ttl'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classShacl()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeShacl()/]
+    [/if]
+  [/file]
+  [file (aClassifier.e_filePath('doc').concat('.shexc'), overwrite, 'UTF-8')]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classShex()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeShex()/]
+    [/if]
+  [/file]
+  
+  [aClassifier.name.rst_header('=')/]
+  
+  [let shortDescription : String = aClassifier.e_fixClassDocumentation().substring(aClassifier.e_fixClassDocumentation().index('Description:') + 15)]
+    .. dropdown:: [aClassifier.name/] - [shortDescription.substring(1, shortDescription.index('.'))/]
+       :open:
+  [/let]
+  
+     [aClassifier.e_fixClassDocumentation()/]
+  
+     .. grid:: 2
+        :gutter: 1
+        :margin: 1 1 1 1
+        :padding: 0 0 0 0
+  
+        .. grid-item-card:: Encodings Card 1
+  
+           [aClassifier.encodingTabSet('1', ':selected:', '')/]
+  
+        .. grid-item-card:: Encodings Card 2
+  
+           [aClassifier.encodingTabSet('2', '', ':selected:')/]
+  
+[/template]
+
+[template public encodingTabSet(aClassifier : uml::Classifier, number : String, xmiSelected : String, xsdSelected : String)]
+  .. tab-set::
+  
+     .. tab-item:: Canonical XMI
+        :sync: xmi[number/]
+        :class-label: no-tooltip
+        [xmiSelected/]
+  
+        .. literalinclude:: encoding/[aClassifier.name/].xmi
+           :lines: 2-
+           :language: xml
+           :linenos:
+           :emphasize-lines: 4
+  
+     .. tab-item:: XML Schema
+        :sync: xsd[number/]
+        :class-label: no-tooltip
+        [xsdSelected/]
+  
+        .. literalinclude:: encoding/[aClassifier.name/]_xsd.txt 
+           :language: xml
+           :linenos:
+           :emphasize-lines: 1
+           :dedent: 2
+  
+     .. tab-item:: JSON Schema
+        :sync: jsch[number/]
+        :class-label: no-tooltip
+  
+        .. literalinclude:: encoding/[aClassifier.name/].schema.json 
+           :language: json
+           :linenos:
+           :emphasize-lines: 1
+  
+     .. tab-item:: Ontology (Turtle)
+        :sync: onto[number/]
+        :class-label: no-tooltip
+         
+        .. literalinclude:: encoding/[aClassifier.name/].onto.ttl 
+           :language: turtle
+           :linenos:
+           :emphasize-lines: 3
+  
+     .. tab-item:: JSON-LD
+        :sync: jsonld[number/]
+        :class-label: no-tooltip
+  
+  [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
+          *not provided for*
+  [else]
+          .. literalinclude:: encoding/[aClassifier.name/].jsonld 
+             :language: JSON-LD
+             :linenos:
+             :emphasize-lines: 2
+  [/if]
+  
+     .. tab-item:: SHACL
+        :sync: shacl[number/]
+        :class-label: no-tooltip
+  
+        .. literalinclude:: encoding/[aClassifier.name/].shacl.ttl 
+           :language: turtle
+           :linenos:
+           :emphasize-lines: 4
+  
+     .. tab-item:: ShEx
+        :sync: shex[number/]
+        :class-label: no-tooltip
+  
+  [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
+          *not provided for*
+  [else]
+          .. literalinclude:: encoding/[aClassifier.name/].shexc 
+             :language: shexc
+             :linenos:
+             :emphasize-lines: 3
+  [/if]
+[/template]

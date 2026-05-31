@@ -1,0 +1,240 @@
+[module testFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::services::DateTimeService /]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::modelQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[comment encoding = UTF-8 /]
+[template public processModelTest(aModel : uml::Model)]
+  [file ('test.txt', overwrite, 'UTF-8')]
+    
+    time: [aModel.getCurrentDateTime()/]
+        
+    e_modelAcronym '[aModel.e_modelAcronym()/]'
+    e_modelShortName '[aModel.e_modelShortName()/]'
+    
+    'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
+    'xx'.getPropertyValue() ['x'.getPropertyValue()/]
+
+    #######################
+ 	 [let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
+	    #######################
+	    class name: [c.qualifiedName/]
+			[for (c3 : uml::Class | c.u_abstractionClients())]
+					u_abstractionClients: [c3.name/] 
+			[/for]
+			[for (c3 : uml::Class | c.u_abstractionSuppliers())]
+					u_abstractionClients: [c3.name/] 
+			[/for]
+			[for (c3 : uml::Class | c.u_contextClasses())]
+					u_contextClasses: [c3.name/] 
+			[/for]
+	    #######################
+				 X: [c.u_associatedClasses()->size()/]
+			[for (a : uml::Association | c.u_incomingAssociations())]
+				 u_incomingAssociations name: [a.name/]
+			[/for]
+			[for (a : uml::Association | c.u_outgoingAssociations())]
+				 u_outgoingAssociations name: [a.name/]
+			[/for]
+			[for (a : uml::Association | c.u_associations())]
+				 u_associations name: [a.name/]
+			[/for]
+		[/let]
+
+    #######################
+		[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'AgentListing')->first()]
+		  c.qualifiedName: [c.qualifiedName/]
+		  [for (c2 : uml::Class | c.u_incomingAssociatedClasses())]
+						u_incomingAssociatedClasses: [c2.name/] 
+		  [/for]
+		  [for (c3 : uml::Class | c.u_outgoingAssociatedClasses())]
+						u_outgoingAssociatedClasses: [c3.name/] 
+		  [/for]
+		  [c.u_associatedClasses()/]
+		  [for (c4 : uml::Class | c.u_associatedClasses())]
+						u_associatedClasses: [c4.name/] 
+		  [/for]
+		  eInverse Association size: [c.eInverse(uml::Association)->size()/] 0
+		  eInverse Property size: [c.eInverse(uml::Property)->size()/] 13
+		  eInverse association ownedEnd size: [c.eInverse(uml::Property)->select(p | p.association <> null).association.ownedEnd->size()/]
+		  eInverse association memberEnd: [c.eInverse(uml::Property)->select(p | p.association <> null).association.memberEnd->size()/]
+		  eInverse association ownedEnd: [c.eInverse(uml::Property)->select(p | p.association <> null).association/]
+		  [for (a : uml::Association | c.eInverse(uml::Property)->select(p | p.association <> null).association)]
+						eInverse Property association (to) name: [a.name/], [a.ownedEnd.type.name/] 
+						eInverse Property association (to) name: [a.name/], [a.memberEnd.type.name/] 
+						eInverse Property association (to) name: [a.name/], [a.ownedEnd.type.oclIsTypeOf(uml::Class)/] 
+		  [/for]
+		  [for (c2 : uml::Type | c.eInverse(uml::Property)->select(p | p.association <> null).association.memberEnd.type)]
+						eInverse type (to) name: [c2.name/] 
+						eInverse type (to) name: [c2.oclIsTypeOf(uml::Class)/] 
+						eInverse type (to) name: [c2.oclIsTypeOf(uml::Type)/] 
+		  [/for]
+		  eInverse association getOtherEnd: [c.eInverse(uml::Property)->select(p | p.association <> null).association.ownedEnd->first().getOtherEnd()->size()/]
+		  Property size2: [c.eContents(uml::Property)->size()/]
+		  Property attribute size2: [c.eContents(uml::Property)->select(p | p.association = null)->size()/]
+		  Property association size2: [c.eContents(uml::Property)->select(p | p.association <> null)->size()/]
+		  [for (a : uml::Association | c.eContents(uml::Property)->select(p | p.association <> null).association)]
+						Property association (to) name: [a.name/], [a.ownedEnd->first().getOtherEnd().type.name/] 
+		  [/for]
+				OK
+		  attribute size: [c.eInverse(uml::Property)->select(p | p.association = null)->size()/]
+				association size: [c.eInverse(uml::Property)->select(p | p.association <> null)->size()/]
+				association: [c.eInverse(uml::Property)->select(p | p.association <> null)/]
+		  abstraction client: [c.eInverse(uml::Abstraction).client.name/]
+		  abstraction supplier: [c.eInverse(uml::Abstraction).supplier.name/]
+		[/let]
+
+    #######################
+    [let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
+      c.qualifiedName: [c.qualifiedName/]
+      [let im : Sequence(uml::NamedElement) = c.inheritedMember]
+      		im size: [im->size()/]
+      		[let ps : Sequence(uml::Property) = im->collect(p3 | p3.oclAsType(uml::Property)) ]
+          	ps size: [ps->size()/]
+          		[let ps2 : Sequence(uml::Property) =	ps->select(p4 | p4.association <> null)]
+          				ps2 size: [ps2->size()/]
+              			[let as : Sequence(uml::Association) = ps2->collect(p5 | p5.association)]
+											[as->size()/] ps2 size
+			          					[for (a : uml::Association | as)]
+                    				[a.name/]
+			          					[/for]
+			          					[for (a : uml::Association | c.e_inheritedAssociations())]
+                    				[a.name/]
+			          					[/for]
+										[/let]
+							[/let]
+					[/let]
+			[/let]
+		[/let]
+
+    #######################
+    [let agents : uml::Package =
+    	aModel.eAllContents(uml::Package)->select(p | p.name = 'Conceptual')->first()]
+    		agents [agents/]
+		[let superclasses : Sequence(uml::Class) =
+			agents.u_allTopSuperClasses()]
+    		superclasses->size():[superclasses->size()/]
+		[for (sc : uml::Class | superclasses )]
+			[sc.qualifiedName/]
+		[/for]
+    [/let]
+    [/let]
+
+    u_allAbstractionClients
+    #######################
+		[for (c : uml::NamedElement | aModel.u_allAbstractionSuppliers()->sortedBy(c | c.qualifiedName))]
+			[c.qualifiedName/]
+		[/for]
+
+
+    Agents: [aModel.eAllContents(uml::Package)->select(p | p.name = 'Agents')->first()/]
+    Model: [aModel.eAllContents(uml::Package)->first() /]
+    Ancestors package: [aModel.eAllContents(uml::Package)->select(p | p.name = 'Agents')->first().ancestors()->last()/]
+    Ancestors class: [aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual')->first().ancestors()->last()/]
+    getModel(): [aModel.eAllContents(uml::Package)->select(p | p.name = 'Agents')->first().getModel().name/]
+    eInverse: [aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').eInverse(uml::Class)/]
+		[for (subClass : uml::Class |
+				aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept')
+					.eInverse(uml::Generalization)
+					.specific
+					->select(cl | cl.oclIsTypeOf(uml::Class))
+					->sortedBy(c | c.name)
+			)]
+    name: [subClass.name/]
+[comment]     	Generalization: [subClass.eInverse(uml::Generalization)/]
+    	specific: [subClass.eInverse(uml::Generalization).specific/]
+    	specific name: [subClass.eInverse(uml::Generalization).specific.name/]
+    	specific name: [subClass.eInverse(uml::Generalization).specific->select(cl | cl.oclIsTypeOf(uml::Class)).name/]
+    	specific first name: [subClass.eInverse(uml::Generalization).specific->select(cl | cl.oclIsTypeOf(uml::Class))->first().name/]
+[/comment]
+		[/for]
+		[for (subClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_subClasses()
+			 )]
+			 Concept subclass name: [subClass.name/]
+		[/for]
+		[for (subClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'RepresentedVariable').u_subClasses()
+			 )]
+			 RepresentedVariable subclass name: [subClass.name/]
+		[/for]
+  		[for (subClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_allSubClasses()
+			 )]
+									u2 subclass name: [subClass.name/]
+		[/for]
+  		[for (subClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'RepresentedVariable').u_allSubClasses()
+			 )]
+									RepresentedVariable u2 subclass name: [subClass.name/]
+		[/for]
+  		[for (subClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_allSubClasses()
+			 )]
+									Individual u2 subclass name: [subClass.name/]
+		[/for]
+  		[for (superClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_allSuperClasses()
+			 )]
+									Individual Superclasses: [superClass.name/]
+		[/for]
+  		[for (superClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable').u_allSuperClasses()
+			 )]
+									InstanceVariable Superclasses: [superClass.name/]
+		[/for]
+  		[for (superClass : uml::Class |
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_allSuperClasses()
+			 )]
+									Concept Superclasses: [superClass.name/]
+		[/for]
+				---------- eInverse ----------
+		[for ( p : uml::Property | 
+			aModel.eAllContents(uml::Class)
+				->select(p | p.name = 'AgentListing').eInverse(uml::Property)
+				->select(p | p.association <> null)
+		)]
+		[aModel.name/]
+		[p.association/] association
+		[p.association.name/] association - name
+		[p.associationEnd/] associationEnd -
+		[p.type/] type
+		[p.type.oclIsTypeOf(uml::Class)/] type is class
+		[p.type.name/] type name
+		[p.opposite.type/] opposite type
+		[p.opposite.type.oclIsTypeOf(uml::Class)/] opposite type is class
+		[p.opposite.type.name/] opposite type name
+		[p.getOtherEnd().type/] getOtherEnd().type
+		[p.getOtherEnd().type.oclIsTypeOf(uml::Class)/] getOtherEnd().type is class
+		[p.getOtherEnd().type.name/] getOtherEnd().type name
+		[p.owningAssociation/] owningAssociation
+		[p.owner/] owner
+		[/for]
+				---------- eContents(uml::Property) ----------
+		[for ( p : uml::Property | 
+			aModel.eAllContents(uml::Class)
+				->select(p | p.name = 'AgentListing').eContents(uml::Property)
+				->select(p | p.association <> null)
+		)]
+		[aModel.name/]
+		[p.association/] association
+		[p.association.name/] association - name
+		[p.associationEnd/] associationEnd -
+		[p.type/] type
+		[p.type.oclIsTypeOf(uml::Class)/] type is class
+		[p.type.name/] type name
+		[p.opposite.type/] opposite type
+		[p.opposite.type.oclIsTypeOf(uml::Class)/] opposite type is class
+		[p.opposite.type.name/] opposite type name
+		[p.getOtherEnd().type/] getOtherEnd().type
+		[p.getOtherEnd().type.oclIsTypeOf(uml::Class)/] getOtherEnd().type is class
+		[p.getOtherEnd().type.name/] getOtherEnd().type name
+		[p.owningAssociation/] owningAssociation
+		[p.owner/] owner
+		[/for]
+  [/file]
+[/template]
+
+
