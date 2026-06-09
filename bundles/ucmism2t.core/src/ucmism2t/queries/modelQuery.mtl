@@ -1,0 +1,105 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a UML model as receiver.
+This includes queries for retrieving model metadata
+(acronym, title, version, URI, language), navigating
+the model structure (main package, all classes, all
+data types, all packages), and property file access.
+
+Note: The main package is the top-level package of the
+model as specified by the property MAIN_PACKAGE_NAME.
+All generation targets operate on the main package
+rather than the model root directly.
+
+Note: Model metadata is resolved in order of priority:
+(1) property file value, (2) ModelIdentification data
+type in the model, (3) built-in fallback value.
+This allows property file values to override model
+metadata without modifying the model.
+
+Related modules:
+- packageQuery: queries with a UML package as receiver,
+  since Model is a subtype of Package in UML
+- classQuery: queries with a UML class as receiver
+- dataTypeQuery: queries with a UML data type as receiver
+/]
+[module modelQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::services::PropertiesService /]
+
+[**
+Returns the package identified by the main package name specified by
+the property MAIN_PACKAGE_NAME. Returns the model itself if
+MAIN_PACKAGE_NAME is not specified, is empty, matches the model name,
+or is not found within the model. A uml::Model is a subtype of
+uml::Package in the UML metamodel, so returning aModel as a
+uml::Package is always valid.
+---
+AQL operations used:
+  'MAIN_PACKAGE_NAME'.getPropertyValue() - Returns the value of the
+                                           Acceleo generation property
+                                           named MAIN_PACKAGE_NAME as
+                                           a String. Returns empty
+                                           string if the property is
+                                           not set.
+  aModel.eAllContents(uml::Package)      - Returns all uml::Package
+                                           instances transitively
+                                           contained in aModel,
+                                           covering nested
+                                           sub-packages at any depth.
+  ->select(p | p.qualifiedName           - Filters to the package
+    = propertyValue)                       whose qualified name
+                                           matches the property value.
+                                           Uses qualifiedName rather
+                                           than name to uniquely
+                                           identify the package in
+                                           models with non-unique
+                                           simple names.
+  ->isEmpty()                            - Returns true if no package
+                                           matched the property value.
+  ->first()                              - Returns the first matching
+                                           package. If qualifiedNames
+                                           are unique, exactly one
+                                           match is expected.
+
+@param aModel - The root UML model used as the search scope.
+/]
+[query public u_mainPackage(aModel : uml::Model) : uml::Package =
+  let propertyValue : String =
+    'MAIN_PACKAGE_NAME'.getPropertyValue()
+  let matchedPackages : OrderedSet(uml::Package) =
+    aModel.eAllContents(uml::Package)
+      ->select(p | p.qualifiedName = propertyValue)
+  in
+    if propertyValue = ''
+      or propertyValue = aModel.name
+      or matchedPackages->isEmpty()
+    then
+      aModel
+    else
+      matchedPackages->first()
+    endif
+/]
+
+[**
+Returns an ordered set of all abstraction supplier classes and data
+types in the model, sorted by name. Collects all abstraction
+dependencies in the model, gathers their suppliers, and retains only
+those that are exactly classes or data types.
+
+@param aModel - A UML model whose abstraction supplier classes and
+                data types are to be retrieved.
+/]
+[query public u_abstractionSupplierClassifiers(
+  aModel : uml::Model) : OrderedSet(uml::Classifier) =
+  aModel.eAllContents(uml::Abstraction)
+    ->collect(a | a.supplier)
+    ->select(e | e.oclIsTypeOf(uml::Class) or e.oclIsKindOf(uml::DataType))
+    ->asOrderedSet()
+/]
+

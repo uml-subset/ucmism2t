@@ -1,8 +1,13 @@
-[module testFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+[module testFile('http://www.eclipse.org/emf/2002/Ecore', 'http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
 
+[import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::DateTimeService /]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::modelQuery/]
+[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
 [comment encoding = UTF-8 /]
@@ -18,13 +23,112 @@
     'xx'.getPropertyValue() ['x'.getPropertyValue()/]
 
     #######################
+		[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
+	    e_simpleQualifiedClassName: [c.e_simpleQualifiedClassName()/]
+	    u_packageQualifiedName: [c.u_packageQualifiedName()/]
+	    eContainer: [c.eContainer()/]
+	    u_parent: [c.u_parent().oclAsType(uml::Class).name/]
+	    u_nearestPackage name: [c.u_nearestPackage().name/]
+	    u_model name: [c.u_model().name/]
+			[for (a : uml::Association | c.u_associations())]
+    		assoc name: [a.name/]
+    		assoc u_ownedEndClass [a.u_ownedEndClass().name/]
+    		assoc u_otherEndClass [a.u_otherEndClass().name/]
+			[/for]
+		[/let]
+    #######################
+    [let d : uml::DataType =
+    	aModel.eAllContents(uml::DataType)->select(p | p.name = 'Identifier')->first()]
+  		[for (ud : uml::Class | d.u_usingClasses()->sortedBy(ud2 | ud2.qualifiedName) )]
+      	u_usingDataTypes: [ud.qualifiedName/]
+			[/for]
+    [/let]
+	[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept')->first()]
+				test 6 [c.test6()/]
+				class name: [c.qualifiedName/]
+				SIZE: [c.u_inheritedAssociations()->size()/]
+  		[for (p2 : uml::Class | c.u_subClasses())]
+		       T subclass name: [p2.name/]
+		[/for]
+	
+[comment] 		aClass.inheritedMember->filter(uml::Property)
+			->select(p1 | p1.association->notEmpty())
+			->collect(p | p.association) 
+			->sortedBy(p2 | p2.name)
+
+[/comment]
+  		[for (p2 : uml::Association | c.u_inheritedAssociations())]
+[comment]  		[for (p2 : uml::NamedElement | c.inheritedMember 	)][/comment]
+		       assoc name: [p2.name/]
+		[/for]
+
+
+			[for (att : uml::Property | c.eAllContents(uml::Property)->select(p1 | p1.association = null)->sortedBy(p2 | p2.name))]
+					att name: [att.name/]
+						[att.type.eClass().name/]
+						[att.type.name/]
+						[att.type.getURIFragment()/]
+						[att.type.toString()/]
+						"[att.type.u_typeName()/]"
+			[/for]
+	
+		[/let]
+    #######################
+		[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual')->first()]
+    	e_isSuperClass [c.u_isSuperClass()/]
+		[/let]
+    #######################
+		[let c1 : uml::Class = aModel.eAllContents(uml::Class)->select(c2 | c2.name = 'InstanceVariable')->first()]
+	    [for (c2 : uml::Class | c1.u_outgoingAssociatedClasses()->sortedBy(c3 | c3.name))]
+       c name: [c2.name/]
+	    [/for]
+	    [for (a1 : uml::Association | c1.u_associations())]
+       a name: [a1.name/]
+	    [/for]
+		[/let]
+    #######################
+		[let p : uml::Package =
+			aModel.eAllContents(uml::Package)->select(p | p.name = 'Conceptual')->first()]
+	
+				class name: [p.qualifiedName/]
+	
+			[for (c : uml::Class | aModel.u_rootSuperClasses()->sortedBy(c2 | c2.name))]
+					c name: [c.name/]
+			[/for]
+	
+		[/let]
+
+				#######################
+		[let d : uml::DataType =
+			aModel.eAllContents(uml::DataType)->select(p | p.name = 'ObjectName')->first()]
+	
+				class name: [d.qualifiedName/]
+	
+			[for (p : uml::Property | d.u_dataTypeUseProperties()->sortedBy(p | p.qualifiedName))]
+					p name: [p.qualifiedName/]
+			[/for]
+	
+		[/let]
+
  	 [let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
 	    #######################
 	    class name: [c.qualifiedName/]
+	    eInverse analyze:
+			[for (obj : ecore::EObject | c.eInverse()->sortedBy(o | o.eClass().name)->sortedBy(s | s.toString()))]
+					 eClass().name: [obj.eClass().name/]
+[comment] 					 [if (obj.eClass().name = 'Property' and obj.association <> null)]
+							 type name: [obj.ownedEnd.type.name/]
+							 other type: [obj.ownedEnd.getOtherEnd().type.name/]
+        		[/if]
+					 [if (obj.eClass().name = 'Property' and obj.association = null)]
+							 name: [obj.name/]
+        		[/if]
+[/comment]					 toString: [obj.toString()/]
+			[/for]
 			[for (c3 : uml::Class | c.u_abstractionClients())]
 					u_abstractionClients: [c3.name/] 
 			[/for]
-			[for (c3 : uml::Class | c.u_abstractionSuppliers())]
+			[for (c3 : uml::Class | c.u_abstractionSupplierClasses())]
 					u_abstractionClients: [c3.name/] 
 			[/for]
 			[for (c3 : uml::Class | c.u_contextClasses())]
@@ -100,7 +204,7 @@
 			          					[for (a : uml::Association | as)]
                     				[a.name/]
 			          					[/for]
-			          					[for (a : uml::Association | c.e_inheritedAssociations())]
+			          					[for (a : uml::Association | c.u_inheritedAssociations())]
                     				[a.name/]
 			          					[/for]
 										[/let]
@@ -114,7 +218,7 @@
     	aModel.eAllContents(uml::Package)->select(p | p.name = 'Conceptual')->first()]
     		agents [agents/]
 		[let superclasses : Sequence(uml::Class) =
-			agents.u_allTopSuperClasses()]
+			agents.u_rootSuperClasses()]
     		superclasses->size():[superclasses->size()/]
 		[for (sc : uml::Class | superclasses )]
 			[sc.qualifiedName/]
@@ -122,11 +226,6 @@
     [/let]
     [/let]
 
-    u_allAbstractionClients
-    #######################
-		[for (c : uml::NamedElement | aModel.u_allAbstractionSuppliers()->sortedBy(c | c.qualifiedName))]
-			[c.qualifiedName/]
-		[/for]
 
 
     Agents: [aModel.eAllContents(uml::Package)->select(p | p.name = 'Agents')->first()/]
@@ -176,17 +275,17 @@
 									Individual u2 subclass name: [subClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_allSuperClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_superClasses()
 			 )]
 									Individual Superclasses: [superClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable').u_allSuperClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable').u_superClasses()
 			 )]
 									InstanceVariable Superclasses: [superClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_allSuperClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_superClasses()
 			 )]
 									Concept Superclasses: [superClass.name/]
 		[/for]
@@ -237,4 +336,17 @@
   [/file]
 [/template]
 
+
+
+[template public test5(p : uml::Class)]
+  this is a class: [p.name/]
+[/template]
+
+[template public test5(p : uml::DataType)]
+  this is a data type: [p.name/]
+[/template]
+
+[template public test6(p : uml::Class)]
+  eClass: [p.eClass().name/]
+[/template]
 

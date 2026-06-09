@@ -1,0 +1,101 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains all model queries.
+/]
+[module classifierQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::dataTypeQuery/]
+
+[**
+Returns an ordered set of direct subclasses or sub data types
+of a classifier, sorted by classifier name.
+Note: Intended for use with classes and data types.
+Not tested with other classifier types.
+
+@param aClassifier A UML classifier
+/]
+[query public Xu_subClassesOrSubDataTypes(
+		aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
+	if aClassifier.oclIsTypeOf(uml::Class)
+	then
+		aClassifier.u_subClasses()
+	else
+		if aClassifier.oclIsKindOf(uml::DataType)
+		then
+		 aClassifier.u_subDataTypes()
+		else OrderedSet{}
+		endif
+	endif
+/]
+
+[**
+Returns an ordered set of direct subclasses or sub data types
+of a classifier, sorted by classifier name.
+Note: Intended for use with classes and data types.
+Not tested with other classifier types.
+
+@param aClassifier - A UML classifier whose direct subclasses or
+                     sub data types are to be retrieved.
+/]
+[query public u_subClassesOrSubDataTypes(
+  aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
+  if aClassifier.oclIsKindOf(uml::Class)
+  then
+    aClassifier.oclAsType(uml::Class).u_subClasses()
+  else
+    if aClassifier.oclIsKindOf(uml::DataType)
+    then
+      aClassifier.oclAsType(uml::DataType).u_subDataTypes()
+    else
+      OrderedSet{}
+    endif
+  endif
+/]
+
+
+[**
+Returns an ordered set of all super classifiers of a classifier,
+traversing the full generalization hierarchy up to the root.
+Supports both single and multiple inheritance. Cycle-safe.
+Covers all classifier subtypes including uml::Class, uml::DataType,
+uml::Interface, uml::Signal, uml::Component, etc.
+---
+AQL operations used:
+  ->closure(c | expr)    - Applied to aClassifier itself as seed; the lambda
+                           c.general is evaluated starting from aClassifier,
+                           so the direct parent is included from the first
+                           step. Traverses transitively until no new elements
+                           are found. Cycle-safe: each element is visited at
+                           most once.
+
+@param aClassifier - A UML classifier whose full generalization
+                     hierarchy is to be retrieved.
+/]
+[query public u_superClassifiers(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
+  aClassifier->closure(c | c.general)
+/]
+
+[**
+Returns an ordered set of owned attributes of the specified
+classifier, sorted by attribute name. Supports uml::Class and
+uml::DataType only — returns an empty ordered set for any other
+classifier type. Excludes association ends.
+Note: See the overloaded, strongly typed variant for classes and data types:
+u_attributes(uml::Class), u_attributes(uml::DataType).
+
+@param aClassifier - A UML classifier (class or data type) whose
+                     owned attributes are to be retrieved.
+/]
+[query public u_attributes(
+  aClassifier : uml::Classifier) : OrderedSet(uml::Property) =
+  aClassifier->filter({uml::Class | uml::DataType})
+    ->collect(c | c.ownedAttribute
+      ->select(p | p.association = null))
+    ->sortedBy(p | p.name)
+/]

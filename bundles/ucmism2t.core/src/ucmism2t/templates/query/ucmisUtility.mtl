@@ -10,6 +10,11 @@
  * Example of a long association name: InstanceVariable_measures_Population.
  * @param anAssociation An association object.
 */]
-[query public ucmis_shortAssociationName(anAssociation : uml::Association) : String = if anAssociation.name.contains('_') then let sAfterUnderscore : String = anAssociation.name.substring(anAssociation.name.index('_') + 1) in sAfterUnderscore.first(sAfterUnderscore.index('_') - 1) else anAssociation.name endif/]
-
-[query public Xucmis_shortAssociationName(anAssociation : uml::Association) : String = let sAfterUnderscore : String = anAssociation.name.substring(anAssociation.name.index('_') + 1) in sAfterUnderscore.first(sAfterUnderscore.index('_') - 1)/]
+[query public ucmis_shortAssociationName(anAssociation : uml::Association) : String =
+	if anAssociation.name.contains('_') then
+		let sAfterUnderscore : String = anAssociation.name.substring(anAssociation.name.index('_') + 1)
+		in
+		sAfterUnderscore.first(sAfterUnderscore.index('_') - 1)
+	else anAssociation.name
+	endif
+/]

@@ -1,0 +1,39 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a String as receiver.
+This includes queries for string manipulation and formatting
+operations not available in the AQL standard library or
+that provide a more convenient interface for common patterns
+used across the generation templates.
+
+Note: This module complements the AQL built-in string
+operations (replace, replaceAll, indexOf, tokenize, etc.)
+with additional utilities specific to the UCMIS generation
+context.
+
+Related modules:
+- typeQuery: queries that retrieve type names as strings
+- namedElementQuery: queries that produce string
+  representations of named elements such as paths
+  and qualified names
+/]
+[module stringQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[**
+Returns the given text with consecutive empty or blank lines collapsed
+into a single newline. Removes lines consisting only of horizontal
+whitespace (spaces, tabs) between two line breaks.
+Note that \\h (horizontal whitespace character class) is a Java regex extension —
+it works in Acceleo since the underlying engine is Java's java.util.regex,
+but it is not standard POSIX regex.
+
+@param txt - The string from which empty lines are to be removed.
+/]
+[query public u_removeEmptyLines(txt : String) : String =
+  txt.replaceAll('(\\r)?\\n\\h*(\\r)?\\n', '\n')
+/]

@@ -1,0 +1,61 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a UML element or named element as receiver.
+/]
+[module elementQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[**
+Returns the root model that owns the specified element,
+by navigating up the containment hierarchy to the first
+uml::Model ancestor. AQL equivalent of getModel().
+
+@param anElement - A UML element whose owning model is
+                   to be retrieved.
+/]
+[query public u_model(
+  anElement : uml::Element) : uml::Model =
+  anElement.ancestors(uml::Model)->first()
+/]
+
+[**
+Returns the direct parent of the specified element in the UML
+containment hierarchy. AQL equivalent of eContainer().
+
+@param anElement - A UML element whose direct parent is to be retrieved.
+/]
+[query public u_parent(
+  anElement : uml::Element) : uml::Element =
+  anElement.ancestors(uml::Element)->reverse()->first()
+/]
+
+
+[**
+Returns the nearest package that directly or indirectly owns the
+specified element, by navigating up the containment hierarchy to
+the first uml::Package ancestor.
+
+@param anElement - A UML element whose nearest containing package
+                   is to be retrieved.
+/]
+[query public u_nearestPackage(
+  anElement : uml::Element) : uml::Package =
+  anElement.ancestors(uml::Package)->first()
+/]
+
+
+[**
+Returns the qualified name of the specified element in the form
+'package::element', using the nearest containing package name.
+
+@param anElement - A UML named element whose package-qualified
+                   name is to be retrieved.
+/]
+[query public u_packageQualifiedName(
+  anElement : uml::NamedElement) : String =
+  anElement.u_nearestPackage().name + '::' + anElement.name
+/]

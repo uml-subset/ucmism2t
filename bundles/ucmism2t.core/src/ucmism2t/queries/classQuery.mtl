@@ -1,0 +1,817 @@
+[comment encoding = UTF-8 /]
+[**
+Module contains queries with a UML class as receiver.
+This includes queries for navigating the class hierarchy
+(superclasses, subclasses), finding associations, inherited
+attributes, and class classification.
+
+Note: Queries applicable to both classes and data types
+are in classifierQuery, since both are subtypes of Classifier.
+
+Related modules:
+- dataTypeQuery: queries with a UML data type as receiver
+- classifierQuery: queries with a UML classifier as receiver,
+  applicable to both classes and data types
+- associationQuery: queries with a UML association as receiver
+- propertyQuery: queries with a UML property as receiver
+/]
+[module classQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::associationQuery/]
+
+[**
+Returns a sequence of inherited attributes of the specified class,
+i.e. properties inherited from its superclass hierarchy that are not
+association ends. Excludes own attributes and inherited association
+ends.
+
+@param aClass - A UML class whose inherited attributes are to be
+                retrieved.
+/]
+[query public u_inheritedClassAttributes(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.inheritedMember
+    ->filter(uml::Property)
+    ->select(p1 | p1.association->isEmpty())
+    ->sortedBy(p2 | p2.name)
+/]
+
+[**
+Returns an ordered set of all superclasses of a class,
+traversing the full generalization hierarchy up to the root.
+Supports both single and multiple inheritance. Cycle-safe.
+---
+AQL operations used:
+  ->closure(c | expr)    - Applied to aClass itself as seed; the lambda
+                           c.general->filter(uml::Class) is evaluated
+                           starting from aClass, so the direct parent is
+                           included from the first step. Traverses
+                           transitively until no new elements are found.
+                           Cycle-safe: each element is visited at most once.
+
+@param aClass - A UML class whose full superclass hierarchy
+                is to be retrieved.
+/]
+[query public u_superClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass->closure(c | c.general->filter(uml::Class))
+/]
+
+[**
+Returns a sequence of all root superclasses in the specified
+package and its sub-packages. A root superclass is a class that has
+no superclasses itself but is a generalisation parent of at least one
+other class. The parameter can be any uml::Package, including the
+model root, to scope the search accordingly.
+
+@param aPackage - A UML package to search within. Can be the model
+                  root or any sub-package.
+/]
+[query public u_rootSuperClasses(
+  aPackage : uml::Package) : Sequence(uml::Class) =
+  aPackage.eAllContents(uml::Class)
+    ->select(c | c.general->filter(uml::Class)->isEmpty() and c.u_subClasses()->notEmpty())
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of direct subclasses of a class,
+sorted by class name.
+---
+AQL operations used:
+  eInverse(uml::Generalization)    - Finds all Generalization elements that
+                                     cross-reference aClass; requires all
+                                     resources to be loaded in the same
+                                     resource set. Returns both generalizations
+                                     where aClass is the general end AND where
+                                     aClass is the specific end — hence the
+                                     guard below is mandatory.
+  ->select(g1 | g1.general=aClass) - Retains only Generalization elements where
+                                     aClass is the general (parent) end,
+	                                   excluding generalizations where aClass is
+	                                   the specific (child) end. Without this
+	                                   guard, aClass itself leaks into the result
+	                                   via .specific on its own superclass
+	                                   relationships.
+  ->collect(g2 | g3.specific)      - Retrieves the specific (child) classifier
+                                     of each qualifying Generalization element.
+  ->filter(uml::Class)             - Retains only uml::Class instances,
+                                   	 excluding non-Class specializations and
+                                     dropping null values safely.
+  ->sortedBy(c | c.name)           - Sorts result alphabetically by class name.
+
+@param aClass - A UML class whose direct subclasses
+                are to be retrieved.
+/]
+[query public u_subClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Generalization)
+    ->select(g1 | g1.general = aClass)
+    ->collect(g2 | g2.specific)
+    ->filter(uml::Class)
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all subclasses of a class,
+traversing the full specialization hierarchy down to the leaves.
+Supports both single and multiple inheritance. Cycle-safe.
+---
+AQL operations used:
+  ->closure(c1 | expr)     - Applied to aClass itself as seed; the lambda
+                             c1.u_subClasses() is evaluated starting from
+                             aClass, so direct subclasses are included from
+                             the first step. Traverses transitively until no
+                             new elements are found. Cycle-safe: each element
+                             is visited at most once.
+  ->sortedBy(c2 | c2.name) - Sorts the full result alphabetically by class
+                             name.
+
+@param aClass - A UML class whose full subclass hierarchy
+                is to be retrieved.
+/]
+[query public u_allSubClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass->closure(c1 | c1.u_subClasses())
+    ->sortedBy(c2 | c2.name)
+/]
+
+[**
+Returns true if the specified class is a superclass of at least one
+other class, i.e. if it has at least one direct subclass.
+
+@param aClass - A UML class to test for being a superclass.
+/]
+[query public u_isSuperClass(aClass : uml::Class) : Boolean =
+  aClass.u_subClasses()->notEmpty()
+/]
+
+[**
+Returns an ordered set of all classes that are sources of incoming
+binary directed associations pointing to the specified class. Uses
+eInverse() to find all uml::Property elements whose type cross-
+references aClass, then resolves the source class via getOtherEnd().
+Only source-class-owned ends (ownedAttribute) are considered.
+Self-associations are excluded.
+---
+AQL operations used:
+  eInverse(uml::Property)        - Finds all Property instances whose type
+                                   EReference cross-references aClass; requires
+                                   all resources to be loaded in the same
+                                   resource set.
+  ->select(p1 | cond)            - Keeps only source-class-owned association
+                                   ends pointing to aClass, excluding those
+                                   owned by aClass (self-associations).
+  p1.association                 - EReference: the owning Association element;
+                                   null if not an association end.
+  eContainingFeature().name      - Returns the name of the EReference via
+                                   which p is contained; 'ownedAttribute'
+                                   confirms the property is source-class-owned,
+                                   not owned by the Association itself (ownedEnd).
+  p1.eContainer() <> aClass      - Excludes self-associations: a self-association
+                                   is exactly the case where the source-owned end
+                                   is contained by aClass itself.
+  ->collect(p2 | expr)           - Transforms each qualifying property.
+  p2.getOtherEnd()               - Java method on uml::Property: returns the
+                                   opposite end of a binary association.
+                                   Not an EStructuralFeature; must be called
+                                   with explicit parentheses in AQL.
+  .type                          - EReference: the classifier typing the other
+                                   end (uml::Type); narrowed by filter below.
+  ->filter(uml::Class)           - Retains only uml::Class instances;
+                                   also drops null values safely.
+  ->asOrderedSet()               - Deduplicates the result collection.
+  ->sortedBy(p3 | p3.name)       - Sorts result alphabetically by class name.
+
+@param aClass - The target class whose incoming association source
+                classes are to be retrieved.
+/]
+[query public u_incomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+    aClass.eInverse(uml::Property)
+        ->select(p1 | p1.association <> null
+               and p1.eContainingFeature().name = 'ownedAttribute'
+               and p1.eContainer() <> aClass)
+        ->collect(p2 | p2.getOtherEnd().type)
+        ->filter(uml::Class)
+        ->asOrderedSet()
+        ->sortedBy(p3 | p3.name)
+/]
+
+[**
+Returns all classes that are targets of outgoing binary directed
+associations from the specified class. Alphabetically sorted, deduplicated
+set of classes reachable via outgoing associations. Navigates via ownedAttribute
+ends that belong to a uml::Association, collecting their target types.
+Self-associations (where the class is associated with itself) are
+excluded from the result.
+---
+AQL operations used:
+  ownedAttribute             - EReference: properties structurally owned
+                               by this class (uml::Property).
+  ->select(p | cond)         - Keeps only elements satisfying the condition.
+  p.association              - EReference: the Association this property
+                               is a member end of; null if plain attribute.
+  ->collect(p | expr)        - Transforms each element to the given expression.
+  p.type                     - EReference: the classifier typing this property
+                               (uml::Type); narrowed to uml::Class by filter.
+  ->filter(uml::Class)       - Retains only instances of uml::Class;
+                               also drops null values safely.
+  ->reject(c1 | c1 = aClass) - Excludes self-associations.
+  ->asOrderedSet()           - Deduplicates the result collection.
+  ->sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.
+
+@param aClass - The source class whose outgoing association targets are to be retrieved.
+/]
+[query public u_outgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.ownedAttribute
+    ->select(p1 | p1.association <> null)
+    ->collect(p2 | p2.type)
+    ->filter(uml::Class)
+    ->reject(c1 | c1 = aClass)
+    ->asOrderedSet()
+    ->sortedBy(c2 | c2.name)
+/]
+
+[**
+Returns all classes associated with the specified class, combining
+both outgoing and incoming binary directed associations. Delegates
+to u_incomingAssociatedClasses() and u_outgoingAssociatedClasses(),
+merges the results, deduplicates, and sorts alphabetically by name.
+Self-associations are excluded.
+
+@param self - The class for which all associated classes (both
+              source and target ends of binary directed associations)
+              are to be retrieved.
+/]
+[query public u_associatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_incomingAssociatedClasses()
+  	->union(aClass.u_outgoingAssociatedClasses())
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all classes that reference the specified
+class as a target via incoming binary directed associations, including
+associations inherited from its superclass hierarchy. Combines the
+class itself with all its superclasses, then collects incoming
+association sources across the full hierarchy, deduplicating the
+result.
+---
+AQL operations used:
+  u_superClasses()               - Query: returns the ordered superclass
+                                   hierarchy of aClass.
+  ->including(aClass)            - Adds aClass itself to the collection
+                                   so its own associations are included.
+  ->collect(c1 | expr)           - Collects incoming associated classes
+                                   for each class in the hierarchy.
+  u_incomingAssociatedClasses()  - Query: returns direct incoming
+                                   association sources of a single class.
+  ->asOrderedSet()               - Deduplicates; a class may be reachable
+                                   via associations at multiple levels.
+  ->sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.
+
+@param aClass - A UML class whose full effective incoming association
+                sources (own and inherited) are to be retrieved.
+/]
+[query public u_effectiveIncomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_superClasses()
+    ->including(aClass)
+    ->collect(c1 | c1.u_incomingAssociatedClasses())
+    ->asOrderedSet()
+    ->sortedBy(c2 | c2.name)
+/]
+
+[**
+Returns an ordered set of all classes reachable via outgoing binary
+directed associations from the specified class, including associations
+inherited from its superclass hierarchy. Combines the class itself
+with all its superclasses, then collects outgoing association targets
+across the full hierarchy, deduplicating the result.
+---
+AQL operations used:
+  u_superClasses()            - Query: returns the ordered superclass
+                                   hierarchy of aClass.
+  ->including(aClass)            - Adds aClass itself to the collection
+                                   so its own associations are included.
+  ->collect(c1 | expr)           - Collects outgoing associated classes
+                                   for each class in the hierarchy.
+  getOutgoingAssociatedClasses() - Query: returns direct outgoing
+                                   association targets of a single class.
+  ->asOrderedSet()               - Deduplicates; a class may be reachable
+                                   via associations at multiple levels.
+  ->sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.
+
+@param aClass - A UML class whose full effective outgoing association
+                targets (own and inherited) are to be retrieved.
+/]
+[query public u_effectiveOutgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_superClasses()
+    ->including(aClass)
+    ->collect(c1 | c1.u_outgoingAssociatedClasses())
+    ->asOrderedSet()
+    ->sortedBy(c2 | c2.name)
+/]
+
+[**
+Returns an ordered set of all classes reachable via any binary directed
+association from or to the specified class, including associations
+inherited from its superclass hierarchy. Combines the results of
+u_effectiveOutgoingAssociatedClasses() and
+u_effectiveIncomingAssociatedClasses(), deduplicating the result.
+---
+AQL operations used:
+  u_effectiveOutgoingAssociatedClasses() - Query: returns all classes
+                                              reachable via outgoing
+                                              associations across the
+                                              full superclass hierarchy.
+  u_effectiveIncomingAssociatedClasses() - Query: returns all classes
+                                              referencing aClass via
+                                              incoming associations
+                                              across the full superclass
+                                              hierarchy.
+  ->union(col)                              - Merges both collections,
+                                              deduplicating the result
+                                              as an OrderedSet.
+  ->sortedBy(c | c.name)                    - Sorts result alphabetically
+                                              by name.
+
+@param aClass - A UML class whose full effective associated classes
+                (both incoming and outgoing, own and inherited) are
+                to be retrieved.
+/]
+[query public u_allEffectiveAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_effectiveOutgoingAssociatedClasses()
+    ->union(aClass.u_effectiveIncomingAssociatedClasses())
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all indirect superclasses of a class,
+i.e. the full superclass hierarchy excluding the direct parent.
+Delegates to u_superClasses() and removes the direct parent.
+Note: Works only for single inheritance.
+
+@param aClass - A UML class whose indirect superclass hierarchy
+                (excluding direct parent) is to be retrieved.
+/]
+[query public u_allIndirectSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+    let superTypes : OrderedSet(uml::Class) =
+        aClass.u_superClasses()
+    in
+    if superTypes->notEmpty() then
+        superTypes->excluding(aClass.superClass->first())
+    else
+        OrderedSet{}
+    endif
+/]
+
+[**
+Returns an ordered set of all incoming binary directed associations
+of the specified class, i.e. associations where another class owns
+the source end via ownedAttribute and this class is the target type.
+The Association elements themselves are returned, not the source classes.
+Self-associations are excluded.
+---
+AQL operations used:
+  eInverse(uml::Property)        - Finds all Property instances whose type
+                                   EReference cross-references aClass;
+                                   requires all resources to be loaded in
+                                   the same resource set.
+  ->select(p1 | cond)            - Keeps only source-class-owned association
+                                   ends pointing to aClass, excluding those
+                                   owned by aClass itself (self-associations).
+  p1.association                 - EReference: the owning Association element;
+                                   null if not an association end.
+  eContainingFeature().name      - Returns the name of the EReference via
+                                   which p is contained; 'ownedAttribute'
+                                   confirms the property is source-class-owned,
+                                   not owned by the Association itself (ownedEnd).
+  p1.eContainer() <> aClass      - Excludes self-associations: a self-association
+                                   is exactly the case where the source-owned end
+                                   is contained by aClass itself.
+  ->collect(p2 | expr)           - Extracts the Association element from each
+                                   qualifying property.
+  ->filter(uml::Association)     - Retains only Association instances; also
+                                   drops any null values safely.
+  ->asOrderedSet()               - Deduplicates the result collection.
+  ->sortedBy(a | a.name)         - Sorts result alphabetically by association
+                                   name.
+
+@param aClass - The target class whose incoming associations
+                are to be retrieved.
+/]
+[query public u_incomingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) =
+    aClass.eInverse(uml::Property)
+        ->select(p1 | p1.association <> null
+               and p1.eContainingFeature().name = 'ownedAttribute'
+               and p1.eContainer() <> aClass)
+        ->collect(p2 | p2.association)
+        ->filter(uml::Association)
+        ->asOrderedSet()
+        ->sortedBy(a | a.name)
+/]
+
+[**
+Returns an ordered set of all outgoing binary directed associations
+of the specified class, i.e. associations where this class owns the
+source end via ownedAttribute. The Association elements themselves
+are returned, not the target classes.
+---
+AQL operations used:
+  ownedAttribute             - EReference: properties structurally owned
+                               by this class (uml::Property).
+  ->select(p1 | cond)        - Keeps only properties that are source ends
+                               of an association.
+  p1.association             - EReference: the Association this property
+                               is a member end of; null if plain attribute.
+  ->collect(p2 | expr)       - Extracts the Association element from each
+                               qualifying property.
+  ->filter(uml::Association) - Retains only Association instances; also
+                               drops any null values safely.
+  ->asOrderedSet()           - Deduplicates the result collection.
+  ->sortedBy(a | a.name)     - Sorts result alphabetically by association
+                               name.
+
+@param aClass - The source class whose outgoing associations
+                are to be retrieved.
+/]
+[query public u_outgoingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) =
+    aClass.ownedAttribute
+        ->select(p1 | p1.association <> null)
+        ->collect(p2 | p2.association)
+        ->filter(uml::Association)
+        ->asOrderedSet()
+        ->sortedBy(a | a.name)
+/]
+
+[**
+Returns an ordered set of all classes that are abstraction clients of
+the specified class. Navigates the model's cross-references to find
+all uml::Abstraction relationships that list aClass as a supplier,
+then returns their client elements filtered to uml::Class instances.
+---
+AQL operations used:
+  aClass.eInverse(uml::Abstraction) - Navigates cross-references to
+                                      return all uml::Abstraction
+                                      instances that reference aClass
+                                      (i.e. where aClass appears as a
+                                      supplier). eInverse() is an AQL
+                                      operation on EObject that returns
+                                      all objects holding a reference
+                                      to the receiver, optionally
+                                      filtered by type.
+  ->collect(a | a.client)           - For each Abstraction, collects
+                                      its client NamedElements (the
+                                      depending side of the
+                                      relationship).
+  ->filter(uml::Class)              - Retains only uml::Class instances,
+                                      excluding other NamedElement
+                                      subtypes (e.g. Interfaces).
+  ->asOrderedSet()                  - Deduplicates; a class may appear
+                                      as client in multiple
+                                      Abstraction relationships.
+  ->sortedBy(c | c.name)            - Sorts result alphabetically by
+                                      name.
+
+@param aClass - A UML class whose abstraction clients are to be
+                retrieved.
+/]
+[query public u_abstractionClients(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Abstraction)
+    ->collect(a | a.client)
+    ->filter(uml::Class)
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all classes that are abstraction suppliers
+of the specified class. Navigates the model's cross-references to find
+all uml::Abstraction relationships that list aClass as a client, then
+returns their supplier elements filtered to uml::Class instances.
+---
+AQL operations used:
+  aClass.eInverse(uml::Abstraction) - Navigates cross-references to
+                                      return all uml::Abstraction
+                                      instances that reference aClass
+                                      (i.e. where aClass appears as a
+                                      client). eInverse() is an AQL
+                                      operation on EObject that returns
+                                      all objects holding a reference
+                                      to the receiver, optionally
+                                      filtered by type.
+  ->collect(a | a.supplier)         - For each Abstraction, collects
+                                      its supplier NamedElements (the
+                                      depended-upon side of the
+                                      relationship).
+  ->filter(uml::Class)              - Retains only uml::Class instances,
+                                      excluding other NamedElement
+                                      subtypes (e.g. Interfaces).
+  ->asOrderedSet()                  - Deduplicates; a class may appear
+                                      as supplier in multiple
+                                      Abstraction relationships.
+  ->sortedBy(c | c.name)            - Sorts result alphabetically by
+                                      name.
+
+@param aClass - A UML class whose abstraction suppliers are to be
+                retrieved.
+/]
+[query public u_abstractionSupplierClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Abstraction)
+    ->collect(a | a.supplier)
+    ->filter(uml::Class)
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all associations in which the specified
+class participates as a typed end, sorted first by direction (outgoing
+before incoming) and then alphabetically by name within each group.
+Outgoing associations are those where aClass owns the source end
+(ownedEnd contains a property typed by the other class). Incoming
+associations are all remaining associations retrieved via
+eInverse('type').
+
+Two associations between the same two classes are distinct EMF
+objects and are both retained in the result. The ->asOrderedSet()
+call only deduplicates cases where the same association object
+appears more than once, which occurs when both ends of a
+self-association are typed by aClass — in that case eInverse('type')
+yields the same association twice and ->asOrderedSet() correctly
+collapses it to one.
+
+Note: excludes uml::Port instances since ->filter(uml::Property)
+retains only exact uml::Property matches.
+---
+AQL operations used:
+  aClass.eInverse('type')        - AQL operation on EObject: returns
+                                   all EObjects that reference aClass
+                                   via the 'type' EStructuralFeature,
+                                   i.e. all typed elements whose type
+                                   is aClass.
+  ->filter(uml::Property)        - Retains only uml::Property
+                                   instances, excluding other typed
+                                   elements such as parameters or
+                                   ports.
+  ->select(p1 |                  - Retains only properties that
+    p1.association->notEmpty())    belong to an association, excluding
+                                   plain class attributes.
+  ->collect(p2 | p2.association) - Collects the owning association
+                                   of each retained property.
+  ->select(a1 |                  - Separates outgoing associations:
+    a1.ownedEnd->exists(           those where aClass owns a source
+      e | e.type = aClass))        end, i.e. the end typed by aClass
+                                   is owned by the association itself.
+  ->reject(a2 |                  - Separates incoming associations:
+    a2.ownedEnd->exists(           all associations not classified as
+      e | e.type = aClass))        outgoing.
+  ->asOrderedSet()               - Deduplicates self-associations
+                                   within each group.
+  ->sortedBy(a | a.name)         - Sorts each group alphabetically
+                                   by name.
+  ->union()                      - Combines outgoing (first) and
+                                   incoming (second) groups, with
+                                   outgoing appearing before incoming
+                                   in the result.
+
+@param aClass - A UML class whose participating associations are to
+               be retrieved, ordered by direction then name.
+/]
+[query public u_associations(aClass : uml::Class) : OrderedSet(uml::Association) =
+  let all : OrderedSet(uml::Association) =
+    aClass.eInverse('type')
+      ->filter(uml::Property)
+      ->select(p1 | p1.association->notEmpty())
+      ->collect(p2 | p2.association)
+      ->asOrderedSet()
+  in
+    all
+      ->select(a1 | a1.ownedEnd->exists(e | e.type = aClass))
+      ->sortedBy(a2 | a2.name)
+      ->union(
+        all
+          ->reject(a3 | a3.ownedEnd->exists(e | e.type = aClass))
+          ->sortedBy(a4 | a4.name))
+/]
+
+[**
+Returns an ordered set of all classes forming the diagram context of
+the specified class. Combines classes reachable via direct
+associations, the full superclass hierarchy and their limited
+associations, the full subclass hierarchy, and abstraction
+relationships. Used for diagram context scoping, e.g. to determine
+which classes to include in a focused class diagram around aClass.
+
+The result excludes aClass itself and is sorted alphabetically.
+The union terms contribute the following:
+  1. u_associatedClasses()       - Classes directly associated with
+                                   aClass via incoming or outgoing
+                                   binary associations.
+  2. u_superClasses()         - All ancestors of aClass in the
+                                   superclass hierarchy.
+  3. u_limitedAssociations()     - For each superclass, at most 3
+     -> u_ownedEndClass()          filtered associations; collect
+                                   their owned end types.
+  4. u_limitedAssociations()     - Same filtered associations;
+     -> u_otherEndClass()          collect their other end types.
+  5. u_allSubClasses()           - All descendants of aClass in the
+                                   subclass hierarchy.
+  6. u_abstractionClients()      - Classes that depend on aClass via
+                                   a uml::Abstraction relationship.
+  7. u_abstractionSupplierClasses()    - Classes that aClass depends on via
+                                   a uml::Abstraction relationship.
+---
+AQL operations used:
+  u_associatedClasses()          - Query: returns classes directly
+                                   associated with aClass via incoming
+                                   or outgoing binary associations.
+  u_superClasses()            - Query: returns the ordered
+                                   superclass hierarchy of aClass.
+  ->collect(sc | expr)           - Collects results across all
+                                   superclasses.
+  u_limitedAssociations(aClass)  - Query: returns at most 3 filtered
+                                   associations of a superclass,
+                                   excluding those directly or
+                                   indirectly connecting to aClass's
+                                   hierarchy.
+  u_ownedEndClass()              - Query: returns the type of the
+                                   first owned end of an association
+                                   as uml::Class.
+  u_otherEndClass()              - Query: returns the type of the
+                                   non-owned end of an association
+                                   as uml::Class.
+  u_allSubClasses()              - Query: returns all descendants of
+                                   aClass in the subclass hierarchy.
+  u_abstractionClients()         - Query: returns classes that list
+                                   aClass as an abstraction supplier.
+  u_abstractionSupplierClasses()       - Query: returns classes that aClass
+                                   lists as an abstraction supplier.
+  ->union(col)                   - Merges collections, deduplicating
+                                   the combined result.
+  ->asOrderedSet()               - Ensures the final merged result is
+                                   a deduplicated OrderedSet.
+  ->excluding(aClass)            - Removes aClass itself from the
+                                   result.
+  ->sortedBy(c | c.name)         - Sorts result alphabetically by
+                                   name.
+
+@param aClass - A UML class whose diagram context classes are to be
+                retrieved.
+/]
+[query public u_contextClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_associatedClasses()
+  ->union( aClass.u_superClasses() )
+  ->union(
+    aClass.u_superClasses()
+      ->collect( sc1 | sc1.u_limitedAssociations(aClass) )
+      ->collect( a1 | a1.u_ownedEndClass() )
+  )
+  ->union(
+    aClass.u_superClasses()
+      ->collect( sc2 | sc2.u_limitedAssociations(aClass) )
+      ->collect( a2 | a2.u_otherEndClass() )
+  )
+  ->union( aClass.u_allSubClasses() )
+  ->union( aClass.u_abstractionClients() )
+  ->union( aClass.u_abstractionSupplierClasses() )
+  ->asOrderedSet()
+  ->excluding(aClass)
+  ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of associations inherited by the specified
+class from its superclass hierarchy. Collects all associations of
+each superclass and excludes those directly owned by aClass itself.
+Uses u_superClasses() to traverse the full hierarchy and
+u_associations() to retrieve associations per superclass.
+---
+AQL operations used:
+  aClass.u_superClasses()         - Query: returns the full
+                                       ordered superclass hierarchy
+                                       of aClass.
+  ->collect(sc | sc.u_associations() - Collects all associations of
+    ->reject(a |                       each superclass, excluding
+      aClass.u_associations()          associations that aClass
+        ->includes(a)))                itself directly participates
+                                       in, to retain only truly
+                                       inherited ones.
+  ->asOrderedSet()                   - Deduplicates; the same
+                                       association may be reachable
+                                       via multiple levels of the
+                                       superclass hierarchy.
+  ->sortedBy(a | a.name)             - Sorts result alphabetically
+                                       by association name.
+
+@param aClass - A UML class whose inherited associations are to be
+               retrieved.
+/]
+[query public u_inheritedAssociations(
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  aClass.u_superClasses()
+    ->collect(sc |
+      sc.u_associations()
+        ->reject(a | aClass.u_associations()->includes(a)))
+    ->asOrderedSet()
+    ->sortedBy(a | a.name)
+/]
+
+[**
+Returns a sequence of owned attributes of the specified class,
+sorted by attribute name. Excludes association ends, retaining
+only plain attributes owned directly by the class.
+Note: See the overloaded variants for data types and classifiers:
+u_attributes(uml::DataType), u_attributes(uml::Classifier).
+
+@param aClass - A UML class whose owned attributes are to be
+                retrieved.
+/]
+[query public u_attributes(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+    ->select(p | p.association = null)
+    ->sortedBy(p | p.name)
+/]
+
+[**
+Returns an ordered set of at most 3 associations involving aSuperClass
+that are not directly connected to aClass and not connected to any of
+aClass's superclasses on both ends simultaneously. This reduces
+redundant Graphviz constraints parallel to the inheritance path.
+
+The two filtering steps work as follows:
+  1. Exclude associations where either end directly connects to aClass.
+  2. Exclude associations where both ends are in aClass's superclass
+     hierarchy (i.e. retain only those where at least one end is
+     outside that hierarchy).
+
+Associations are sorted by name before capping to ensure a
+deterministic result independent of traversal order.
+If more than 3 associations pass both filters, only the first 3 are
+returned.
+---
+AQL operations used:
+  aSuperClass.getAssociations()          - Java method on uml::Class:
+                                           returns all associations in
+                                           which aSuperClass participates
+                                           as a member end. Not an
+                                           EStructuralFeature; called
+                                           with explicit parentheses
+                                           in AQL.
+  ->asOrderedSet()                       - Casts the result of
+                                           getAssociations() to
+                                           OrderedSet, required since
+                                           getAssociations() does not
+                                           return an OrderedSet in AQL.
+  ->select(a | expr)                     - Filters the collection to
+                                           elements satisfying the
+                                           predicate.
+  u_ownedEndClass()                      - Query: returns the type of
+                                           the first owned end of the
+                                           association as uml::Class.
+  u_otherEndClass()                      - Query: returns the type of
+                                           the non-owned end of the
+                                           association as uml::Class.
+  u_superClasses()                    - Query: returns the ordered
+                                           superclass hierarchy of
+                                           aClass.
+  ->excludes(obj)                        - Returns true if the
+                                           collection does not contain
+                                           obj.
+  ->sortedBy(a | a.name)                 - Sorts associations
+                                           alphabetically by name to
+                                           ensure deterministic
+                                           ordering before capping.
+  ->size()                               - Returns the number of
+                                           elements in the collection.
+  ->subOrderedSet(1, 3)                  - Returns the first 3 elements
+                                           of the ordered set.
+
+@param aSuperClass - A UML class that is a superclass of aClass, whose
+                     associations are to be filtered.
+@param aClass      - A UML class that is a subclass of aSuperClass,
+                     used as the exclusion reference.
+/]
+
+[query public u_limitedAssociations(
+  aSuperClass : uml::Class,
+  aClass      : uml::Class) : OrderedSet(uml::Association) =
+  let associations : OrderedSet(uml::Association) =
+    aSuperClass.getAssociations()->asOrderedSet()
+      ->select(a |
+        a.u_ownedEndClass() <> aClass
+        and a.u_otherEndClass() <> aClass)
+      ->select(a |
+        aClass.u_superClasses()->excludes(a.u_ownedEndClass())
+        or aClass.u_superClasses()->excludes(a.u_otherEndClass()))
+      ->sortedBy(a | a.name)
+  in
+    if associations->size() > 3 then
+      associations->subOrderedSet(1, 3)
+    else
+      associations
+    endif
+/]

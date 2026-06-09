@@ -1,0 +1,192 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a UML data type as receiver.
+This includes queries for navigating the data type hierarchy
+(supertypes, subtypes), finding properties that use a data type,
+and data type classification.
+
+Note: Queries applicable to both classes and data types
+are in classifierQuery, since both are subtypes of Classifier.
+
+Related modules:
+- classQuery: queries with a UML class as receiver
+- classifierQuery: queries with a UML classifier as receiver,
+  applicable to both classes and data types
+/]
+[module dataTypeQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[**
+Returns an ordered set of direct sub datatypes of a datatype,
+sorted by datatype name.
+---
+AQL operations used:
+  eInverse(uml::Generalization) - Finds all Generalization elements that
+                                  cross-reference aDataType; requires all
+																	resources to be loaded in the same
+																	resource set. Returns both generalizations
+																	where aDataType is the general end AND
+																	where aDataType is the specific end —
+																	hence the guard below is mandatory.
+  ->select(g1 | g1.general      - Retains only Generalization elements where
+              = aDataType)        aDataType is the general (parent) end,
+                                  excluding generalizations where aDataType
+                                  is the specific (child) end. Without this
+                                  guard, aDataType itself leaks into the
+                                  result via .specific on its own supertype
+                                  relationships.
+  ->collect(g2 | g2.specific)   - Retrieves the specific (child) classifier
+                                  of each qualifying Generalization element.
+  ->filter(uml::DataType)       - Retains only uml::DataType instances,
+                                  excluding non-DataType specializations and
+                                  dropping null values safely.
+  ->sortedBy(c | c.name)        - Sorts result alphabetically by datatype
+                                  name.
+
+@param aDataType - A UML datatype whose direct sub datatypes
+                   are to be retrieved.
+/]
+[query public u_subDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Generalization)
+	  ->select(g1 | g1.general = aDataType)
+	  ->collect(g2 | g2.specific)
+	  ->filter(uml::DataType)
+	  ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all sub datatypes of a datatype,
+traversing the full specialization hierarchy down to the leaves.
+Supports both single and multiple inheritance. Cycle-safe.
+---
+AQL operations used:
+  ->closure(c | expr)    - Applied to aDataType itself as seed; the lambda
+                           c.u_subDataTypes() is evaluated starting from
+                           aDataType, so direct sub datatypes are included
+                           from the first step. Traverses transitively until
+                           no new elements are found. Cycle-safe: each element
+                           is visited at most once. Returns
+                           OrderedSet(uml::DataType) — no cast required.
+  ->sortedBy(c | c.name) - Sorts the full result alphabetically by datatype
+                           name.
+
+@param aDataType - A UML datatype whose full sub datatype hierarchy
+                   is to be retrieved.
+/]
+[query public u_allSubDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType->closure(c | c.u_subDataTypes())
+  	->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of classes which use the specified data type,
+sorted by class name. Navigates the inverse usage links from
+the data type, selects only those whose owner is a class,
+collects and casts the owning classes, and deduplicates.
+
+@param aDataType - A UML data type whose using classes are
+                   to be retrieved.
+/]
+[query public u_usingClasses(
+  aDataType : uml::DataType) : OrderedSet(uml::Class) =
+  aDataType.u_usingProperties()
+    ->select(p | p.owner.oclIsKindOf(uml::Class))
+    ->collect(p | p.owner.oclAsType(uml::Class))
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of data types which use the specified data type,
+sorted by data type name. Navigates the inverse usage links from
+the data type, selects only those whose owner is a data type,
+collects and casts the owning data types, and deduplicates.
+
+@param aDataType - A UML data type whose using data types are
+                   to be retrieved.
+/]
+[query public u_usingDataTypes(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.u_usingProperties()
+    ->select(p | p.owner.oclIsKindOf(uml::DataType))
+    ->collect(p | p.owner.oclAsType(uml::DataType))
+    ->asOrderedSet()
+    ->sortedBy(d | d.name)
+/]
+
+[**
+Returns an ordered set of properties (attributes) that use the
+specified data type, excluding association ends and properties
+owned by the data type itself, sorted by the owning classifier name.
+
+@param aDataType - A UML data type whose using properties are
+                   to be retrieved.
+/]
+[query public u_usingProperties(
+  aDataType : uml::DataType) : OrderedSet(uml::Property) =
+  aDataType.eInverse(uml::Property)
+    ->select(p | p.association = null)
+    ->select(p | p.owner <> aDataType)
+    ->sortedBy(p | p.owner.oclAsType(uml::Classifier).name)
+/]
+
+[**
+Returns an ordered set of supplier data types of all abstraction
+dependencies that target the specified data type, sorted by name.
+Navigates inverse abstraction links from the data type, collects
+their suppliers, and retains only data type instances.
+
+@param aDataType - A UML data type whose abstraction suppliers are
+                   to be retrieved.
+/]
+[query public u_abstractionSuppliersDataType(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Abstraction)
+    ->collect(a | a.supplier)
+    ->filter(uml::DataType)
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns a sequence of owned attributes of the specified data type,
+sorted by attribute name. Excludes association ends, retaining
+only plain attributes owned directly by the data type.
+Applies to all subtypes of uml::DataType, including
+uml::Enumeration and uml::PrimitiveType.
+Note: See the overloaded variants for classes and classifiers:
+u_attributes(uml::Class), u_attributes(uml::Classifier).
+
+@param aDataType - A UML data type whose owned attributes are to
+                   be retrieved.
+/]
+[query public u_attributes(
+  aDataType : uml::DataType) : Sequence(uml::Property) =
+  aDataType.ownedAttribute
+    ->select(p | p.association = null)
+    ->sortedBy(p | p.name)
+/]
+
+[**
+Returns an ordered set of all super datatypes of a datatype,
+traversing the full generalization hierarchy up to the root.
+Supports both single and multiple inheritance. Cycle-safe.
+---
+AQL operations used:
+  ->closure(c | expr)    - Applied to aDataType itself as seed; the lambda
+                           c.general->filter(uml::DataType) is evaluated
+                           starting from aDataType, so the direct parent is
+                           included from the first step. Traverses
+                           transitively until no new elements are found.
+                           Cycle-safe: each element is visited at most once.
+
+@param aDataType - A UML datatype whose full supertype hierarchy
+                   is to be retrieved.
+/]
+[query public u_superDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType->closure(c | c.general->filter(uml::DataType))
+/]

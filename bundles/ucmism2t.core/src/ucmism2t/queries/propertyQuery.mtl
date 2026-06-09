@@ -1,0 +1,68 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a UML property as receiver.
+This includes queries for retrieving property metadata
+(multiplicity, cardinality), classifying properties as
+attributes or association ends, and navigating to the
+owning classifier or association.
+
+Note: In UML, association ends are represented as
+properties. Queries in this module handle both plain
+attributes (association = null) and association ends
+(association <> null). The distinction is made explicit
+in the query documentation where relevant.
+
+Note: Queries that find properties starting from a class
+or data type are in classQuery and dataTypeQuery
+respectively, since their receiver is the owning
+classifier rather than the property itself.
+
+Related modules:
+- classQuery: queries with a UML class as receiver,
+  including queries that find attributes and
+  association ends of a class
+- dataTypeQuery: queries with a UML data type as receiver,
+  including queries that find attributes of a data type
+- associationQuery: queries with a UML association as
+  receiver, since association ends are properties
+/]
+[module propertyQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[**
+Returns the cardinality of a property in ShEx syntax:
+"?" for 0..1, "*" for 0..*, "+" for 1..*, "" for all other cases.
+Note: upperBound() returns '*' for unlimited multiplicity as per
+canonical XMI serialization used by Eclipse UML2.
+---
+AQL operations used:
+  aProperty.lowerBound()   - Java method on uml::Property: returns the
+                             lower bound of the multiplicity as Integer.
+                             Not an EStructuralFeature; called with
+                             explicit parentheses in AQL.
+  aProperty.upperBound()   - Java method on uml::Property: returns the
+                             upper bound of the multiplicity. Returns '*'
+                             for unlimited multiplicity as per canonical
+                             XMI. Not an EStructuralFeature; called with
+                             explicit parentheses in AQL.
+
+@param aProperty - A UML property whose multiplicity is to be
+                   expressed as a ShEx cardinality string.
+/]
+[query public u_shexCardinality(aProperty : uml::Property) : String =
+  if aProperty.lowerBound() = 0 and aProperty.upperBound() = 1 then
+    '?'
+  else if aProperty.lowerBound() = 0 and aProperty.upperBound() = '*' then
+    '*'
+  else if aProperty.lowerBound() = 1 and aProperty.upperBound() = '*' then
+    '+'
+  else
+    ''
+  endif
+  endif
+  endif
+/]

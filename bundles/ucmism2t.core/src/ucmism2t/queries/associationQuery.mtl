@@ -1,0 +1,236 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains queries with a UML association as receiver.
+This includes queries for navigating association ends (owned end,
+other end, source class, target class) and filtering associations
+for diagram generation purposes.
+
+Note: Queries that find associations starting from a class
+are in classQuery, since their receiver is a UML class.
+
+Related modules:
+- classQuery: queries with a UML class as receiver,
+  including queries that find associations of a class
+- propertyQuery: queries with a UML property as receiver,
+  since association ends are properties in UML
+/]
+[module associationQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[**
+Returns the source class of a binary association — the class that
+owns the navigable end via ownedAttribute. Uses memberEnd to ensure
+correct navigation regardless of association ownership pattern
+(directed, bidirectional, or non-navigable).
+
+@param anAssociation - A UML binary association whose source class
+                       is to be retrieved.
+/]
+[query public Xu_ownedEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.memberEnd
+    ->reject(p | anAssociation.ownedEnd->includes(p))
+    ->first()
+    .type.oclAsType(uml::Class)
+/]
+
+[**
+Returns the type of the first owned end of a binary directed
+association, cast to uml::Class. Intended for associations where
+exactly one end is owned by the association (i.e. the non-navigable
+end in a directed binary association). The caller must ensure the
+owned end's type is a uml::Class; otherwise oclAsType() will fail
+at runtime.
+---
+AQL operations used:
+  anAssociation.ownedEnd        - EStructuralFeature on
+                                  uml::Association: the ordered set
+                                  of association ends owned by the
+                                  association itself (as opposed to
+                                  ends owned by the participant
+                                  classifiers).
+  ->first()                     - Returns the first element of the
+                                  ordered set as a single object.
+  .type                         - EStructuralFeature on
+                                  uml::TypedElement: the classifier
+                                  typing this association end.
+  .oclAsType(uml::Class)        - Casts the type to uml::Class.
+                                  Throws a runtime error if the type
+                                  is not a uml::Class instance.
+
+@param anAssociation - A UML association whose first owned end type
+                       is to be returned as a uml::Class.
+/]
+[query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class =
+  anAssociation.ownedEnd->first().type.oclAsType(uml::Class)
+/]
+
+
+[**
+Returns the target class of a binary association — the class at
+the end owned by the association itself (ownedEnd). Uses memberEnd
+to ensure correct navigation regardless of association ownership
+pattern (directed, bidirectional, or non-navigable).
+
+@param anAssociation - A UML binary association whose target class
+                       is to be retrieved.
+/]
+[query public Xu_otherEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.memberEnd
+    ->select(p | anAssociation.ownedEnd->includes(p))
+    ->first()
+    .type.oclAsType(uml::Class)
+/]
+
+[**
+Returns the type of the non-owned end of a binary directed
+association, cast to uml::Class. Navigates from the first owned end
+to its opposite end via getOtherEnd(), then returns that end's type.
+Intended for binary associations only; behaviour is undefined for
+n-ary associations. The caller must ensure the other end's type is a
+uml::Class; otherwise oclAsType() will fail at runtime.
+---
+AQL operations used:
+  anAssociation.ownedEnd        - EStructuralFeature on
+                                  uml::Association: the ordered set
+                                  of association ends owned by the
+                                  association itself.
+  ->first()                     - Returns the first element of the
+                                  ordered set as a single object
+                                  (a uml::Property).
+  .getOtherEnd()                - Java method on uml::Property:
+                                  returns the opposite end of a
+                                  binary association. Not an
+                                  EStructuralFeature; called with
+                                  explicit parentheses in AQL.
+  .type                         - EStructuralFeature on
+                                  uml::TypedElement: the classifier
+                                  typing this association end.
+  .oclAsType(uml::Class)        - Casts the type to uml::Class.
+                                  Throws a runtime error if the type
+                                  is not a uml::Class instance.
+
+@param anAssociation - A UML association whose non-owned end type
+                       is to be returned as a uml::Class.
+/]
+[query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class =
+  anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(uml::Class)
+/]
+
+[**
+Returns the source class of a binary directed association.
+The source end is owned by the association itself (ownedEnd),
+and its type is the source class.
+Note: Intended for use with binary directed associations only.
+See: u_otherEndClass(uml::Association) - Returns the target class.
+
+@param anAssociation - A UML binary directed association whose
+                       source class is to be retrieved.
+/]
+[query public X2u_ownedEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.ownedEnd
+    ->first()
+    .type.oclAsType(uml::Class)
+/]
+
+
+[**
+Returns the target class of a binary directed association.
+The target end is owned by the source class via ownedAttribute
+(memberEnd minus ownedEnd), and its type is the target class.
+Note: Intended for use with binary directed associations only.
+See: u_ownedEndClass(uml::Association) - Returns the source class.
+
+@param anAssociation - A UML binary directed association whose
+                       target class is to be retrieved.
+/]
+[query public X2u_otherEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.memberEnd
+    ->reject(p | anAssociation.ownedEnd->includes(p))
+    ->first()
+    .type.oclAsType(uml::Class)
+/]
+
+[**
+Returns the source (subject) end of a binary directed association.
+A binary directed association can be understood as a triple:
+  subject -- predicate (association name) --> object
+The source end is the subject end — owned by the association
+itself (ownedEnd) — as opposed to the target (object) end, which
+is owned by the source class via ownedAttribute.
+Note: Intended for use with binary directed associations only.
+See: u_otherEnd(uml::Association) - Returns the target (object) end.
+
+@param anAssociation - A UML binary directed association whose
+                       source (subject) end is to be retrieved.
+/]
+[query public u_ownedEnd(
+  anAssociation : uml::Association) : uml::Property =
+  anAssociation.ownedEnd->first()
+/]
+
+
+[**
+Returns the target (object) end of a binary directed association.
+A binary directed association can be understood as a triple:
+  subject -- predicate (association name) --> object
+The target end is the object end — owned by the source class via
+ownedAttribute (memberEnd minus ownedEnd) — as opposed to the
+source (subject) end, which is owned by the association itself.
+Note: Intended for use with binary directed associations only.
+See: u_ownedEnd(uml::Association) - Returns the source (subject) end.
+
+@param anAssociation - A UML binary directed association whose
+                       target (object) end is to be retrieved.
+/]
+[query public u_otherEnd(
+  anAssociation : uml::Association) : uml::Property =
+  anAssociation.memberEnd
+    ->reject(p | anAssociation.ownedEnd->includes(p))
+    ->first()
+/]
+
+
+[**
+Returns the source (subject) class of a binary directed association.
+A binary directed association can be understood as a triple:
+  subject -- predicate (association name) --> object
+The source class is the subject — the class from which the
+association originates. Delegates to u_ownedEnd() for end
+navigation and casts its type to uml::Class.
+Note: Intended for use with binary directed associations only.
+See: u_otherEndClass(uml::Association) - Returns the target (object) class.
+
+@param anAssociation - A UML binary directed association whose
+                       source (subject) class is to be retrieved.
+/]
+[query public u_ownedEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.u_ownedEnd().type.oclAsType(uml::Class)
+/]
+
+
+[**
+Returns the target (object) class of a binary directed association.
+A binary directed association can be understood as a triple:
+  subject -- predicate (association name) --> object
+The target class is the object — the class to which the association
+points. Delegates to u_otherEnd() for end navigation and casts
+its type to uml::Class.
+Note: Intended for use with binary directed associations only.
+See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.
+
+@param anAssociation - A UML binary directed association whose
+                       target (object) class is to be retrieved.
+/]
+[query public u_otherEndClass(
+  anAssociation : uml::Association) : uml::Class =
+  anAssociation.u_otherEnd().type.oclAsType(uml::Class)
+/]
