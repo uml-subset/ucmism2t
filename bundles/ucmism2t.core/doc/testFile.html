@@ -20,6 +20,36 @@
         <h3><a href="index.html">Modules</a></h3>
         <ul>
             <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
                 <a href="h2.html">h2</a>
             </li>
             <li>
@@ -32,7 +62,7 @@
                 <a href="representation.html">representation</a>
             </li>
             <li>
-                <a href="modelQuery.html">modelQuery</a>
+                <a href="oldModelQuery.html">oldModelQuery</a>
             </li>
             <li>
                 <a href="propertiesQuery.html">propertiesQuery</a>
@@ -187,12 +217,6 @@
             <li class="active">
                 <a href="testFile.html">testFile</a>
             </li>
-            <li>
-                <a href="testFile2.html">testFile2</a>
-            </li>
-            <li>
-                <a href="testFile3.html">testFile3</a>
-            </li>
         </ul>
     </aside>
 
@@ -208,7 +232,7 @@
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/emf/2002/Ecore</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
             <tr><th>Source</th><td><code>ucmism2t/templates/test/testFile.mtl</code></td></tr>
         </table>
@@ -229,98 +253,37 @@
                     </td>
                     <td><span class="no-doc">—</span></td>
                 </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#test5"><code>test5(p)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#test5"><code>test5(p)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><a href="#test6"><code>test6(p)</code></a>
+                        
+                        
+                        
+                    </td>
+                    <td><span class="no-doc">—</span></td>
+                </tr>
             </tbody>
         </table>
 
         <!-- ═══════════════════════════════════════════ Query summary table -->
-        <h2>Query Summary</h2>
-        <table class="summary-table">
-            <thead>
-                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#OKgetIncomingAssociatedClasses"><code>OKgetIncomingAssociatedClasses(self)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#u_incomingAssociatedClasses"><code>u_incomingAssociatedClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns all classes that are sources of incoming binary directed associations pointing to the specified class. Alphabetically sorted, deduplicated set of classes that have an outgoing association pointing to this class. Uses eInverse() to find all uml::Property elements whose type reference points to aClass, then resolves the source class via getOtherEnd().type on the association end that is owned by the source class (ownedAttribute). Self-associations are excluded from the result.  AQL operations used: eInverse(uml::Property)    - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)        - Keeps only association ends owned by a class (not by the association itself). p1.association             - EReference: the owning Association element; null if not an association end. eContainingFeature()       - Returns the EReference via which p is contained; .name = &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association (ownedEnd). -&gt;collect(p2 | expr)       - Transforms each qualifying property. p2.getOtherEnd()           - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; must be called with explicit parentheses in AQL. .type                      - EReference: the classifier typing the other end (i.e., the source class); typed as uml::Type, narrowed by filter below. -&gt;filter(uml::Class)       - Retains only uml::Class instances; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#OK2getIncomingAssociatedClasses"><code>OK2getIncomingAssociatedClasses(self)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#u_outgoingAssociatedClasses"><code>u_outgoingAssociatedClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns all classes that are targets of outgoing binary directed associations from the specified class. Alphabetically sorted, deduplicated set of classes reachable via outgoing associations. Navigates via ownedAttribute ends that belong to a uml::Association, collecting their target types. Self-associations (where the class is associated with itself) are excluded from the result.  AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p | cond)         - Keeps only elements satisfying the condition. p.association              - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p | expr)        - Transforms each element to the given expression. p.type                     - EReference: the classifier typing this property (uml::Type); narrowed to uml::Class by filter. -&gt;filter(uml::Class)       - Retains only instances of uml::Class; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#OKgetOutgoingAssociatedClasses"><code>OKgetOutgoingAssociatedClasses(self)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#u_subClasses"><code>u_subClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of all direct subclasses, sorted by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#u_allSubClasses"><code>u_allSubClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of all subclasses, sorted by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Association)</code></td>
-                    <td><a href="#u_contextClasses"><code>u_contextClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>Sequence(uml::Class)</code></td>
-                    <td><a href="#u_allSuperClasses"><code>u_allSuperClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns a sequence of all superclasses (works only for single inheritance).</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>Sequence(uml::Class)</code></td>
-                    <td><a href="#OKu_allSuperclasses"><code>OKu_allSuperclasses(aClass)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-            </tbody>
-        </table>
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
@@ -346,254 +309,74 @@
             </dl>
 
         </div>
+        <div class="element-detail" id="test5">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                test5
+            </h3>
+
+            <div class="signature">
+                <code>[template public test5(p : uml::Class)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>p</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="test5">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                test5
+            </h3>
+
+            <div class="signature">
+                <code>[template public test5(p : uml::DataType)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>p</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
+        <div class="element-detail" id="test6">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                test6
+            </h3>
+
+            <div class="signature">
+                <code>[template public test6(p : uml::Class)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>p</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+        </div>
 
         <!-- ═════════════════════════════════════════════ Query detail -->
-        <h2>Query Detail</h2>
-        <div class="element-detail" id="OKgetIncomingAssociatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                OKgetIncomingAssociatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public OKgetIncomingAssociatedClasses(self : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>self</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_incomingAssociatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_incomingAssociatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_incomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns all classes that are sources of incoming binary directed associations pointing to the specified class. Alphabetically sorted, deduplicated set of classes that have an outgoing association pointing to this class. Uses eInverse() to find all uml::Property elements whose type reference points to aClass, then resolves the source class via getOtherEnd().type on the association end that is owned by the source class (ownedAttribute). Self-associations are excluded from the result.  AQL operations used: eInverse(uml::Property)    - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)        - Keeps only association ends owned by a class (not by the association itself). p1.association             - EReference: the owning Association element; null if not an association end. eContainingFeature()       - Returns the EReference via which p is contained; .name = &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association (ownedEnd). -&gt;collect(p2 | expr)       - Transforms each qualifying property. p2.getOtherEnd()           - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; must be called with explicit parentheses in AQL. .type                      - EReference: the classifier typing the other end (i.e., the source class); typed as uml::Type, narrowed by filter below. -&gt;filter(uml::Class)       - Retains only uml::Class instances; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass - The target class whose incoming association sources are to be retrieved.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="OK2getIncomingAssociatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                OK2getIncomingAssociatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public OK2getIncomingAssociatedClasses(self : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>self</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_outgoingAssociatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_outgoingAssociatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_outgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns all classes that are targets of outgoing binary directed associations from the specified class. Alphabetically sorted, deduplicated set of classes reachable via outgoing associations. Navigates via ownedAttribute ends that belong to a uml::Association, collecting their target types. Self-associations (where the class is associated with itself) are excluded from the result.  AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p | cond)         - Keeps only elements satisfying the condition. p.association              - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p | expr)        - Transforms each element to the given expression. p.type                     - EReference: the classifier typing this property (uml::Type); narrowed to uml::Class by filter. -&gt;filter(uml::Class)       - Retains only instances of uml::Class; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>The source class whose outgoing association targets are to be retrieved.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="OKgetOutgoingAssociatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                OKgetOutgoingAssociatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public OKgetOutgoingAssociatedClasses(self : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>self</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_subClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_subClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_subClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of all direct subclasses, sorted by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass A UML class</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_allSubClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_allSubClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_allSubClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of all subclasses, sorted by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass A UML class</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_contextClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_contextClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_contextClasses(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Association)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="u_allSuperClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                u_allSuperClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public u_allSuperClasses(aClass : uml::Class) : Sequence(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns a sequence of all superclasses (works only for single inheritance).</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass A UML class</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>Sequence(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="OKu_allSuperclasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                OKu_allSuperclasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public OKu_allSuperclasses(aClass : uml::Class) : Sequence(uml::Class) = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>Sequence(uml::Class)</code>
-            </p>
-
-        </div>
 
     </main>
 </div>

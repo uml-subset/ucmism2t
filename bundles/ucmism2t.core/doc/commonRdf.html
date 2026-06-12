@@ -20,6 +20,36 @@
         <h3><a href="index.html">Modules</a></h3>
         <ul>
             <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
                 <a href="h2.html">h2</a>
             </li>
             <li>
@@ -32,7 +62,7 @@
                 <a href="representation.html">representation</a>
             </li>
             <li>
-                <a href="modelQuery.html">modelQuery</a>
+                <a href="oldModelQuery.html">oldModelQuery</a>
             </li>
             <li>
                 <a href="propertiesQuery.html">propertiesQuery</a>
@@ -187,12 +217,6 @@
             <li>
                 <a href="testFile.html">testFile</a>
             </li>
-            <li>
-                <a href="testFile2.html">testFile2</a>
-            </li>
-            <li>
-                <a href="testFile3.html">testFile3</a>
-            </li>
         </ul>
     </aside>
 
@@ -208,7 +232,7 @@
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
             <tr><th>Source</th><td><code>ucmism2t/templates/target/rdf/commonRdf.mtl</code></td></tr>
         </table>
@@ -294,15 +318,6 @@
                 </tr>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#cdiAdHoc2"><code>cdiAdHoc2(txt)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
                     <td><a href="#ttlEscape"><code>ttlEscape(txt)</code></a>
                         
                         
@@ -340,22 +355,6 @@
                     <td><span class="visibility public">public</span></td>
                     <td><code>String</code></td>
                     <td><a href="#shortName"><code>shortName(anAssociation)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>uml::Type</code></td>
-                    <td><a href="#source"><code>source(anAssociation)</code></a>
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>uml::Type</code></td>
-                    <td><a href="#target"><code>target(anAssociation)</code></a>
                         
                     </td>
                     <td><span class="no-doc">—</span></td>
@@ -563,28 +562,6 @@
             </dl>
 
         </div>
-        <div class="element-detail" id="cdiAdHoc2">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                cdiAdHoc2
-            </h3>
-
-            <div class="signature">
-                <code>[template public cdiAdHoc2(txt : String)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>txt</code> <span class="param-type">: String</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
         <div class="element-detail" id="ttlEscape">
             <h3>
                 <span class="kind-badge kind-template">template</span>
@@ -680,54 +657,6 @@
 
             <h4>Returns</h4>
             <p><code>String</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="source">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                source
-            </h3>
-
-            <div class="signature">
-                <code>[query public source(anAssociation : uml::Association) : uml::Type = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>uml::Type</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="target">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                target
-            </h3>
-
-            <div class="signature">
-                <code>[query public target(anAssociation : uml::Association) : uml::Type = ...]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>uml::Type</code>
             </p>
 
         </div>

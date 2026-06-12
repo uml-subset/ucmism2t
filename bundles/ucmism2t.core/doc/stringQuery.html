@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::target::doc::attributeDoc — Acceleo Documentation</title>
+    <title>ucmism2t::queries::stringQuery — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -43,7 +43,7 @@
             <li>
                 <a href="propertyQuery.html">propertyQuery</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="stringQuery.html">stringQuery</a>
             </li>
             <li>
@@ -85,7 +85,7 @@
             <li>
                 <a href="associationDoc.html">associationDoc</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="attributeDoc.html">attributeDoc</a>
             </li>
             <li>
@@ -225,67 +225,68 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::target::doc::attributeDoc
+            ucmism2t::queries::stringQuery
         </h1>
 
 
-        <div class="description">The documentation of the module anAttribute.</div>
+        <div class="description">Module contains queries with a String as receiver. This includes queries for string manipulation and formatting operations not available in the AQL standard library or that provide a more convenient interface for common patterns used across the generation templates.  Note: This module complements the AQL built-in string operations (replace, replaceAll, indexOf, tokenize, etc.) with additional utilities specific to the UCMIS generation context.  Related modules: - typeQuery: queries that retrieve type names as strings - namedElementQuery: queries that produce string representations of named elements such as paths and qualified names</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/target/doc/attributeDoc.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/stringQuery.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
-        <h2>Template Summary</h2>
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+        <h2>Query Summary</h2>
         <table class="summary-table">
             <thead>
-                <tr><th>Visibility</th><th>Name</th><th>Description</th></tr>
+                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
             </thead>
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#processAttributeDoc"><code>processAttributeDoc(anAttribute)</code></a>
-                        
-                        
+                    <td><code>String</code></td>
+                    <td><a href="#u_removeEmptyLines"><code>u_removeEmptyLines(txt)</code></a>
                         
                     </td>
-                    <td>Processses an attribute.</td>
+                    <td>Returns the given text with consecutive empty or blank lines collapsed into a single newline. Removes lines consisting only of horizontal whitespace (spaces, tabs) between two line breaks. Note that \\h (horizontal whitespace character class) is a Java regex extension — it works in Acceleo since the underlying engine is Java&#39;s java.util.regex, but it is not standard POSIX regex.</td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- ═══════════════════════════════════════════ Query summary table -->
-
         <!-- ══════════════════════════════════════════ Template detail -->
-        <h2>Template Detail</h2>
-        <div class="element-detail" id="processAttributeDoc">
+
+        <!-- ═════════════════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_removeEmptyLines">
             <h3>
-                <span class="kind-badge kind-template">template</span>
+                <span class="kind-badge kind-query">query</span>
                 <span class="visibility public">public</span>
-                
-                
-                processAttributeDoc
+                u_removeEmptyLines
             </h3>
 
             <div class="signature">
-                <code>[template public processAttributeDoc(anAttribute : uml::Property)]</code>
+                <code>[query public u_removeEmptyLines(txt : String) : String = ...]</code>
             </div>
 
 
-            <div class="description">Processses an attribute.</div>
+            <div class="description">Returns the given text with consecutive empty or blank lines collapsed into a single newline. Removes lines consisting only of horizontal whitespace (spaces, tabs) between two line breaks. Note that \\h (horizontal whitespace character class) is a Java regex extension — it works in Acceleo since the underlying engine is Java&#39;s java.util.regex, but it is not standard POSIX regex.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
-                <dt><code>anAttribute</code> <span class="param-type">: uml::Property</span></dt>
-                <dd>aProperty</dd>
+                <dt><code>txt</code> <span class="param-type">: String</span></dt>
+                <dd>txt - The string from which empty lines are to be removed.</dd>
             </dl>
 
-        </div>
+            <h4>Returns</h4>
+            <p><code>String</code>
+            </p>
 
-        <!-- ═════════════════════════════════════════════ Query detail -->
+        </div>
 
     </main>
 </div>

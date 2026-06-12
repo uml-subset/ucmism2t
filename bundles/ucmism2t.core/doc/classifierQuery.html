@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::target::xsd::modelXsdFile — Acceleo Documentation</title>
+    <title>ucmism2t::queries::classifierQuery — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <li>
                 <a href="associationQuery.html">associationQuery</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="classifierQuery.html">classifierQuery</a>
             </li>
             <li>
@@ -208,7 +208,7 @@
             <li>
                 <a href="enumerationXsd.html">enumerationXsd</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="modelXsdFile.html">modelXsdFile</a>
             </li>
             <li>
@@ -225,284 +225,167 @@
         <!-- ═══════════════════════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::target::xsd::modelXsdFile
+            ucmism2t::queries::classifierQuery
         </h1>
 
 
-        <div class="description">All templates in the *Xsd.mtl modules generate XML Schema.</div>
+        <div class="description">Module contains all model queries.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
                 <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/target/xsd/modelXsdFile.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/classifierQuery.mtl</code></td></tr>
         </table>
 
         <!-- ══════════════════════════════════════════ Template summary table -->
-        <h2>Template Summary</h2>
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+        <h2>Query Summary</h2>
         <table class="summary-table">
             <thead>
-                <tr><th>Visibility</th><th>Name</th><th>Description</th></tr>
+                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
             </thead>
             <tbody>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#TprocessModelXsd"><code>TprocessModelXsd(aModel)</code></a>
-                        
-                        
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#Xu_subClassesOrSubDataTypes"><code>Xu_subClassesOrSubDataTypes(aClassifier)</code></a>
                         
                     </td>
-                    <td>Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</td>
+                    <td>Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</td>
                 </tr>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#processModelXsd"><code>processModelXsd(aModel)</code></a>
-                        
-                        
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#u_subClassesOrSubDataTypes"><code>u_subClassesOrSubDataTypes(aClassifier)</code></a>
                         
                     </td>
-                    <td><span class="no-doc">—</span></td>
+                    <td>Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</td>
                 </tr>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdHeader"><code>xsdHeader(aModel)</code></a>
-                        
-                        
+                    <td><code>OrderedSet(uml::Classifier)</code></td>
+                    <td><a href="#u_superClassifiers"><code>u_superClassifiers(aClassifier)</code></a>
                         
                     </td>
-                    <td><span class="no-doc">—</span></td>
+                    <td>Returns an ordered set of all super classifiers of a classifier, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. Covers all classifier subtypes including uml::Class, uml::DataType, uml::Interface, uml::Signal, uml::Component, etc. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aClassifier itself as seed; the lambda c.general is evaluated starting from aClassifier, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.</td>
                 </tr>
                 <tr>
                     <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdVersion"><code>xsdVersion(aModel)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdFooter"><code>xsdFooter(aModel)</code></a>
-                        
-                        
+                    <td><code>OrderedSet(uml::Property)</code></td>
+                    <td><a href="#u_attributes"><code>u_attributes(aClassifier)</code></a>
                         
                     </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdGenerationMessage"><code>xsdGenerationMessage(aModel)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdModelIdentificationComment"><code>xsdModelIdentificationComment(aModel)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><a href="#xsdWrapper"><code>xsdWrapper(aModel)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td><span class="no-doc">—</span></td>
+                    <td>Returns an ordered set of owned attributes of the specified classifier, sorted by attribute name. Supports uml::Class and uml::DataType only — returns an empty ordered set for any other classifier type. Excludes association ends. Note: See the overloaded, strongly typed variant for classes and data types: u_attributes(uml::Class), u_attributes(uml::DataType).</td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- ═══════════════════════════════════════════ Query summary table -->
-
         <!-- ══════════════════════════════════════════ Template detail -->
-        <h2>Template Detail</h2>
-        <div class="element-detail" id="TprocessModelXsd">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                TprocessModelXsd
-            </h3>
-
-            <div class="signature">
-                <code>[template public TprocessModelXsd(aModel : uml::Model)]</code>
-            </div>
-
-
-            <div class="description">Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>aModel a model</dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="processModelXsd">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                processModelXsd
-            </h3>
-
-            <div class="signature">
-                <code>[template public processModelXsd(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdHeader">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdHeader
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdHeader(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdVersion">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdVersion
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdVersion(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdFooter">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdFooter
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdFooter(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdGenerationMessage">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdGenerationMessage
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdGenerationMessage(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdModelIdentificationComment">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdModelIdentificationComment
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdModelIdentificationComment(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="xsdWrapper">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdWrapper
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdWrapper(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-        </div>
 
         <!-- ═════════════════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="Xu_subClassesOrSubDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                Xu_subClassesOrSubDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public Xu_subClassesOrSubDataTypes(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier A UML classifier</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_subClassesOrSubDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subClassesOrSubDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subClassesOrSubDataTypes(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct subclasses or sub data types of a classifier, sorted by classifier name. Note: Intended for use with classes and data types. Not tested with other classifier types.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier - A UML classifier whose direct subclasses or</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_superClassifiers">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_superClassifiers
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_superClassifiers(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all super classifiers of a classifier, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. Covers all classifier subtypes including uml::Class, uml::DataType, uml::Interface, uml::Signal, uml::Component, etc. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aClassifier itself as seed; the lambda c.general is evaluated starting from aClassifier, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier - A UML classifier whose full generalization</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Classifier)</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_attributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_attributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_attributes(aClassifier : uml::Classifier) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of owned attributes of the specified classifier, sorted by attribute name. Supports uml::Class and uml::DataType only — returns an empty ordered set for any other classifier type. Excludes association ends. Note: See the overloaded, strongly typed variant for classes and data types: u_attributes(uml::Class), u_attributes(uml::DataType).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>aClassifier - A UML classifier (class or data type) whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>OrderedSet(uml::Property)</code>
+            </p>
+
+        </div>
 
     </main>
 </div>

@@ -20,6 +20,36 @@
         <h3><a href="index.html">Modules</a></h3>
         <ul>
             <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
                 <a href="h2.html">h2</a>
             </li>
             <li>
@@ -32,7 +62,7 @@
                 <a href="representation.html">representation</a>
             </li>
             <li>
-                <a href="modelQuery.html">modelQuery</a>
+                <a href="oldModelQuery.html">oldModelQuery</a>
             </li>
             <li>
                 <a href="propertiesQuery.html">propertiesQuery</a>
@@ -187,12 +217,6 @@
             <li>
                 <a href="testFile.html">testFile</a>
             </li>
-            <li>
-                <a href="testFile2.html">testFile2</a>
-            </li>
-            <li>
-                <a href="testFile3.html">testFile3</a>
-            </li>
         </ul>
     </aside>
 
@@ -205,11 +229,11 @@
         </h1>
 
 
-        <div class="description">The documentation of the module textBlocks.</div>
+        <div class="description">Module contains templates for generating the PlantUml code for UML diagrams.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
-                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
             <tr><th>Source</th><td><code>ucmism2t/templates/target/doc/puDiagram.mtl</code></td></tr>
         </table>
@@ -224,15 +248,6 @@
                 <tr>
                     <td><span class="visibility public">public</span></td>
                     <td><a href="#pu_itemDefinition"><code>pu_itemDefinition(item, attributes, multiplicity, packageName, color, fontColor)</code></a>
-                        
-                        
-                        
-                    </td>
-                    <td>Creates a UML diagram for items in PlantUML code. Items are classes or data types. Different groups of items have certain colors. A convenient context diagram of an item can be displayed with mainItemsLinks=all, mainItemsAttributes=all, mainItemsInheritance=true, associationToSuperclasses=false, packageName=other, designPatterns=true, otherSpecifications=true.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><a href="#e_removeEmptyLine"><code>e_removeEmptyLine(txt)</code></a>
                         
                         
                         
@@ -279,62 +294,6 @@
         </table>
 
         <!-- ═══════════════════════════════════════════ Query summary table -->
-        <h2>Query Summary</h2>
-        <table class="summary-table">
-            <thead>
-                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#e_associatedClasses"><code>e_associatedClasses(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of associated classes, sorted by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Class)</code></td>
-                    <td><a href="#e_associatedClassesWithoutSuperClass"><code>e_associatedClassesWithoutSuperClass(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of associated classes without the super class, sorted by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Property)</code></td>
-                    <td><a href="#e_using"><code>e_using(aDataType)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of item (class or data type) attributes that use the specified data type, sorted by item name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>Sequence(uml::Class)</code></td>
-                    <td><a href="#e_classesUsing"><code>e_classesUsing(aDataType)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of classes that use the specified data type, sorted by class name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>Sequence(uml::DataType)</code></td>
-                    <td><a href="#e_dataTypesUsing"><code>e_dataTypesUsing(aDataType)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of data types which use the specified data type, sorted by data type name.</td>
-                </tr>
-                <tr>
-                    <td><span class="visibility public">public</span></td>
-                    <td><code>OrderedSet(uml::Association)</code></td>
-                    <td><a href="#e_associations2"><code>e_associations2(aClass)</code></a>
-                        
-                    </td>
-                    <td>Returns an ordered set of associations of a class sorted by the associated class name.</td>
-                </tr>
-            </tbody>
-        </table>
 
         <!-- ══════════════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
@@ -352,43 +311,20 @@
             </div>
 
 
-            <div class="description">Creates a UML diagram for items in PlantUML code. Items are classes or data types. Different groups of items have certain colors. A convenient context diagram of an item can be displayed with mainItemsLinks=all, mainItemsAttributes=all, mainItemsInheritance=true, associationToSuperclasses=false, packageName=other, designPatterns=true, otherSpecifications=true.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>item</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd>mainItems are items with main focus. Automatically all relationships between these elements are displayed,</dd>
+                <dd><span class="no-doc">No description.</span></dd>
                 <dt><code>attributes</code> <span class="param-type">: String</span></dt>
-                <dd>mainItemsLinks specifies which links are displayed.</dd>
+                <dd><span class="no-doc">No description.</span></dd>
                 <dt><code>multiplicity</code> <span class="param-type">: Boolean</span></dt>
-                <dd>mainItemsAttributes specifies which attributes of main items are displayed. Allowed values are:</dd>
+                <dd><span class="no-doc">No description.</span></dd>
                 <dt><code>packageName</code> <span class="param-type">: String</span></dt>
-                <dd>mainItemsDataTypes specifies which related data types of main item attributes are displayed.</dd>
+                <dd><span class="no-doc">No description.</span></dd>
                 <dt><code>color</code> <span class="param-type">: String</span></dt>
-                <dd>mainItemsInheritance specifies if super items and sub items of main items are displayed.</dd>
+                <dd><span class="no-doc">No description.</span></dd>
                 <dt><code>fontColor</code> <span class="param-type">: String</span></dt>
-                <dd>mainItemsMultiplicity specifies if the multiplicities of association ends (in case of classes) and</dd>
-            </dl>
-
-        </div>
-        <div class="element-detail" id="e_removeEmptyLine">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                e_removeEmptyLine
-            </h3>
-
-            <div class="signature">
-                <code>[template public e_removeEmptyLine(txt : String)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>txt</code> <span class="param-type">: String</span></dt>
                 <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
@@ -523,157 +459,6 @@
         </div>
 
         <!-- ═════════════════════════════════════════════ Query detail -->
-        <h2>Query Detail</h2>
-        <div class="element-detail" id="e_associatedClasses">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_associatedClasses
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_associatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of associated classes, sorted by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass An object of type class.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="e_associatedClassesWithoutSuperClass">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_associatedClassesWithoutSuperClass
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_associatedClassesWithoutSuperClass(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of associated classes without the super class, sorted by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass An object of type association.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="e_using">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_using
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_using(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of item (class or data type) attributes that use the specified data type, sorted by item name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Property)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="e_classesUsing">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_classesUsing
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_classesUsing(aDataType : uml::DataType) : Sequence(uml::Class) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of classes that use the specified data type, sorted by class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd>aClass An object of type DataType.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>Sequence(uml::Class)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="e_dataTypesUsing">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_dataTypesUsing
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_dataTypesUsing(aDataType : uml::DataType) : Sequence(uml::DataType) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of data types which use the specified data type, sorted by data type name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd>aClass An object of type DataType.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>Sequence(uml::DataType)</code>
-            </p>
-
-        </div>
-        <div class="element-detail" id="e_associations2">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                e_associations2
-            </h3>
-
-            <div class="signature">
-                <code>[query public e_associations2(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
-            </div>
-
-
-            <div class="description">Returns an ordered set of associations of a class sorted by the associated class name.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>aClass An object of type class.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p><code>OrderedSet(uml::Association)</code>
-            </p>
-
-        </div>
 
     </main>
 </div>

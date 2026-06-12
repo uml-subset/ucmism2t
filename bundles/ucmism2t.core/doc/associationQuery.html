@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::associationQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li class="active">
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="h2.html">h2</a>
+            </li>
+            <li>
+                <a href="m2t.html">m2t</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="propertiesQuery.html">propertiesQuery</a>
+            </li>
+            <li>
+                <a href="ucmisUtility.html">ucmisUtility</a>
+            </li>
+            <li>
+                <a href="h.html">h</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="test4.html">test4</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::associationQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class) and filtering associations for diagram generation purposes.  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/associationQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template summary table -->
+
+        <!-- ═══════════════════════════════════════════ Query summary table -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Visibility</th><th>Return Type</th><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#Xu_ownedEndClass"><code>Xu_ownedEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the source class of a binary association — the class that owns the navigable end via ownedAttribute. Uses memberEnd to ensure correct navigation regardless of association ownership pattern (directed, bidirectional, or non-navigable).</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#OKu_ownedEndClass"><code>OKu_ownedEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the type of the first owned end of a binary directed association, cast to uml::Class. Intended for associations where exactly one end is owned by the association (i.e. the non-navigable end in a directed binary association). The caller must ensure the owned end&#39;s type is a uml::Class; otherwise oclAsType() will fail at runtime. --- AQL operations used: anAssociation.ownedEnd        - EStructuralFeature on uml::Association: the ordered set of association ends owned by the association itself (as opposed to ends owned by the participant classifiers). -&gt;first()                     - Returns the first element of the ordered set as a single object. .type                         - EStructuralFeature on uml::TypedElement: the classifier typing this association end. .oclAsType(uml::Class)        - Casts the type to uml::Class. Throws a runtime error if the type is not a uml::Class instance.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#Xu_otherEndClass"><code>Xu_otherEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the target class of a binary association — the class at the end owned by the association itself (ownedEnd). Uses memberEnd to ensure correct navigation regardless of association ownership pattern (directed, bidirectional, or non-navigable).</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#OKu_otherEndClass"><code>OKu_otherEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the type of the non-owned end of a binary directed association, cast to uml::Class. Navigates from the first owned end to its opposite end via getOtherEnd(), then returns that end&#39;s type. Intended for binary associations only; behaviour is undefined for n-ary associations. The caller must ensure the other end&#39;s type is a uml::Class; otherwise oclAsType() will fail at runtime. --- AQL operations used: anAssociation.ownedEnd        - EStructuralFeature on uml::Association: the ordered set of association ends owned by the association itself. -&gt;first()                     - Returns the first element of the ordered set as a single object (a uml::Property). .getOtherEnd()                - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; called with explicit parentheses in AQL. .type                         - EStructuralFeature on uml::TypedElement: the classifier typing this association end. .oclAsType(uml::Class)        - Casts the type to uml::Class. Throws a runtime error if the type is not a uml::Class instance.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#X2u_ownedEndClass"><code>X2u_ownedEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the source class of a binary directed association. The source end is owned by the association itself (ownedEnd), and its type is the source class. Note: Intended for use with binary directed associations only. See: u_otherEndClass(uml::Association) - Returns the target class.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#X2u_otherEndClass"><code>X2u_otherEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the target class of a binary directed association. The target end is owned by the source class via ownedAttribute (memberEnd minus ownedEnd), and its type is the target class. Note: Intended for use with binary directed associations only. See: u_ownedEndClass(uml::Association) - Returns the source class.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Property</code></td>
+                    <td><a href="#u_ownedEnd"><code>u_ownedEnd(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the source (subject) end of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The source end is the subject end — owned by the association itself (ownedEnd) — as opposed to the target (object) end, which is owned by the source class via ownedAttribute. Note: Intended for use with binary directed associations only. See: u_otherEnd(uml::Association) - Returns the target (object) end.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Property</code></td>
+                    <td><a href="#u_otherEnd"><code>u_otherEnd(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the target (object) end of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The target end is the object end — owned by the source class via ownedAttribute (memberEnd minus ownedEnd) — as opposed to the source (subject) end, which is owned by the association itself. Note: Intended for use with binary directed associations only. See: u_ownedEnd(uml::Association) - Returns the source (subject) end.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#u_ownedEndClass"><code>u_ownedEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the source (subject) class of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The source class is the subject — the class from which the association originates. Delegates to u_ownedEnd() for end navigation and casts its type to uml::Class. Note: Intended for use with binary directed associations only. See: u_otherEndClass(uml::Association) - Returns the target (object) class.</td>
+                </tr>
+                <tr>
+                    <td><span class="visibility public">public</span></td>
+                    <td><code>uml::Class</code></td>
+                    <td><a href="#u_otherEndClass"><code>u_otherEndClass(anAssociation)</code></a>
+                        
+                    </td>
+                    <td>Returns the target (object) class of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The target class is the object — the class to which the association points. Delegates to u_otherEnd() for end navigation and casts its type to uml::Class. Note: Intended for use with binary directed associations only. See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ══════════════════════════════════════════ Template detail -->
+
+        <!-- ═════════════════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="Xu_ownedEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                Xu_ownedEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public Xu_ownedEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the source class of a binary association — the class that owns the navigable end via ownedAttribute. Uses memberEnd to ensure correct navigation regardless of association ownership pattern (directed, bidirectional, or non-navigable).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary association whose source class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="OKu_ownedEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                OKu_ownedEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the type of the first owned end of a binary directed association, cast to uml::Class. Intended for associations where exactly one end is owned by the association (i.e. the non-navigable end in a directed binary association). The caller must ensure the owned end&#39;s type is a uml::Class; otherwise oclAsType() will fail at runtime. --- AQL operations used: anAssociation.ownedEnd        - EStructuralFeature on uml::Association: the ordered set of association ends owned by the association itself (as opposed to ends owned by the participant classifiers). -&gt;first()                     - Returns the first element of the ordered set as a single object. .type                         - EStructuralFeature on uml::TypedElement: the classifier typing this association end. .oclAsType(uml::Class)        - Casts the type to uml::Class. Throws a runtime error if the type is not a uml::Class instance.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML association whose first owned end type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="Xu_otherEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                Xu_otherEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public Xu_otherEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the target class of a binary association — the class at the end owned by the association itself (ownedEnd). Uses memberEnd to ensure correct navigation regardless of association ownership pattern (directed, bidirectional, or non-navigable).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary association whose target class</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="OKu_otherEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                OKu_otherEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the type of the non-owned end of a binary directed association, cast to uml::Class. Navigates from the first owned end to its opposite end via getOtherEnd(), then returns that end&#39;s type. Intended for binary associations only; behaviour is undefined for n-ary associations. The caller must ensure the other end&#39;s type is a uml::Class; otherwise oclAsType() will fail at runtime. --- AQL operations used: anAssociation.ownedEnd        - EStructuralFeature on uml::Association: the ordered set of association ends owned by the association itself. -&gt;first()                     - Returns the first element of the ordered set as a single object (a uml::Property). .getOtherEnd()                - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; called with explicit parentheses in AQL. .type                         - EStructuralFeature on uml::TypedElement: the classifier typing this association end. .oclAsType(uml::Class)        - Casts the type to uml::Class. Throws a runtime error if the type is not a uml::Class instance.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML association whose non-owned end type</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="X2u_ownedEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                X2u_ownedEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public X2u_ownedEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the source class of a binary directed association. The source end is owned by the association itself (ownedEnd), and its type is the source class. Note: Intended for use with binary directed associations only. See: u_otherEndClass(uml::Association) - Returns the target class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="X2u_otherEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                X2u_otherEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public X2u_otherEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the target class of a binary directed association. The target end is owned by the source class via ownedAttribute (memberEnd minus ownedEnd), and its type is the target class. Note: Intended for use with binary directed associations only. See: u_ownedEndClass(uml::Association) - Returns the source class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_ownedEnd">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_ownedEnd
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_ownedEnd(anAssociation : uml::Association) : uml::Property = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the source (subject) end of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The source end is the subject end — owned by the association itself (ownedEnd) — as opposed to the target (object) end, which is owned by the source class via ownedAttribute. Note: Intended for use with binary directed associations only. See: u_otherEnd(uml::Association) - Returns the target (object) end.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Property</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_otherEnd">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_otherEnd
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_otherEnd(anAssociation : uml::Association) : uml::Property = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the target (object) end of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The target end is the object end — owned by the source class via ownedAttribute (memberEnd minus ownedEnd) — as opposed to the source (subject) end, which is owned by the association itself. Note: Intended for use with binary directed associations only. See: u_ownedEnd(uml::Association) - Returns the source (subject) end.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Property</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_ownedEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_ownedEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_ownedEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the source (subject) class of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The source class is the subject — the class from which the association originates. Delegates to u_ownedEnd() for end navigation and casts its type to uml::Class. Note: Intended for use with binary directed associations only. See: u_otherEndClass(uml::Association) - Returns the target (object) class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+        <div class="element-detail" id="u_otherEndClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_otherEndClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_otherEndClass(anAssociation : uml::Association) : uml::Class = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the target (object) class of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The target class is the object — the class to which the association points. Delegates to u_otherEnd() for end navigation and casts its type to uml::Class. Note: Intended for use with binary directed associations only. See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>anAssociation - A UML binary directed association whose</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p><code>uml::Class</code>
+            </p>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -19,11 +19,21 @@
     <aside class="sidebar">
         <h3>Modules</h3>
         <ul>
-                        <li><a href="h2.html">h2</a></li>
+                        <li><a href="associationQuery.html">associationQuery</a></li>
+            <li><a href="classifierQuery.html">classifierQuery</a></li>
+            <li><a href="classQuery.html">classQuery</a></li>
+            <li><a href="dataTypeQuery.html">dataTypeQuery</a></li>
+            <li><a href="elementQuery.html">elementQuery</a></li>
+            <li><a href="modelQuery.html">modelQuery</a></li>
+            <li><a href="packageQuery.html">packageQuery</a></li>
+            <li><a href="propertyQuery.html">propertyQuery</a></li>
+            <li><a href="stringQuery.html">stringQuery</a></li>
+            <li><a href="typeQuery.html">typeQuery</a></li>
+            <li><a href="h2.html">h2</a></li>
             <li><a href="m2t.html">m2t</a></li>
             <li><a href="m2tMaster.html">m2tMaster</a></li>
             <li><a href="representation.html">representation</a></li>
-            <li><a href="modelQuery.html">modelQuery</a></li>
+            <li><a href="oldModelQuery.html">oldModelQuery</a></li>
             <li><a href="propertiesQuery.html">propertiesQuery</a></li>
             <li><a href="ucmisUtility.html">ucmisUtility</a></li>
             <li><a href="h.html">h</a></li>
@@ -75,8 +85,6 @@
             <li><a href="modelXsdFile.html">modelXsdFile</a></li>
             <li><a href="test4.html">test4</a></li>
             <li><a href="testFile.html">testFile</a></li>
-            <li><a href="testFile2.html">testFile2</a></li>
-            <li><a href="testFile3.html">testFile3</a></li>
         </ul>
     </aside>
 
@@ -98,6 +106,96 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td><a href="associationQuery.html">ucmism2t::queries::associationQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/associationQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">10</td>
+                    <td>Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class) and filtering associations for diagram generation purposes.  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML</td>
+                </tr>
+                <tr>
+                    <td><a href="classifierQuery.html">ucmism2t::queries::classifierQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/classifierQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">4</td>
+                    <td>Module contains all model queries.</td>
+                </tr>
+                <tr>
+                    <td><a href="classQuery.html">ucmism2t::queries::classQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/classQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">27</td>
+                    <td>Module contains queries with a UML class as receiver. This includes queries for navigating the class hierarchy (superclasses, subclasses), finding associations, inherited attributes, and class classification.  Note: Queries applicable to both classes and data types are in classifierQuery, since both are subtypes of Classifier.  Related modules: - dataTypeQuery: queries with a UML data type as receiver - classifierQuery: queries with a UML classifier as receiver, applicable to both classes and data types - associationQuery: queries with a UML association as receiver - propertyQuery: queries with a UML property as receiver</td>
+                </tr>
+                <tr>
+                    <td><a href="dataTypeQuery.html">ucmism2t::queries::dataTypeQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/dataTypeQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">9</td>
+                    <td>Module contains queries with a UML data type as receiver. This includes queries for navigating the data type hierarchy (supertypes, subtypes), finding properties that use a data type, and data type classification.  Note: Queries applicable to both classes and data types are in classifierQuery, since both are subtypes of Classifier.  Related modules: - classQuery: queries with a UML class as receiver - classifierQuery: queries with a UML classifier as receiver, applicable to both classes and data types</td>
+                </tr>
+                <tr>
+                    <td><a href="elementQuery.html">ucmism2t::queries::elementQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/elementQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">7</td>
+                    <td>Module contains queries with a UML element or named element as receiver.</td>
+                </tr>
+                <tr>
+                    <td><a href="modelQuery.html">ucmism2t::queries::modelQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/modelQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">7</td>
+                    <td>Module contains queries with a UML model as receiver. This includes queries for retrieving model metadata (acronym, title, version, URI, language), navigating the model structure (main package, all classes, all data types, all packages), and property file access.  Note: The main package is the top-level package of the model as specified by the property MAIN_PACKAGE_NAME. All generation targets operate on the main package rather than the model root directly.  Note: Model metadata is resolved in order of priority: (1) property file value, (2) ModelIdentification data type in the model, (3) built-in fallback value. This allows property file values to override model metadata without modifying the model.  Related modules: - packageQuery: queries with a UML package as receiver, since Model is a subtype of Package in UML - classQuery: queries with a UML class as receiver - dataTypeQuery: queries with a UML data type as receiver</td>
+                </tr>
+                <tr>
+                    <td><a href="packageQuery.html">ucmism2t::queries::packageQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/packageQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">2</td>
+                    <td>Module contains all model queries.</td>
+                </tr>
+                <tr>
+                    <td><a href="propertyQuery.html">ucmism2t::queries::propertyQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/propertyQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">2</td>
+                    <td>Module contains queries with a UML property as receiver. This includes queries for retrieving property metadata (multiplicity, cardinality), classifying properties as attributes or association ends, and navigating to the owning classifier or association.  Note: In UML, association ends are represented as properties. Queries in this module handle both plain attributes (association = null) and association ends (association &lt;&gt; null). The distinction is made explicit in the query documentation where relevant.  Note: Queries that find properties starting from a class or data type are in classQuery and dataTypeQuery respectively, since their receiver is the owning classifier rather than the property itself.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find attributes and association ends of a class - dataTypeQuery: queries with a UML data type as receiver, including queries that find attributes of a data type - associationQuery: queries with a UML association as receiver, since association ends are properties</td>
+                </tr>
+                <tr>
+                    <td><a href="stringQuery.html">ucmism2t::queries::stringQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/stringQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">1</td>
+                    <td>Module contains queries with a String as receiver. This includes queries for string manipulation and formatting operations not available in the AQL standard library or that provide a more convenient interface for common patterns used across the generation templates.  Note: This module complements the AQL built-in string operations (replace, replaceAll, indexOf, tokenize, etc.) with additional utilities specific to the UCMIS generation context.  Related modules: - typeQuery: queries that retrieve type names as strings - namedElementQuery: queries that produce string representations of named elements such as paths and qualified names</td>
+                </tr>
+                <tr>
+                    <td><a href="typeQuery.html">ucmism2t::queries::typeQuery</a>
+                        
+                    </td>
+                    <td class="source-path"><code>ucmism2t/queries/typeQuery.mtl</code></td>
+                    <td class="count">0</td>
+                    <td class="count">2</td>
+                    <td>Module contains queries with a UML type as receiver. This includes queries for retrieving the type name of both regular types and UML primitive types, and for classifying types as primitive or non-primitive.  Note: UML primitive types (String, Integer, Boolean, Real) require special handling since their name property is not directly accessible when loaded as proxies. The queries in this module provide a uniform interface for all type name retrieval regardless of whether the type is a primitive or a regular classifier.  Related modules: - classifierQuery: queries with a UML classifier as receiver, since Classifier is a subtype of Type - classQuery: queries with a UML class as receiver - dataTypeQuery: queries with a UML data type as receiver</td>
+                </tr>
                 <tr>
                     <td><a href="h2.html">ucmism2t::templates::h2</a>
                         
@@ -121,7 +219,7 @@
                         
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/m2tMaster.mtl</code></td>
-                    <td class="count">3</td>
+                    <td class="count">4</td>
                     <td class="count">0</td>
                     <td>Master for generating target languages on the basis of a UML class model  The model should comply to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/</td>
                 </tr>
@@ -135,12 +233,12 @@
                     <td>All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.</td>
                 </tr>
                 <tr>
-                    <td><a href="modelQuery.html">ucmism2t::templates::query::modelQuery</a>
+                    <td><a href="oldModelQuery.html">ucmism2t::templates::query::oldModelQuery</a>
                         
                     </td>
-                    <td class="source-path"><code>ucmism2t/templates/query/modelQuery.mtl</code></td>
-                    <td class="count">3</td>
-                    <td class="count">82</td>
+                    <td class="source-path"><code>ucmism2t/templates/query/oldModelQuery.mtl</code></td>
+                    <td class="count">2</td>
+                    <td class="count">49</td>
                     <td>Module contains all model queries. Queries with prefix &quot;e_&quot; are migrated from Acceleo 3.7. Queries with prefix &quot;u_&quot; are written for Acceleo 4.</td>
                 </tr>
                 <tr>
@@ -158,7 +256,7 @@
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/query/ucmisUtility.mtl</code></td>
                     <td class="count">0</td>
-                    <td class="count">2</td>
+                    <td class="count">1</td>
                     <td>The documentation of the module ucmisUtility.</td>
                 </tr>
                 <tr>
@@ -283,9 +381,9 @@
                         
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/target/doc/puDiagram.mtl</code></td>
-                    <td class="count">6</td>
-                    <td class="count">6</td>
-                    <td>The documentation of the module textBlocks.</td>
+                    <td class="count">5</td>
+                    <td class="count">0</td>
+                    <td>Module contains templates for generating the PlantUml code for UML diagrams.</td>
                 </tr>
                 <tr>
                     <td><a href="puUtilityDoc.html">ucmism2t::templates::target::doc::puUtilityDoc</a>
@@ -321,7 +419,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonld/classJsonld.mtl</code></td>
                     <td class="count">4</td>
                     <td class="count">0</td>
-                    <td>The documentation of the module modelJsonldFile.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="commonJsonld.html">ucmism2t::templates::target::jsonld::commonJsonld</a>
@@ -339,7 +437,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonld/dataTypeJsonld.mtl</code></td>
                     <td class="count">4</td>
                     <td class="count">0</td>
-                    <td>The documentation of the module modelJsonldFile.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="modelJsonldFile.html">ucmism2t::templates::target::jsonld::modelJsonldFile</a>
@@ -348,7 +446,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonld/modelJsonldFile.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>The documentation of the module modelJsonldFile.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="classJsch.html">ucmism2t::templates::target::jsonschema::classJsch</a>
@@ -357,7 +455,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonschema/classJsch.mtl</code></td>
                     <td class="count">6</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td>Module contains templates for JSON Schema.</td>
                 </tr>
                 <tr>
                     <td><a href="commonJsch.html">ucmism2t::templates::target::jsonschema::commonJsch</a>
@@ -366,7 +464,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonschema/commonJsch.mtl</code></td>
                     <td class="count">4</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td>Module contains templates for JSON Schema.</td>
                 </tr>
                 <tr>
                     <td><a href="dataTypeJsch.html">ucmism2t::templates::target::jsonschema::dataTypeJsch</a>
@@ -375,7 +473,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonschema/dataTypeJsch.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>The documentation of the module modelJsonldFile.</td>
+                    <td>Module contains templates for JSON Schema.</td>
                 </tr>
                 <tr>
                     <td><a href="enumerationJsch.html">ucmism2t::templates::target::jsonschema::enumerationJsch</a>
@@ -384,7 +482,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/jsonschema/enumerationJsch.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td>Module contains templates for JSON Schema.</td>
                 </tr>
                 <tr>
                     <td><a href="modelJschFile.html">ucmism2t::templates::target::jsonschema::modelJschFile</a>
@@ -429,7 +527,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/onto/dataTypeOnto.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td><span class="no-doc">—</span></td>
+                    <td>Module contains templates for .</td>
                 </tr>
                 <tr>
                     <td><a href="enumerationOnto.html">ucmism2t::templates::target::onto::enumerationOnto</a>
@@ -454,8 +552,8 @@
                         
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/target/rdf/commonRdf.mtl</code></td>
-                    <td class="count">10</td>
-                    <td class="count">7</td>
+                    <td class="count">9</td>
+                    <td class="count">5</td>
                     <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
@@ -492,7 +590,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/shacl/modelShaclFile.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>All templates in the *Shacl.mtl modules generate a SHACL shape graph.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="associationShex.html">ucmism2t::templates::target::shex::associationShex</a>
@@ -537,7 +635,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/shex/modelShexFile.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>All templates in the *Shex.mtl modules generate XML Schema.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="classXsd.html">ucmism2t::templates::target::xsd::classXsd</a>
@@ -546,7 +644,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/xsd/classXsd.mtl</code></td>
                     <td class="count">2</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="commonXsd.html">ucmism2t::templates::target::xsd::commonXsd</a>
@@ -554,8 +652,8 @@
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/target/xsd/commonXsd.mtl</code></td>
                     <td class="count">2</td>
-                    <td class="count">4</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td class="count">3</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="dataTypeXsd.html">ucmism2t::templates::target::xsd::dataTypeXsd</a>
@@ -564,7 +662,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/xsd/dataTypeXsd.mtl</code></td>
                     <td class="count">2</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="enumerationXsd.html">ucmism2t::templates::target::xsd::enumerationXsd</a>
@@ -573,7 +671,7 @@
                     <td class="source-path"><code>ucmism2t/templates/target/xsd/enumerationXsd.mtl</code></td>
                     <td class="count">1</td>
                     <td class="count">0</td>
-                    <td>Module for generating XML Schema.</td>
+                    <td><span class="no-doc">—</span></td>
                 </tr>
                 <tr>
                     <td><a href="modelXsdFile.html">ucmism2t::templates::target::xsd::modelXsdFile</a>
@@ -598,25 +696,7 @@
                         
                     </td>
                     <td class="source-path"><code>ucmism2t/templates/test/testFile.mtl</code></td>
-                    <td class="count">1</td>
-                    <td class="count">10</td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><a href="testFile2.html">ucmism2t::templates::test::testFile2</a>
-                        
-                    </td>
-                    <td class="source-path"><code>ucmism2t/templates/test/testFile2.mtl</code></td>
-                    <td class="count">1</td>
-                    <td class="count">0</td>
-                    <td><span class="no-doc">—</span></td>
-                </tr>
-                <tr>
-                    <td><a href="testFile3.html">ucmism2t::templates::test::testFile3</a>
-                        
-                    </td>
-                    <td class="source-path"><code>ucmism2t/templates/test/testFile3.mtl</code></td>
-                    <td class="count">1</td>
+                    <td class="count">4</td>
                     <td class="count">0</td>
                     <td><span class="no-doc">—</span></td>
                 </tr>
