@@ -22,6 +22,7 @@ Related modules:
 )/]
 
 [import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::elementQuery/]
 
 [**
 Returns a sequence of inherited attributes of the specified class,
@@ -814,4 +815,73 @@ AQL operations used:
     else
       associations
     endif
+/]
+
+[**
+Returns a sequence of association-end properties owned by the
+specified class that point to a type in a different package.
+
+@param aClass - A UML class whose outgoing cross-package
+                association-end properties are to be retrieved.
+/]
+[query public u_associationEndsToOtherPackages(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+  ->select(p | p.association <> null
+            and p.type <> null
+            and p.u_nearestPackage() <> p.type.u_nearestPackage())
+/]
+
+
+[**
+Returns a sequence of association-end properties from other
+packages that reference the specified class.
+
+@param aClass - A UML class that is referenced by the properties.
+/]
+[query public u_associationEndsFromOtherPackages(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.u_model().eAllContents(uml::Property)
+  ->select(p | p.association <> null
+            and p.type = aClass
+            and p.u_nearestPackage() <> aClass.u_nearestPackage())
+/]
+
+[**
+Returns the association-end properties owned by the specified
+class, i.e. navigable association ends declared on this class.
+
+@param aClass - A UML class whose association-end properties
+                are to be retrieved.
+/]
+[query public u_associationEndProperties(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+  ->select(p | p.association <> null)
+/]
+
+[**
+Returns an ordered set of all subclasses of the specified class
+including the class itself, sorted by name.
+
+@param aClass - A UML class.
+/]
+[query public u_allSubClassesPlusSelf(
+  aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSubClasses()
+  ->including(aClass)
+  ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all non-abstract subclasses of the
+specified class including the class itself if non-abstract,
+sorted by name.
+
+@param aClass - A UML class.
+/]
+[query public u_allConcreteSubClassesPlusSelf(
+  aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSubClassesPlusSelf()
+  ->reject(c | c.isAbstract)
 /]

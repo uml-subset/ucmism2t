@@ -9,3 +9,28 @@ Module contains all model queries.
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[**
+Returns the classes directly owned by the specified package,
+sorted by name.
+
+@param aPackage - A UML package whose directly owned classes
+                  are to be retrieved.
+/]
+[query public u_childClasses(
+  aPackage : uml::Package) : Sequence(uml::Class) =
+  aPackage.ownedType->filter(uml::Class)
+  ->sortedBy(c | c.name)
+/]
+
+[**
+Returns the packages directly owned by the specified package,
+sorted by name.
+
+@param aPackage - A UML package whose directly owned packages
+                  are to be retrieved.
+/]
+[query public u_childPackages(
+  aPackage : uml::Package) : Sequence(uml::Package) =
+  aPackage.nestedPackage
+  ->sortedBy(p | p.name)
+/]

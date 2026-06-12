@@ -190,3 +190,16 @@ AQL operations used:
 [query public u_superDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
   aDataType->closure(c | c.general->filter(uml::DataType))
 /]
+
+[**
+Returns true if the specified data type is a general (parent)
+data type, i.e. it has at least one specializing sub data type.
+
+@param aDataType - A UML data type to check.
+/]
+[query public u_isGeneralDataType(
+  aDataType : uml::DataType) : Boolean =
+  aDataType.eInverse(uml::Generalization)
+  ->select(g | g.general = aDataType)
+  ->notEmpty()
+/]

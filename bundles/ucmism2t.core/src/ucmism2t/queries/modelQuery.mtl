@@ -87,19 +87,80 @@ AQL operations used:
 /]
 
 [**
-Returns an ordered set of all abstraction supplier classes and data
-types in the model, sorted by name. Collects all abstraction
-dependencies in the model, gathers their suppliers, and retains only
-those that are exactly classes or data types.
+Returns an ordered set of all abstraction suplpier classes or data
+types contained in the specified model, without duplicates.
 
-@param aModel - A UML model whose abstraction supplier classes and
-                data types are to be retrieved.
+@param aModel - A UML model.
 /]
-[query public u_abstractionSupplierClassifiers(
+[query public u_allAbstractionSuppliers(
   aModel : uml::Model) : OrderedSet(uml::Classifier) =
-  aModel.eAllContents(uml::Abstraction)
-    ->collect(a | a.supplier)
-    ->select(e | e.oclIsTypeOf(uml::Class) or e.oclIsKindOf(uml::DataType))
-    ->asOrderedSet()
+  aModel.eAllContents(uml::Abstraction).supplier
+  ->filter({uml::Class | uml::DataType})
+  ->asOrderedSet()
+/]
+
+[**
+Returns an ordered set of all abstraction client classes or data
+types contained in the specified model, without duplicates.
+
+@param aModel - A UML model.
+/]
+[query public u_allAbstractionClients(
+  aModel : uml::Model) : OrderedSet(uml::Classifier) =
+  aModel.eAllContents(uml::Abstraction).client
+  ->filter({uml::Class | uml::DataType})
+  ->asOrderedSet()
+/]
+
+[**
+Returns a sequence of all classes contained in the specified
+model, sorted by name.
+
+@param aModel - A UML model.
+/]
+[query public u_allClasses(
+  aModel : uml::Model) : Sequence(uml::Class) =
+  aModel.eAllContents(uml::Class)
+  ->sortedBy(c | c.name)
+/]
+
+[**
+Returns a sequence of all proper data types contained in the
+specified model, excluding primitive types and enumerations,
+sorted by name.
+
+@param aModel - A UML model.
+/]
+[query public u_allDataTypes(
+  aModel : uml::Model) : Sequence(uml::DataType) =
+  aModel.eAllContents(uml::DataType)
+  ->reject(dt | dt.oclIsKindOf(uml::Enumeration)
+             or dt.oclIsKindOf(uml::PrimitiveType))
+  ->sortedBy(dt | dt.name)
+/]
+
+[**
+Returns a sequence of all enumerations contained in the specified
+model, sorted by name.
+
+@param aModel - A UML model.
+/]
+[query public u_allEnumerations(
+  aModel : uml::Model) : Sequence(uml::Enumeration) =
+  aModel.eAllContents(uml::Enumeration)
+  ->sortedBy(e | e.name)
+/]
+
+[**
+Returns a sequence of all packages contained in the specified
+model, excluding the model itself, sorted by name.
+
+@param aModel - A UML model.
+/]
+[query public u_allPackages(
+  aModel : uml::Model) : Sequence(uml::Package) =
+  aModel.eAllContents(uml::Package)
+  ->reject(p | p.oclIsKindOf(uml::Model))
+  ->sortedBy(p | p.name)
 /]
 

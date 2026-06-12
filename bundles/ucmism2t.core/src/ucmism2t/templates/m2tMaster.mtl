@@ -32,9 +32,11 @@ data type with detailed information.
 @main
 /]
 [template public processModel(aModel : uml::Model)]
+	[aModel.initProperties()/]
+	[aModel.writeConfigurationReport()/]
   [aModel.writeModelProperties()/]
   [aModel.writeModelPropertiesPy()/]
-  MODEL :  [aModel.name/]
+
   [if (aModel.name = 'Mapping')]
     	[aModel.encodingMapping()/]
     	[aModel.processModelTest()/]
@@ -64,7 +66,6 @@ data type with detailed information.
       		[aModel.processModelTest()/]
     [/if]
   [/if]
-      		[aModel.processModelTest()/]
 [/template]
 
 [template public writeModelProperties(aModel : uml::Model)]
@@ -97,4 +98,11 @@ data type with detailed information.
     model_title = '[aModel.e_modelTitle()/]'
     repository_url = '['REPOSITORY_URL'.getPropertyValue()/]'
   [/file]
+[/template]
+
+[template public writeConfigurationReport(aModel : uml::Model)]
+[file ('_configurationReport.txt', overwrite, 'UTF-8')]
+  === ConfigurationService Report ===
+	[aModel.getConfigurationReport()/]
+[/file]
 [/template]

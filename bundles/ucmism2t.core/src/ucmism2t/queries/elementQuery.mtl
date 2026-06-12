@@ -30,9 +30,19 @@ containment hierarchy. AQL equivalent of eContainer().
 /]
 [query public u_parent(
   anElement : uml::Element) : uml::Element =
-  anElement.ancestors(uml::Element)->reverse()->first()
+  anElement.ancestors(uml::Element)->first()
 /]
 
+[**
+Returns the direct parent of the specified named element in the UML
+containment hierarchy. AQL equivalent of eContainer().
+
+@param aNamedElement - A UML named element whose direct parent is to be retrieved.
+/]
+[query public u_parent(
+  aNamedElement : uml::NamedElement) : uml::NamedElement =
+  aNamedElement.ancestors(uml::NamedElement)->first()
+/]
 
 [**
 Returns the nearest package that directly or indirectly owns the
@@ -47,6 +57,18 @@ the first uml::Package ancestor.
   anElement.ancestors(uml::Package)->first()
 /]
 
+[**
+Returns the nearest package that directly or indirectly owns the
+specified named element, by navigating up the containment hierarchy to
+the first uml::Package ancestor.
+
+@param aNamedElement - A UML named element whose nearest containing package
+                   is to be retrieved.
+/]
+[query public u_nearestPackage(
+  aNamedElement : uml::NamedElement) : uml::Package =
+  aNamedElement.ancestors(uml::Package)->first()
+/]
 
 [**
 Returns the qualified name of the specified element in the form
@@ -58,4 +80,21 @@ Returns the qualified name of the specified element in the form
 [query public u_packageQualifiedName(
   anElement : uml::NamedElement) : String =
   anElement.u_nearestPackage().name + '::' + anElement.name
+/]
+
+[**
+Returns the body of the first owned comment of the specified
+element if it exists, trimmed of leading and trailing spaces,
+or a warning message otherwise.
+
+@param anElement - A UML element whose first comment body
+                   is to be retrieved.
+/]
+[query public u_commentBody(
+  anElement : uml::Element) : String =
+  if anElement.ownedComment->notEmpty() then
+    anElement.ownedComment->first().body.trim()
+  else
+    'WARNING: ELEMENT HAS NO DOCUMENTATION!'
+  endif
 /]

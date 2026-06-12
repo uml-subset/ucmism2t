@@ -60,7 +60,7 @@ public class DateTimeService {
      */
 //    public String getCurrentDateTime(Object object) {
       public String getCurrentDateTime(EObject context) {
-        return LocalDateTime.now().format(ISO_FORMATTER);
+          return LocalDateTime.now().format(ISO_FORMATTER);
     }
     
     /**

@@ -36,33 +36,35 @@ Related modules:
 [**
 Returns the cardinality of a property in ShEx syntax:
 "?" for 0..1, "*" for 0..*, "+" for 1..*, "" for all other cases.
-Note: upperBound() returns '*' for unlimited multiplicity as per
-canonical XMI serialization used by Eclipse UML2.
----
-AQL operations used:
-  aProperty.lowerBound()   - Java method on uml::Property: returns the
-                             lower bound of the multiplicity as Integer.
-                             Not an EStructuralFeature; called with
-                             explicit parentheses in AQL.
-  aProperty.upperBound()   - Java method on uml::Property: returns the
-                             upper bound of the multiplicity. Returns '*'
-                             for unlimited multiplicity as per canonical
-                             XMI. Not an EStructuralFeature; called with
-                             explicit parentheses in AQL.
+Note: in canonical XMI serialization, unlimited upper bound is
+stored as '*' (String), not -1.
 
 @param aProperty - A UML property whose multiplicity is to be
                    expressed as a ShEx cardinality string.
 /]
-[query public u_shexCardinality(aProperty : uml::Property) : String =
-  if aProperty.lowerBound() = 0 and aProperty.upperBound() = 1 then
+[query public u_shexCardinality(
+  aProperty : uml::Property) : String =
+  if aProperty.lower = 0 and aProperty.upper = 1 then
     '?'
-  else if aProperty.lowerBound() = 0 and aProperty.upperBound() = '*' then
+  else if aProperty.lower = 0 and aProperty.upper = '*' then
     '*'
-  else if aProperty.lowerBound() = 1 and aProperty.upperBound() = '*' then
+  else if aProperty.lower = 1 and aProperty.upper = '*' then
     '+'
   else
     ''
   endif
   endif
   endif
+/]
+
+[**
+Returns the multiplicity of the specified property as a string
+in the format "lower..upper", e.g. "0..1", "1..*".
+
+@param aProperty - A UML property whose multiplicity is to be
+                   retrieved.
+/]
+[query public u_docMultiplicity(
+  aProperty : uml::Property) : String =
+  aProperty.lower.toString() + '..' + aProperty.upper.toString()
 /]

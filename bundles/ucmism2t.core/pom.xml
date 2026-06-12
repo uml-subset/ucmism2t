@@ -27,6 +27,25 @@
     <description>Core transformation logic with Acceleo templates and Java services</description>
     
     <build>
+        <plugins>
+            <!--
+              Instructs Tycho to ignore optional dependencies that
+              cannot be resolved in the build target platform.
+              Required because acceleodoc.core is declared as an
+              optional dependency in MANIFEST.MF (resolution:=optional)
+              and is only available in the IDE, not in the Maven build.
+            -->
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho.version}</version>
+                <configuration>
+                    <dependency-resolution>
+                        <optionalDependencies>ignore</optionalDependencies>
+                    </dependency-resolution>
+                </configuration>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <!--

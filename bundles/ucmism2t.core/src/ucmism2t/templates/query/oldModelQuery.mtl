@@ -13,7 +13,7 @@ Queries with prefix "u_" are written for Acceleo 4.
 [import ucmism2t::queries::associationQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::dataTypeQuery/]
-[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
 
 [**
@@ -61,6 +61,7 @@ of a property key, sorted by value.
 
 @param propertyKey A property key string
 /]
+[comment] NOT USED
 [query public e_propertyValues(
 		propertyKey : String) : OrderedSet(String) =
 	let propertyValue : String = propertyKey.getPropertyValue()
@@ -75,7 +76,7 @@ of a property key, sorted by value.
 			->asOrderedSet()
 	endif
 /]
-
+[/comment]
 [**
 Returns an ordered set of package objects, sorted by package name,
 for the specified ordered set of package names.
@@ -213,54 +214,43 @@ Returns a sequence of all classes in the model, sorted by class name.
 
 @param aModel A UML model
 /]
-[query public e_allClasses(aModel : uml::Model) : Sequence(uml::Class) =
+[comment] [query public e_allClasses(aModel : uml::Model) : Sequence(uml::Class) =
 	aModel.eAllContents(uml::Class)->sortedBy(c | c.name)
 /]
-
+[/comment]
 [**
 Returns a sequence of all data types in the model,
 sorted by data type name.
 
 @param aModel A UML model
 /]
-[query public e_allDataTypes(
+[comment] [query public e_allDataTypes(
 		aModel : uml::Model) : Sequence(uml::DataType) =
 	aModel.eAllContents(uml::DataType)->sortedBy(d | d.name)
 /]
-
+[/comment]
 [**
 Returns a sequence of all enumerations in the model,
 sorted by enumeration name.
 
 @param aModel A UML model
 /]
-[query public e_allEnumerations(
+[comment] [query public e_allEnumerations(
 		aModel : uml::Model) : Sequence(uml::Enumeration) =
 	aModel.eAllContents(uml::Enumeration)->sortedBy(e | e.name)
 /]
-
+[/comment]
 [**
 Returns a sequence of all packages in the model,
 sorted by package name.
 
 @param aModel A UML model
 /]
-[query public e_allPackages(
+[comment] [query public e_allPackages(
 		aModel : uml::Model) : Sequence(uml::Package) =
 	aModel.eAllContents(uml::Package)->sortedBy(p | p.name)
 /]
-
-[**
-Returns a sequence of all abstraction client classes or data types in the model.
-
-@param aModel A UML model
-/]
-[query public u_allAbstractionClients(
-		aModel : uml::Model) : Sequence(uml::NamedElement) =
-	aModel.eAllContents(uml::Abstraction)
-		->collect(n | n.client)
-		->filter({uml::Class | uml::DataType})
-/]
+[/comment]
 
 [**
 Returns a sequence of all top-level super classes in a package,
@@ -284,12 +274,12 @@ Note: A simpler approach using eInverse(Association) may be possible.
 
 @param aClass A UML class
 /]
-[query public e_associationProperties(
+[comment] [query public e_associationProperties(
 		aClass : uml::Class) : Sequence(uml::Property) =
 	aClass.eContents(uml::Property)
 		->select(temp12 | temp12.association <> null)
 /]
-
+[/comment]
 [**
 Returns a sequence of association-end properties from other packages
 that reference the specified class.
@@ -502,13 +492,13 @@ in the format "lower..upper", with -1 replaced by "*".
 
 @param aProperty A UML property
 /]
-[query public e_multiplicity(aProperty : uml::Property) : String =
+[comment] [query public e_multiplicity(aProperty : uml::Property) : String =
 	aProperty.lower.toString()
 		.concat('..')
 		.concat(aProperty.upper.toString())
 		.replaceAll('-1', '*')
 /]
-
+[/comment]
 [comment]
 [query public A3e_allSuperclasses(
 		aClass : uml::Class) : Sequence(uml::Class) =
@@ -941,63 +931,63 @@ Returns the class at the owned end of an association.
 
 @param anAssociation A UML association
 /]
-[query public e_ownedEndClass(
+[comment] [query public e_ownedEndClass(
 		anAssociation : uml::Association) : uml::Class =
 	anAssociation.ownedEnd->first().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the class at the source (owned) end of an association.
 
 @param anAssociation A UML association
 /]
-[query public sourceClass(
+[comment] [query public sourceClass(
 		anAssociation : uml::Association) : uml::Class =
 	anAssociation.ownedEnd->first().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the class at the target (other) end of an association.
 
 @param anAssociation A UML association
 /]
-[query public targetClass(
+[comment] [query public targetClass(
 		anAssociation : uml::Association) : uml::Class =
 	anAssociation.ownedEnd->first()
 		.getOtherEnd().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the property at the owned end of an association.
 
 @param anAssociation A UML association
 /]
-[query public e_ownedEnd(
+[comment] [query public e_ownedEnd(
 		anAssociation : uml::Association) : uml::Property =
 	anAssociation.ownedEnd->first()
 /]
-
+[/comment]
 [**
 Returns the class at the other (non-owned) end of an association.
 
 @param anAssociation A UML association
 /]
-[query public e_otherEndClass(
+[comment] [query public e_otherEndClass(
 		anAssociation : uml::Association) : uml::Class =
 	anAssociation.ownedEnd->first()
 		.getOtherEnd().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the property at the other (non-owned) end of an association.
 
 @param anAssociation A UML association
 /]
-[query public e_otherEnd(
+[comment] [query public e_otherEnd(
 		anAssociation : uml::Association) : uml::Property =
 	anAssociation.ownedEnd->first().getOtherEnd()
 /]
-
+[/comment]
 [**
 Returns an ordered set of properties that use the specified
 data type as their type, excluding association ends and
@@ -1089,27 +1079,27 @@ class itself, sorted by class name.
 
 @param aClass A UML class
 /]
-[query public e_allSubclassesPlusSelf(
+[comment] [query public e_allSubclassesPlusSelf(
 		aClass : uml::Class) : OrderedSet(uml::Class) =
 	aClass.u_allSubClasses()
 		->union(OrderedSet{aClass}->asSet())
 		->asOrderedSet()
 		->sortedBy(temp57 | temp57.name)
 /]
-
+[/comment]
 [**
 Returns an ordered set of all non-abstract subclasses of a class
 plus the class itself if it is non-abstract, sorted by class name.
 
 @param aClass A UML class
 /]
-[query public e_allSubclassesPlusSelfNonAbstract(
+[comment] [query public e_allSubclassesPlusSelfNonAbstract(
 		aClass : uml::Class) : OrderedSet(uml::Class) =
 	aClass.e_allSubclassesPlusSelf()
 		->select(c | c.isAbstract = false)
 		->asOrderedSet()
 /]
-
+[/comment]
 [**
 Returns an ordered set of packages of the context classes
 of the specified class, excluding the class's own package,
@@ -1447,14 +1437,14 @@ concatenated. Returns an empty string if there are no comments.
 
 @param aNamedElement A UML named element
 /]
-[template public e_fixClassDocumentation(
+[comment] [template public e_fixClassDocumentation(
 		aNamedElement : uml::NamedElement) post(self.trim())]
   [aNamedElement.ownedComment
     ->asSequence()
     ->collect(temp75 | temp75.body)
     ->collect(temp76 | temp76.toString())/]
 [/template]
-
+[/comment]
 [**
 Returns a sequence of RDF mapping token strings from the
 property "uml-map-rdf", split by comma.
@@ -1507,10 +1497,10 @@ Returns true if the specified type is not a UML primitive type.
 
 @param aType A UML type
 /]
-[query public e_notPrimitive(aType : uml::Type) : Boolean =
+[comment] [query public e_notPrimitive(aType : uml::Type) : Boolean =
 	aType.ancestors()->notEmpty()
 /]
-
+[/comment]
 [**
 Returns true if the specified data type is a general (parent)
 data type, i.e. it has at least one sub data type.
@@ -1542,7 +1532,7 @@ Returns the cardinality of a property in ShEx syntax:
 
 @param aProperty A UML property
 /]
-[query public OKu_shexCardinality(
+[comment] [query public OKu_shexCardinality(
 		aProperty : uml::Property) : String =
 	if (aProperty.lowerBound() == 0
 			and aProperty.upperBound() == 1) then '?'
@@ -1555,7 +1545,7 @@ Returns the cardinality of a property in ShEx syntax:
 	endif
 	endif
 /]
-
+[/comment]
 [**
 Returns an ordered set of direct subclasses of a class,
 sorted by class name.
