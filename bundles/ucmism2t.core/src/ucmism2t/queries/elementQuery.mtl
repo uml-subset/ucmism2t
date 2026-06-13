@@ -98,3 +98,67 @@ or a warning message otherwise.
     'WARNING: ELEMENT HAS NO DOCUMENTATION!'
   endif
 /]
+
+[**
+Returns the first 100 characters of the first owned comment body
+of the specified element, followed by a newline and '...'
+if truncated. Returns a warning if there are no owned comments.
+
+@param aNamedElement - A UML element.
+/]
+[query public u_shortDocumentation(
+  anElement : uml::Element) : String =
+  let d : String = anElement.u_commentBody() in
+  if d = '' then
+    'WARNING: element has no documentation'
+  else if d.size() > 100 then
+    d.substring(1, 100) + '\n...'
+  else
+    d
+  endif
+  endif
+/]
+
+[**
+Returns the definition text extracted from the first owned comment
+of the specified named element:
+- strips section headings (Definition, Examples, Explanatory notes)
+- normalises whitespace
+- escapes curly braces as Unicode literals
+- truncates to 300 characters if longer
+Returns a warning string if there are no owned comments.
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_onlyDefinition(
+  aNamedElement : uml::NamedElement) : String =
+  let s : String =
+    aNamedElement.u_commentBody()
+      .replace('Explanatory notes[\\s\\S\\"=]+', '')
+      .replace('Examples[\\s\\S\\"=]+', '')
+      .replace('Definition[\\s\\S]+?[\\"=]+\\s+', '')
+      .replaceAll('[\\s\\n\\r]+', ' ')
+      .replaceAll('\\{', '<U+007B>')
+      .replaceAll('\\}', '<U+007D>')
+      .trim()
+  in
+  if s.size() > 300 then
+    s.substring(1, 300).trim().concat(' ...')
+  else
+    s
+  endif
+/]
+
+[**
+Returns the path of the specified element below the model root,
+using '/' as the separator between path segments.
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_path(
+  aNamedElement : uml::NamedElement) : String =
+  let modelPrefix : String = aNamedElement.u_model().name.concat('::') in
+  aNamedElement.qualifiedName
+    .replace(modelPrefix, '')
+    .replaceAll('::', '/')
+/]

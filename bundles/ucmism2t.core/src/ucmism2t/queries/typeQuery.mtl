@@ -73,15 +73,3 @@ AQL operations used:
     aType.name
   endif
 /]
-
-[**
-Returns true if the specified type is not a UML primitive type,
-i.e. it is a Class, DataType, Interface, or other non-primitive
-classifier.
-
-@param aType - A UML type to check.
-/]
-[query public u_isNotPrimitiveType(
-  aType : uml::Type) : Boolean =
-  not aType.oclIsKindOf(uml::PrimitiveType)
-/]

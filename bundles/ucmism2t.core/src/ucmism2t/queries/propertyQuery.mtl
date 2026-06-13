@@ -35,9 +35,10 @@ Related modules:
 
 [**
 Returns the cardinality of a property in ShEx syntax:
-"?" for 0..1, "*" for 0..*, "+" for 1..*, "" for all other cases.
-Note: in canonical XMI serialization, unlimited upper bound is
-stored as '*' (String), not -1.
+'?' for 0..1, '*' for 0..*, '+' for 1..*, '' for all other cases.
+Note: the upper bound is an Integer; unlimited is represented as -1,
+both in the UML metamodel and at runtime (regardless of the XMI
+serialization which can use the asterisk).
 
 @param aProperty - A UML property whose multiplicity is to be
                    expressed as a ShEx cardinality string.
@@ -46,9 +47,9 @@ stored as '*' (String), not -1.
   aProperty : uml::Property) : String =
   if aProperty.lower = 0 and aProperty.upper = 1 then
     '?'
-  else if aProperty.lower = 0 and aProperty.upper = '*' then
+  else if aProperty.lower = 0 and aProperty.upper = -1 then
     '*'
-  else if aProperty.lower = 1 and aProperty.upper = '*' then
+  else if aProperty.lower = 1 and aProperty.upper = -1 then
     '+'
   else
     ''

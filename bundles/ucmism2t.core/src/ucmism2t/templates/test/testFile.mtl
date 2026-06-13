@@ -4,6 +4,7 @@
 
 [import ucmism2t::queries::associationQuery/]
 [import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::dataTypeQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
@@ -25,6 +26,14 @@
     'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
     'xx'.getPropertyValue() ['xx'.getPropertyValue()/]
 
+    #######################
+    subset name ['subset.name'.getPropertyValue()/]
+			[for (s : String | aModel.e_subsetClasses()->sortedBy(c | c))]
+    		subset class [s/]
+			[/for]
+			[for (s : String | aModel.u_subsetPackages()->sortedBy(p | p))]
+    		subset2 package [s/]
+			[/for]
     #######################
     N client 1: [aModel.u_allAbstractionClients()->size()/]
 		[for (c : uml::NamedElement | aModel.u_allAbstractionClients()->sortedBy(c2 | c2.qualifiedName))]
@@ -143,6 +152,22 @@
 	
 			[for (p : uml::Property | d.u_dataTypeUseProperties()->sortedBy(p | p.qualifiedName))]
 					p name: [p.qualifiedName/]
+					upper
+					LiteralUnlimitedNatural: [p.upper.oclIsTypeOf(uml::LiteralUnlimitedNatural)/]
+					Integer: [p.upper.oclIsTypeOf(Integer)/]
+					- [p.upper/]
+					toString [p.upper.toString()/]
+					is it -1 [p.upper = -1/]
+					is it * [p.upper = '*'/]
+					upperValue
+					LiteralUnlimitedNatural: [p.upperValue.oclIsTypeOf(uml::LiteralUnlimitedNatural)/]
+					Integer: [p.upperValue.oclIsTypeOf(Integer)/]
+					- [p.upperValue/]
+					toString [p.upperValue.toString()/]
+					is it -1 [p.upperValue = -1/]
+					is it * [p.upperValue = '*'/]
+					unlimitedValue XX [p.upperValue.unlimitedValue()/]
+					eClass [p.upperValue.eClass().name/]
 			[/for]
 	
 		[/let]
@@ -387,3 +412,7 @@
   eClass: [p.eClass().name/]
 [/template]
 
+[query public u_upperBoundType(aProperty : uml::Property) : String =
+  'upper=' + aProperty.upper.toString()
+  + ' type=' + aProperty.upperValue.eClass().name
+/]

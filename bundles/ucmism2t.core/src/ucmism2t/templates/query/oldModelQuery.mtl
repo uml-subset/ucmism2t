@@ -382,12 +382,12 @@ using "/" as the separator between path segments.
 
 @param aNamedElement A UML named element
 /]
-[query public e_path(aNamedElement : uml::NamedElement) : String =
+[comment] [query public u_path(aNamedElement : uml::NamedElement) : String =
 	aNamedElement.qualifiedName
 		.replace(aNamedElement.u_model().name.concat('::'), '')
 		.replaceAll('::', '/')
 /]
-
+[/comment]
 [**
 Returns a shortened relative path of the specified element,
 using the first character of each intermediate segment.
@@ -395,6 +395,7 @@ Note: Under test.
 
 @param aNamedElement A UML named element
 /]
+[comment] NOT USED
 [query public e_relativePath(
 		aNamedElement : uml::NamedElement) : String =
 	aNamedElement.qualifiedName
@@ -403,7 +404,7 @@ Note: Under test.
 		.replaceAll('(\\w)\\w+\\/', '\\1')
 		.replace(aNamedElement.name, '')
 /]
-
+[/comment]
 [**
 Returns the output file path for the specified element and target format.
 For the "doc" target the model name is replaced with "_rst".
@@ -1149,6 +1150,7 @@ Returns an empty string if there are no owned comments.
 
 @param aNamedElement A UML named element
 /]
+[comment] NOT USED
 [query public e_shortDocumentation(
 		aNamedElement : uml::NamedElement) : String =
 	if aNamedElement.ownedComment->isEmpty()
@@ -1163,7 +1165,7 @@ Returns an empty string if there are no owned comments.
 		endif
 	endif
 /]
-
+[/comment]
 [**
 Returns the ModelIdentification data type from a model.
 This data type contains model metadata such as acronym, version,
@@ -1409,7 +1411,7 @@ Truncates to 300 characters if longer.
 
 @param aNamedElement A UML named element
 /]
-[template public e_onlyDefinition(
+[comment] [template public e_onlyDefinition(
 		aNamedElement : uml::NamedElement) post(self.trim())]
   [if (aNamedElement.ownedComment->size() > 0)]
     [let s : String =
@@ -1430,7 +1432,7 @@ Truncates to 300 characters if longer.
     [/let]
   [/if]
 [/template]
-
+[/comment]
 [**
 Returns the body text of all owned comments of a named element,
 concatenated. Returns an empty string if there are no comments.
@@ -1449,10 +1451,10 @@ concatenated. Returns an empty string if there are no comments.
 Returns a sequence of RDF mapping token strings from the
 property "uml-map-rdf", split by comma.
 
-@param anOclAny Any EMF object (used as receiver only)
+@param anEObject Any EMF object (used as receiver only)
 /]
 [query public e_mappedUcmisItemsRdfTokens(
-		anOclAny : ecore::EObject) : Sequence(String) =
+		anEObject : ecore::EObject) : Sequence(String) =
 	'uml-map-rdf'.getPropertyValue()
 		.replaceAll('\\s+', '')
 		.tokenize(',')
@@ -1462,11 +1464,11 @@ property "uml-map-rdf", split by comma.
 Returns a sequence of source IRI strings from the RDF mapping
 tokens (the part before ">").
 
-@param anOclAny Any EMF object (used as receiver only)
+@param anEObject Any EMF object (used as receiver only)
 /]
 [query public e_mappedUcmisItemsRdf(
-		anOclAny : ecore::EObject) : Sequence(String) =
-	anOclAny.e_mappedUcmisItemsRdfTokens()
+		anEObject : ecore::EObject) : Sequence(String) =
+	anEObject.e_mappedUcmisItemsRdfTokens()
 		->collect(temp77 | temp77.tokenize('>')->at(1))
 /]
 
@@ -1474,11 +1476,11 @@ tokens (the part before ">").
 Returns a sequence of target IRI strings from the RDF mapping
 tokens (the part after ">").
 
-@param anOclAny Any EMF object (used as receiver only)
+@param anEObject Any EMF object (used as receiver only)
 /]
 [query public e_mappedUcmisItemsRdfTargets(
-		anOclAny : ecore::EObject) : Sequence(String) =
-	anOclAny.e_mappedUcmisItemsRdfTokens()
+		anEObject : ecore::EObject) : Sequence(String) =
+	anEObject.e_mappedUcmisItemsRdfTokens()
 		->collect(temp78 | temp78.tokenize('>')->at(2))
 /]
 
@@ -1488,10 +1490,10 @@ Primitive types have no ancestors in the containment hierarchy.
 
 @param aType A UML type
 /]
-[query public e_primitive(aType : uml::Type) : Boolean =
+[comment] [query public e_primitive(aType : uml::Type) : Boolean =
 	aType.ancestors()->isEmpty()
 /]
-
+[/comment]
 [**
 Returns true if the specified type is not a UML primitive type.
 
