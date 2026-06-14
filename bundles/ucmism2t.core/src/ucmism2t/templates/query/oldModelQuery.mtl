@@ -818,9 +818,10 @@ Used for diagram context scoping.
 
 @param aDataType A UML data type
 /]
+[comment] MIGRATED
 [query public e_contextClassesOrDataTypes(
 		aDataType : uml::DataType) : OrderedSet(uml::Classifier) =
-	aDataType.e_dataTypeUseProperties()
+	aDataType.u_dataTypeUseProperties()
 		->asSequence()
 		->collect(temp44 | temp44.owner.oclAsType(uml::Classifier))
 	->union(aDataType.u_superDataTypes())
@@ -842,7 +843,7 @@ Used for diagram context scoping.
 	->asOrderedSet()
 	->sortedBy(temp49 | temp49.name)
 /]
-
+[/comment]
 [**
 Returns an ordered set of associations of a superclass that are
 not between the superclass and any of the subclass's ancestors.
@@ -852,6 +853,19 @@ already represented through the inheritance path.
 @param aSuperClass A UML class that is a superclass of aClass
 @param aClass A UML class
 /]
+[comment] MIGRATED
+[query public e_limitedAssociations2(
+		aSuperClass : uml::Class,
+		aClass : uml::Class) : OrderedSet(uml::Association) =
+	aSuperClass.u_associations()
+		->select(a |
+			a.e_ownedEndClass() <> aClass
+			and a.e_otherEndClass() <> aClass)
+		->select(a |
+			aClass.u_superClasses()->excludes(a.e_ownedEndClass())
+			or aClass.u_superClasses()
+				->excludes(a.e_otherEndClass()))
+[/comment]/]
 [query public e_limitedAssociations2(
 		aSuperClass : uml::Class,
 		aClass : uml::Class) : OrderedSet(uml::Association) =
@@ -1004,22 +1018,6 @@ properties owned by the data type itself.
 			->select(p2 | p2.owner <> aDataType)
 /]
 [/comment]
-
-[**
-Returns an ordered set of properties whose type is the specified
-data type. Excludes association ends and properties owned by
-the data type itself, i.e. returns only attributes of other
-classifiers that reference this data type.
-
-@param aDataType - The data type to find usages of.
-/]
-[query public u_dataTypeUseProperties(
-		aDataType : uml::DataType) : OrderedSet(uml::Property) =
-	aDataType.eInverse(uml::Property)
-		->select(p |
-			p.association = null
-			and p.owner <> aDataType)
-/]
 
 [**
 Returns at most 3 properties that use the specified data type,
@@ -1889,20 +1887,12 @@ Used for diagram context scoping.
 	aDataType.u_dataTypeUseProperties()
 		->collect(p | p.owner.oclAsType(uml::Classifier))
 	->union(aDataType.u_superDataTypes())
-	->union(
+	->union( 
 		aDataType.u_superDataTypes()
 			->collect(temp45 | temp45.e_limitedDataTypeUseProperties())
-			->collect(temp46 |
-				temp46.owner.oclAsType(uml::Classifier)))
 	->union(aDataType.u_allSubDataTypes())
-	->union(
-		aDataType.eInverse(uml::Abstraction)
-			->asSequence()
-			->collect(temp47 | temp47.client))
-	->union(
-		aDataType.eInverse(uml::Abstraction)
-			->asSequence()
-			->collect(temp48 | temp48.supplier))
+	->union(aDataType.u_abstractionClientsDataType())
+	->union(aDataType.u_abstractionSuppliersDataType())
 	->excluding(aDataType)
 	->asOrderedSet()
 	->sortedBy(temp49 | temp49.name)

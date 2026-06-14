@@ -36,9 +36,6 @@ Related modules:
 [**
 Returns the cardinality of a property in ShEx syntax:
 '?' for 0..1, '*' for 0..*, '+' for 1..*, '' for all other cases.
-Note: the upper bound is an Integer; unlimited is represented as -1,
-both in the UML metamodel and at runtime (regardless of the XMI
-serialization which can use the asterisk).
 
 @param aProperty - A UML property whose multiplicity is to be
                    expressed as a ShEx cardinality string.
@@ -47,9 +44,9 @@ serialization which can use the asterisk).
   aProperty : uml::Property) : String =
   if aProperty.lower = 0 and aProperty.upper = 1 then
     '?'
-  else if aProperty.lower = 0 and aProperty.upper = -1 then
+  else if aProperty.lower = 0 and aProperty.upper.u_isUnlimited() then
     '*'
-  else if aProperty.lower = 1 and aProperty.upper = -1 then
+  else if aProperty.lower = 1 and aProperty.upper.u_isUnlimited() then
     '+'
   else
     ''
@@ -60,12 +57,32 @@ serialization which can use the asterisk).
 
 [**
 Returns the multiplicity of the specified property as a string
-in the format "lower..upper", e.g. "0..1", "1..*".
+in the format 'lower..upper', e.g. '0..1', '1..*'.
 
 @param aProperty - A UML property whose multiplicity is to be
                    retrieved.
 /]
 [query public u_docMultiplicity(
   aProperty : uml::Property) : String =
-  aProperty.lower.toString() + '..' + aProperty.upper.toString()
+  let upper : String =
+    if aProperty.upper.u_isUnlimited() then
+      '*'
+    else
+      aProperty.upper.toString()
+    endif
+  in
+  aProperty.lower.toString() + '..' + upper
+/]
+
+[**
+Returns true if the specified upper bound integer value is
+unlimited (i.e. -1).
+Note: unlimited is represented as -1, both in the UML metamodel and at
+runtime (regardless of the XMI serialization which can use the asterisk)
+
+@param upper - A UML upper bound integer value.
+/]
+[query public u_isUnlimited(
+  upper : Integer) : Boolean =
+  upper = -1
 /]

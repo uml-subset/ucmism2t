@@ -135,6 +135,24 @@ owned by the data type itself, sorted by the owning classifier name.
 /]
 
 [**
+Returns an ordered set of client data types of all abstraction
+dependencies that target the specified data type, sorted by name.
+Navigates inverse abstraction links from the data type, collects
+their clients, and retains only data type instances.
+
+@param aDataType - A UML data type whose abstraction clients are
+                   to be retrieved.
+/]
+[query public u_abstractionClientsDataType(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Abstraction)
+    ->collect(a | a.client)
+    ->filter(uml::DataType)
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
+/]
+
+[**
 Returns an ordered set of supplier data types of all abstraction
 dependencies that target the specified data type, sorted by name.
 Navigates inverse abstraction links from the data type, collects
@@ -202,4 +220,20 @@ data type, i.e. it has at least one specializing sub data type.
   aDataType.eInverse(uml::Generalization)
   ->select(g | g.general = aDataType)
   ->notEmpty()
+/]
+
+[**
+Returns an ordered set of properties whose type is the specified
+data type. Excludes association ends and properties owned by
+the data type itself, i.e. returns only attributes of other
+classifiers that reference this data type.
+
+@param aDataType - The data type to find usages of.
+/]
+[query public u_dataTypeUseProperties(
+		aDataType : uml::DataType) : OrderedSet(uml::Property) =
+	aDataType.eInverse(uml::Property)
+		->select(p |
+			p.association = null
+			and p.owner <> aDataType)
 /]

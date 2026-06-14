@@ -234,3 +234,24 @@ See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.
   anAssociation : uml::Association) : uml::Class =
   anAssociation.u_otherEnd().type.oclAsType(uml::Class)
 /]
+
+[**
+Returns the short association name extracted from the long unique
+association name by taking the middle segment between the first
+and second underscore.
+Example: 'InstanceVariable_measures_Population' to 'measures'.
+Returns the full name if it contains no underscores.
+
+@param anAssociation - A UML association.
+/]
+[query public u_shortAssociationName(
+  anAssociation : uml::Association) : String =
+  if anAssociation.name.contains('_') then
+    let nameAfterFirst : String =
+      anAssociation.name.substring(anAssociation.name.index('_') + 1)
+    in
+    nameAfterFirst.substring(1, nameAfterFirst.index('_') - 1)
+  else
+    anAssociation.name
+  endif
+/]
