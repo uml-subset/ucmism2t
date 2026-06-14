@@ -885,3 +885,20 @@ sorted by name.
   aClass.u_allSubClassesPlusSelf()
   ->reject(c | c.isAbstract)
 /]
+
+[**
+Returns an ordered set of packages of the context classes
+of the specified class, excluding the class's own package,
+sorted by package name.
+See also: u_contextPackages(uml::DataType)
+
+@param aClass - A UML class.
+/]
+[query public u_contextPackages(
+  aClass : uml::Class) : OrderedSet(uml::Package) =
+  aClass.u_contextClasses()
+    ->collect(c | c.package)
+    ->excluding(aClass.package)
+    ->asOrderedSet()
+    ->sortedBy(p | p.name)
+/]

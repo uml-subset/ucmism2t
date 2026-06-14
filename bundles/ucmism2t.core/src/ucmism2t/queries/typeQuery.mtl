@@ -73,3 +73,28 @@ AQL operations used:
     aType.name
   endif
 /]
+
+[**
+Returns the qualified name of a UML type. For resolved types, returns
+the name property directly. For unresolved UML primitive type proxies
+(e.g. Boolean, Integer, String, Real from UMLPrimitiveTypes.xmi),
+the name is extracted from the toString() representation since the
+name property returns empty on unresolved proxies.
+Note: this workaround is not necessary if UMLResourcesUtil.init(
+resourceSet) is registered in the generator launcher, in which case
+all primitive type proxies resolve correctly and name is always
+accessible. The workaround degrades gracefully when registration
+is present.
+
+@param aType - A UML type whose simple name is to be returned,
+               including unresolved primitive type proxies.
+/]
+[query public u_typeQualifiedName(aType : uml::Type) : String =
+  if aType.eClass().name = 'PrimitiveType' then
+    let s : String = aType.toString()
+    in
+      s.substring(s.lastIndex('#') + 1).replace('\\)', '')
+  else
+    aType.qualifiedName
+  endif
+/]

@@ -37,3 +37,16 @@ but it is not standard POSIX regex.
 [query public u_removeEmptyLines(txt : String) : String =
   txt.replaceAll('(\\r)?\\n\\h*(\\r)?\\n', '\n')
 /]
+
+[**
+Returns a string consisting of n repetitions of char.
+
+@param char The character or string to repeat
+@param n The number of repetitions
+/]
+[query public u_repeatChar(char : String, n : Integer) : String =
+	if n <= 0
+	then ''
+	else char + char.u_repeatChar(n - 1)
+	endif
+/]

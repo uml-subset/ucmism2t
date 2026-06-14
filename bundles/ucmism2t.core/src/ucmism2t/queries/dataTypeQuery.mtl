@@ -20,6 +20,8 @@ Related modules:
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::templates::query::oldModelQuery/]
+
 [**
 Returns an ordered set of direct sub datatypes of a datatype,
 sorted by datatype name.
@@ -236,4 +238,54 @@ classifiers that reference this data type.
 		->select(p |
 			p.association = null
 			and p.owner <> aDataType)
+/]
+
+[**
+Returns a sequence of inherited attributes of the specified data type.
+Excludes own attributes.
+
+@param aDataType - A UML data type whose inherited attributes are to
+                   be retrieved.
+/]
+[query public u_inheritedDataTypeAttributes(
+  aDataType : uml::DataType) : Sequence(uml::Property) =
+  aDataType.inheritedMember
+    ->filter(uml::Property)
+    ->select(p1 | p1.association->isEmpty())
+    ->sortedBy(p2 | p2.name)
+/]
+
+[**
+Returns an ordered set of packages of the context classifiers
+of the specified data type, excluding the data type's own package,
+sorted by package name.
+See also: u_contextPackages(uml::Class)
+
+@param aDataType - A UML data type.
+/]
+[query public u_contextPackages(
+  aDataType : uml::DataType) : OrderedSet(uml::Package) =
+  aDataType.e_contextClassesOrDataTypes()
+    ->collect(c | c.package)
+    ->excluding(aDataType.package)
+    ->asOrderedSet()
+    ->sortedBy(p | p.name)
+/]
+
+[**
+Returns at most the first 3 properties that use the specified data
+type, to keep diagrams manageable.
+
+@param aDataType - A UML data type.
+/]
+[query public u_limitedDataTypeUseProperties(
+  aDataType : uml::DataType) : OrderedSet(uml::Property) =
+  let props : OrderedSet(uml::Property) =
+    aDataType.u_dataTypeUseProperties()
+  in
+  if props->size() > 3 then
+    props->subOrderedSet(1, 3)
+  else
+    props
+  endif
 /]

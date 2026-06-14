@@ -100,3 +100,14 @@ u_attributes(uml::Class), u_attributes(uml::DataType).
       ->select(p | p.association = null))
     ->sortedBy(p | p.name)
 /]
+
+[**
+Returns the simple qualified name of a classifier in the form
+'packageName::classifierName'.
+
+@param aClassifier - A UML classifier.
+/]
+[query public u_simpleQualifiedClassifierName(
+  aClassifier : uml::Classifier) : String =
+  aClassifier.package.name + '::' + aClassifier.name
+/]

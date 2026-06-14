@@ -1,0 +1,48 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module eobjectQuery(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::services::PropertiesService /]
+
+[**
+Returns a sequence of RDF mapping token strings from the
+property "uml-map-rdf", split by comma.
+
+@param anEObject - Only used as entry point.
+/]
+[query public u_mappedUcmisItemsRdfTokens(
+		anEObject : ecore::EObject) : Sequence(String) =
+	'uml-map-rdf'.getPropertyValue()
+		.replaceAll('\\s+', '')
+		.tokenize(',')
+/]
+
+[**
+Returns a sequence of source IRI strings from the RDF mapping
+tokens (the part before ">").
+
+@param anEObject - Only used as entry point.
+/]
+[query public u_mappedUcmisItemsRdf(
+		anEObject : ecore::EObject) : Sequence(String) =
+	anEObject.u_mappedUcmisItemsRdfTokens()
+		->collect(s | s.tokenize('>')->at(1))
+/]
+
+[**
+Returns a sequence of target IRI strings from the RDF mapping
+tokens (the part after ">").
+
+@param anEObject - Only used as entry point.
+/]
+[query public u_mappedUcmisItemsRdfTargets(
+		anEObject : ecore::EObject) : Sequence(String) =
+	anEObject.u_mappedUcmisItemsRdfTokens()
+		->collect(s | s.tokenize('>')->at(2))
+/]

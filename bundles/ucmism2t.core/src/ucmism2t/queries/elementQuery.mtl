@@ -9,6 +9,10 @@ Module contains queries with a UML element or named element as receiver.
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+
 [**
 Returns the root model that owns the specified element,
 by navigating up the containment hierarchy to the first
@@ -161,4 +165,90 @@ using '/' as the separator between path segments.
   aNamedElement.qualifiedName
     .replace(modelPrefix, '')
     .replaceAll('::', '/')
+/]
+
+[**
+Returns a named element that is a direct or indirect child of the
+specified named element, matched by name. Returns null if not found.
+
+@param aNamedElement - A UML named element used as search root.
+@param aName - The name to search for.
+/]
+[query public u_namedElementByName(
+  aNamedElement : uml::NamedElement,
+  aName : String) : uml::NamedElement =
+  aNamedElement.eAllContents(uml::NamedElement)
+    ->select(n | n.name = aName)
+    ->first()
+/]
+
+[**
+Returns true if the specified named element is a child of the main
+package and not contained in any ignored package.
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_isInAllowedPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  aNamedElement <> null
+  and aNamedElement.u_model()
+    .u_mainPackage()
+    .eAllContents(uml::NamedElement)
+    ->includes(aNamedElement)
+  and aNamedElement.u_isNotInIgnoredPackage()
+/]
+
+[**
+Returns true if the specified named element is not contained in
+any package listed in the IGNORE_PACKAGE property
+(comma-separated list of package names).
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_isNotInIgnoredPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  'IGNORE_PACKAGE'.getPropertyValue()
+    .substituteAll(' ', '')
+    .tokenize(',')
+    ->collect(p | aNamedElement.u_model().u_namedElementByName(p))
+    ->excludes(aNamedElement)
+/]
+
+[**
+Returns true if the specified named element is a direct or indirect
+child of the main package.
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_isChildOfMainPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  let mainPkg : uml::Package = aNamedElement.u_model().u_mainPackage() in
+  mainPkg.eAllContents(uml::NamedElement)->includes(aNamedElement)
+/]
+
+[**
+Returns the output file path for the specified element and target
+format, using the model short name as the root segment.
+For the 'doc' target, the model name segment is replaced with '_rst'.
+Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
+         'doc' → 'shortName/doc/_rst/pkg/ClassName'
+
+@param aNamedElement - A UML named element.
+@param aTarget - The generation target format identifier
+                 (e.g. 'xsd', 'doc').
+/]
+[query public u_filePath(
+  aNamedElement : uml::NamedElement,
+  aTarget : String) : String =
+  let root : String = aNamedElement.u_model().e_modelShortName()
+    + '/' + aTarget + '/'
+  in
+  let path : String =
+    aNamedElement.qualifiedName.replaceAll('::', '/')
+  in
+  if aTarget = 'doc' then
+    root + path.replace(aNamedElement.u_model().name, '_rst')
+  else
+    root + path
+  endif
 /]

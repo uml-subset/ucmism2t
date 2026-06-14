@@ -30,7 +30,9 @@ Related modules:
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
 
 [**
 Returns the package identified by the main package name specified by
@@ -164,3 +166,35 @@ model, excluding the model itself, sorted by name.
   ->sortedBy(p | p.name)
 /]
 
+[**
+ Returns an ordered set of package qualified name segments that
+ contain at least one classifier whose simple name appears in
+ u_subsetItems(). Each segment is a '::'-separated token of the
+ qualifier prefix of a matching classifier's qualified name.
+
+ @param aModel - A UML model.
+/]
+[query public u_subsetPackages(
+  aModel : uml::Model) : OrderedSet(String) =
+  let mainPkg : uml::Package = aModel.u_mainPackage() in
+  mainPkg.eAllContents(uml::Classifier)
+    ->collect(c | c.qualifiedName)
+    ->select(s | aModel.e_subsetItems()->includes(
+        s.substring(s.lastIndex('::') + 2)))
+    ->collect(s | s.substring(1, s.lastIndex('::') - 1))
+    ->collect(s | s.tokenize('::'))
+    ->asOrderedSet()
+/]
+
+[**
+Returns a sequence of packages that directly contain at least one
+class, sorted by package name.
+
+@param aModel - A UML model.
+/]
+[query public u_packagesWithClasses(
+  aModel : uml::Model) : Sequence(uml::Package) =
+  aModel.eAllContents(uml::Package)
+    ->select(p | p.eContents(uml::Class)->notEmpty())
+    ->sortedBy(p | p.name)
+/]

@@ -9,6 +9,10 @@ Module contains queries with a UML pcakage as receiver.
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::services::PropertiesService /]
+
 [**
 Returns the classes directly owned by the specified package,
 sorted by name.
@@ -33,4 +37,53 @@ sorted by name.
   aPackage : uml::Package) : Sequence(uml::Package) =
   aPackage.nestedPackage
   ->sortedBy(p | p.name)
+/]
+
+[**
+Returns true if the specified package is the main package or a
+non-ignored child of the main package.
+
+@param aPackage - A UML package.
+/]
+[query public u_isAllowedPackage(aPackage : uml::Package) : Boolean =
+  let mainPkg : uml::Package = aPackage.u_model().u_mainPackage() in
+  aPackage = mainPkg
+  or (mainPkg.eAllContents(uml::Package)->includes(aPackage)
+      and aPackage.u_isNotIgnoredPackage())
+/]
+
+[**
+Returns true if the specified package is not listed in the
+IGNORE_PACKAGE property (comma-separated list of package names).
+
+@param aPackage - A UML package.
+/]
+[query public u_isNotIgnoredPackage(aPackage : uml::Package) : Boolean =
+  'IGNORE_PACKAGE'.getPropertyValue()
+    .substituteAll(' ', '')
+    .tokenize(',')
+    ->collect(p | aPackage.u_model().u_namedElementByName(p))
+    ->excludes(aPackage)
+/]
+
+[**
+Returns a sequence of data types directly contained in the
+specified package.
+
+@param aPackage - A UML package.
+/]
+[query public u_childrenDataTypes(
+  aPackage : uml::Package) : Sequence(uml::DataType) =
+  aPackage.eContents(uml::DataType)
+/]
+
+[**
+Returns a sequence of enumerations directly contained in the
+specified package.
+
+@param aPackage - A UML package.
+/]
+[query public u_childrenEnumerations(
+  aPackage : uml::Package) : Sequence(uml::Enumeration) =
+  aPackage.eContents(uml::Enumeration)
 /]

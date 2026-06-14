@@ -8,8 +8,9 @@ Module contains queries which use properties.
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 
 [**
  * Returns the title of the subset
@@ -101,22 +102,3 @@ Module contains queries which use properties.
   	.tokenize(',')
 /]
 
-[**
- Returns an ordered set of package qualified name segments that
- contain at least one classifier whose simple name appears in
- u_subsetItems(). Each segment is a '::'-separated token of the
- qualifier prefix of a matching classifier's qualified name.
-
- @param aModel - A UML model.
-/]
-[query public u_subsetPackages(
-  aModel : uml::Model) : OrderedSet(String) =
-  let mainPkg : uml::Package = aModel.e_mainPackage() in
-  mainPkg.eAllContents(uml::Classifier)
-    ->collect(c | c.qualifiedName)
-    ->select(s | aModel.e_subsetItems()->includes(
-        s.substring(s.lastIndex('::') + 2)))
-    ->collect(s | s.substring(1, s.lastIndex('::') - 1))
-    ->collect(s | s.tokenize('::'))
-    ->asOrderedSet()
-/]
