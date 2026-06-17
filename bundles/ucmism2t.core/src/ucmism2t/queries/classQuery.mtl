@@ -57,7 +57,7 @@ AQL operations used:
 @param aClass - A UML class whose full superclass hierarchy
                 is to be retrieved.
 /]
-[query public u_superClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+[query public u_allSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
   aClass->closure(c | c.general->filter(uml::Class))
 /]
 
@@ -261,7 +261,7 @@ association sources across the full hierarchy, deduplicating the
 result.
 ---
 AQL operations used:
-  u_superClasses()               - Query: returns the ordered superclass
+  u_allSuperClasses()               - Query: returns the ordered superclass
                                    hierarchy of aClass.
   ->including(aClass)            - Adds aClass itself to the collection
                                    so its own associations are included.
@@ -277,7 +277,7 @@ AQL operations used:
                 sources (own and inherited) are to be retrieved.
 /]
 [query public u_effectiveIncomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
-  aClass.u_superClasses()
+  aClass.u_allSuperClasses()
     ->including(aClass)
     ->collect(c1 | c1.u_incomingAssociatedClasses())
     ->asOrderedSet()
@@ -292,7 +292,7 @@ with all its superclasses, then collects outgoing association targets
 across the full hierarchy, deduplicating the result.
 ---
 AQL operations used:
-  u_superClasses()            - Query: returns the ordered superclass
+  u_allSuperClasses()            - Query: returns the ordered superclass
                                    hierarchy of aClass.
   ->including(aClass)            - Adds aClass itself to the collection
                                    so its own associations are included.
@@ -308,7 +308,7 @@ AQL operations used:
                 targets (own and inherited) are to be retrieved.
 /]
 [query public u_effectiveOutgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
-  aClass.u_superClasses()
+  aClass.u_allSuperClasses()
     ->including(aClass)
     ->collect(c1 | c1.u_outgoingAssociatedClasses())
     ->asOrderedSet()
@@ -351,7 +351,7 @@ AQL operations used:
 [**
 Returns an ordered set of all indirect superclasses of a class,
 i.e. the full superclass hierarchy excluding the direct parent.
-Delegates to u_superClasses() and removes the direct parent.
+Delegates to u_allSuperClasses() and removes the direct parent.
 Note: Works only for single inheritance.
 
 @param aClass - A UML class whose indirect superclass hierarchy
@@ -359,7 +359,7 @@ Note: Works only for single inheritance.
 /]
 [query public u_allIndirectSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
     let superTypes : OrderedSet(uml::Class) =
-        aClass.u_superClasses()
+        aClass.u_allSuperClasses()
     in
     if superTypes->notEmpty() then
         superTypes->excluding(aClass.superClass->first())
@@ -611,7 +611,7 @@ The union terms contribute the following:
   1. u_associatedClasses()       - Classes directly associated with
                                    aClass via incoming or outgoing
                                    binary associations.
-  2. u_superClasses()         - All ancestors of aClass in the
+  2. u_allSuperClasses()         - All ancestors of aClass in the
                                    superclass hierarchy.
   3. u_limitedAssociations()     - For each superclass, at most 3
      -> u_ownedEndClass()          filtered associations; collect
@@ -629,7 +629,7 @@ AQL operations used:
   u_associatedClasses()          - Query: returns classes directly
                                    associated with aClass via incoming
                                    or outgoing binary associations.
-  u_superClasses()            - Query: returns the ordered
+  u_allSuperClasses()            - Query: returns the ordered
                                    superclass hierarchy of aClass.
   ->collect(sc | expr)           - Collects results across all
                                    superclasses.
@@ -664,14 +664,14 @@ AQL operations used:
 /]
 [query public u_contextClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
   aClass.u_associatedClasses()
-  ->union( aClass.u_superClasses() )
+  ->union( aClass.u_allSuperClasses() )
   ->union(
-    aClass.u_superClasses()
+    aClass.u_allSuperClasses()
       ->collect( sc1 | sc1.u_limitedAssociations(aClass) )
       ->collect( a1 | a1.u_ownedEndClass() )
   )
   ->union(
-    aClass.u_superClasses()
+    aClass.u_allSuperClasses()
       ->collect( sc2 | sc2.u_limitedAssociations(aClass) )
       ->collect( a2 | a2.u_otherEndClass() )
   )
@@ -687,11 +687,11 @@ AQL operations used:
 Returns an ordered set of associations inherited by the specified
 class from its superclass hierarchy. Collects all associations of
 each superclass and excludes those directly owned by aClass itself.
-Uses u_superClasses() to traverse the full hierarchy and
+Uses u_allSuperClasses() to traverse the full hierarchy and
 u_associations() to retrieve associations per superclass.
 ---
 AQL operations used:
-  aClass.u_superClasses()         - Query: returns the full
+  aClass.u_allSuperClasses()         - Query: returns the full
                                        ordered superclass hierarchy
                                        of aClass.
   ->collect(sc | sc.u_associations() - Collects all associations of
@@ -712,7 +712,7 @@ AQL operations used:
 /]
 [query public u_inheritedAssociations(
   aClass : uml::Class) : OrderedSet(uml::Association) =
-  aClass.u_superClasses()
+  aClass.u_allSuperClasses()
     ->collect(sc |
       sc.u_associations()
         ->reject(a | aClass.u_associations()->includes(a)))
@@ -776,7 +776,7 @@ AQL operations used:
   u_otherEndClass()                      - Query: returns the type of
                                            the non-owned end of the
                                            association as uml::Class.
-  u_superClasses()                    - Query: returns the ordered
+  u_allSuperClasses()                    - Query: returns the ordered
                                            superclass hierarchy of
                                            aClass.
   ->excludes(obj)                        - Returns true if the
@@ -806,8 +806,8 @@ AQL operations used:
         a.u_ownedEndClass() <> aClass
         and a.u_otherEndClass() <> aClass)
       ->select(a |
-        aClass.u_superClasses()->excludes(a.u_ownedEndClass())
-        or aClass.u_superClasses()->excludes(a.u_otherEndClass()))
+        aClass.u_allSuperClasses()->excludes(a.u_ownedEndClass())
+        or aClass.u_allSuperClasses()->excludes(a.u_otherEndClass()))
       ->sortedBy(a | a.name)
   in
     if associations->size() > 3 then
@@ -901,4 +901,48 @@ See also: u_contextPackages(uml::DataType)
     ->excluding(aClass.package)
     ->asOrderedSet()
     ->sortedBy(p | p.name)
+/]
+
+[**
+Returns an ordered set of associations of aSuperClass that are neither
+directly connected to aClass nor to any of aClass's superclasses.
+This reduces unnecessary Graphviz constraints that would otherwise
+create associations parallel to the inheritance path at the level of
+superclasses starting from the second ancestor.
+
+@param aSuperClass - A UML class that is a superclass of aClass.
+@param aClass      - The UML class whose context is being computed.
+/]
+[query public u_limitedAssociations2(
+  aSuperClass : uml::Class,
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  let superClasses : OrderedSet(uml::Class) =
+    aClass.u_allSuperClasses()
+  in
+  aSuperClass.u_associations()
+    ->select(a |
+        a.u_ownedEndClass() <> aClass
+        and a.u_otherEndClass() <> aClass)
+    ->select(a |
+        superClasses->excludes(a.u_ownedEndClass())
+        and superClasses->excludes(a.u_otherEndClass()))
+/]
+
+[**
+Returns at most 3 associations from u_limitedAssociations2
+to keep diagrams manageable.
+
+@param aSuperClass - A UML class that is a superclass of aClass.
+@param aClass      - A UML class.
+/]
+[query public u_limitedAssociations3(
+  aSuperClass : uml::Class,
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  let limited : OrderedSet(uml::Association) =
+    aSuperClass.u_limitedAssociations2(aClass)
+  in
+  if limited->size() > 3
+  then limited->subOrderedSet(1, 3)
+  else limited
+  endif
 /]

@@ -45,7 +45,7 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import ucmism2t.services.PropertiesService;
-import ucmism2t.services.CustomServices;
+//import ucmism2t.services.CustomServices;
 import ucmism2t.services.DateTimeService;
 
 /**
@@ -385,9 +385,9 @@ public class Main implements IApplication {
         ServiceUtils.registerServices(queryEnvironment,
             ServiceUtils.getServices(
                 queryEnvironment, new DateTimeService()));
-        ServiceUtils.registerServices(queryEnvironment,
-            ServiceUtils.getServices(
-                queryEnvironment, new CustomServices()));
+//        ServiceUtils.registerServices(queryEnvironment,
+//            ServiceUtils.getServices(
+//                queryEnvironment, new CustomServices()));
 
         // Resolve main module
         System.out.println("Loading Acceleo template: m2tMaster.mtl");

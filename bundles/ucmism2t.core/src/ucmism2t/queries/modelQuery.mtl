@@ -35,59 +35,53 @@ Related modules:
 [import ucmism2t::templates::query::oldModelQuery/]
 
 [**
-Returns the package identified by the main package name specified by
-the property MAIN_PACKAGE_NAME. Returns the model itself if
-MAIN_PACKAGE_NAME is not specified, is empty, matches the model name,
-or is not found within the model. A uml::Model is a subtype of
-uml::Package in the UML metamodel, so returning aModel as a
-uml::Package is always valid.
----
-AQL operations used:
-  'MAIN_PACKAGE_NAME'.getPropertyValue() - Returns the value of the
-                                           Acceleo generation property
-                                           named MAIN_PACKAGE_NAME as
-                                           a String. Returns empty
-                                           string if the property is
-                                           not set.
-  aModel.eAllContents(uml::Package)      - Returns all uml::Package
-                                           instances transitively
-                                           contained in aModel,
-                                           covering nested
-                                           sub-packages at any depth.
-  ->select(p | p.qualifiedName           - Filters to the package
-    = propertyValue)                       whose qualified name
-                                           matches the property value.
-                                           Uses qualifiedName rather
-                                           than name to uniquely
-                                           identify the package in
-                                           models with non-unique
-                                           simple names.
-  ->isEmpty()                            - Returns true if no package
-                                           matched the property value.
-  ->first()                              - Returns the first matching
-                                           package. If qualifiedNames
-                                           are unique, exactly one
-                                           match is expected.
-
-@param aModel - The root UML model used as the search scope.
+ * Returns the main package for generation, determined by the
+ * 'MAIN_PACKAGE_NAME' property.
+ *
+ * Property matching:
+ *   The property value is matched against the qualified name of
+ *   each package (uml::Package.qualifiedName), which includes
+ *   the full path, e.g. 'MyModel::Domain::Core'. A simple
+ *   unqualified name such as 'Core' will NOT match. If the
+ *   property holds a simple name, use p.name instead.
+ *
+ * Fallback to model:
+ *   The model itself is returned as a uml::Package when:
+ *   - 'MAIN_PACKAGE_NAME' is not set (empty string),
+ *   - the property equals the model name, or
+ *   - no package with the given qualified name is found.
+ *   The second condition means that explicitly naming the model
+ *   is treated the same as leaving the property unset.
+ *
+ * Non-determinism:
+ *   If multiple packages share the same qualified name across
+ *   different subtrees, ->first() returns the first match in
+ *   containment order. The model is assumed to contain unique
+ *   qualified names, which is the standard UML constraint.
+ *
+ * Type note:
+ *   uml::Model is a specialisation of uml::Package, so returning
+ *   aModel as uml::Package requires no cast.
+ *
+ * @param aModel - The UML model being generated.
 /]
 [query public u_mainPackage(aModel : uml::Model) : uml::Package =
   let propertyValue : String =
     'MAIN_PACKAGE_NAME'.getPropertyValue()
-  let matchedPackages : OrderedSet(uml::Package) =
+  in
+  let matchedPackages : Sequence(uml::Package) =
     aModel.eAllContents(uml::Package)
       ->select(p | p.qualifiedName = propertyValue)
   in
-    if propertyValue = ''
-      or propertyValue = aModel.name
-      or matchedPackages->isEmpty()
-    then
-      aModel
-    else
-      matchedPackages->first()
-    endif
+  if propertyValue = ''
+    or propertyValue = aModel.name
+    or matchedPackages->isEmpty()
+  then
+    aModel
+  else
+    matchedPackages->first()
+  endif
 /]
-
 [**
 Returns an ordered set of all abstraction suplpier classes or data
 types contained in the specified model, without duplicates.
@@ -179,7 +173,7 @@ model, excluding the model itself, sorted by name.
   let mainPkg : uml::Package = aModel.u_mainPackage() in
   mainPkg.eAllContents(uml::Classifier)
     ->collect(c | c.qualifiedName)
-    ->select(s | aModel.e_subsetItems()->includes(
+    ->select(s | aModel.u_subsetItems()->includes(
         s.substring(s.lastIndex('::') + 2)))
     ->collect(s | s.substring(1, s.lastIndex('::') - 1))
     ->collect(s | s.tokenize('::'))

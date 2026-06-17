@@ -39,6 +39,7 @@ data type with detailed information.
 [template public processModel(aModel : uml::Model)]
 	[aModel.initProperties()/]
 	[aModel.writeConfigurationReport()/]
+	[aModel.writeDiagnostic()/]
   [aModel.writeModelProperties()/]
   [aModel.writeModelPropertiesPy()/]
 
@@ -109,5 +110,11 @@ data type with detailed information.
 [file ('_configurationReport.txt', overwrite, 'UTF-8')]
   === ConfigurationService Report ===
 	[aModel.getConfigurationReport()/]
+[/file]
+[/template]
+
+[template public writeDiagnostic(aModel : uml::Model)]
+[file ('_diagnostic.txt', overwrite, 'UTF-8')]
+[aModel.getDiagnosticInfo()/]
 [/file]
 [/template]

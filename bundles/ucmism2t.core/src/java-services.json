@@ -1,0 +1,7 @@
+{
+  "getCurrentDateTime": 		"java/ucmism2t/services/DateTimeService.html#getCurrentDateTime(org.eclipse.emf.ecore.EObject)",
+	"getConfigurationReport":	"java/ucmism2t/services/PropertiesService.html#getConfigurationReport(org.eclipse.emf.ecore.EObject)",
+  "getProperty":        		"java/ucmism2t/services/PropertiesService.html#getPropertyValue(java.lang.String)",
+	"initProperties":					"java/ucmism2t/services/PropertiesService.html#initProperties(org.eclipse.uml2.uml.Model)",
+	"isPropertyTrue":     		"java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)"
+}

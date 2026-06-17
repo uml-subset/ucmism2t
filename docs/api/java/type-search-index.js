@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ucmism2t.services","l":"DateTimeService"},{"p":"ucmism2t.services","l":"PropertiesService"}];updateSearchResults();

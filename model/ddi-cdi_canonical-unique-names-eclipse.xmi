@@ -543,7 +543,7 @@ The datatype of language-tagged string values. Defined according to the data typ
                      <value>1</value>
                   </upperValue>
                   <name>language</name>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-Context-RDF-langString-lexicalForm"
@@ -566,7 +566,7 @@ The datatype of language-tagged string values. Defined according to the data typ
                      <value>1</value>
                   </upperValue>
                   <name>lexicalForm</name>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
             </packagedElement>
@@ -1280,7 +1280,7 @@ Relationships between agents are fluid and reflect effective dates of the relati
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Agents-AgentListing-identifier"
@@ -1471,7 +1471,7 @@ Assigns a sequence number to an agent in an agent listing.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -4142,7 +4142,7 @@ Assigns a sequence number to a category within a list.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -5130,7 +5130,7 @@ Note that this class can be used with concepts, classifications, universes, popu
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Conceptual-ConceptSystem-catalogDetails"
@@ -5952,7 +5952,7 @@ Extends from conceptual variable and can contain all descriptive fields without 
                         <value>1</value>
                      </upperValue>
                      <name>simpleUnitOfMeasure</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -6263,7 +6263,7 @@ Not to be confused with Population, which includes the specification of time and
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -6314,7 +6314,7 @@ A simple ordered or unordered list of variables can be described via a set of va
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel"
@@ -6558,7 +6558,7 @@ Variable position allows a list of variables to be ordered.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -8839,7 +8839,7 @@ Indexes the components in a data structure using integers with a position indica
                            <value>1</value>
                         </upperValue>
                         <name>value</name>
-                        <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                        <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                               xmi:type="uml:PrimitiveType"/>
                      </ownedAttribute>
                   </packagedElement>
@@ -8982,7 +8982,7 @@ An example would be age categories. Five-year age categories can be collapsed in
                                       xmi:type="uml:LiteralBoolean">
                            <value>False</value>
                         </defaultValue>
-                        <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                        <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                               xmi:type="uml:PrimitiveType"/>
                      </ownedAttribute>
                      <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-DataDescription-Components-DimensionComponent-ownedAttribute"
@@ -9983,7 +9983,7 @@ The April datum for Income revised in June.</body>
                            <value>1</value>
                         </upperValue>
                         <name>vintage</name>
-                        <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                        <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                               xmi:type="uml:PrimitiveType"/>
                      </ownedAttribute>
                   </packagedElement>
@@ -10021,7 +10021,7 @@ An adjustment to monthly employment numbers to adjust for errors (sampling or no
                            <value>1</value>
                         </upperValue>
                         <name>algorithm</name>
-                        <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                        <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                               xmi:type="uml:PrimitiveType"/>
                      </ownedAttribute>
                      <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-DataDescription-Dimensional-Revision-identifier"
@@ -11999,7 +11999,7 @@ Indexed location of the associated member within the associated list.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -12150,7 +12150,7 @@ Keep in mind that a logical records are definitions, not a "datasets". Logical r
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-DataStore-catalogDetails"
@@ -12191,7 +12191,7 @@ Keep in mind that a logical records are definitions, not a "datasets". Logical r
                         <value>1</value>
                      </upperValue>
                      <name>characterSet</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-DataStore-dataStoreType"
@@ -12353,7 +12353,7 @@ Keep in mind that a logical records are definitions, not a "datasets". Logical r
                         <value>1</value>
                      </upperValue>
                      <name>recordCount</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -12488,7 +12488,7 @@ The instance variable map identifies the variables which are used to connect two
                         <value>1</value>
                      </upperValue>
                      <name>setValue</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -12638,7 +12638,7 @@ Assigns a position of the logical record within the data store.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -12957,7 +12957,7 @@ Multiple styles of structural description are supported: including describing fi
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalDataSet-catalogDetails"
@@ -13044,7 +13044,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>1</value>
                      </upperValue>
                      <name>numberOfSegments</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalDataSet-overview"
@@ -13172,7 +13172,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>1</value>
                      </upperValue>
                      <name>physicalFileName</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalDataSet-purpose"
@@ -13813,7 +13813,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>1</value>
                      </upperValue>
                      <name>physicalFileName</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalRecordSegment-purpose"
@@ -13906,7 +13906,7 @@ Assigns a position of the physical record segment within the whole physical reco
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -14220,7 +14220,7 @@ A physical segment layout is a physical description (e.g. unit segment layout) o
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-arrayBase"
@@ -14241,7 +14241,7 @@ A physical segment layout is a physical description (e.g. unit segment layout) o
                         <value>1</value>
                      </upperValue>
                      <name>arrayBase</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-catalogDetails"
@@ -14287,7 +14287,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>1</value>
                      </upperValue>
                      <name>commentPrefix</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-delimiter"
@@ -14313,7 +14313,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralString">
                         <value>,</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-encoding"
@@ -14359,7 +14359,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralString">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-hasHeader"
@@ -14385,7 +14385,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-headerIsCaseSensitive"
@@ -14411,7 +14411,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-headerRowCount"
@@ -14437,7 +14437,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralInteger">
                         <value>1</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-identifier"
@@ -14486,7 +14486,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-isFixedWidth"
@@ -14514,7 +14514,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-lineTerminator"
@@ -14541,7 +14541,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>[CRLF, LF]</value>
                      </defaultValue>
                      <isOrdered>true</isOrdered>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-name"
@@ -14583,7 +14583,7 @@ This is information that is tied to the identity of the object. If this informat
                         <value>1</value>
                      </upperValue>
                      <name>nullSequence</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-overview"
@@ -14707,7 +14707,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralString">
                         <value>"</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-skipBlankRows"
@@ -14733,7 +14733,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-skipDataColumns"
@@ -14759,7 +14759,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralInteger">
                         <value>0</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-skipInitialSpace"
@@ -14785,7 +14785,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-skipRows"
@@ -14811,7 +14811,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralInteger">
                         <value>0</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-tableDirection"
@@ -14882,7 +14882,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-trim"
@@ -15182,7 +15182,7 @@ An adequate description will always include a startCharacterPosition and then ma
                         <value>1</value>
                      </upperValue>
                      <name>characterLength</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-SegmentByText-endCharacterPosition"
@@ -15203,7 +15203,7 @@ An adequate description will always include a startCharacterPosition and then ma
                         <value>1</value>
                      </upperValue>
                      <name>endCharacterPosition</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-SegmentByText-endLine"
@@ -15224,7 +15224,7 @@ An adequate description will always include a startCharacterPosition and then ma
                         <value>1</value>
                      </upperValue>
                      <name>endLine</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-SegmentByText-startCharacterPosition"
@@ -15245,7 +15245,7 @@ An adequate description will always include a startCharacterPosition and then ma
                         <value>1</value>
                      </upperValue>
                      <name>startCharacterPosition</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-SegmentByText-startLine"
@@ -15271,7 +15271,7 @@ An adequate description will always include a startCharacterPosition and then ma
                                    xmi:type="uml:LiteralInteger">
                         <value>1</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -15345,7 +15345,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>decimalPositions</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-defaultDecimalSeparator"
@@ -15371,7 +15371,7 @@ An instance variable has details of value domain and data type, but will not hav
                                    xmi:type="uml:LiteralString">
                         <value>.</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-defaultDigitGroupSeparator"
@@ -15392,7 +15392,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>defaultDigitGroupSeparator</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-defaultValue"
@@ -15415,7 +15415,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>defaultValue</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-format"
@@ -15482,7 +15482,7 @@ An instance variable has details of value domain and data type, but will not hav
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-length"
@@ -15503,7 +15503,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>length</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-maximumLength"
@@ -15524,7 +15524,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>maximumLength</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-minimumLength"
@@ -15545,7 +15545,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>minimumLength</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-nullSequence"
@@ -15566,7 +15566,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>nullSequence</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-numberPattern"
@@ -15587,7 +15587,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>numberPattern</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-FormatDescription-ValueMapping-ownedAttribute_1"
@@ -15656,7 +15656,7 @@ An instance variable has details of value domain and data type, but will not hav
                         <value>1</value>
                      </upperValue>
                      <name>scale</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -15729,7 +15729,7 @@ Denotes the position of a value mapping in a sequence.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -16436,7 +16436,7 @@ An activity is invoked by control logic. It may use and/or produce information o
                         <value>1</value>
                      </upperValue>
                      <name>description</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Process-Activity-displayLabel"
@@ -16762,7 +16762,7 @@ DDI-CDI has extended control logic to include non-deterministic activity and ste
                         <value>1</value>
                      </upperValue>
                      <name>description</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Process-ControlLogic-displayLabel"
@@ -17221,7 +17221,7 @@ Data processing platforms and data analysis platforms are types of production en
                         <value>1</value>
                      </upperValue>
                      <name>description</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Process-ProductionEnvironment-displayLabel"
@@ -17585,7 +17585,7 @@ Assigns a sequence number to an activity within a sequence.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -19467,7 +19467,7 @@ A classification index shows the relationship between text found in statistical 
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationIndex-availableLanguage"
@@ -19911,7 +19911,7 @@ Member indicator for use with member type classification index entry.</body>
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -20061,7 +20061,7 @@ A classification item defines the content and the borders of the category. A uni
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationItem-isValid"
@@ -20087,7 +20087,7 @@ A classification item defines the content and the borders of the category. A uni
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationItem-name"
@@ -20259,7 +20259,7 @@ Provides a classification item with an index conveying the order of the classifi
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -20625,7 +20625,7 @@ The index of a classification within a classification family expressed as an int
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -20675,7 +20675,7 @@ Typically, these statistical classifications have the same name.</body>
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationSeries-catalogDetails"
@@ -21222,7 +21222,7 @@ List may be flat or hierarchical. A hierarchical structure may have an indexed o
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-CodeList-ownedAttribute_1"
@@ -21513,7 +21513,7 @@ An index within an order intended for presentation (even though the content with
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -21986,7 +21986,7 @@ Provides level information for the members of the level structure. levelNumber p
                         <value>1</value>
                      </upperValue>
                      <name>levelNumber</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-Level-ownedAttribute_1"
@@ -22308,7 +22308,7 @@ Each classification item represents a category. Every category is a member of a 
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-availableLanguage"
@@ -22442,7 +22442,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-isFloating"
@@ -22468,7 +22468,7 @@ This is information that is tied to the identity of the object. If this informat
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-ownedAttribute_1"
@@ -23004,7 +23004,7 @@ The value and concept description may be used to describe either a value domain 
                         <value>1</value>
                      </upperValue>
                      <name>maximumValueExclusive</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ValueAndConceptDescription-maximumValueInclusive"
@@ -23025,7 +23025,7 @@ The value and concept description may be used to describe either a value domain 
                         <value>1</value>
                      </upperValue>
                      <name>maximumValueInclusive</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ValueAndConceptDescription-minimumValueExclusive"
@@ -23046,7 +23046,7 @@ The value and concept description may be used to describe either a value domain 
                         <value>1</value>
                      </upperValue>
                      <name>minimumValueExclusive</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ValueAndConceptDescription-minimumValueInclusive"
@@ -23067,7 +23067,7 @@ The value and concept description may be used to describe either a value domain 
                         <value>1</value>
                      </upperValue>
                      <name>minimumValueInclusive</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-Classes-Representations-ValueAndConceptDescription-regularExpression"
@@ -23250,7 +23250,7 @@ Attributes for the model identification with constant values.</body>
                      <value>DDI-CDI</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-language"
@@ -23279,7 +23279,7 @@ Attributes for the model identification with constant values.</body>
                      <value>en</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-majorVersion"
@@ -23308,7 +23308,7 @@ Attributes for the model identification with constant values.</body>
                      <value>1</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-minorVersion"
@@ -23337,7 +23337,7 @@ Attributes for the model identification with constant values.</body>
                      <value>0</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-subtitle"
@@ -23366,7 +23366,7 @@ Attributes for the model identification with constant values.</body>
                      <value>Release</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-title"
@@ -23395,7 +23395,7 @@ Attributes for the model identification with constant values.</body>
                      <value>DDI Cross Domain Integration</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-ModelIdentification-uri"
@@ -23424,7 +23424,7 @@ Attributes for the model identification with constant values.</body>
                      <value>http://ddialliance.org/Specification/DDI-CDI/1.0/</value>
                   </defaultValue>
                   <isReadOnly>true</isReadOnly>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
             </packagedElement>
@@ -24676,7 +24676,7 @@ For example:
                         <value>1</value>
                      </upperValue>
                      <name>cityPlaceLocal</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-countryCode"
@@ -24762,7 +24762,7 @@ For example:
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-line"
@@ -24784,7 +24784,7 @@ For example:
                      </upperValue>
                      <name>line</name>
                      <isOrdered>true</isOrdered>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-locationName"
@@ -24825,7 +24825,7 @@ For example:
                         <value>1</value>
                      </upperValue>
                      <name>postalCode</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-privacy"
@@ -24886,7 +24886,7 @@ For example:
                         <value>1</value>
                      </upperValue>
                      <name>stateProvince</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-timeZone"
@@ -25063,7 +25063,7 @@ Personal names should be listed surname or family name first, followed by forena
                         <value>1</value>
                      </upperValue>
                      <name>affiliation</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -25825,7 +25825,7 @@ Allows for unstructured content which may be an entry from an externally maintai
                      </upperValue>
                      <name>entryValue</name>
                      <isOrdered>true</isOrdered>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ControlledVocabularyEntry-name"
@@ -25846,7 +25846,7 @@ Allows for unstructured content which may be an entry from an externally maintai
                         <value>1</value>
                      </upperValue>
                      <name>name</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ControlledVocabularyEntry-valueForOther"
@@ -25867,7 +25867,7 @@ Allows for unstructured content which may be an entry from an externally maintai
                         <value>1</value>
                      </upperValue>
                      <name>valueForOther</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ControlledVocabularyEntry-vocabulary"
@@ -26072,7 +26072,7 @@ Skype account, etc.</body>
                         <value>1</value>
                      </upperValue>
                      <name>contactAddress</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ElectronicMessageSystem-effectiveDates"
@@ -26118,7 +26118,7 @@ Skype account, etc.</body>
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ElectronicMessageSystem-privacy"
@@ -26216,7 +26216,7 @@ info@ddialliance.org; ex.ample@somewhere.org</body>
                         <value>1</value>
                      </upperValue>
                      <name>internetEmail</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Email-isPreferred"
@@ -26242,7 +26242,7 @@ info@ddialliance.org; ex.ample@somewhere.org</body>
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Email-privacy"
@@ -26391,7 +26391,7 @@ Information regarding the source of funds used to develop or support the resourc
                         <value>1</value>
                      </upperValue>
                      <name>grantNumber</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -26489,7 +26489,7 @@ Identifier for objects requiring short- or long-lasting referencing and manageme
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Identifier-isDdiIdentifierUniversallyUnique"
@@ -26515,7 +26515,7 @@ Identifier for objects requiring short- or long-lasting referencing and manageme
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Identifier-nonDdiIdentifier"
@@ -26710,7 +26710,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                         <value>1</value>
                      </upperValue>
                      <name>firstGiven</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-fullName"
@@ -26756,7 +26756,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-isPreferred"
@@ -26782,7 +26782,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-lastFamily"
@@ -26803,7 +26803,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                         <value>1</value>
                      </upperValue>
                      <name>lastFamily</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-middle"
@@ -26825,7 +26825,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                      </upperValue>
                      <name>middle</name>
                      <isOrdered>true</isOrdered>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-prefix"
@@ -26846,7 +26846,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                         <value>1</value>
                      </upperValue>
                      <name>prefix</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-sex"
@@ -26887,7 +26887,7 @@ The name of an individual broken out into its component parts of prefix, first/g
                         <value>1</value>
                      </upperValue>
                      <name>suffix</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-typeOfIndividualName"
@@ -26945,7 +26945,7 @@ For use in annotation or other citation format.</body>
                         <value>1</value>
                      </upperValue>
                      <name>identifierContent</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalIdentifier-isURI"
@@ -26971,7 +26971,7 @@ For use in annotation or other citation format.</body>
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalIdentifier-managingAgency"
@@ -27029,7 +27029,7 @@ The uniqueness of an InternationalRegistrationDataIdentifier (IRDI) is determine
                      </upperValue>
                      <name>dataIdentifier</name>
                      <isID>true</isID>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalRegistrationDataIdentifier-registrationAuthorityIdentifier"
@@ -27053,7 +27053,7 @@ The uniqueness of an InternationalRegistrationDataIdentifier (IRDI) is determine
                      </upperValue>
                      <name>registrationAuthorityIdentifier</name>
                      <isID>true</isID>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalRegistrationDataIdentifier-versionIdentifier"
@@ -27077,7 +27077,7 @@ The uniqueness of an InternationalRegistrationDataIdentifier (IRDI) is determine
                      </upperValue>
                      <name>versionIdentifier</name>
                      <isID>true</isID>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -27170,7 +27170,7 @@ A structured display label. Label provides display content of a fully human read
                         <value>1</value>
                      </upperValue>
                      <name>maxLength</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LabelForDisplay-validDates"
@@ -27226,7 +27226,7 @@ A data type which describes a string specific to a language/scope combination. I
                         <value>1</value>
                      </upperValue>
                      <name>content</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LanguageString-isTranslatable"
@@ -27252,7 +27252,7 @@ A data type which describes a string specific to a language/scope combination. I
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LanguageString-isTranslated"
@@ -27278,7 +27278,7 @@ A data type which describes a string specific to a language/scope combination. I
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LanguageString-language"
@@ -27319,7 +27319,7 @@ A data type which describes a string specific to a language/scope combination. I
                         <value>1</value>
                      </upperValue>
                      <name>scope</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LanguageString-structureUsed"
@@ -27515,7 +27515,7 @@ A unique set of attributes, not conforming to the DDI identifier structure nor s
                         <value>1</value>
                      </upperValue>
                      <name>managingAgency</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-NonDdiIdentifier-type"
@@ -27538,7 +27538,7 @@ A unique set of attributes, not conforming to the DDI identifier structure nor s
                         <value>1</value>
                      </upperValue>
                      <name>type</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-NonDdiIdentifier-value"
@@ -27561,7 +27561,7 @@ A unique set of attributes, not conforming to the DDI identifier structure nor s
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-NonDdiIdentifier-version"
@@ -27582,7 +27582,7 @@ A unique set of attributes, not conforming to the DDI identifier structure nor s
                         <value>1</value>
                      </upperValue>
                      <name>version</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -27638,7 +27638,7 @@ Used to preserve an historical date, formatted in a non-ISO fashion.</body>
                         <value>1</value>
                      </upperValue>
                      <name>dateContent</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-NonIsoDate-nonIsoDateFormat"
@@ -27717,7 +27717,7 @@ A resource which describes a specific attribute of an object. It is defined in t
                         <value>1</value>
                      </upperValue>
                      <name>refinedByOrderNumber</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ObjectAttributeSelector-value"
@@ -27738,7 +27738,7 @@ A resource which describes a specific attribute of an object. It is defined in t
                         <value>1</value>
                      </upperValue>
                      <name>value</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -27796,7 +27796,7 @@ Use in model: In general the property name should be "name" as it is the name of
                         <value>1</value>
                      </upperValue>
                      <name>name</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -27880,7 +27880,7 @@ Names by which the organization is known. Use the attribute isFormal with a valu
                                    xmi:type="uml:LiteralBoolean">
                         <value>True</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-OrganizationName-typeOfOrganizationName"
@@ -28236,7 +28236,7 @@ Provides a way of pointing to resources outside of the information described in 
                         <value>1</value>
                      </upperValue>
                      <name>description</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Reference-location"
@@ -28339,7 +28339,7 @@ Provides a way of pointing to resources outside of the information described in 
                      </upperValue>
                      <name>validType</name>
                      <isOrdered>true</isOrdered>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -28386,7 +28386,7 @@ Lists the value and format type for the coordinate value. Note that this is a si
                         <value>1</value>
                      </upperValue>
                      <name>content</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-SpatialCoordinate-coordinateType"
@@ -28526,7 +28526,7 @@ The value of the statistic expressed as a decimal, float and/or double. Indicate
                         <value>1</value>
                      </upperValue>
                      <name>content</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Real"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Statistic-isWeighted"
@@ -28552,7 +28552,7 @@ The value of the statistic expressed as a decimal, float and/or double. Indicate
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Statistic-typeOfNumericValue"
@@ -28573,7 +28573,7 @@ The value of the statistic expressed as a decimal, float and/or double. Indicate
                         <value>1</value>
                      </upperValue>
                      <name>typeOfNumericValue</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -28709,7 +28709,7 @@ Examples
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Telephone-privacy"
@@ -28750,7 +28750,7 @@ Examples
                         <value>1</value>
                      </upperValue>
                      <name>telephoneNumber</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Telephone-typeOfTelephone"
@@ -28811,7 +28811,7 @@ Describes a range of text by recording the start and end positions of the select
                         <value>1</value>
                      </upperValue>
                      <name>end</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-TextPositionSelector-start"
@@ -28834,7 +28834,7 @@ Describes a range of text by recording the start and end positions of the select
                         <value>1</value>
                      </upperValue>
                      <name>start</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                </packagedElement>
@@ -28916,7 +28916,7 @@ This is a generic type + string where property name and documentation should be 
                         <value>1</value>
                      </upperValue>
                      <name>content</name>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-TypedString-typeOfContent"
@@ -28995,7 +28995,7 @@ A web site (normally a URL) with information on type of site, privacy flag, and 
                                    xmi:type="uml:LiteralBoolean">
                         <value>False</value>
                      </defaultValue>
-                     <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                     <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                            xmi:type="uml:PrimitiveType"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:id="DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-WebLink-privacy"
@@ -29441,7 +29441,7 @@ Generic container that supports different types of groupings, from unordered set
                      <value>1</value>
                   </upperValue>
                   <name>allowsDuplicates</name>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DesignPatterns-CollectionsPattern-Collection-name"
@@ -29818,7 +29818,7 @@ Position indexes members within a collection to create a list (array).</body>
                      <value>1</value>
                   </upperValue>
                   <name>value</name>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Integer"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
             </packagedElement>
@@ -30189,7 +30189,7 @@ A signifier has the potential to refer to an object. In this case, the referring
                      <value>1</value>
                   </upperValue>
                   <name>content</name>
-                  <type href="http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#String"
+                  <type href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"
                         xmi:type="uml:PrimitiveType"/>
                </ownedAttribute>
                <ownedAttribute xmi:id="DDICDIModels-DesignPatterns-SignificationPattern-Signifier-ownedAttribute"

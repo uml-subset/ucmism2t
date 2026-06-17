@@ -16,5 +16,5 @@
     <booleanAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_MONITOR_ADAPTER" value="true"/>
     <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_PARAM" value="{&quot;module&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/bundles/ucmism2t.core/src/ucmism2t/templates/m2tMaster.mtl&quot;,&quot;model&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/model/ddi-cdi_canonical-unique-names-eclipse.xmi&quot;,&quot;destination&quot;:&quot;file:/media/wackerow/Shared/Git/github/ucmism2t/generated/&quot;,&quot;options&quot;:&quot;{\&quot;newLine\&quot;:\&quot;\\n\&quot;,\&quot;logURI\&quot;:\&quot;acceleo.log\&quot;}&quot;}"/>
     <stringAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_HOST" value="127.0.0.1"/>
-    <intAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_PORT" value="42547"/>
+    <intAttribute key="org.eclipse.lsp4e.debug.model.ATTR_DSP_SERVER_PORT" value="34667"/>
 </launchConfiguration>

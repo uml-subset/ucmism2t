@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::packageQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li class="active">
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::packageQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML pcakage as receiver.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/packageQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_childClasses">
+                            <code>u_childClasses(aPackage) : Sequence(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the classes directly owned by the specified package, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childPackages">
+                            <code>u_childPackages(aPackage) : Sequence(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the packages directly owned by the specified package, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isAllowedPackage">
+                            <code>u_isAllowedPackage(aPackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified package is the main package or a non-ignored child of the main package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isNotIgnoredPackage">
+                            <code>u_isNotIgnoredPackage(aPackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified package is not listed in the IGNORE_PACKAGE property (comma-separated list of package names).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childrenDataTypes">
+                            <code>u_childrenDataTypes(aPackage) : Sequence(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of data types directly contained in the specified package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childrenEnumerations">
+                            <code>u_childrenEnumerations(aPackage) : Sequence(uml::Enumeration)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of enumerations directly contained in the specified package.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_childClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childClasses(aPackage : uml::Package) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the classes directly owned by the specified package, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package whose directly owned classes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childClasses(
+  aPackage : uml::Package) : Sequence(uml::Class) =
+  aPackage.ownedType-&gt;filter(uml::Class)
+  -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childPackages(aPackage : uml::Package) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the packages directly owned by the specified package, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package whose directly owned packages are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Package)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childPackages(
+  aPackage : uml::Package) : Sequence(uml::Package) =
+  aPackage.nestedPackage
+  -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isAllowedPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isAllowedPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isAllowedPackage(aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified package is the main package or a non-ignored child of the main package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isNotIgnoredPackage">u_isNotIgnoredPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isAllowedPackage(aPackage : uml::Package) : Boolean =
+  let mainPkg : uml::Package = aPackage.u_model().u_mainPackage() in
+  aPackage = mainPkg
+  or (mainPkg.eAllContents(uml::Package)-&gt;includes(aPackage)
+      and aPackage.u_isNotIgnoredPackage())
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isNotIgnoredPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isNotIgnoredPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isNotIgnoredPackage(aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified package is not listed in the IGNORE_PACKAGE property (comma-separated list of package names).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_namedElementByName">u_namedElementByName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substituteall" target="_blank">substituteAll()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isNotIgnoredPackage(aPackage : uml::Package) : Boolean =
+  &#39;IGNORE_PACKAGE&#39;.getPropertyValue()
+    .substituteAll(&#39; &#39;, &#39;&#39;)
+    .tokenize(&#39;,&#39;)
+    -&gt;collect(p | aPackage.u_model().u_namedElementByName(p))
+    -&gt;excludes(aPackage)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childrenDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childrenDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childrenDataTypes(aPackage : uml::Package) : Sequence(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of data types directly contained in the specified package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childrenDataTypes(
+  aPackage : uml::Package) : Sequence(uml::DataType) =
+  aPackage.eContents(uml::DataType)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childrenEnumerations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childrenEnumerations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childrenEnumerations(aPackage : uml::Package) : Sequence(uml::Enumeration) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of enumerations directly contained in the specified package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Enumeration)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childrenEnumerations(
+  aPackage : uml::Package) : Sequence(uml::Enumeration) =
+  aPackage.eContents(uml::Enumeration)
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -15,6 +15,7 @@
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::xsd::commonXsd/]
 
 [template public processModelTest(aModel : uml::Model)]
   [file ('test.txt', overwrite, 'UTF-8')]
@@ -27,9 +28,22 @@
     'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
     'xx'.getPropertyValue() ['xx'.getPropertyValue()/]
 
+
+    #######################
+    ownedComment	[aModel.ownedComment/]
+    ownedComment->first()	[aModel.ownedComment->first()/]
+    ownedComment->first() 2
+   	[aModel.ownedComment->first()/]
+    ownedComment->first().body	[aModel.ownedComment->first().body/]
+    ownedComment->first().body.trim()[aModel.ownedComment->first().body.trim()/]
+    xsd_documentation
+    [aModel.u_commentBody().xsd_documentation()/]
+    [comment]     ['<xs:documentation>'+aModel.u_commentBody()+'</xs:documentation>'/] [/comment]
+    
+
     #######################
     subset name ['subset.name'.getPropertyValue()/]
-			[for (s : String | aModel.e_subsetClasses()->sortedBy(c | c))]
+			[for (s : String | aModel.u_subsetClasses()->sortedBy(c | c))]
     		subset class [s/]
 			[/for]
 			[for (s : String | aModel.u_subsetPackages()->sortedBy(p | p))]
@@ -64,9 +78,22 @@
 		[/let]
     #######################
     [let d : uml::DataType =
-    	aModel.eAllContents(uml::DataType)->select(p | p.name = 'Identifier')->first()]
-  		[for (ud : uml::Class | d.u_usingClasses()->sortedBy(ud2 | ud2.qualifiedName) )]
-      	u_usingDataTypes: [ud.qualifiedName/]
+    	aModel.eAllContents(uml::DataType)->select(p | p.name = 'Email')->first()]
+  		[for (a : uml::Property | d.ownedAttribute )]
+      	a1 name: [a.name/]
+      	a1 type : [a.type/]
+      	a1 type name: [a.type.name/]
+      	a1 type.eClass().name [a.type.eClass().name/]
+      	a1.type.eResource() [a.type.eResource()/]
+      	a1.type.qualifiedName [a.type.qualifiedName/]
+      	aModel.eClass().name: [aModel.eClass().name/]
+      	***
+      	[if (a.type.name='')]
+         	EMPTY
+        [else]
+          [a.type/]
+          [a.type.name->size()/]
+        [/if]
 			[/for]
     [/let]
 	[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept')->first()]
@@ -95,8 +122,8 @@
 						[att.type.name/]
 						[att.type.getURIFragment()/]
 						[att.type.toString()/]
-						"[att.type.u_typeName()/]"
-			[/for]
+[comment] 						"[att.type.u_typeName()/]"
+[/comment]			[/for]
 	
 		[/let]
     #######################
@@ -333,17 +360,17 @@
 									Individual u2 subclass name: [subClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_superClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Individual').u_allSuperClasses()
 			 )]
 									Individual Superclasses: [superClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable').u_superClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable').u_allSuperClasses()
 			 )]
 									InstanceVariable Superclasses: [superClass.name/]
 		[/for]
   		[for (superClass : uml::Class |
-			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_superClasses()
+			 aModel.eAllContents(uml::Class)->select(p | p.name = 'Concept').u_allSuperClasses()
 			 )]
 									Concept Superclasses: [superClass.name/]
 		[/for]

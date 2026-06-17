@@ -207,7 +207,7 @@ AQL operations used:
 @param aDataType - A UML datatype whose full supertype hierarchy
                    is to be retrieved.
 /]
-[query public u_superDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+[query public u_allSuperDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
   aDataType->closure(c | c.general->filter(uml::DataType))
 /]
 
@@ -265,7 +265,7 @@ See also: u_contextPackages(uml::Class)
 /]
 [query public u_contextPackages(
   aDataType : uml::DataType) : OrderedSet(uml::Package) =
-  aDataType.e_contextClassesOrDataTypes()
+  aDataType.u_contextClassesOrDataTypes()
     ->collect(c | c.package)
     ->excluding(aDataType.package)
     ->asOrderedSet()
@@ -288,4 +288,47 @@ type, to keep diagrams manageable.
   else
     props
   endif
+/]
+
+[**
+Returns an ordered set of classifiers related to the specified data
+type as context classifiers for diagram generation:
+- classifiers that own properties using the data type
+- all super data types
+- classifiers that own properties using any super data type
+  (limited to 3 per super type)
+- all sub data types
+- abstraction clients of the data type
+- abstraction suppliers of the data type
+The data type itself is excluded from the result.
+
+Note: p.owner is typed as uml::Element and requires an explicit
+oclAsType(uml::Classifier) cast. Sub- and super data types as well
+as abstraction helpers returning OrderedSet(uml::DataType) do not
+need a cast since DataType is a subtype of Classifier and AQL
+widens the union automatically.
+
+@param aDataType - A UML data type.
+/]
+[query public u_contextClassesOrDataTypes(
+  aDataType : uml::DataType) : OrderedSet(uml::Classifier) =
+  let useClassifiers : OrderedSet(uml::Classifier) =
+    aDataType.u_dataTypeUseProperties()
+    ->collect(p | p.owner.oclAsType(uml::Classifier))
+  in
+  let superTypes : OrderedSet(uml::DataType) =
+    aDataType.u_allSuperDataTypes()
+  in
+  useClassifiers
+    ->union(superTypes)
+    ->union(
+        superTypes
+        ->collect(s | s.u_limitedDataTypeUseProperties())
+        ->collect(p | p.owner.oclAsType(uml::Classifier)))
+    ->union(aDataType.u_allSubDataTypes())
+    ->union(aDataType.u_abstractionClientsDataType())
+    ->union(aDataType.u_abstractionSuppliersDataType())
+    ->excluding(aDataType)
+    ->asOrderedSet()
+    ->sortedBy(c | c.name)
 /]

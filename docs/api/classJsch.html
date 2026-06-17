@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::target::jsonschema::classJsch — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li class="active">
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::target::jsonschema::classJsch
+        </h1>
+
+
+        <div class="description">Module contains templates for JSON Schema.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/jsonschema/classJsch.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#classJsch">
+                            <code>classJsch(aClass)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates JSON-Schema code for a class.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genClassAttributes">
+                            <code>genClassAttributes(aClass)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genAssociations">
+                            <code>genAssociations(aClass, seen)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generate the &quot;properties&quot; entries for all associations of aClass and its superclass. In order to prevent duplicate keys, &#39;seen&#39; is expected to contain all the keys already used. This is useful when a subclass specializes the constrains on an inherited association.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genReverseAssociations">
+                            <code>genReverseAssociations(aClass)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#requiredClassAttributes">
+                            <code>requiredClassAttributes(aClass)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        List-items of the names of the required attributes
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#requiredAssociations">
+                            <code>requiredAssociations(aClass)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        List-items of the names of the required associations
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Query summary -->
+
+        <!-- ═══════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="classJsch">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classJsch
+            </h3>
+
+            <div class="signature">
+                <code>[template public classJsch(aClass : uml::Class)]</code>
+            </div>
+
+
+            <div class="description">Generates JSON-Schema code for a class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_subClasses">u_subClasses</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genClassAttributes">genClassAttributes</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genAssociations">genAssociations</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genReverseAssociations">genReverseAssociations</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#requiredClassAttributes">requiredClassAttributes</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#requiredAssociations">requiredAssociations</a>
+        </div>
+
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classJsch(aClass : uml::Class) post(self.trim())]
+  &quot;cls-[aClass.name/]&quot;: {
+    &quot;description&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/][aClass.name/]&quot;,
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+      &quot;@context&quot;: {
+        &quot;$ref&quot;: &quot;#/defs/at-context&quot;
+      },
+      &quot;@id&quot;: {
+        &quot;type&quot;: &quot;string&quot;,
+        &quot;format&quot;: &quot;iri-reference&quot;
+      },
+      &quot;@type&quot;: {
+        &quot;const&quot;: &quot;[aClass.name/]&quot;
+      },
+      [aClass.genClassAttributes()/]
+      [aClass.genAssociations(OrderedSet{})/]
+      [aClass.genReverseAssociations()/]
+      &quot;sameAs&quot;: {
+        &quot;$ref&quot;: &quot;#/defs/owl:sameAs&quot;
+      }
+    },
+    &quot;required&quot;: [&#39;[&#39;/][aClass.requiredClassAttributes()/][aClass.requiredAssociations()/]&quot;@type&quot;],
+    &quot;additionalProperties&quot;: false
+  },
+  &quot;target-[aClass.name/]&quot;: {
+    &quot;description&quot;: &quot;all subclasses of [&#39;RDF_NS&#39;.getPropertyValue()/][aClass.name/]&quot;,
+    &quot;anyOf&quot;: [&#39;[&#39;/]
+      { &quot;$ref&quot;: &quot;#/defs/cls-[aClass.name/]&quot; },
+  [for (sc : uml::Class | aClass.u_subClasses())]
+        { &quot;$ref&quot;: &quot;#/defs/cls-[sc.name/]&quot; },
+  [/for]
+      { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; }
+    ]
+  },[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genClassAttributes">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genClassAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genClassAttributes(aClass : uml::Class)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#genAttributes">genAttributes</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genClassAttributes">genClassAttributes</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genClassAttributes(aClass : uml::Class) post(self.trim())]
+  [aClass.genAttributes()/]
+  [if (not aClass.superClass-&gt;isEmpty())]
+    [aClass.superClass-&gt;asSequence()-&gt;collect(temp1 | temp1.genClassAttributes())/]
+  [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genAssociations">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genAssociations(aClass : uml::Class, seen : OrderedSet(String))]</code>
+            </div>
+
+
+            <div class="description">Generate the &quot;properties&quot; entries for all associations of aClass and its superclass. In order to prevent duplicate keys, &#39;seen&#39; is expected to contain all the keys already used. This is useful when a subclass specializes the constrains on an inherited association.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>seen</code> <span class="param-type">: OrderedSet(String)</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genAssociations">genAssociations</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				            <span class="ref-badge ref-project-service">upperBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genAssociations(aClass : uml::Class, seen : OrderedSet(String)) post(self.trim())]
+  [let associations : OrderedSet(uml::Association) = aClass.u_associations()-&gt;select(a | a.u_ownedEndClass() = aClass)]
+    [for (anAssociation : uml::Association | associations-&gt;select(anAssociation | seen-&gt;excludes(anAssociation.name)))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          &quot;[anAssociation.shortName()/]&quot;: {
+            &quot;description&quot;: &quot;[anAssociation.name/]&quot;,
+            &quot;$comment&quot;: &quot;cardinality [targetEnd.lowerBound()/]..[targetEnd.upperBound()/]&quot;,
+          [if (targetEnd.upperBound() = 1)]
+               &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+          [else]
+              &quot;anyOf&quot;: [&#39;[&#39;/]
+                {
+                  &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+                },
+                {
+                  &quot;type&quot;: &quot;array&quot;,
+                  &quot;items&quot;: {
+                    &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+                  }
+                }
+              ]
+          [/if]
+          },
+        [/let]
+      [/let]
+    [/for]
+    [if (not aClass.superClass-&gt;isEmpty())]
+      [aClass.superClass-&gt;asSequence()-&gt;collect(temp2 | temp2.genAssociations(seen + associations-&gt;asSequence()-&gt;collect(a | a.shortName())))/]
+    [/if]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genReverseAssociations">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genReverseAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genReverseAssociations(aClass : uml::Class)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genReverseAssociations">genReverseAssociations</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				            <span class="ref-badge ref-project-service">upperBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genReverseAssociations(aClass : uml::Class) post(self.trim())]
+  [for (anAssociation : uml::Association | aClass.u_associations()-&gt;select(anAssociation | anAssociation.u_otherEndClass() = aClass))]
+    [let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()]
+      &quot;[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]&quot;: {
+        &quot;description&quot;: &quot;[anAssociation.name/]&quot;,
+        &quot;$comment&quot;: &quot;cardinality [sourceEnd.lowerBound()/]..[sourceEnd.upperBound()/]&quot;,
+      [if (sourceEnd.upperBound() = 1)]
+          &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+      [else]
+          &quot;anyOf&quot;: [&#39;[&#39;/]
+            {
+              &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+            },
+            {
+              &quot;type&quot;: &quot;array&quot;,
+              &quot;items&quot;: {
+                &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+              }
+            }
+          ]
+      [/if]
+      },
+    [/let]
+  [/for]
+  [if (not aClass.superClass-&gt;isEmpty())]
+    [aClass.superClass-&gt;asSequence()-&gt;collect(temp3 | temp3.genReverseAssociations())/]
+  [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="requiredClassAttributes">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                requiredClassAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[template public requiredClassAttributes(aClass : uml::Class)]</code>
+            </div>
+
+
+            <div class="description">List-items of the names of the required attributes</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#requiredAttributes">requiredAttributes</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#requiredClassAttributes">requiredClassAttributes</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public requiredClassAttributes(aClass : uml::Class) post(self.trim())]
+  [aClass.requiredAttributes()/][if (not aClass.superClass-&gt;isEmpty())][aClass.superClass-&gt;asSequence()-&gt;collect(temp4 | temp4.requiredClassAttributes())/][/if][/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="requiredAssociations">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                requiredAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[template public requiredAssociations(aClass : uml::Class)]</code>
+            </div>
+
+
+            <div class="description">List-items of the names of the required associations</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#requiredAssociations">requiredAssociations</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public requiredAssociations(aClass : uml::Class) post(self.trim())]
+  [for (anAssociation : uml::Association | aClass.u_associations()-&gt;select(anAssociation | anAssociation.u_ownedEndClass() = aClass))][let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()][let targetEnd : uml::Property = sourceEnd.getOtherEnd()][if (targetEnd.lowerBound() &gt; 0)]&quot;[anAssociation.shortName()/]&quot;, [/if][/let][/let][/for][if (not aClass.superClass-&gt;isEmpty())]
+                                                                                                                                                                                                                                                                                                                                                           [aClass.superClass-&gt;asSequence()-&gt;collect(temp5 | temp5.requiredAssociations())/]
+                                                                                                                                                                                                                                                                                                                                                         [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+
+        <!-- ═══════════════════════════════════ Query detail -->
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

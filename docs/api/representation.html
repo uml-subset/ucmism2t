@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::mapping::representation — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li class="active">
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::mapping::representation
+        </h1>
+
+
+        <div class="description">All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/mapping/representation.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#encodingMapping">
+                            <code>encodingMapping(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#processClassifier">
+                            <code>processClassifier(aClassifier)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#encodingTabSet">
+                            <code>encodingTabSet(aClassifier, number, xmiSelected, xsdSelected)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Query summary -->
+
+        <!-- ═══════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="encodingMapping">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                encodingMapping
+            </h3>
+
+            <div class="signature">
+                <code>[template public encodingMapping(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="representation.html#processClassifier">processClassifier</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public encodingMapping(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/index.rst&#39;), overwrite, &#39;UTF-8&#39;)]
+    Mapping UML to Encodings
+    ************************
+    
+    [aModel.eAllContents(uml::Class)-&gt;select(temp1 | temp1.name = &#39;Class&#39;)-&gt;collect(temp2 | temp2.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp3 | temp3.name = &#39;ClassWithPrimitiveAttribute&#39;)-&gt;collect(temp4 | temp4.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp5 | temp5.name = &#39;ClassWithEnumerationAttribute&#39;)-&gt;collect(temp6 | temp6.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp7 | temp7.name = &#39;ClassWithDataTypeAttribute&#39;)-&gt;collect(temp8 | temp8.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp9 | temp9.name = &#39;AssociatedClass&#39;)-&gt;collect(temp10 | temp10.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp11 | temp11.name = &#39;AggregationWhole&#39;)-&gt;collect(temp12 | temp12.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp13 | temp13.name = &#39;CompositeWhole&#39;)-&gt;collect(temp14 | temp14.processClassifier())/]
+    [aModel.eAllContents(uml::Class)-&gt;select(temp15 | temp15.name = &#39;SubClass&#39;)-&gt;collect(temp16 | temp16.processClassifier())/]
+    [aModel.eAllContents(uml::DataType)-&gt;select(temp17 | temp17.name = &#39;StructuredDataType&#39;)-&gt;collect(temp18 | temp18.processClassifier())/]
+    [aModel.eAllContents(uml::DataType)-&gt;select(temp19 | temp19.name = &#39;Enumeration&#39;)-&gt;collect(temp20 | temp20.processClassifier())/]
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="processClassifier">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                processClassifier
+            </h3>
+
+            <div class="signature">
+                <code>[template public processClassifier(aClassifier : uml::Classifier)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classXsd.html#classXsd">classXsd</a>
+                <a class="ref-badge ref-internal-template"
+                   href="enumerationXsd.html#enumerationXsd">enumerationXsd</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeXsd.html#dataTypeXsd">dataTypeXsd</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#classJsch">classJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="enumerationJsch.html#enumerationJsch">enumerationJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsch.html#dataTypeJsch">dataTypeJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classOnto.html#classOnto">classOnto</a>
+                <a class="ref-badge ref-internal-template"
+                   href="enumerationOnto.html#enumerationOnto">enumerationOnto</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeOnto.html#dataTypeOnto">dataTypeOnto</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldModular">classJsonldModular</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsonld.html#dataTypeJsonldModular">dataTypeJsonldModular</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShacl.html#classShacl">classShacl</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeShacl.html#dataTypeShacl">dataTypeShacl</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShex.html#classShex">classShex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeShex.html#dataTypeShex">dataTypeShex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_header">rst_header</a>
+                <a class="ref-badge ref-internal-template"
+                   href="representation.html#encodingTabSet">encodingTabSet</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substring" target="_blank">substring()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-index" target="_blank">index()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public processClassifier(aClassifier : uml::Classifier)]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;_xsd.txt&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classXsd()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationXsd()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeXsd()/]
+    [/if]
+  [/file]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;.schema.json&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classJsch()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationJsch()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeJsch()/]
+    [/if]
+  [/file]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;.onto.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classOnto()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+      [aClassifier.oclAsType(uml::Enumeration).enumerationOnto()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeOnto()/]
+    [/if]
+  [/file]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;.jsonld&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classJsonldModular()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeJsonldModular()/]
+    [/if]
+  [/file]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;.shacl.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classShacl()/]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeShacl()/]
+    [/if]
+  [/file]
+  [file (aClassifier.u_filePath(&#39;doc&#39;).concat(&#39;.shexc&#39;), overwrite, &#39;UTF-8&#39;)]
+    [if (aClassifier.oclIsKindOf(uml::Class))]
+      [aClassifier.oclAsType(uml::Class).classShex()/]
+    [elseif (aClassifier.oclIsKindOf(uml::Enumeration))]
+    [elseif (aClassifier.oclIsKindOf(uml::DataType))]
+      [aClassifier.oclAsType(uml::DataType).dataTypeShex()/]
+    [/if]
+  [/file]
+  
+  [aClassifier.name.rst_header(&#39;=&#39;)/]
+  
+  [let shortDescription : String =
+  	aClassifier.u_commentBody()
+  	  .substring(aClassifier.u_commentBody().index(&#39;Description:&#39;) + 15)]
+    .. dropdown:: [aClassifier.name/] - [shortDescription.substring(1, shortDescription.index(&#39;.&#39;))/]
+       :open:
+  [/let]
+  
+     [aClassifier.u_commentBody()/]
+  
+     .. grid:: 2
+        :gutter: 1
+        :margin: 1 1 1 1
+        :padding: 0 0 0 0
+  
+        .. grid-item-card:: Encodings Card 1
+  
+           [aClassifier.encodingTabSet(&#39;1&#39;, &#39;:selected:&#39;, &#39;&#39;)/]
+  
+        .. grid-item-card:: Encodings Card 2
+  
+           [aClassifier.encodingTabSet(&#39;2&#39;, &#39;&#39;, &#39;:selected:&#39;)/]
+  
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="encodingTabSet">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                encodingTabSet
+            </h3>
+
+            <div class="signature">
+                <code>[template public encodingTabSet(aClassifier : uml::Classifier, number : String, xmiSelected : String, xsdSelected : String)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>number</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>xmiSelected</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>xsdSelected</code> <span class="param-type">: String</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclisof" target="_blank">oclIsTypeOf()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public encodingTabSet(aClassifier : uml::Classifier, number : String, xmiSelected : String, xsdSelected : String)]
+  .. tab-set::
+  
+     .. tab-item:: Canonical XMI
+        :sync: xmi[number/]
+        :class-label: no-tooltip
+        [xmiSelected/]
+  
+        .. literalinclude:: encoding/[aClassifier.name/].xmi
+           :lines: 2-
+           :language: xml
+           :linenos:
+           :emphasize-lines: 4
+  
+     .. tab-item:: XML Schema
+        :sync: xsd[number/]
+        :class-label: no-tooltip
+        [xsdSelected/]
+  
+        .. literalinclude:: encoding/[aClassifier.name/]_xsd.txt 
+           :language: xml
+           :linenos:
+           :emphasize-lines: 1
+           :dedent: 2
+  
+     .. tab-item:: JSON Schema
+        :sync: jsch[number/]
+        :class-label: no-tooltip
+  
+        .. literalinclude:: encoding/[aClassifier.name/].schema.json 
+           :language: json
+           :linenos:
+           :emphasize-lines: 1
+  
+     .. tab-item:: Ontology (Turtle)
+        :sync: onto[number/]
+        :class-label: no-tooltip
+         
+        .. literalinclude:: encoding/[aClassifier.name/].onto.ttl 
+           :language: turtle
+           :linenos:
+           :emphasize-lines: 3
+  
+     .. tab-item:: JSON-LD
+        :sync: jsonld[number/]
+        :class-label: no-tooltip
+  
+  [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
+          *not provided for*
+  [else]
+          .. literalinclude:: encoding/[aClassifier.name/].jsonld 
+             :language: JSON-LD
+             :linenos:
+             :emphasize-lines: 2
+  [/if]
+  
+     .. tab-item:: SHACL
+        :sync: shacl[number/]
+        :class-label: no-tooltip
+  
+        .. literalinclude:: encoding/[aClassifier.name/].shacl.ttl 
+           :language: turtle
+           :linenos:
+           :emphasize-lines: 4
+  
+     .. tab-item:: ShEx
+        :sync: shex[number/]
+        :class-label: no-tooltip
+  
+  [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
+          *not provided for*
+  [else]
+          .. literalinclude:: encoding/[aClassifier.name/].shexc 
+             :language: shexc
+             :linenos:
+             :emphasize-lines: 3
+  [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+
+        <!-- ═══════════════════════════════════ Query detail -->
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

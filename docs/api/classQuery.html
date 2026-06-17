@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::classQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li class="active">
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::classQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML class as receiver. This includes queries for navigating the class hierarchy (superclasses, subclasses), finding associations, inherited attributes, and class classification.  Note: Queries applicable to both classes and data types are in classifierQuery, since both are subtypes of Classifier.  Related modules: - dataTypeQuery: queries with a UML data type as receiver - classifierQuery: queries with a UML classifier as receiver, applicable to both classes and data types - associationQuery: queries with a UML association as receiver - propertyQuery: queries with a UML property as receiver</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/classQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_inheritedClassAttributes">
+                            <code>u_inheritedClassAttributes(aClass) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of inherited attributes of the specified class, i.e. properties inherited from its superclass hierarchy that are not association ends. Excludes own attributes and inherited association ends.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allSuperClasses">
+                            <code>u_allSuperClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all superclasses of a class, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aClass itself as seed; the lambda c.general-&gt;filter(uml::Class) is evaluated starting from aClass, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_rootSuperClasses">
+                            <code>u_rootSuperClasses(aPackage) : Sequence(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of all root superclasses in the specified package and its sub-packages. A root superclass is a class that has no superclasses itself but is a generalisation parent of at least one other class. The parameter can be any uml::Package, including the model root, to scope the search accordingly.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_subClasses">
+                            <code>u_subClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of direct subclasses of a class, sorted by class name. --- AQL operations used: eInverse(uml::Generalization)    - Finds all Generalization elements that cross-reference aClass; requires all resources to be loaded in the same resource set. Returns both generalizations where aClass is the general end AND where aClass is the specific end — hence the guard below is mandatory. -&gt;select(g1 | g1.general=aClass) - Retains only Generalization elements where aClass is the general (parent) end, excluding generalizations where aClass is the specific (child) end. Without this guard, aClass itself leaks into the result via .specific on its own superclass relationships. -&gt;collect(g2 | g3.specific)      - Retrieves the specific (child) classifier of each qualifying Generalization element. -&gt;filter(uml::Class)             - Retains only uml::Class instances, excluding non-Class specializations and dropping null values safely. -&gt;sortedBy(c | c.name)           - Sorts result alphabetically by class name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allSubClasses">
+                            <code>u_allSubClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all subclasses of a class, traversing the full specialization hierarchy down to the leaves. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c1 | expr)     - Applied to aClass itself as seed; the lambda c1.u_subClasses() is evaluated starting from aClass, so direct subclasses are included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once. -&gt;sortedBy(c2 | c2.name) - Sorts the full result alphabetically by class name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isSuperClass">
+                            <code>u_isSuperClass(aClass) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified class is a superclass of at least one other class, i.e. if it has at least one direct subclass.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_incomingAssociatedClasses">
+                            <code>u_incomingAssociatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes that are sources of incoming binary directed associations pointing to the specified class. Uses eInverse() to find all uml::Property elements whose type cross- references aClass, then resolves the source class via getOtherEnd(). Only source-class-owned ends (ownedAttribute) are considered. Self-associations are excluded. --- AQL operations used: eInverse(uml::Property)        - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)            - Keeps only source-class-owned association ends pointing to aClass, excluding those owned by aClass (self-associations). p1.association                 - EReference: the owning Association element; null if not an association end. eContainingFeature().name      - Returns the name of the EReference via which p is contained; &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association itself (ownedEnd). p1.eContainer() &lt;&gt; aClass      - Excludes self-associations: a self-association is exactly the case where the source-owned end is contained by aClass itself. -&gt;collect(p2 | expr)           - Transforms each qualifying property. p2.getOtherEnd()               - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; must be called with explicit parentheses in AQL. .type                          - EReference: the classifier typing the other end (uml::Type); narrowed by filter below. -&gt;filter(uml::Class)           - Retains only uml::Class instances; also drops null values safely. -&gt;asOrderedSet()               - Deduplicates the result collection. -&gt;sortedBy(p3 | p3.name)       - Sorts result alphabetically by class name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_outgoingAssociatedClasses">
+                            <code>u_outgoingAssociatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns all classes that are targets of outgoing binary directed associations from the specified class. Alphabetically sorted, deduplicated set of classes reachable via outgoing associations. Navigates via ownedAttribute ends that belong to a uml::Association, collecting their target types. Self-associations (where the class is associated with itself) are excluded from the result. --- AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p | cond)         - Keeps only elements satisfying the condition. p.association              - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p | expr)        - Transforms each element to the given expression. p.type                     - EReference: the classifier typing this property (uml::Type); narrowed to uml::Class by filter. -&gt;filter(uml::Class)       - Retains only instances of uml::Class; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_associatedClasses">
+                            <code>u_associatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns all classes associated with the specified class, combining both outgoing and incoming binary directed associations. Delegates to u_incomingAssociatedClasses() and u_outgoingAssociatedClasses(), merges the results, deduplicates, and sorts alphabetically by name. Self-associations are excluded.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_effectiveIncomingAssociatedClasses">
+                            <code>u_effectiveIncomingAssociatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes that reference the specified class as a target via incoming binary directed associations, including associations inherited from its superclass hierarchy. Combines the class itself with all its superclasses, then collects incoming association sources across the full hierarchy, deduplicating the result. --- AQL operations used: u_allSuperClasses()               - Query: returns the ordered superclass hierarchy of aClass. -&gt;including(aClass)            - Adds aClass itself to the collection so its own associations are included. -&gt;collect(c1 | expr)           - Collects incoming associated classes for each class in the hierarchy. u_incomingAssociatedClasses()  - Query: returns direct incoming association sources of a single class. -&gt;asOrderedSet()               - Deduplicates; a class may be reachable via associations at multiple levels. -&gt;sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_effectiveOutgoingAssociatedClasses">
+                            <code>u_effectiveOutgoingAssociatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes reachable via outgoing binary directed associations from the specified class, including associations inherited from its superclass hierarchy. Combines the class itself with all its superclasses, then collects outgoing association targets across the full hierarchy, deduplicating the result. --- AQL operations used: u_allSuperClasses()            - Query: returns the ordered superclass hierarchy of aClass. -&gt;including(aClass)            - Adds aClass itself to the collection so its own associations are included. -&gt;collect(c1 | expr)           - Collects outgoing associated classes for each class in the hierarchy. getOutgoingAssociatedClasses() - Query: returns direct outgoing association targets of a single class. -&gt;asOrderedSet()               - Deduplicates; a class may be reachable via associations at multiple levels. -&gt;sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allEffectiveAssociatedClasses">
+                            <code>u_allEffectiveAssociatedClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes reachable via any binary directed association from or to the specified class, including associations inherited from its superclass hierarchy. Combines the results of u_effectiveOutgoingAssociatedClasses() and u_effectiveIncomingAssociatedClasses(), deduplicating the result. --- AQL operations used: u_effectiveOutgoingAssociatedClasses() - Query: returns all classes reachable via outgoing associations across the full superclass hierarchy. u_effectiveIncomingAssociatedClasses() - Query: returns all classes referencing aClass via incoming associations across the full superclass hierarchy. -&gt;union(col)                              - Merges both collections, deduplicating the result as an OrderedSet. -&gt;sortedBy(c | c.name)                    - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allIndirectSuperClasses">
+                            <code>u_allIndirectSuperClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_incomingAssociations">
+                            <code>u_incomingAssociations(aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all incoming binary directed associations of the specified class, i.e. associations where another class owns the source end via ownedAttribute and this class is the target type. The Association elements themselves are returned, not the source classes. Self-associations are excluded. --- AQL operations used: eInverse(uml::Property)        - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)            - Keeps only source-class-owned association ends pointing to aClass, excluding those owned by aClass itself (self-associations). p1.association                 - EReference: the owning Association element; null if not an association end. eContainingFeature().name      - Returns the name of the EReference via which p is contained; &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association itself (ownedEnd). p1.eContainer() &lt;&gt; aClass      - Excludes self-associations: a self-association is exactly the case where the source-owned end is contained by aClass itself. -&gt;collect(p2 | expr)           - Extracts the Association element from each qualifying property. -&gt;filter(uml::Association)     - Retains only Association instances; also drops any null values safely. -&gt;asOrderedSet()               - Deduplicates the result collection. -&gt;sortedBy(a | a.name)         - Sorts result alphabetically by association name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_outgoingAssociations">
+                            <code>u_outgoingAssociations(aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all outgoing binary directed associations of the specified class, i.e. associations where this class owns the source end via ownedAttribute. The Association elements themselves are returned, not the target classes. --- AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p1 | cond)        - Keeps only properties that are source ends of an association. p1.association             - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p2 | expr)       - Extracts the Association element from each qualifying property. -&gt;filter(uml::Association) - Retains only Association instances; also drops any null values safely. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(a | a.name)     - Sorts result alphabetically by association name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_abstractionClients">
+                            <code>u_abstractionClients(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes that are abstraction clients of the specified class. Navigates the model&#39;s cross-references to find all uml::Abstraction relationships that list aClass as a supplier, then returns their client elements filtered to uml::Class instances. --- AQL operations used: aClass.eInverse(uml::Abstraction) - Navigates cross-references to return all uml::Abstraction instances that reference aClass (i.e. where aClass appears as a supplier). eInverse() is an AQL operation on EObject that returns all objects holding a reference to the receiver, optionally filtered by type. -&gt;collect(a | a.client)           - For each Abstraction, collects its client NamedElements (the depending side of the relationship). -&gt;filter(uml::Class)              - Retains only uml::Class instances, excluding other NamedElement subtypes (e.g. Interfaces). -&gt;asOrderedSet()                  - Deduplicates; a class may appear as client in multiple Abstraction relationships. -&gt;sortedBy(c | c.name)            - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_abstractionSupplierClasses">
+                            <code>u_abstractionSupplierClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes that are abstraction suppliers of the specified class. Navigates the model&#39;s cross-references to find all uml::Abstraction relationships that list aClass as a client, then returns their supplier elements filtered to uml::Class instances. --- AQL operations used: aClass.eInverse(uml::Abstraction) - Navigates cross-references to return all uml::Abstraction instances that reference aClass (i.e. where aClass appears as a client). eInverse() is an AQL operation on EObject that returns all objects holding a reference to the receiver, optionally filtered by type. -&gt;collect(a | a.supplier)         - For each Abstraction, collects its supplier NamedElements (the depended-upon side of the relationship). -&gt;filter(uml::Class)              - Retains only uml::Class instances, excluding other NamedElement subtypes (e.g. Interfaces). -&gt;asOrderedSet()                  - Deduplicates; a class may appear as supplier in multiple Abstraction relationships. -&gt;sortedBy(c | c.name)            - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_associations">
+                            <code>u_associations(aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all associations in which the specified class participates as a typed end, sorted first by direction (outgoing before incoming) and then alphabetically by name within each group. Outgoing associations are those where aClass owns the source end (ownedEnd contains a property typed by the other class). Incoming associations are all remaining associations retrieved via eInverse(&#39;type&#39;).  Two associations between the same two classes are distinct EMF objects and are both retained in the result. The -&gt;asOrderedSet() call only deduplicates cases where the same association object appears more than once, which occurs when both ends of a self-association are typed by aClass — in that case eInverse(&#39;type&#39;) yields the same association twice and -&gt;asOrderedSet() correctly collapses it to one.  Note: excludes uml::Port instances since -&gt;filter(uml::Property) retains only exact uml::Property matches. --- AQL operations used: aClass.eInverse(&#39;type&#39;)        - AQL operation on EObject: returns all EObjects that reference aClass via the &#39;type&#39; EStructuralFeature, i.e. all typed elements whose type is aClass. -&gt;filter(uml::Property)        - Retains only uml::Property instances, excluding other typed elements such as parameters or ports. -&gt;select(p1 |                  - Retains only properties that p1.association-&gt;notEmpty())    belong to an association, excluding plain class attributes. -&gt;collect(p2 | p2.association) - Collects the owning association of each retained property. -&gt;select(a1 |                  - Separates outgoing associations: a1.ownedEnd-&gt;exists(           those where aClass owns a source e | e.type = aClass))        end, i.e. the end typed by aClass is owned by the association itself. -&gt;reject(a2 |                  - Separates incoming associations: a2.ownedEnd-&gt;exists(           all associations not classified as e | e.type = aClass))        outgoing. -&gt;asOrderedSet()               - Deduplicates self-associations within each group. -&gt;sortedBy(a | a.name)         - Sorts each group alphabetically by name. -&gt;union()                      - Combines outgoing (first) and incoming (second) groups, with outgoing appearing before incoming in the result.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_contextClasses">
+                            <code>u_contextClasses(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all classes forming the diagram context of the specified class. Combines classes reachable via direct associations, the full superclass hierarchy and their limited associations, the full subclass hierarchy, and abstraction relationships. Used for diagram context scoping, e.g. to determine which classes to include in a focused class diagram around aClass.  The result excludes aClass itself and is sorted alphabetically. The union terms contribute the following: 1. u_associatedClasses()       - Classes directly associated with aClass via incoming or outgoing binary associations. 2. u_allSuperClasses()         - All ancestors of aClass in the superclass hierarchy. 3. u_limitedAssociations()     - For each superclass, at most 3 -&gt; u_ownedEndClass()          filtered associations; collect their owned end types. 4. u_limitedAssociations()     - Same filtered associations; -&gt; u_otherEndClass()          collect their other end types. 5. u_allSubClasses()           - All descendants of aClass in the subclass hierarchy. 6. u_abstractionClients()      - Classes that depend on aClass via a uml::Abstraction relationship. 7. u_abstractionSupplierClasses()    - Classes that aClass depends on via a uml::Abstraction relationship. --- AQL operations used: u_associatedClasses()          - Query: returns classes directly associated with aClass via incoming or outgoing binary associations. u_allSuperClasses()            - Query: returns the ordered superclass hierarchy of aClass. -&gt;collect(sc | expr)           - Collects results across all superclasses. u_limitedAssociations(aClass)  - Query: returns at most 3 filtered associations of a superclass, excluding those directly or indirectly connecting to aClass&#39;s hierarchy. u_ownedEndClass()              - Query: returns the type of the first owned end of an association as uml::Class. u_otherEndClass()              - Query: returns the type of the non-owned end of an association as uml::Class. u_allSubClasses()              - Query: returns all descendants of aClass in the subclass hierarchy. u_abstractionClients()         - Query: returns classes that list aClass as an abstraction supplier. u_abstractionSupplierClasses()       - Query: returns classes that aClass lists as an abstraction supplier. -&gt;union(col)                   - Merges collections, deduplicating the combined result. -&gt;asOrderedSet()               - Ensures the final merged result is a deduplicated OrderedSet. -&gt;excluding(aClass)            - Removes aClass itself from the result. -&gt;sortedBy(c | c.name)         - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_inheritedAssociations">
+                            <code>u_inheritedAssociations(aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of associations inherited by the specified class from its superclass hierarchy. Collects all associations of each superclass and excludes those directly owned by aClass itself. Uses u_allSuperClasses() to traverse the full hierarchy and u_associations() to retrieve associations per superclass. --- AQL operations used: aClass.u_allSuperClasses()         - Query: returns the full ordered superclass hierarchy of aClass. -&gt;collect(sc | sc.u_associations() - Collects all associations of -&gt;reject(a |                       each superclass, excluding aClass.u_associations()          associations that aClass -&gt;includes(a)))                itself directly participates in, to retain only truly inherited ones. -&gt;asOrderedSet()                   - Deduplicates; the same association may be reachable via multiple levels of the superclass hierarchy. -&gt;sortedBy(a | a.name)             - Sorts result alphabetically by association name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_attributes">
+                            <code>u_attributes(aClass) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of owned attributes of the specified class, sorted by attribute name. Excludes association ends, retaining only plain attributes owned directly by the class. Note: See the overloaded variants for data types and classifiers: u_attributes(uml::DataType), u_attributes(uml::Classifier).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_limitedAssociations">
+                            <code>u_limitedAssociations(aSuperClass, aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of at most 3 associations involving aSuperClass that are not directly connected to aClass and not connected to any of aClass&#39;s superclasses on both ends simultaneously. This reduces redundant Graphviz constraints parallel to the inheritance path.  The two filtering steps work as follows: 1. Exclude associations where either end directly connects to aClass. 2. Exclude associations where both ends are in aClass&#39;s superclass hierarchy (i.e. retain only those where at least one end is outside that hierarchy).  Associations are sorted by name before capping to ensure a deterministic result independent of traversal order. If more than 3 associations pass both filters, only the first 3 are returned. --- AQL operations used: aSuperClass.getAssociations()          - Java method on uml::Class: returns all associations in which aSuperClass participates as a member end. Not an EStructuralFeature; called with explicit parentheses in AQL. -&gt;asOrderedSet()                       - Casts the result of getAssociations() to OrderedSet, required since getAssociations() does not return an OrderedSet in AQL. -&gt;select(a | expr)                     - Filters the collection to elements satisfying the predicate. u_ownedEndClass()                      - Query: returns the type of the first owned end of the association as uml::Class. u_otherEndClass()                      - Query: returns the type of the non-owned end of the association as uml::Class. u_allSuperClasses()                    - Query: returns the ordered superclass hierarchy of aClass. -&gt;excludes(obj)                        - Returns true if the collection does not contain obj. -&gt;sortedBy(a | a.name)                 - Sorts associations alphabetically by name to ensure deterministic ordering before capping. -&gt;size()                               - Returns the number of elements in the collection. -&gt;subOrderedSet(1, 3)                  - Returns the first 3 elements of the ordered set.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_associationEndsToOtherPackages">
+                            <code>u_associationEndsToOtherPackages(aClass) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of association-end properties owned by the specified class that point to a type in a different package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_associationEndsFromOtherPackages">
+                            <code>u_associationEndsFromOtherPackages(aClass) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of association-end properties from other packages that reference the specified class.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_associationEndProperties">
+                            <code>u_associationEndProperties(aClass) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the association-end properties owned by the specified class, i.e. navigable association ends declared on this class.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allSubClassesPlusSelf">
+                            <code>u_allSubClassesPlusSelf(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all subclasses of the specified class including the class itself, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allConcreteSubClassesPlusSelf">
+                            <code>u_allConcreteSubClassesPlusSelf(aClass) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all non-abstract subclasses of the specified class including the class itself if non-abstract, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_contextPackages">
+                            <code>u_contextPackages(aClass) : OrderedSet(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of packages of the context classes of the specified class, excluding the class&#39;s own package, sorted by package name. See also: u_contextPackages(uml::DataType)
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_limitedAssociations2">
+                            <code>u_limitedAssociations2(aSuperClass, aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of associations of aSuperClass that are neither directly connected to aClass nor to any of aClass&#39;s superclasses. This reduces unnecessary Graphviz constraints that would otherwise create associations parallel to the inheritance path at the level of superclasses starting from the second ancestor.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_limitedAssociations3">
+                            <code>u_limitedAssociations3(aSuperClass, aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns at most 3 associations from u_limitedAssociations2 to keep diagrams manageable.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_inheritedClassAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_inheritedClassAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_inheritedClassAttributes(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of inherited attributes of the specified class, i.e. properties inherited from its superclass hierarchy that are not association ends. Excludes own attributes and inherited association ends.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose inherited attributes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_inheritedClassAttributes(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.inheritedMember
+    -&gt;filter(uml::Property)
+    -&gt;select(p1 | p1.association-&gt;isEmpty())
+    -&gt;sortedBy(p2 | p2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all superclasses of a class, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aClass itself as seed; the lambda c.general-&gt;filter(uml::Class) is evaluated starting from aClass, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose full superclass hierarchy is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <span class="ref-badge ref-aql-collection">closure()</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass-&gt;closure(c | c.general-&gt;filter(uml::Class))
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_rootSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_rootSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_rootSuperClasses(aPackage : uml::Package) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all root superclasses in the specified package and its sub-packages. A root superclass is a class that has no superclasses itself but is a generalisation parent of at least one other class. The parameter can be any uml::Package, including the model root, to scope the search accordingly.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A UML package to search within. Can be the model root or any sub-package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_subClasses">u_subClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_rootSuperClasses(
+  aPackage : uml::Package) : Sequence(uml::Class) =
+  aPackage.eAllContents(uml::Class)
+    -&gt;select(c | c.general-&gt;filter(uml::Class)-&gt;isEmpty() and c.u_subClasses()-&gt;notEmpty())
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_subClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct subclasses of a class, sorted by class name. --- AQL operations used: eInverse(uml::Generalization)    - Finds all Generalization elements that cross-reference aClass; requires all resources to be loaded in the same resource set. Returns both generalizations where aClass is the general end AND where aClass is the specific end — hence the guard below is mandatory. -&gt;select(g1 | g1.general=aClass) - Retains only Generalization elements where aClass is the general (parent) end, excluding generalizations where aClass is the specific (child) end. Without this guard, aClass itself leaks into the result via .specific on its own superclass relationships. -&gt;collect(g2 | g3.specific)      - Retrieves the specific (child) classifier of each qualifying Generalization element. -&gt;filter(uml::Class)             - Retains only uml::Class instances, excluding non-Class specializations and dropping null values safely. -&gt;sortedBy(c | c.name)           - Sorts result alphabetically by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose direct subclasses are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_subClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Generalization)
+    -&gt;select(g1 | g1.general = aClass)
+    -&gt;collect(g2 | g2.specific)
+    -&gt;filter(uml::Class)
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allSubClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSubClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSubClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all subclasses of a class, traversing the full specialization hierarchy down to the leaves. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c1 | expr)     - Applied to aClass itself as seed; the lambda c1.u_subClasses() is evaluated starting from aClass, so direct subclasses are included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once. -&gt;sortedBy(c2 | c2.name) - Sorts the full result alphabetically by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose full subclass hierarchy is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_subClasses">u_subClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <span class="ref-badge ref-aql-collection">closure()</span>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allSubClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass-&gt;closure(c1 | c1.u_subClasses())
+    -&gt;sortedBy(c2 | c2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isSuperClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isSuperClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isSuperClass(aClass : uml::Class) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified class is a superclass of at least one other class, i.e. if it has at least one direct subclass.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class to test for being a superclass.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_subClasses">u_subClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isSuperClass(aClass : uml::Class) : Boolean =
+  aClass.u_subClasses()-&gt;notEmpty()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_incomingAssociatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_incomingAssociatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_incomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes that are sources of incoming binary directed associations pointing to the specified class. Uses eInverse() to find all uml::Property elements whose type cross- references aClass, then resolves the source class via getOtherEnd(). Only source-class-owned ends (ownedAttribute) are considered. Self-associations are excluded. --- AQL operations used: eInverse(uml::Property)        - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)            - Keeps only source-class-owned association ends pointing to aClass, excluding those owned by aClass (self-associations). p1.association                 - EReference: the owning Association element; null if not an association end. eContainingFeature().name      - Returns the name of the EReference via which p is contained; &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association itself (ownedEnd). p1.eContainer() &lt;&gt; aClass      - Excludes self-associations: a self-association is exactly the case where the source-owned end is contained by aClass itself. -&gt;collect(p2 | expr)           - Transforms each qualifying property. p2.getOtherEnd()               - Java method on uml::Property: returns the opposite end of a binary association. Not an EStructuralFeature; must be called with explicit parentheses in AQL. .type                          - EReference: the classifier typing the other end (uml::Type); narrowed by filter below. -&gt;filter(uml::Class)           - Retains only uml::Class instances; also drops null values safely. -&gt;asOrderedSet()               - Deduplicates the result collection. -&gt;sortedBy(p3 | p3.name)       - Sorts result alphabetically by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The target class whose incoming association source classes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">eContainingFeature()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtainer" target="_blank">eContainer()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_incomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+    aClass.eInverse(uml::Property)
+        -&gt;select(p1 | p1.association &lt;&gt; null
+               and p1.eContainingFeature().name = &#39;ownedAttribute&#39;
+               and p1.eContainer() &lt;&gt; aClass)
+        -&gt;collect(p2 | p2.getOtherEnd().type)
+        -&gt;filter(uml::Class)
+        -&gt;asOrderedSet()
+        -&gt;sortedBy(p3 | p3.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_outgoingAssociatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_outgoingAssociatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_outgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns all classes that are targets of outgoing binary directed associations from the specified class. Alphabetically sorted, deduplicated set of classes reachable via outgoing associations. Navigates via ownedAttribute ends that belong to a uml::Association, collecting their target types. Self-associations (where the class is associated with itself) are excluded from the result. --- AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p | cond)         - Keeps only elements satisfying the condition. p.association              - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p | expr)        - Transforms each element to the given expression. p.type                     - EReference: the classifier typing this property (uml::Type); narrowed to uml::Class by filter. -&gt;filter(uml::Class)       - Retains only instances of uml::Class; also drops null values safely. -&gt;reject(c1 | c1 = aClass) - Excludes self-associations. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(c2 | c2.name)   - Sorts alphabetically by class name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The source class whose outgoing association targets are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_outgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.ownedAttribute
+    -&gt;select(p1 | p1.association &lt;&gt; null)
+    -&gt;collect(p2 | p2.type)
+    -&gt;filter(uml::Class)
+    -&gt;reject(c1 | c1 = aClass)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c2 | c2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_associatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns all classes associated with the specified class, combining both outgoing and incoming binary directed associations. Delegates to u_incomingAssociatedClasses() and u_outgoingAssociatedClasses(), merges the results, deduplicates, and sorts alphabetically by name. Self-associations are excluded.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_incomingAssociatedClasses">u_incomingAssociatedClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_outgoingAssociatedClasses">u_outgoingAssociatedClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_incomingAssociatedClasses()
+  	-&gt;union(aClass.u_outgoingAssociatedClasses())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_effectiveIncomingAssociatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_effectiveIncomingAssociatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_effectiveIncomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes that reference the specified class as a target via incoming binary directed associations, including associations inherited from its superclass hierarchy. Combines the class itself with all its superclasses, then collects incoming association sources across the full hierarchy, deduplicating the result. --- AQL operations used: u_allSuperClasses()               - Query: returns the ordered superclass hierarchy of aClass. -&gt;including(aClass)            - Adds aClass itself to the collection so its own associations are included. -&gt;collect(c1 | expr)           - Collects incoming associated classes for each class in the hierarchy. u_incomingAssociatedClasses()  - Query: returns direct incoming association sources of a single class. -&gt;asOrderedSet()               - Deduplicates; a class may be reachable via associations at multiple levels. -&gt;sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose full effective incoming association sources (own and inherited) are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_incomingAssociatedClasses">u_incomingAssociatedClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-including" target="_blank">including()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_effectiveIncomingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSuperClasses()
+    -&gt;including(aClass)
+    -&gt;collect(c1 | c1.u_incomingAssociatedClasses())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c2 | c2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_effectiveOutgoingAssociatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_effectiveOutgoingAssociatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_effectiveOutgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes reachable via outgoing binary directed associations from the specified class, including associations inherited from its superclass hierarchy. Combines the class itself with all its superclasses, then collects outgoing association targets across the full hierarchy, deduplicating the result. --- AQL operations used: u_allSuperClasses()            - Query: returns the ordered superclass hierarchy of aClass. -&gt;including(aClass)            - Adds aClass itself to the collection so its own associations are included. -&gt;collect(c1 | expr)           - Collects outgoing associated classes for each class in the hierarchy. getOutgoingAssociatedClasses() - Query: returns direct outgoing association targets of a single class. -&gt;asOrderedSet()               - Deduplicates; a class may be reachable via associations at multiple levels. -&gt;sortedBy(c2 | c2.name)       - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose full effective outgoing association targets (own and inherited) are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_outgoingAssociatedClasses">u_outgoingAssociatedClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-including" target="_blank">including()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_effectiveOutgoingAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSuperClasses()
+    -&gt;including(aClass)
+    -&gt;collect(c1 | c1.u_outgoingAssociatedClasses())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c2 | c2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allEffectiveAssociatedClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allEffectiveAssociatedClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allEffectiveAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes reachable via any binary directed association from or to the specified class, including associations inherited from its superclass hierarchy. Combines the results of u_effectiveOutgoingAssociatedClasses() and u_effectiveIncomingAssociatedClasses(), deduplicating the result. --- AQL operations used: u_effectiveOutgoingAssociatedClasses() - Query: returns all classes reachable via outgoing associations across the full superclass hierarchy. u_effectiveIncomingAssociatedClasses() - Query: returns all classes referencing aClass via incoming associations across the full superclass hierarchy. -&gt;union(col)                              - Merges both collections, deduplicating the result as an OrderedSet. -&gt;sortedBy(c | c.name)                    - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose full effective associated classes (both incoming and outgoing, own and inherited) are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_effectiveOutgoingAssociatedClasses">u_effectiveOutgoingAssociatedClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_effectiveIncomingAssociatedClasses">u_effectiveIncomingAssociatedClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allEffectiveAssociatedClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_effectiveOutgoingAssociatedClasses()
+    -&gt;union(aClass.u_effectiveIncomingAssociatedClasses())
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allIndirectSuperClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allIndirectSuperClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allIndirectSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose indirect superclass hierarchy (excluding direct parent) is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excluding" target="_blank">excluding()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allIndirectSuperClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+    let superTypes : OrderedSet(uml::Class) =
+        aClass.u_allSuperClasses()
+    in
+    if superTypes-&gt;notEmpty() then
+        superTypes-&gt;excluding(aClass.superClass-&gt;first())
+    else
+        OrderedSet{}
+    endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_incomingAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_incomingAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_incomingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all incoming binary directed associations of the specified class, i.e. associations where another class owns the source end via ownedAttribute and this class is the target type. The Association elements themselves are returned, not the source classes. Self-associations are excluded. --- AQL operations used: eInverse(uml::Property)        - Finds all Property instances whose type EReference cross-references aClass; requires all resources to be loaded in the same resource set. -&gt;select(p1 | cond)            - Keeps only source-class-owned association ends pointing to aClass, excluding those owned by aClass itself (self-associations). p1.association                 - EReference: the owning Association element; null if not an association end. eContainingFeature().name      - Returns the name of the EReference via which p is contained; &#39;ownedAttribute&#39; confirms the property is source-class-owned, not owned by the Association itself (ownedEnd). p1.eContainer() &lt;&gt; aClass      - Excludes self-associations: a self-association is exactly the case where the source-owned end is contained by aClass itself. -&gt;collect(p2 | expr)           - Extracts the Association element from each qualifying property. -&gt;filter(uml::Association)     - Retains only Association instances; also drops any null values safely. -&gt;asOrderedSet()               - Deduplicates the result collection. -&gt;sortedBy(a | a.name)         - Sorts result alphabetically by association name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The target class whose incoming associations are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">eContainingFeature()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtainer" target="_blank">eContainer()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_incomingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) =
+    aClass.eInverse(uml::Property)
+        -&gt;select(p1 | p1.association &lt;&gt; null
+               and p1.eContainingFeature().name = &#39;ownedAttribute&#39;
+               and p1.eContainer() &lt;&gt; aClass)
+        -&gt;collect(p2 | p2.association)
+        -&gt;filter(uml::Association)
+        -&gt;asOrderedSet()
+        -&gt;sortedBy(a | a.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_outgoingAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_outgoingAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_outgoingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all outgoing binary directed associations of the specified class, i.e. associations where this class owns the source end via ownedAttribute. The Association elements themselves are returned, not the target classes. --- AQL operations used: ownedAttribute             - EReference: properties structurally owned by this class (uml::Property). -&gt;select(p1 | cond)        - Keeps only properties that are source ends of an association. p1.association             - EReference: the Association this property is a member end of; null if plain attribute. -&gt;collect(p2 | expr)       - Extracts the Association element from each qualifying property. -&gt;filter(uml::Association) - Retains only Association instances; also drops any null values safely. -&gt;asOrderedSet()           - Deduplicates the result collection. -&gt;sortedBy(a | a.name)     - Sorts result alphabetically by association name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The source class whose outgoing associations are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_outgoingAssociations(aClass : uml::Class) : OrderedSet(uml::Association) =
+    aClass.ownedAttribute
+        -&gt;select(p1 | p1.association &lt;&gt; null)
+        -&gt;collect(p2 | p2.association)
+        -&gt;filter(uml::Association)
+        -&gt;asOrderedSet()
+        -&gt;sortedBy(a | a.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_abstractionClients">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_abstractionClients
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_abstractionClients(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes that are abstraction clients of the specified class. Navigates the model&#39;s cross-references to find all uml::Abstraction relationships that list aClass as a supplier, then returns their client elements filtered to uml::Class instances. --- AQL operations used: aClass.eInverse(uml::Abstraction) - Navigates cross-references to return all uml::Abstraction instances that reference aClass (i.e. where aClass appears as a supplier). eInverse() is an AQL operation on EObject that returns all objects holding a reference to the receiver, optionally filtered by type. -&gt;collect(a | a.client)           - For each Abstraction, collects its client NamedElements (the depending side of the relationship). -&gt;filter(uml::Class)              - Retains only uml::Class instances, excluding other NamedElement subtypes (e.g. Interfaces). -&gt;asOrderedSet()                  - Deduplicates; a class may appear as client in multiple Abstraction relationships. -&gt;sortedBy(c | c.name)            - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose abstraction clients are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_abstractionClients(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Abstraction)
+    -&gt;collect(a | a.client)
+    -&gt;filter(uml::Class)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_abstractionSupplierClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_abstractionSupplierClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_abstractionSupplierClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes that are abstraction suppliers of the specified class. Navigates the model&#39;s cross-references to find all uml::Abstraction relationships that list aClass as a client, then returns their supplier elements filtered to uml::Class instances. --- AQL operations used: aClass.eInverse(uml::Abstraction) - Navigates cross-references to return all uml::Abstraction instances that reference aClass (i.e. where aClass appears as a client). eInverse() is an AQL operation on EObject that returns all objects holding a reference to the receiver, optionally filtered by type. -&gt;collect(a | a.supplier)         - For each Abstraction, collects its supplier NamedElements (the depended-upon side of the relationship). -&gt;filter(uml::Class)              - Retains only uml::Class instances, excluding other NamedElement subtypes (e.g. Interfaces). -&gt;asOrderedSet()                  - Deduplicates; a class may appear as supplier in multiple Abstraction relationships. -&gt;sortedBy(c | c.name)            - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose abstraction suppliers are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_abstractionSupplierClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.eInverse(uml::Abstraction)
+    -&gt;collect(a | a.supplier)
+    -&gt;filter(uml::Class)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_associations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associations(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all associations in which the specified class participates as a typed end, sorted first by direction (outgoing before incoming) and then alphabetically by name within each group. Outgoing associations are those where aClass owns the source end (ownedEnd contains a property typed by the other class). Incoming associations are all remaining associations retrieved via eInverse(&#39;type&#39;).  Two associations between the same two classes are distinct EMF objects and are both retained in the result. The -&gt;asOrderedSet() call only deduplicates cases where the same association object appears more than once, which occurs when both ends of a self-association are typed by aClass — in that case eInverse(&#39;type&#39;) yields the same association twice and -&gt;asOrderedSet() correctly collapses it to one.  Note: excludes uml::Port instances since -&gt;filter(uml::Property) retains only exact uml::Property matches. --- AQL operations used: aClass.eInverse(&#39;type&#39;)        - AQL operation on EObject: returns all EObjects that reference aClass via the &#39;type&#39; EStructuralFeature, i.e. all typed elements whose type is aClass. -&gt;filter(uml::Property)        - Retains only uml::Property instances, excluding other typed elements such as parameters or ports. -&gt;select(p1 |                  - Retains only properties that p1.association-&gt;notEmpty())    belong to an association, excluding plain class attributes. -&gt;collect(p2 | p2.association) - Collects the owning association of each retained property. -&gt;select(a1 |                  - Separates outgoing associations: a1.ownedEnd-&gt;exists(           those where aClass owns a source e | e.type = aClass))        end, i.e. the end typed by aClass is owned by the association itself. -&gt;reject(a2 |                  - Separates incoming associations: a2.ownedEnd-&gt;exists(           all associations not classified as e | e.type = aClass))        outgoing. -&gt;asOrderedSet()               - Deduplicates self-associations within each group. -&gt;sortedBy(a | a.name)         - Sorts each group alphabetically by name. -&gt;union()                      - Combines outgoing (first) and incoming (second) groups, with outgoing appearing before incoming in the result.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose participating associations are to be retrieved, ordered by direction then name.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-exists" target="_blank">exists()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associations(aClass : uml::Class) : OrderedSet(uml::Association) =
+  let all : OrderedSet(uml::Association) =
+    aClass.eInverse(&#39;type&#39;)
+      -&gt;filter(uml::Property)
+      -&gt;select(p1 | p1.association-&gt;notEmpty())
+      -&gt;collect(p2 | p2.association)
+      -&gt;asOrderedSet()
+  in
+    all
+      -&gt;select(a1 | a1.ownedEnd-&gt;exists(e | e.type = aClass))
+      -&gt;sortedBy(a2 | a2.name)
+      -&gt;union(
+        all
+          -&gt;reject(a3 | a3.ownedEnd-&gt;exists(e | e.type = aClass))
+          -&gt;sortedBy(a4 | a4.name))
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_contextClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_contextClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_contextClasses(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all classes forming the diagram context of the specified class. Combines classes reachable via direct associations, the full superclass hierarchy and their limited associations, the full subclass hierarchy, and abstraction relationships. Used for diagram context scoping, e.g. to determine which classes to include in a focused class diagram around aClass.  The result excludes aClass itself and is sorted alphabetically. The union terms contribute the following: 1. u_associatedClasses()       - Classes directly associated with aClass via incoming or outgoing binary associations. 2. u_allSuperClasses()         - All ancestors of aClass in the superclass hierarchy. 3. u_limitedAssociations()     - For each superclass, at most 3 -&gt; u_ownedEndClass()          filtered associations; collect their owned end types. 4. u_limitedAssociations()     - Same filtered associations; -&gt; u_otherEndClass()          collect their other end types. 5. u_allSubClasses()           - All descendants of aClass in the subclass hierarchy. 6. u_abstractionClients()      - Classes that depend on aClass via a uml::Abstraction relationship. 7. u_abstractionSupplierClasses()    - Classes that aClass depends on via a uml::Abstraction relationship. --- AQL operations used: u_associatedClasses()          - Query: returns classes directly associated with aClass via incoming or outgoing binary associations. u_allSuperClasses()            - Query: returns the ordered superclass hierarchy of aClass. -&gt;collect(sc | expr)           - Collects results across all superclasses. u_limitedAssociations(aClass)  - Query: returns at most 3 filtered associations of a superclass, excluding those directly or indirectly connecting to aClass&#39;s hierarchy. u_ownedEndClass()              - Query: returns the type of the first owned end of an association as uml::Class. u_otherEndClass()              - Query: returns the type of the non-owned end of an association as uml::Class. u_allSubClasses()              - Query: returns all descendants of aClass in the subclass hierarchy. u_abstractionClients()         - Query: returns classes that list aClass as an abstraction supplier. u_abstractionSupplierClasses()       - Query: returns classes that aClass lists as an abstraction supplier. -&gt;union(col)                   - Merges collections, deduplicating the combined result. -&gt;asOrderedSet()               - Ensures the final merged result is a deduplicated OrderedSet. -&gt;excluding(aClass)            - Removes aClass itself from the result. -&gt;sortedBy(c | c.name)         - Sorts result alphabetically by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose diagram context classes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associatedClasses">u_associatedClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_limitedAssociations">u_limitedAssociations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSubClasses">u_allSubClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_abstractionClients">u_abstractionClients</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_abstractionSupplierClasses">u_abstractionSupplierClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excluding" target="_blank">excluding()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_contextClasses(aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_associatedClasses()
+  -&gt;union( aClass.u_allSuperClasses() )
+  -&gt;union(
+    aClass.u_allSuperClasses()
+      -&gt;collect( sc1 | sc1.u_limitedAssociations(aClass) )
+      -&gt;collect( a1 | a1.u_ownedEndClass() )
+  )
+  -&gt;union(
+    aClass.u_allSuperClasses()
+      -&gt;collect( sc2 | sc2.u_limitedAssociations(aClass) )
+      -&gt;collect( a2 | a2.u_otherEndClass() )
+  )
+  -&gt;union( aClass.u_allSubClasses() )
+  -&gt;union( aClass.u_abstractionClients() )
+  -&gt;union( aClass.u_abstractionSupplierClasses() )
+  -&gt;asOrderedSet()
+  -&gt;excluding(aClass)
+  -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_inheritedAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_inheritedAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_inheritedAssociations(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of associations inherited by the specified class from its superclass hierarchy. Collects all associations of each superclass and excludes those directly owned by aClass itself. Uses u_allSuperClasses() to traverse the full hierarchy and u_associations() to retrieve associations per superclass. --- AQL operations used: aClass.u_allSuperClasses()         - Query: returns the full ordered superclass hierarchy of aClass. -&gt;collect(sc | sc.u_associations() - Collects all associations of -&gt;reject(a |                       each superclass, excluding aClass.u_associations()          associations that aClass -&gt;includes(a)))                itself directly participates in, to retain only truly inherited ones. -&gt;asOrderedSet()                   - Deduplicates; the same association may be reachable via multiple levels of the superclass hierarchy. -&gt;sortedBy(a | a.name)             - Sorts result alphabetically by association name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose inherited associations are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_inheritedAssociations(
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  aClass.u_allSuperClasses()
+    -&gt;collect(sc |
+      sc.u_associations()
+        -&gt;reject(a | aClass.u_associations()-&gt;includes(a)))
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(a | a.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_attributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_attributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_attributes(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of owned attributes of the specified class, sorted by attribute name. Excludes association ends, retaining only plain attributes owned directly by the class. Note: See the overloaded variants for data types and classifiers: u_attributes(uml::DataType), u_attributes(uml::Classifier).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose owned attributes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_attributes(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+    -&gt;select(p | p.association = null)
+    -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_limitedAssociations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_limitedAssociations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_limitedAssociations(aSuperClass : uml::Class, aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of at most 3 associations involving aSuperClass that are not directly connected to aClass and not connected to any of aClass&#39;s superclasses on both ends simultaneously. This reduces redundant Graphviz constraints parallel to the inheritance path.  The two filtering steps work as follows: 1. Exclude associations where either end directly connects to aClass. 2. Exclude associations where both ends are in aClass&#39;s superclass hierarchy (i.e. retain only those where at least one end is outside that hierarchy).  Associations are sorted by name before capping to ensure a deterministic result independent of traversal order. If more than 3 associations pass both filters, only the first 3 are returned. --- AQL operations used: aSuperClass.getAssociations()          - Java method on uml::Class: returns all associations in which aSuperClass participates as a member end. Not an EStructuralFeature; called with explicit parentheses in AQL. -&gt;asOrderedSet()                       - Casts the result of getAssociations() to OrderedSet, required since getAssociations() does not return an OrderedSet in AQL. -&gt;select(a | expr)                     - Filters the collection to elements satisfying the predicate. u_ownedEndClass()                      - Query: returns the type of the first owned end of the association as uml::Class. u_otherEndClass()                      - Query: returns the type of the non-owned end of the association as uml::Class. u_allSuperClasses()                    - Query: returns the ordered superclass hierarchy of aClass. -&gt;excludes(obj)                        - Returns true if the collection does not contain obj. -&gt;sortedBy(a | a.name)                 - Sorts associations alphabetically by name to ensure deterministic ordering before capping. -&gt;size()                               - Returns the number of elements in the collection. -&gt;subOrderedSet(1, 3)                  - Returns the first 3 elements of the ordered set.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aSuperClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class that is a superclass of aClass, whose associations are to be filtered.</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class that is a subclass of aSuperClass, used as the exclusion reference.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-subordered set" target="_blank">subOrderedSet()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getAssociations()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_limitedAssociations(
+  aSuperClass : uml::Class,
+  aClass      : uml::Class) : OrderedSet(uml::Association) =
+  let associations : OrderedSet(uml::Association) =
+    aSuperClass.getAssociations()-&gt;asOrderedSet()
+      -&gt;select(a |
+        a.u_ownedEndClass() &lt;&gt; aClass
+        and a.u_otherEndClass() &lt;&gt; aClass)
+      -&gt;select(a |
+        aClass.u_allSuperClasses()-&gt;excludes(a.u_ownedEndClass())
+        or aClass.u_allSuperClasses()-&gt;excludes(a.u_otherEndClass()))
+      -&gt;sortedBy(a | a.name)
+  in
+    if associations-&gt;size() &gt; 3 then
+      associations-&gt;subOrderedSet(1, 3)
+    else
+      associations
+    endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_associationEndsToOtherPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associationEndsToOtherPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associationEndsToOtherPackages(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of association-end properties owned by the specified class that point to a type in a different package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose outgoing cross-package association-end properties are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_nearestPackage">u_nearestPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associationEndsToOtherPackages(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+  -&gt;select(p | p.association &lt;&gt; null
+            and p.type &lt;&gt; null
+            and p.u_nearestPackage() &lt;&gt; p.type.u_nearestPackage())
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_associationEndsFromOtherPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associationEndsFromOtherPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associationEndsFromOtherPackages(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of association-end properties from other packages that reference the specified class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class that is referenced by the properties.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_nearestPackage">u_nearestPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associationEndsFromOtherPackages(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.u_model().eAllContents(uml::Property)
+  -&gt;select(p | p.association &lt;&gt; null
+            and p.type = aClass
+            and p.u_nearestPackage() &lt;&gt; aClass.u_nearestPackage())
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_associationEndProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associationEndProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associationEndProperties(aClass : uml::Class) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the association-end properties owned by the specified class, i.e. navigable association ends declared on this class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class whose association-end properties are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associationEndProperties(
+  aClass : uml::Class) : Sequence(uml::Property) =
+  aClass.ownedAttribute
+  -&gt;select(p | p.association &lt;&gt; null)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allSubClassesPlusSelf">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSubClassesPlusSelf
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSubClassesPlusSelf(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all subclasses of the specified class including the class itself, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSubClasses">u_allSubClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-including" target="_blank">including()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allSubClassesPlusSelf(
+  aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSubClasses()
+  -&gt;including(aClass)
+  -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allConcreteSubClassesPlusSelf">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allConcreteSubClassesPlusSelf
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allConcreteSubClassesPlusSelf(aClass : uml::Class) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all non-abstract subclasses of the specified class including the class itself if non-abstract, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSubClassesPlusSelf">u_allSubClassesPlusSelf</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allConcreteSubClassesPlusSelf(
+  aClass : uml::Class) : OrderedSet(uml::Class) =
+  aClass.u_allSubClassesPlusSelf()
+  -&gt;reject(c | c.isAbstract)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_contextPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_contextPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_contextPackages(aClass : uml::Class) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of packages of the context classes of the specified class, excluding the class&#39;s own package, sorted by package name. See also: u_contextPackages(uml::DataType)</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Package)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_contextClasses">u_contextClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excluding" target="_blank">excluding()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_contextPackages(
+  aClass : uml::Class) : OrderedSet(uml::Package) =
+  aClass.u_contextClasses()
+    -&gt;collect(c | c.package)
+    -&gt;excluding(aClass.package)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_limitedAssociations2">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_limitedAssociations2
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_limitedAssociations2(aSuperClass : uml::Class, aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of associations of aSuperClass that are neither directly connected to aClass nor to any of aClass&#39;s superclasses. This reduces unnecessary Graphviz constraints that would otherwise create associations parallel to the inheritance path at the level of superclasses starting from the second ancestor.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aSuperClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class that is a superclass of aClass.</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class whose context is being computed.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_limitedAssociations2(
+  aSuperClass : uml::Class,
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  let superClasses : OrderedSet(uml::Class) =
+    aClass.u_allSuperClasses()
+  in
+  aSuperClass.u_associations()
+    -&gt;select(a |
+        a.u_ownedEndClass() &lt;&gt; aClass
+        and a.u_otherEndClass() &lt;&gt; aClass)
+    -&gt;select(a |
+        superClasses-&gt;excludes(a.u_ownedEndClass())
+        and superClasses-&gt;excludes(a.u_otherEndClass()))
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_limitedAssociations3">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_limitedAssociations3
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_limitedAssociations3(aSuperClass : uml::Class, aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns at most 3 associations from u_limitedAssociations2 to keep diagrams manageable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aSuperClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class that is a superclass of aClass.</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- A UML class.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_limitedAssociations2">u_limitedAssociations2</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-subordered set" target="_blank">subOrderedSet()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_limitedAssociations3(
+  aSuperClass : uml::Class,
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  let limited : OrderedSet(uml::Association) =
+    aSuperClass.u_limitedAssociations2(aClass)
+  in
+  if limited-&gt;size() &gt; 3
+  then limited-&gt;subOrderedSet(1, 3)
+  else limited
+  endif
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

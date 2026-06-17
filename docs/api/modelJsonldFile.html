@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::target::jsonld::modelJsonldFile — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li class="active">
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::target::jsonld::modelJsonldFile
+        </h1>
+
+
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/jsonld/modelJsonldFile.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#generateJsonld">
+                            <code>generateJsonld(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        This generator creates a root context which depends on one additional context for each class and datatype As this creates a lot of contexts, this does not scale very well when the contexts are loaded from the Web. An external script can be used to *inline* most of the class- and datatype-contexts in the root context, (this proved much more flexible than trying to generate the inline context directly).
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Query summary -->
+
+        <!-- ═══════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="generateJsonld">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                generateJsonld
+            </h3>
+
+            <div class="signature">
+                <code>[template public generateJsonld(aModel : uml::Model)]</code>
+            </div>
+
+
+            <div class="description">This generator creates a root context which depends on one additional context for each class and datatype As this creates a lot of contexts, this does not scale very well when the contexts are loaded from the Web. An external script can be used to *inline* most of the class- and datatype-contexts in the root context, (this proved much more flexible than trying to generate the inline context directly).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelShortName">e_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelAcronym">e_modelAcronym</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_isInAllowedPackage">u_isInAllowedPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isComplex">isComplex</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldSelfContained">classJsonldSelfContained</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldFile">classJsonldFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsonld.html#dataTypeJsonldSelfContained">dataTypeJsonldSelfContained</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsonld.html#dataTypeJsonldFile">dataTypeJsonldFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsonld.html#generationMessageJsonld">generationMessageJsonld</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public generateJsonld(aModel : uml::Model)]
+  [file (aModel.e_modelShortName() + &#39;/encoding/json-ld/&#39; + aModel.e_modelAcronym().toLower() + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
+    {
+      &quot;@context&quot;: {
+        &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/]&quot;,
+     	&quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+        &quot;[aModel.name/]&quot;: &quot;@included&quot;,
+    [for (aClass : uml::Class | aModel.eAllContents(uml::Class)-&gt;select(aClass | aClass.u_isInAllowedPackage()))]
+          &quot;[aClass.name/]&quot;: {
+            &quot;@id&quot;: &quot;[aClass.iri()/]&quot;,
+            &quot;@context&quot;: [&#39;[&#39;/]
+                [aClass.classJsonldSelfContained()/][aClass.classJsonldFile()/]
+            ]
+          },
+    [/for]
+    [for (aDataType : uml::DataType | aModel.eAllContents(uml::DataType)-&gt;select(aDataType | aDataType.isComplex() and aDataType.u_isInAllowedPackage() and aDataType.isNotInMappedItems())) separator(&#39;,\n&#39;)]
+          &quot;[aDataType.name/]&quot;: {
+            &quot;@id&quot;: &quot;[aDataType.iri()/]&quot;,
+            &quot;@context&quot;: [&#39;[&#39;/]
+                [aDataType.dataTypeJsonldSelfContained()/][aDataType.dataTypeJsonldFile()/]
+            ]
+          }[/for]
+    
+      },
+      &quot;generatedBy&quot;: &quot;[aModel.generationMessageJsonld()/]&quot;,
+      &quot;basedOn&quot;: &quot;based on the UML model [aModel.qualifiedName/]&quot;
+    }
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+
+        <!-- ═══════════════════════════════════ Query detail -->
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::dataTypeQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li class="active">
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::dataTypeQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML data type as receiver. This includes queries for navigating the data type hierarchy (supertypes, subtypes), finding properties that use a data type, and data type classification.  Note: Queries applicable to both classes and data types are in classifierQuery, since both are subtypes of Classifier.  Related modules: - classQuery: queries with a UML class as receiver - classifierQuery: queries with a UML classifier as receiver, applicable to both classes and data types</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/dataTypeQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_subDataTypes">
+                            <code>u_subDataTypes(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of direct sub datatypes of a datatype, sorted by datatype name. --- AQL operations used: eInverse(uml::Generalization) - Finds all Generalization elements that cross-reference aDataType; requires all resources to be loaded in the same resource set. Returns both generalizations where aDataType is the general end AND where aDataType is the specific end — hence the guard below is mandatory. -&gt;select(g1 | g1.general      - Retains only Generalization elements where = aDataType)        aDataType is the general (parent) end, excluding generalizations where aDataType is the specific (child) end. Without this guard, aDataType itself leaks into the result via .specific on its own supertype relationships. -&gt;collect(g2 | g2.specific)   - Retrieves the specific (child) classifier of each qualifying Generalization element. -&gt;filter(uml::DataType)       - Retains only uml::DataType instances, excluding non-DataType specializations and dropping null values safely. -&gt;sortedBy(c | c.name)        - Sorts result alphabetically by datatype name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allSubDataTypes">
+                            <code>u_allSubDataTypes(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all sub datatypes of a datatype, traversing the full specialization hierarchy down to the leaves. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aDataType itself as seed; the lambda c.u_subDataTypes() is evaluated starting from aDataType, so direct sub datatypes are included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once. Returns OrderedSet(uml::DataType) — no cast required. -&gt;sortedBy(c | c.name) - Sorts the full result alphabetically by datatype name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_usingClasses">
+                            <code>u_usingClasses(aDataType) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of classes which use the specified data type, sorted by class name. Navigates the inverse usage links from the data type, selects only those whose owner is a class, collects and casts the owning classes, and deduplicates.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_usingDataTypes">
+                            <code>u_usingDataTypes(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of data types which use the specified data type, sorted by data type name. Navigates the inverse usage links from the data type, selects only those whose owner is a data type, collects and casts the owning data types, and deduplicates.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_usingProperties">
+                            <code>u_usingProperties(aDataType) : OrderedSet(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of properties (attributes) that use the specified data type, excluding association ends and properties owned by the data type itself, sorted by the owning classifier name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_abstractionClientsDataType">
+                            <code>u_abstractionClientsDataType(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of client data types of all abstraction dependencies that target the specified data type, sorted by name. Navigates inverse abstraction links from the data type, collects their clients, and retains only data type instances.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_abstractionSuppliersDataType">
+                            <code>u_abstractionSuppliersDataType(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of supplier data types of all abstraction dependencies that target the specified data type, sorted by name. Navigates inverse abstraction links from the data type, collects their suppliers, and retains only data type instances.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_attributes">
+                            <code>u_attributes(aDataType) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of owned attributes of the specified data type, sorted by attribute name. Excludes association ends, retaining only plain attributes owned directly by the data type. Applies to all subtypes of uml::DataType, including uml::Enumeration and uml::PrimitiveType. Note: See the overloaded variants for classes and classifiers: u_attributes(uml::Class), u_attributes(uml::Classifier).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allSuperDataTypes">
+                            <code>u_allSuperDataTypes(aDataType) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all super datatypes of a datatype, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aDataType itself as seed; the lambda c.general-&gt;filter(uml::DataType) is evaluated starting from aDataType, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isGeneralDataType">
+                            <code>u_isGeneralDataType(aDataType) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified data type is a general (parent) data type, i.e. it has at least one specializing sub data type.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_dataTypeUseProperties">
+                            <code>u_dataTypeUseProperties(aDataType) : OrderedSet(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of properties whose type is the specified data type. Excludes association ends and properties owned by the data type itself, i.e. returns only attributes of other classifiers that reference this data type.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_inheritedDataTypeAttributes">
+                            <code>u_inheritedDataTypeAttributes(aDataType) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of inherited attributes of the specified data type. Excludes own attributes.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_contextPackages">
+                            <code>u_contextPackages(aDataType) : OrderedSet(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of packages of the context classifiers of the specified data type, excluding the data type&#39;s own package, sorted by package name. See also: u_contextPackages(uml::Class)
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_limitedDataTypeUseProperties">
+                            <code>u_limitedDataTypeUseProperties(aDataType) : OrderedSet(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns at most the first 3 properties that use the specified data type, to keep diagrams manageable.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_contextClassesOrDataTypes">
+                            <code>u_contextClassesOrDataTypes(aDataType) : OrderedSet(uml::Classifier)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of classifiers related to the specified data type as context classifiers for diagram generation: - classifiers that own properties using the data type - all super data types - classifiers that own properties using any super data type (limited to 3 per super type) - all sub data types - abstraction clients of the data type - abstraction suppliers of the data type The data type itself is excluded from the result.  Note: p.owner is typed as uml::Element and requires an explicit oclAsType(uml::Classifier) cast. Sub- and super data types as well as abstraction helpers returning OrderedSet(uml::DataType) do not need a cast since DataType is a subtype of Classifier and AQL widens the union automatically.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_subDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of direct sub datatypes of a datatype, sorted by datatype name. --- AQL operations used: eInverse(uml::Generalization) - Finds all Generalization elements that cross-reference aDataType; requires all resources to be loaded in the same resource set. Returns both generalizations where aDataType is the general end AND where aDataType is the specific end — hence the guard below is mandatory. -&gt;select(g1 | g1.general      - Retains only Generalization elements where = aDataType)        aDataType is the general (parent) end, excluding generalizations where aDataType is the specific (child) end. Without this guard, aDataType itself leaks into the result via .specific on its own supertype relationships. -&gt;collect(g2 | g2.specific)   - Retrieves the specific (child) classifier of each qualifying Generalization element. -&gt;filter(uml::DataType)       - Retains only uml::DataType instances, excluding non-DataType specializations and dropping null values safely. -&gt;sortedBy(c | c.name)        - Sorts result alphabetically by datatype name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML datatype whose direct sub datatypes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_subDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Generalization)
+	  -&gt;select(g1 | g1.general = aDataType)
+	  -&gt;collect(g2 | g2.specific)
+	  -&gt;filter(uml::DataType)
+	  -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allSubDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSubDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSubDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all sub datatypes of a datatype, traversing the full specialization hierarchy down to the leaves. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aDataType itself as seed; the lambda c.u_subDataTypes() is evaluated starting from aDataType, so direct sub datatypes are included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once. Returns OrderedSet(uml::DataType) — no cast required. -&gt;sortedBy(c | c.name) - Sorts the full result alphabetically by datatype name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML datatype whose full sub datatype hierarchy is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_subDataTypes">u_subDataTypes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <span class="ref-badge ref-aql-collection">closure()</span>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allSubDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType-&gt;closure(c | c.u_subDataTypes())
+  	-&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_usingClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_usingClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_usingClasses(aDataType : uml::DataType) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of classes which use the specified data type, sorted by class name. Navigates the inverse usage links from the data type, selects only those whose owner is a class, collects and casts the owning classes, and deduplicates.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose using classes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_usingProperties">u_usingProperties</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_usingClasses(
+  aDataType : uml::DataType) : OrderedSet(uml::Class) =
+  aDataType.u_usingProperties()
+    -&gt;select(p | p.owner.oclIsKindOf(uml::Class))
+    -&gt;collect(p | p.owner.oclAsType(uml::Class))
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_usingDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_usingDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_usingDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of data types which use the specified data type, sorted by data type name. Navigates the inverse usage links from the data type, selects only those whose owner is a data type, collects and casts the owning data types, and deduplicates.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose using data types are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_usingProperties">u_usingProperties</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_usingDataTypes(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.u_usingProperties()
+    -&gt;select(p | p.owner.oclIsKindOf(uml::DataType))
+    -&gt;collect(p | p.owner.oclAsType(uml::DataType))
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(d | d.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_usingProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_usingProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_usingProperties(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of properties (attributes) that use the specified data type, excluding association ends and properties owned by the data type itself, sorted by the owning classifier name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose using properties are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_usingProperties(
+  aDataType : uml::DataType) : OrderedSet(uml::Property) =
+  aDataType.eInverse(uml::Property)
+    -&gt;select(p | p.association = null)
+    -&gt;select(p | p.owner &lt;&gt; aDataType)
+    -&gt;sortedBy(p | p.owner.oclAsType(uml::Classifier).name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_abstractionClientsDataType">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_abstractionClientsDataType
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_abstractionClientsDataType(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of client data types of all abstraction dependencies that target the specified data type, sorted by name. Navigates inverse abstraction links from the data type, collects their clients, and retains only data type instances.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose abstraction clients are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_abstractionClientsDataType(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Abstraction)
+    -&gt;collect(a | a.client)
+    -&gt;filter(uml::DataType)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_abstractionSuppliersDataType">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_abstractionSuppliersDataType
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_abstractionSuppliersDataType(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of supplier data types of all abstraction dependencies that target the specified data type, sorted by name. Navigates inverse abstraction links from the data type, collects their suppliers, and retains only data type instances.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose abstraction suppliers are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_abstractionSuppliersDataType(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.eInverse(uml::Abstraction)
+    -&gt;collect(a | a.supplier)
+    -&gt;filter(uml::DataType)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_attributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_attributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_attributes(aDataType : uml::DataType) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of owned attributes of the specified data type, sorted by attribute name. Excludes association ends, retaining only plain attributes owned directly by the data type. Applies to all subtypes of uml::DataType, including uml::Enumeration and uml::PrimitiveType. Note: See the overloaded variants for classes and classifiers: u_attributes(uml::Class), u_attributes(uml::Classifier).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose owned attributes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_attributes(
+  aDataType : uml::DataType) : Sequence(uml::Property) =
+  aDataType.ownedAttribute
+    -&gt;select(p | p.association = null)
+    -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allSuperDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allSuperDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allSuperDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all super datatypes of a datatype, traversing the full generalization hierarchy up to the root. Supports both single and multiple inheritance. Cycle-safe. --- AQL operations used: -&gt;closure(c | expr)    - Applied to aDataType itself as seed; the lambda c.general-&gt;filter(uml::DataType) is evaluated starting from aDataType, so the direct parent is included from the first step. Traverses transitively until no new elements are found. Cycle-safe: each element is visited at most once.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML datatype whose full supertype hierarchy is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <span class="ref-badge ref-aql-collection">closure()</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allSuperDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType-&gt;closure(c | c.general-&gt;filter(uml::DataType))
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isGeneralDataType">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isGeneralDataType
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isGeneralDataType(aDataType : uml::DataType) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified data type is a general (parent) data type, i.e. it has at least one specializing sub data type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type to check.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isGeneralDataType(
+  aDataType : uml::DataType) : Boolean =
+  aDataType.eInverse(uml::Generalization)
+  -&gt;select(g | g.general = aDataType)
+  -&gt;notEmpty()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_dataTypeUseProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_dataTypeUseProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_dataTypeUseProperties(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of properties whose type is the specified data type. Excludes association ends and properties owned by the data type itself, i.e. returns only attributes of other classifiers that reference this data type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- The data type to find usages of.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_dataTypeUseProperties(
+		aDataType : uml::DataType) : OrderedSet(uml::Property) =
+	aDataType.eInverse(uml::Property)
+		-&gt;select(p |
+			p.association = null
+			and p.owner &lt;&gt; aDataType)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_inheritedDataTypeAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_inheritedDataTypeAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_inheritedDataTypeAttributes(aDataType : uml::DataType) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of inherited attributes of the specified data type. Excludes own attributes.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type whose inherited attributes are to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_inheritedDataTypeAttributes(
+  aDataType : uml::DataType) : Sequence(uml::Property) =
+  aDataType.inheritedMember
+    -&gt;filter(uml::Property)
+    -&gt;select(p1 | p1.association-&gt;isEmpty())
+    -&gt;sortedBy(p2 | p2.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_contextPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_contextPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_contextPackages(aDataType : uml::DataType) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of packages of the context classifiers of the specified data type, excluding the data type&#39;s own package, sorted by package name. See also: u_contextPackages(uml::Class)</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Package)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_contextClassesOrDataTypes">u_contextClassesOrDataTypes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excluding" target="_blank">excluding()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_contextPackages(
+  aDataType : uml::DataType) : OrderedSet(uml::Package) =
+  aDataType.u_contextClassesOrDataTypes()
+    -&gt;collect(c | c.package)
+    -&gt;excluding(aDataType.package)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_limitedDataTypeUseProperties">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_limitedDataTypeUseProperties
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_limitedDataTypeUseProperties(aDataType : uml::DataType) : OrderedSet(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns at most the first 3 properties that use the specified data type, to keep diagrams manageable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_dataTypeUseProperties">u_dataTypeUseProperties</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-subordered set" target="_blank">subOrderedSet()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_limitedDataTypeUseProperties(
+  aDataType : uml::DataType) : OrderedSet(uml::Property) =
+  let props : OrderedSet(uml::Property) =
+    aDataType.u_dataTypeUseProperties()
+  in
+  if props-&gt;size() &gt; 3 then
+    props-&gt;subOrderedSet(1, 3)
+  else
+    props
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_contextClassesOrDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_contextClassesOrDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_contextClassesOrDataTypes(aDataType : uml::DataType) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of classifiers related to the specified data type as context classifiers for diagram generation: - classifiers that own properties using the data type - all super data types - classifiers that own properties using any super data type (limited to 3 per super type) - all sub data types - abstraction clients of the data type - abstraction suppliers of the data type The data type itself is excluded from the result.  Note: p.owner is typed as uml::Element and requires an explicit oclAsType(uml::Classifier) cast. Sub- and super data types as well as abstraction helpers returning OrderedSet(uml::DataType) do not need a cast since DataType is a subtype of Classifier and AQL widens the union automatically.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
+                <dd>- A UML data type.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Classifier)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_dataTypeUseProperties">u_dataTypeUseProperties</a>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_allSuperDataTypes">u_allSuperDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_limitedDataTypeUseProperties">u_limitedDataTypeUseProperties</a>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_allSubDataTypes">u_allSubDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_abstractionClientsDataType">u_abstractionClientsDataType</a>
+                <a class="ref-badge ref-internal-query"
+                   href="dataTypeQuery.html#u_abstractionSuppliersDataType">u_abstractionSuppliersDataType</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excluding" target="_blank">excluding()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_contextClassesOrDataTypes(
+  aDataType : uml::DataType) : OrderedSet(uml::Classifier) =
+  let useClassifiers : OrderedSet(uml::Classifier) =
+    aDataType.u_dataTypeUseProperties()
+    -&gt;collect(p | p.owner.oclAsType(uml::Classifier))
+  in
+  let superTypes : OrderedSet(uml::DataType) =
+    aDataType.u_allSuperDataTypes()
+  in
+  useClassifiers
+    -&gt;union(superTypes)
+    -&gt;union(
+        superTypes
+        -&gt;collect(s | s.u_limitedDataTypeUseProperties())
+        -&gt;collect(p | p.owner.oclAsType(uml::Classifier)))
+    -&gt;union(aDataType.u_allSubDataTypes())
+    -&gt;union(aDataType.u_abstractionClientsDataType())
+    -&gt;union(aDataType.u_abstractionSuppliersDataType())
+    -&gt;excluding(aDataType)
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -78,7 +78,7 @@ AQL operations used:
 @param aClassifier - A UML classifier whose full generalization
                      hierarchy is to be retrieved.
 /]
-[query public u_superClassifiers(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
+[query public u_allSuperClassifiers(aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
   aClassifier->closure(c | c.general)
 /]
 

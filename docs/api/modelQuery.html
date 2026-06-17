@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::modelQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li class="active">
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::modelQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML model as receiver. This includes queries for retrieving model metadata (acronym, title, version, URI, language), navigating the model structure (main package, all classes, all data types, all packages), and property file access.  Note: The main package is the top-level package of the model as specified by the property MAIN_PACKAGE_NAME. All generation targets operate on the main package rather than the model root directly.  Note: Model metadata is resolved in order of priority: (1) property file value, (2) ModelIdentification data type in the model, (3) built-in fallback value. This allows property file values to override model metadata without modifying the model.  Related modules: - packageQuery: queries with a UML package as receiver, since Model is a subtype of Package in UML - classQuery: queries with a UML class as receiver - dataTypeQuery: queries with a UML data type as receiver</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/modelQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_mainPackage">
+                            <code>u_mainPackage(aModel) : uml::Package</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the main package for generation, determined by the &#39;MAIN_PACKAGE_NAME&#39; property.  Property matching: The property value is matched against the qualified name of each package (uml::Package.qualifiedName), which includes the full path, e.g. &#39;MyModel::Domain::Core&#39;. A simple unqualified name such as &#39;Core&#39; will NOT match. If the property holds a simple name, use p.name instead.  Fallback to model: The model itself is returned as a uml::Package when: - &#39;MAIN_PACKAGE_NAME&#39; is not set (empty string), - the property equals the model name, or - no package with the given qualified name is found. The second condition means that explicitly naming the model is treated the same as leaving the property unset.  Non-determinism: If multiple packages share the same qualified name across different subtrees, -&gt;first() returns the first match in containment order. The model is assumed to contain unique qualified names, which is the standard UML constraint.  Type note: uml::Model is a specialisation of uml::Package, so returning aModel as uml::Package requires no cast.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allAbstractionSuppliers">
+                            <code>u_allAbstractionSuppliers(aModel) : OrderedSet(uml::Classifier)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all abstraction suplpier classes or data types contained in the specified model, without duplicates.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allAbstractionClients">
+                            <code>u_allAbstractionClients(aModel) : OrderedSet(uml::Classifier)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all abstraction client classes or data types contained in the specified model, without duplicates.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allClasses">
+                            <code>u_allClasses(aModel) : Sequence(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of all classes contained in the specified model, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allDataTypes">
+                            <code>u_allDataTypes(aModel) : Sequence(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of all proper data types contained in the specified model, excluding primitive types and enumerations, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allEnumerations">
+                            <code>u_allEnumerations(aModel) : Sequence(uml::Enumeration)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of all enumerations contained in the specified model, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_allPackages">
+                            <code>u_allPackages(aModel) : Sequence(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of all packages contained in the specified model, excluding the model itself, sorted by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_subsetPackages">
+                            <code>u_subsetPackages(aModel) : OrderedSet(String)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of package qualified name segments that contain at least one classifier whose simple name appears in u_subsetItems(). Each segment is a &#39;::&#39;-separated token of the qualifier prefix of a matching classifier&#39;s qualified name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_packagesWithClasses">
+                            <code>u_packagesWithClasses(aModel) : Sequence(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a sequence of packages that directly contain at least one class, sorted by package name.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_mainPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_mainPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_mainPackage(aModel : uml::Model) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the main package for generation, determined by the &#39;MAIN_PACKAGE_NAME&#39; property.  Property matching: The property value is matched against the qualified name of each package (uml::Package.qualifiedName), which includes the full path, e.g. &#39;MyModel::Domain::Core&#39;. A simple unqualified name such as &#39;Core&#39; will NOT match. If the property holds a simple name, use p.name instead.  Fallback to model: The model itself is returned as a uml::Package when: - &#39;MAIN_PACKAGE_NAME&#39; is not set (empty string), - the property equals the model name, or - no package with the given qualified name is found. The second condition means that explicitly naming the model is treated the same as leaving the property unset.  Non-determinism: If multiple packages share the same qualified name across different subtrees, -&gt;first() returns the first match in containment order. The model is assumed to contain unique qualified names, which is the standard UML constraint.  Type note: uml::Model is a specialisation of uml::Package, so returning aModel as uml::Package requires no cast.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- The UML model being generated.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Package</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">or()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_mainPackage(aModel : uml::Model) : uml::Package =
+  let propertyValue : String =
+    &#39;MAIN_PACKAGE_NAME&#39;.getPropertyValue()
+  in
+  let matchedPackages : Sequence(uml::Package) =
+    aModel.eAllContents(uml::Package)
+      -&gt;select(p | p.qualifiedName = propertyValue)
+  in
+  if propertyValue = &#39;&#39;
+    or propertyValue = aModel.name
+    or matchedPackages-&gt;isEmpty()
+  then
+    aModel
+  else
+    matchedPackages-&gt;first()
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allAbstractionSuppliers">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allAbstractionSuppliers
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allAbstractionSuppliers(aModel : uml::Model) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all abstraction suplpier classes or data types contained in the specified model, without duplicates.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Classifier)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allAbstractionSuppliers(
+  aModel : uml::Model) : OrderedSet(uml::Classifier) =
+  aModel.eAllContents(uml::Abstraction).supplier
+  -&gt;filter({uml::Class | uml::DataType})
+  -&gt;asOrderedSet()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allAbstractionClients">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allAbstractionClients
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allAbstractionClients(aModel : uml::Model) : OrderedSet(uml::Classifier) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all abstraction client classes or data types contained in the specified model, without duplicates.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Classifier)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allAbstractionClients(
+  aModel : uml::Model) : OrderedSet(uml::Classifier) =
+  aModel.eAllContents(uml::Abstraction).client
+  -&gt;filter({uml::Class | uml::DataType})
+  -&gt;asOrderedSet()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allClasses(aModel : uml::Model) : Sequence(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all classes contained in the specified model, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Class)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allClasses(
+  aModel : uml::Model) : Sequence(uml::Class) =
+  aModel.eAllContents(uml::Class)
+  -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allDataTypes(aModel : uml::Model) : Sequence(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all proper data types contained in the specified model, excluding primitive types and enumerations, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::DataType)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allDataTypes(
+  aModel : uml::Model) : Sequence(uml::DataType) =
+  aModel.eAllContents(uml::DataType)
+  -&gt;reject(dt | dt.oclIsKindOf(uml::Enumeration)
+             or dt.oclIsKindOf(uml::PrimitiveType))
+  -&gt;sortedBy(dt | dt.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allEnumerations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allEnumerations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allEnumerations(aModel : uml::Model) : Sequence(uml::Enumeration) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all enumerations contained in the specified model, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Enumeration)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allEnumerations(
+  aModel : uml::Model) : Sequence(uml::Enumeration) =
+  aModel.eAllContents(uml::Enumeration)
+  -&gt;sortedBy(e | e.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_allPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_allPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_allPackages(aModel : uml::Model) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of all packages contained in the specified model, excluding the model itself, sorted by name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Package)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_allPackages(
+  aModel : uml::Model) : Sequence(uml::Package) =
+  aModel.eAllContents(uml::Package)
+  -&gt;reject(p | p.oclIsKindOf(uml::Model))
+  -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_subsetPackages">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_subsetPackages
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_subsetPackages(aModel : uml::Model) : OrderedSet(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of package qualified name segments that contain at least one classifier whose simple name appears in u_subsetItems(). Each segment is a &#39;::&#39;-separated token of the qualifier prefix of a matching classifier&#39;s qualified name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(String)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="configurationQuery.html#u_subsetItems">u_subsetItems</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substring" target="_blank">substring()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-lastindex" target="_blank">lastIndex()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_subsetPackages(
+  aModel : uml::Model) : OrderedSet(String) =
+  let mainPkg : uml::Package = aModel.u_mainPackage() in
+  mainPkg.eAllContents(uml::Classifier)
+    -&gt;collect(c | c.qualifiedName)
+    -&gt;select(s | aModel.u_subsetItems()-&gt;includes(
+        s.substring(s.lastIndex(&#39;::&#39;) + 2)))
+    -&gt;collect(s | s.substring(1, s.lastIndex(&#39;::&#39;) - 1))
+    -&gt;collect(s | s.tokenize(&#39;::&#39;))
+    -&gt;asOrderedSet()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_packagesWithClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_packagesWithClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_packagesWithClasses(aModel : uml::Model) : Sequence(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a sequence of packages that directly contain at least one class, sorted by package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- A UML model.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Package)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_packagesWithClasses(
+  aModel : uml::Model) : Sequence(uml::Package) =
+  aModel.eAllContents(uml::Package)
+    -&gt;select(p | p.eContents(uml::Class)-&gt;notEmpty())
+    -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

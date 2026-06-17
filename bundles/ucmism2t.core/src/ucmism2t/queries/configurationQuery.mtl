@@ -1,104 +1,147 @@
 [comment encoding = UTF-8 /]
 [**
-Module contains queries which use properties.
+Module contains queries that retrieve configuration values from
+the generator properties file. Property keys are constructed
+dynamically using the 'subset.name' property as a prefix.
 /]
 [module configurationQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML'
 )/]
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
-[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::services::PropertiesService/]
 
 [**
- * Returns the title of the subset
- * @param anEObject Any type.
-*/]
-[query public e_subsetTitle(anEObject : ecore::EObject) : String =
-	('subset.name'.getPropertyValue() + '.' + 'title').getPropertyValue()
+ * Returns the subset name prefix used to build property keys.
+ * Returns an error marker string if 'subset.name' is not defined,
+ * ensuring misconfiguration is visible in generated output.
+ * @param anEObject - Any element.
+/]
+[query private u_subsetPrefix(anEObject : ecore::EObject) : String =
+  'subset.name'.getRequiredPropertyValue()
 /]
 
 [**
- * Returns a sequence of names of the subset classes
- * @param Any type.
-*/]
-[query public e_subsetClasses(anEObject : ecore::EObject) : Sequence(String) =
-	('subset.name'.getPropertyValue() + '.' + 'class').
-		getPropertyValue().
-		replaceAll('\\s', '').
-		tokenize(',')
+ * Returns the title of the subset.
+ * @param anEObject - Any element.
+/]
+[query public u_subsetTitle(anEObject : ecore::EObject) : String =
+  (anEObject.u_subsetPrefix() + '.title').getPropertyValue()
 /]
 
 [**
- * Returns a sequence of names of the generalized subset classes
- * @param Any type.
-*/]
-[query public e_subsetGeneralizedClasses(anEObject : ecore::EObject) : Sequence(String) = 
-	('subset.name'.getPropertyValue() + '.' + 'generalizedClass')
-		.getPropertyValue()
-		.replaceAll('\\s', '')
-		.tokenize(',')
+ * Returns a sequence of names of the subset classes.
+ * Returns an empty sequence if the property is not defined.
+ * @param anEObject - Any element.
+/]
+[query public u_subsetClasses(anEObject : ecore::EObject) : Sequence(String) =
+  let raw : String =
+    (anEObject.u_subsetPrefix() + '.class')
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
+/]
+
+[**
+ * Returns a sequence of names of the generalized subset classes.
+ * Returns an empty sequence if the property is not defined.
+ * @param anEObject - Any element.
+/]
+[query public u_subsetGeneralizedClasses(anEObject : ecore::EObject) : Sequence(String) =
+  let raw : String =
+    (anEObject.u_subsetPrefix() + '.generalizedClass')
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
 /]
 
 [**
  * Returns a sequence of names of all subset classes
- * @param anEObject Any type.
-*/]
-[query public e_subsetAllClasses(anEObject : ecore::EObject) : Sequence(String) =
-	anEObject.e_subsetClasses()->union(anEObject.e_subsetGeneralizedClasses())
+ * (subset classes and generalized subset classes).
+ * @param anEObject - Any element.
+/]
+[query public u_subsetAllClasses(anEObject : ecore::EObject) : Sequence(String) =
+  anEObject.u_subsetClasses()->union(anEObject.u_subsetGeneralizedClasses())
 /]
 
 [**
- * Returns a sequence of names of the subset data types
- * @param anEObject Any type.
-*/]
-[query public e_subsetDataTypes(anEObject : ecore::EObject) : Sequence(String) =
-	('subset.name'.getPropertyValue() + '.' + 'dataType')
-		.getPropertyValue()
-		.replaceAll('\\s', '')
-		.tokenize(',')
+ * Returns a sequence of names of the subset data types.
+ * Returns an empty sequence if the property is not defined.
+ * @param anEObject - Any element.
+/]
+[query public u_subsetDataTypes(anEObject : ecore::EObject) : Sequence(String) =
+  let raw : String =
+    (anEObject.u_subsetPrefix() + '.dataType')
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
 /]
 
 [**
- * Returns a sequence of names of the subset enumerations
- * @param anEObject Any type.
-*/]
-[query public e_subsetEnumerations(anEObject : ecore::EObject) : Sequence(String) =
-	('subset.name'.getPropertyValue() + '.' + 'enumeration')
-		.getPropertyValue()
-		.replaceAll('\\s', '')
-		.tokenize(',')
+ * Returns a sequence of names of the subset enumerations.
+ * Returns an empty sequence if the property is not defined.
+ * @param anEObject - Any element.
+/]
+[query public u_subsetEnumerations(anEObject : ecore::EObject) : Sequence(String) =
+  let raw : String =
+    (anEObject.u_subsetPrefix() + '.enumeration')
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
 /]
 
 [**
- * Returns a sequence of names of all subset items (classes, data types, enumerations)
- * @param anEObject Any type.
-*/]
-[query public e_subsetItems(anEObject : ecore::EObject) : Sequence(String) =
-	anEObject.e_subsetAllClasses()->union(anEObject.e_subsetDataTypes())->union(anEObject.e_subsetEnumerations())
+ * Returns a sequence of names of all subset items
+ * (classes, data types, and enumerations).
+ * @param anEObject - Any element.
+/]
+[query public u_subsetItems(anEObject : ecore::EObject) : Sequence(String) =
+  anEObject.u_subsetAllClasses()
+  ->union(anEObject.u_subsetDataTypes())
+  ->union(anEObject.u_subsetEnumerations())
 /]
 
 [**
- * Returns a sequence of names of attributes of a specific class of the subset
- * @param anEObject Any type.
-*/]
-[query public e_subsetClassAttributes(aClassName : String) : Sequence(String) =
-	('subset.name'.getPropertyValue() + '.' + 'class' + '.' + aClassName)
-		.getPropertyValue()
-		.replaceAll('\\s', '')
-		.tokenize(',')
+ * Returns a sequence of attribute names for a specific subset class.
+ * Returns an empty sequence if the property is not defined.
+ * @param aClassName - The name of the class.
+/]
+[query public u_subsetClassAttributes(aClassName : String) : Sequence(String) =
+  let raw : String =
+    (aClassName.u_subsetPrefix() + '.class.' + aClassName)
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
 /]
 
 [**
- * Returns a sequence of names of attributes of a specific data type of the subset
- * @param anEObject Any type.
-*/]
-[query public e_subsetDataTypeAttributes(aDataTypeName : String) : Sequence(String) =
-  ('subset.name'.getPropertyValue() + '.' + 'dataType' + '.' + aDataTypeName)
-  	.getPropertyValue()
-  	.replaceAll('\\s', '')
-  	.tokenize(',')
+ * Returns a sequence of attribute names for a specific subset data type.
+ * Returns an empty sequence if the property is not defined.
+ * @param aDataTypeName - The name of the data type.
 /]
-
+[query public u_subsetDataTypeAttributes(aDataTypeName : String) : Sequence(String) =
+  let raw : String =
+    (aDataTypeName.u_subsetPrefix() + '.dataType.' + aDataTypeName)
+    .getPropertyValue()
+    .replaceAll('\\s', '')
+  in
+  if raw = '' then Sequence{}
+  else raw.tokenize(',')
+  endif
+/]

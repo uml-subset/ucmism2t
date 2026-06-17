@@ -64,7 +64,7 @@ AQL operations used:
 @param aType - A UML type whose simple name is to be returned,
                including unresolved primitive type proxies.
 /]
-[query public u_typeName(aType : uml::Type) : String =
+[comment] [query public u_typeName(aType : uml::Type) : String =
   if aType.eClass().name = 'PrimitiveType' then
     let s : String = aType.toString()
     in
@@ -73,7 +73,7 @@ AQL operations used:
     aType.name
   endif
 /]
-
+[/comment]
 [**
 Returns the qualified name of a UML type. For resolved types, returns
 the name property directly. For unresolved UML primitive type proxies

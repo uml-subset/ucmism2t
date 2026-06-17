@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::query::oldModelQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li class="active">
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::query::oldModelQuery
+        </h1>
+
+
+        <div class="description">Module contains all model queries. Queries with prefix &quot;e_&quot; are migrated from Acceleo 3.7. Queries with prefix &quot;u_&quot; are written for Acceleo 4.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/query/oldModelQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#e_modelIdentication">
+                            <code>e_modelIdentication(aModel) : uml::DataType</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the ModelIdentification data type from a model. This data type contains model metadata such as acronym, version, and title as owned properties with default values.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelShortName">
+                            <code>e_modelShortName(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the short model name including version, derived from the model acronym, major version, and minor version. Format: ACRONYM_MAJOR-MINOR.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelAcronym">
+                            <code>e_modelAcronym(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model acronym. The value is determined in order of priority: (1) MODEL_ACRONYM property, (2) ModelIdentification data type in the model, (3) model name as fallback.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelLanguage">
+                            <code>e_modelLanguage(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model language. The value is determined in order of priority: (1) MODEL_LANGUAGE property, (2) ModelIdentification data type in the model, (3) &#39;en&#39; as fallback.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelMajorVersion">
+                            <code>e_modelMajorVersion(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model major version. The value is determined in order of priority: (1) MODEL_MAJOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelMinorVersion">
+                            <code>e_modelMinorVersion(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model minor version. The value is determined in order of priority: (1) MODEL_MINOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelUri">
+                            <code>e_modelUri(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model URI. The value is determined in order of priority: (1) MODEL_URI property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL URI&#39; as fallback.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#e_modelTitle">
+                            <code>e_modelTitle(aModel) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model title. The value is determined in order of priority: (1) MODEL_TITLE property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL TITLE&#39; as fallback.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="e_modelIdentication">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelIdentication
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelIdentication(aModel : uml::Model) : uml::DataType = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the ModelIdentification data type from a model. This data type contains model metadata such as acronym, version, and title as owned properties with default values.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::DataType</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelIdentication(
+		aModel : uml::Model) : uml::DataType =
+	aModel.eAllContents(uml::DataType)
+		-&gt;select(temp62 | temp62.name = &#39;ModelIdentification&#39;)
+		-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelShortName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelShortName
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelShortName(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the short model name including version, derived from the model acronym, major version, and minor version. Format: ACRONYM_MAJOR-MINOR.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelAcronym">e_modelAcronym</a>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelMajorVersion">e_modelMajorVersion</a>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelMinorVersion">e_modelMinorVersion</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelShortName(aModel : uml::Model) : String =
+	aModel.e_modelAcronym()
+		+ &#39;_&#39;
+		+ aModel.e_modelMajorVersion()
+		+ &#39;-&#39;
+		+ aModel.e_modelMinorVersion()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelAcronym">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelAcronym
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelAcronym(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model acronym. The value is determined in order of priority: (1) MODEL_ACRONYM property, (2) ModelIdentification data type in the model, (3) model name as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelAcronym(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_ACRONYM&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp63 | temp63.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp64 | temp64.name = &#39;acronym&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else aModel.name
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelLanguage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelLanguage
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelLanguage(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model language. The value is determined in order of priority: (1) MODEL_LANGUAGE property, (2) ModelIdentification data type in the model, (3) &#39;en&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelLanguage(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_LANGUAGE&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp65 | temp65.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp66 | temp66.name = &#39;language&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else &#39;en&#39;
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelMajorVersion">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelMajorVersion
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelMajorVersion(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model major version. The value is determined in order of priority: (1) MODEL_MAJOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelMajorVersion(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_MAJOR_VERSION&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp67 | temp67.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp68 | temp68.name = &#39;majorVersion&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else &#39;0&#39;
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelMinorVersion">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelMinorVersion
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelMinorVersion(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model minor version. The value is determined in order of priority: (1) MODEL_MINOR_VERSION property, (2) ModelIdentification data type in the model, (3) &#39;0&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelMinorVersion(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_MINOR_VERSION&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp69 | temp69.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp70 | temp70.name = &#39;minorVersion&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else &#39;0&#39;
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelUri">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelUri
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelUri(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model URI. The value is determined in order of priority: (1) MODEL_URI property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL URI&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelUri(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_URI&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp71 | temp71.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp72 | temp72.name = &#39;uri&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else &#39;NO MODEL URI&#39;
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="e_modelTitle">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                e_modelTitle
+            </h3>
+
+            <div class="signature">
+                <code>[query public e_modelTitle(aModel : uml::Model) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model title. The value is determined in order of priority: (1) MODEL_TITLE property, (2) ModelIdentification data type in the model, (3) &#39;NO MODEL TITLE&#39; as fallback.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>A UML model</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public e_modelTitle(aModel : uml::Model) : String =
+	let fromProperties : String =
+		&#39;MODEL_TITLE&#39;.getPropertyValue()
+	in
+	let fromModel : String =
+		aModel.eAllContents(uml::DataType)
+			-&gt;select(temp73 | temp73.name = &#39;ModelIdentification&#39;)
+			-&gt;first()
+			.eContents(uml::Property)
+			-&gt;select(temp74 | temp74.name = &#39;title&#39;)
+			-&gt;first().default
+	in
+	if fromProperties.size() &gt; 0
+	then fromProperties
+	else
+		if not (fromModel = null)
+		then fromModel
+		else &#39;NO MODEL TITLE&#39;
+		endif
+	endif
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::templates::target::doc::modelDocFile — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li>
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li class="active">
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::templates::target::doc::modelDocFile
+        </h1>
+
+
+        <div class="description">All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/target/doc/modelDocFile.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+        <h2>Template Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#processModelDoc">
+                            <code>processModelDoc(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#modelInformationJs">
+                            <code>modelInformationJs(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#modelUrlJsFile">
+                            <code>modelUrlJsFile(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Writes the model URL to a Javascript file which is used by the generated documentation as logo link.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#addLinksInSpecificationOverview">
+                            <code>addLinksInSpecificationOverview(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#createRedirectHtml">
+                            <code>createRedirectHtml(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#XcreateRedirectHtml">
+                            <code>XcreateRedirectHtml(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Query summary -->
+
+        <!-- ═══════════════════════════════════ Template detail -->
+        <h2>Template Detail</h2>
+        <div class="element-detail" id="processModelDoc">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                processModelDoc
+            </h3>
+
+            <div class="signature">
+                <code>[template public processModelDoc(aModel : uml::Model)]</code>
+            </div>
+
+
+            <div class="description">Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>a model</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="configurationQuery.html#u_subsetTitle">u_subsetTitle</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childPackages">u_childPackages</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_subsetPackages">u_subsetPackages</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_generationMessageDoc">rst_generationMessageDoc</a>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_header">rst_header</a>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_mainIndexHead">rst_mainIndexHead</a>
+                <a class="ref-badge ref-internal-template"
+                   href="packageDocFile.html#processPackageDoc">processPackageDoc</a>
+                <a class="ref-badge ref-internal-template"
+                   href="appendicesDocFile.html#appendicesIndex">appendicesIndex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="aboutModelDocFile.html#aboutModel">aboutModel</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelDocFile.html#modelInformationJs">modelInformationJs</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelDocFile.html#createRedirectHtml">createRedirectHtml</a>
+                <a class="ref-badge ref-internal-template"
+                   href="vegaJsonFile.html#vegaTreeLayoutClassJsonFile">vegaTreeLayoutClassJsonFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="vegaJsonFile.html#vegaEdgeBundlingClassJsonFile">vegaEdgeBundlingClassJsonFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="vegaJsonFile.html#vegaEdgeBundlingAssociationJsonFile">vegaEdgeBundlingAssociationJsonFile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public processModelDoc(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/index.rst&#39;), overwrite, &#39;UTF-8&#39;)]
+    [aModel.rst_generationMessageDoc()/]
+    .. _[aModel.qualifiedName/]:
+    
+    [if (not &#39;includeAllItems&#39;.isPropertyTrue())]
+      [aModel.u_subsetTitle().rst_header(&#39;*&#39;)/]
+      
+      *Description of subset ...*
+      
+      -----
+      
+    [/if]
+    [aModel.rst_mainIndexHead()/]
+    [for (aPackage : uml::Package | aModel.u_childPackages()-&gt;select(p | &#39;includeAllItems&#39;.isPropertyTrue() or aModel.u_model().u_subsetPackages()-&gt;includes(p.name)))]
+         [aPackage.name.concat(&#39;/index.rst&#39;)/]
+      [aPackage.processPackageDoc()/][/for]
+    [if (&#39;includeAllItems&#39;.isPropertyTrue())]
+         Appendices/index.rst
+    [/if]
+       about/index.rst
+  [/file]
+  [if (&#39;includeAllItems&#39;.isPropertyTrue())]
+    [aModel.appendicesIndex()/]
+  [/if]
+  [aModel.aboutModel()/]
+  [aModel.modelInformationJs()/]
+  [aModel.createRedirectHtml()/]
+  [aModel.vegaTreeLayoutClassJsonFile()/]
+  [aModel.vegaEdgeBundlingClassJsonFile()/]
+  [aModel.vegaEdgeBundlingAssociationJsonFile()/]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="modelInformationJs">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                modelInformationJs
+            </h3>
+
+            <div class="signature">
+                <code>[template public modelInformationJs(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelUri">e_modelUri</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allPackages">u_allPackages</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allClasses">u_allClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allDataTypes">u_allDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_onlyDefinition">u_onlyDefinition</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public modelInformationJs(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/_modelInformation.js&#39;), overwrite, &#39;UTF-8&#39;)]
+    var modelUrl = &#39;[aModel.e_modelUri()/]&#39;;
+    var modelDocumentationUrl = &#39;[&#39;DOCUMENTATION_URL&#39;.getPropertyValue()/]&#39;;
+    var definition = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()-&gt;collect(p | p.oclAsType(uml::NamedElement))-&gt;union(aModel.u_allClasses())-&gt;union(aModel.u_allDataTypes()))]
+      	&quot;[aNamedElement.name/]&quot;: &quot;[aNamedElement.u_onlyDefinition().replaceAll(&#39;&quot;&#39;, &#39;\\\\&quot;&#39;)/]&quot;,
+    [/for]
+    	&quot;tooltip.aggregation-kind&quot;: &quot;[&#39;tooltip.aggregation-kind&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.association&quot;: &quot;[&#39;tooltip.association&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.attribute&quot;: &quot;[&#39;tooltip.attribute&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.canonical-xmi&quot;: &quot;[&#39;tooltip.canonical-xmi&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.class&quot;: &quot;[&#39;tooltip.class&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.classifier&quot;: &quot;[&#39;tooltip.classifier&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.coupling&quot;: &quot;[&#39;tooltip.coupling&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.data-type&quot;: &quot;[&#39;tooltip.data-type&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.diagram&quot;: &quot;[&#39;tooltip.diagram&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.enumeration&quot;: &quot;[&#39;tooltip.enumeration&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.encoding&quot;: &quot;[&#39;tooltip.encoding&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.enumeration-literal&quot;: &quot;[&#39;tooltip.enumeration-literal&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.inheritance&quot;: &quot;[&#39;tooltip.inheritance&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.json-schema&quot;: &quot;[&#39;tooltip.json-schema&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.json-ld&quot;: &quot;[&#39;tooltip.json-ld&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.multiplicity&quot;: &quot;[&#39;tooltip.multiplicity&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.navigability&quot;: &quot;[&#39;tooltip.navigability&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.rdf-ontology&quot;: &quot;[&#39;tooltip.rdf-ontology&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.shacl&quot;: &quot;[&#39;tooltip.shacl&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.shex&quot;: &quot;[&#39;tooltip.shex&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.usage&quot;: &quot;[&#39;tooltip.usage&#39;.getPropertyValue()/]&quot;,
+    	&quot;tooltip.xml-schema&quot;: &quot;[&#39;tooltip.xml-schema&#39;.getPropertyValue()/]&quot;,
+    }
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="modelUrlJsFile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                modelUrlJsFile
+            </h3>
+
+            <div class="signature">
+                <code>[template public modelUrlJsFile(aModel : uml::Model)]</code>
+            </div>
+
+
+            <div class="description">Writes the model URL to a Javascript file which is used by the generated documentation as logo link.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelUri">e_modelUri</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public modelUrlJsFile(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;) + &#39;/_modelUrl.js&#39;, overwrite, &#39;UTF-8&#39;)]
+    var modelUrl = &#39;[aModel.e_modelUri()/]&#39;;
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="addLinksInSpecificationOverview">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                addLinksInSpecificationOverview
+            </h3>
+
+            <div class="signature">
+                <code>[template public addLinksInSpecificationOverview(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allPackages">u_allPackages</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reverse" target="_blank">reverse()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public addLinksInSpecificationOverview(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/addLinksInSpecificationOverview.sed&#39;), overwrite, &#39;UTF-8&#39;)]
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()-&gt;collect(p | p.oclAsType(uml::NamedElement))-&gt;union(aModel.u_mainPackage().eAllContents(uml::Class))-&gt;union(aModel.u_mainPackage().eAllContents(uml::DataType))-&gt;sortedBy(temp1 | temp1.name)-&gt;reverse())]
+      s/ [aNamedElement.name/]s/ :ref:`[aNamedElement.name/]s\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+      s/*[aNamedElement.name/]s/*:ref:`[aNamedElement.name/]s\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+      s/^[aNamedElement.name/]s/:ref:`[aNamedElement.name/]s\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+      s/ [aNamedElement.name/]/ :ref:`[aNamedElement.name/]\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+      s/*[aNamedElement.name/]/*:ref:`[aNamedElement.name/]\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+      s/^[aNamedElement.name/]/:ref:`[aNamedElement.name/]\&lt;[aNamedElement.qualifiedName/]\&gt;`/g
+    [/for]
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="createRedirectHtml">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                createRedirectHtml
+            </h3>
+
+            <div class="signature">
+                <code>[template public createRedirectHtml(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public createRedirectHtml(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/rewrite.html&#39;), overwrite, &#39;UTF-8&#39;)]
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;body onload=&quot;redirect()&quot;&gt;
+        &lt;script&gt;
+          var mappingTable = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_mainPackage().eAllContents(uml::Class)-&gt;sortedBy(temp2 | temp2.name)-&gt;union(aModel.u_mainPackage().eAllContents(uml::DataType)-&gt;sortedBy(temp3 | temp3.name)))]
+              &quot;[aNamedElement.name/]&quot;: &quot;[aNamedElement.qualifiedName.replace(aModel.name + &#39;::&#39;, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;) + &#39;.html&#39;/]&quot;,
+    [/for]
+          }
+          function redirect() {
+            pathname = window.location.pathname;
+            lastSlashPosition = pathname.lastIndexOf(&#39;/&#39;);
+            documentationRoot = pathname.substring(0, lastSlashPosition+1);
+            if (window.location.hash) {
+    	      var fragmentIdentifier = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+    	      window.location.replace(documentationRoot+mappingTable[&#39;[&#39;/][&#39;[&#39;/]fragmentIdentifier]]);
+            } else {
+              window.location.replace(documentationRoot);
+            }
+          }
+        &lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="XcreateRedirectHtml">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                XcreateRedirectHtml
+            </h3>
+
+            <div class="signature">
+                <code>[template public XcreateRedirectHtml(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allPackages">u_allPackages</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allClasses">u_allClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_allDataTypes">u_allDataTypes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-intersection" target="_blank">intersection()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substituteall" target="_blank">substituteAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public XcreateRedirectHtml(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/rewrite_index.html&#39;), overwrite, &#39;UTF-8&#39;)]
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;body onload=&quot;redirect()&quot;&gt;
+    &lt;script&gt;
+    function redirect() {
+    	documentationRoot = &quot;[&#39;DDI-CDI_DOCUMENTATION_ROOT&#39;.getPropertyValue()/]&quot;;
+    	var mappingTable = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()-&gt;collect(p | p.oclAsType(uml::NamedElement))-&gt;union(aModel.u_allClasses())-&gt;union(aModel.u_allDataTypes())-&gt;select(temp4 | temp4.qualifiedName.tokenize(&#39;::&#39;)-&gt;asOrderedSet()-&gt;intersection(&#39;ddi-cdi_packages_ignore2&#39;.getPropertyValue().substituteAll(&#39; &#39;, &#39;&#39;).tokenize(&#39;,&#39;)-&gt;asOrderedSet())-&gt;size() = 0)-&gt;sortedBy(temp5 | temp5.name))]
+              &quot;[aNamedElement.name/]&quot; : &quot;[aNamedElement.qualifiedName.replace(&#39;DDICDIModels::&#39;, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;) + &#39;.html&#39;/]&quot;,
+    [/for]
+    	}
+    	if (window.location.hash) {
+    		var fragmentIdentifier = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+    		window.location.replace(documentationRoot+mappingTable[&#39;[&#39;/][&#39;[&#39;/]fragmentIdentifier]]);
+    	} else {
+    		window.location.replace(documentationRoot);
+    	}
+    }
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+
+        <!-- ═══════════════════════════════════ Query detail -->
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>

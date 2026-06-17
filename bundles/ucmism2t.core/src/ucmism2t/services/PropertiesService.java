@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.uml2.uml.Model;
 
 /**
@@ -124,6 +125,24 @@ public class PropertiesService {
         System.out.flush();
     }
 
+    public String getDiagnosticInfo(EObject context) {
+        ResourceSet rs = context.eResource().getResourceSet();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Resources loaded:\n");
+        rs.getResources().forEach(r ->
+            sb.append("  ").append(r.getURI()).append("\n"));
+        sb.append("\nURI mappings containing 'Primitive':\n");
+        rs.getURIConverter().getURIMap()
+            .forEach((k, v) -> {
+                if (k.toString().contains("Primitive")
+                        || v.toString().contains("Primitive")) {
+                    sb.append("  ").append(k)
+                      .append(" -> ").append(v).append("\n");
+                }
+            });
+        return sb.toString();
+    }
+    
     // -----------------------------------------------------------------
     // Initialisation from MTL — Acceleo 4 IDE launch
     // -----------------------------------------------------------------
@@ -150,6 +169,7 @@ public class PropertiesService {
                 + " — properties already loaded.");
             return;
         }
+
         URI modelURI = aModel.eResource().getURI();
         Path modelPath = resolveToFilesystemPath(modelURI);
         Path projectFolder = modelPath.getParent().getParent();
@@ -390,6 +410,22 @@ public class PropertiesService {
         return entry != null ? entry.value : "";
     }
 
+    /**
+     * Returns the value of the given property key.
+     * Returns an error marker string if the key is not defined,
+     * making misconfiguration visible in generated output.
+     * Use for mandatory properties only.
+     *
+     * Called in MTL as: 'key'.getRequiredPropertyValue()
+     *
+     * @param key The property key
+     * @return The property value, or 'ERROR: <key> is undefined' if not found
+     */
+    public String getRequiredPropertyValue(String key) {
+        PropertyEntry entry = propertyMap.get(key);
+        return entry != null ? entry.value : "ERROR: " + key + " is undefined";
+    }
+    
     /**
      * Returns true if the given property key has the value 'true'
      * (case-insensitive). Replaces the Acceleo 3.7 pattern:

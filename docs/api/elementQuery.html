@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ucmism2t::queries::elementQuery — Acceleo Documentation</title>
+    <link rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+<nav class="nav-bar">
+    <a class="nav-title" href="index.html">Acceleo Documentation</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="Search…" autocomplete="off"/>
+        <div id="search-results" class="search-dropdown"></div>
+    </div>
+</nav>
+
+<div class="page-wrapper">
+    <aside class="sidebar">
+        <h3><a href="index.html">Modules</a></h3>
+        <ul>
+            <li>
+                <a href="associationQuery.html">associationQuery</a>
+            </li>
+            <li>
+                <a href="classifierQuery.html">classifierQuery</a>
+            </li>
+            <li>
+                <a href="classQuery.html">classQuery</a>
+            </li>
+            <li>
+                <a href="configurationQuery.html">configurationQuery</a>
+            </li>
+            <li>
+                <a href="dataTypeQuery.html">dataTypeQuery</a>
+            </li>
+            <li class="active">
+                <a href="elementQuery.html">elementQuery</a>
+            </li>
+            <li>
+                <a href="eobjectQuery.html">eobjectQuery</a>
+            </li>
+            <li>
+                <a href="modelQuery.html">modelQuery</a>
+            </li>
+            <li>
+                <a href="packageQuery.html">packageQuery</a>
+            </li>
+            <li>
+                <a href="propertyQuery.html">propertyQuery</a>
+            </li>
+            <li>
+                <a href="stringQuery.html">stringQuery</a>
+            </li>
+            <li>
+                <a href="typeQuery.html">typeQuery</a>
+            </li>
+            <li>
+                <a href="m2tMaster.html">m2tMaster</a>
+            </li>
+            <li>
+                <a href="representation.html">representation</a>
+            </li>
+            <li>
+                <a href="oldModelQuery.html">oldModelQuery</a>
+            </li>
+            <li>
+                <a href="aboutModelDocFile.html">aboutModelDocFile</a>
+            </li>
+            <li>
+                <a href="appendicesDocFile.html">appendicesDocFile</a>
+            </li>
+            <li>
+                <a href="associatedClassesVegaDiagramDocFile.html">associatedClassesVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="associationDoc.html">associationDoc</a>
+            </li>
+            <li>
+                <a href="attributeDoc.html">attributeDoc</a>
+            </li>
+            <li>
+                <a href="classDocFile.html">classDocFile</a>
+            </li>
+            <li>
+                <a href="dataTypeDocFile.html">dataTypeDocFile</a>
+            </li>
+            <li>
+                <a href="enumerationDocFile.html">enumerationDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeDiagramDocFile.html">inheritanceTreeDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="inheritanceTreeVegaDiagramDocFile.html">inheritanceTreeVegaDiagramDocFile</a>
+            </li>
+            <li>
+                <a href="modelDocFile.html">modelDocFile</a>
+            </li>
+            <li>
+                <a href="packageDocFile.html">packageDocFile</a>
+            </li>
+            <li>
+                <a href="puDiagram.html">puDiagram</a>
+            </li>
+            <li>
+                <a href="puUtilityDoc.html">puUtilityDoc</a>
+            </li>
+            <li>
+                <a href="rstUtilityDoc.html">rstUtilityDoc</a>
+            </li>
+            <li>
+                <a href="vegaJsonFile.html">vegaJsonFile</a>
+            </li>
+            <li>
+                <a href="classJsonld.html">classJsonld</a>
+            </li>
+            <li>
+                <a href="commonJsonld.html">commonJsonld</a>
+            </li>
+            <li>
+                <a href="dataTypeJsonld.html">dataTypeJsonld</a>
+            </li>
+            <li>
+                <a href="modelJsonldFile.html">modelJsonldFile</a>
+            </li>
+            <li>
+                <a href="classJsch.html">classJsch</a>
+            </li>
+            <li>
+                <a href="commonJsch.html">commonJsch</a>
+            </li>
+            <li>
+                <a href="dataTypeJsch.html">dataTypeJsch</a>
+            </li>
+            <li>
+                <a href="enumerationJsch.html">enumerationJsch</a>
+            </li>
+            <li>
+                <a href="modelJschFile.html">modelJschFile</a>
+            </li>
+            <li>
+                <a href="associationOnto.html">associationOnto</a>
+            </li>
+            <li>
+                <a href="classOnto.html">classOnto</a>
+            </li>
+            <li>
+                <a href="commonOnto.html">commonOnto</a>
+            </li>
+            <li>
+                <a href="dataTypeOnto.html">dataTypeOnto</a>
+            </li>
+            <li>
+                <a href="enumerationOnto.html">enumerationOnto</a>
+            </li>
+            <li>
+                <a href="processModelOnto.html">processModelOnto</a>
+            </li>
+            <li>
+                <a href="commonRdf.html">commonRdf</a>
+            </li>
+            <li>
+                <a href="classShacl.html">classShacl</a>
+            </li>
+            <li>
+                <a href="commonShacl.html">commonShacl</a>
+            </li>
+            <li>
+                <a href="dataTypeShacl.html">dataTypeShacl</a>
+            </li>
+            <li>
+                <a href="modelShaclFile.html">modelShaclFile</a>
+            </li>
+            <li>
+                <a href="associationShex.html">associationShex</a>
+            </li>
+            <li>
+                <a href="classShex.html">classShex</a>
+            </li>
+            <li>
+                <a href="commonShex.html">commonShex</a>
+            </li>
+            <li>
+                <a href="dataTypeShex.html">dataTypeShex</a>
+            </li>
+            <li>
+                <a href="modelShexFile.html">modelShexFile</a>
+            </li>
+            <li>
+                <a href="classXsd.html">classXsd</a>
+            </li>
+            <li>
+                <a href="commonXsd.html">commonXsd</a>
+            </li>
+            <li>
+                <a href="dataTypeXsd.html">dataTypeXsd</a>
+            </li>
+            <li>
+                <a href="enumerationXsd.html">enumerationXsd</a>
+            </li>
+            <li>
+                <a href="modelXsdFile.html">modelXsdFile</a>
+            </li>
+            <li>
+                <a href="testFile.html">testFile</a>
+            </li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <!-- ═══════════════════════════════════ Module header -->
+        <h1 class="page-title">
+            <span class="kind-badge kind-module">module</span>
+            ucmism2t::queries::elementQuery
+        </h1>
+
+
+        <div class="description">Module contains queries with a UML element or named element as receiver.</div>
+
+        <table class="meta-table">
+            <tr><th>Metamodels</th><td>
+                <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
+            </td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/queries/elementQuery.mtl</code></td></tr>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template summary -->
+
+        <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_model">
+                            <code>u_model(anElement) : uml::Model</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the root model that owns the specified element, by navigating up the containment hierarchy to the first uml::Model ancestor. AQL equivalent of getModel().
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_parent">
+                            <code>u_parent(anElement) : uml::Element</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the direct parent of the specified element in the UML containment hierarchy. AQL equivalent of eContainer().
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_parent">
+                            <code>u_parent(aNamedElement) : uml::NamedElement</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the direct parent of the specified named element in the UML containment hierarchy. AQL equivalent of eContainer().
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_nearestPackage">
+                            <code>u_nearestPackage(anElement) : uml::Package</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the nearest package that directly or indirectly owns the specified element, by navigating up the containment hierarchy to the first uml::Package ancestor.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_nearestPackage">
+                            <code>u_nearestPackage(aNamedElement) : uml::Package</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the nearest package that directly or indirectly owns the specified named element, by navigating up the containment hierarchy to the first uml::Package ancestor.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_packageQualifiedName">
+                            <code>u_packageQualifiedName(anElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the qualified name of the specified element in the form &#39;package::element&#39;, using the nearest containing package name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_commentBody">
+                            <code>u_commentBody(anElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the body of the first owned comment of the specified element if it exists, trimmed of leading and trailing spaces, or a warning message otherwise.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_shortDocumentation">
+                            <code>u_shortDocumentation(anElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the first 100 characters of the first owned comment body of the specified element, followed by a newline and &#39;...&#39; if truncated. Returns a warning if there are no owned comments.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_onlyDefinition">
+                            <code>u_onlyDefinition(aNamedElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the definition text extracted from the first owned comment of the specified named element: - strips section headings (Definition, Examples, Explanatory notes) - normalises whitespace - escapes curly braces as Unicode literals - truncates to 300 characters if longer Returns a warning string if there are no owned comments.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_path">
+                            <code>u_path(aNamedElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the path of the specified element below the model root, using &#39;/&#39; as the separator between path segments.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_namedElementByName">
+                            <code>u_namedElementByName(aNamedElement, aName) : uml::NamedElement</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a named element that is a direct or indirect child of the specified named element, matched by name. Returns null if not found.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isInAllowedPackage">
+                            <code>u_isInAllowedPackage(aNamedElement) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified named element is a child of the main package and not contained in any ignored package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isNotInIgnoredPackage">
+                            <code>u_isNotInIgnoredPackage(aNamedElement) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified named element is not contained in any package listed in the IGNORE_PACKAGE property (comma-separated list of package names).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isChildOfMainPackage">
+                            <code>u_isChildOfMainPackage(aNamedElement) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the specified named element is a direct or indirect child of the main package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_filePath">
+                            <code>u_filePath(aNamedElement, aTarget) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;. Example: &#39;xsd&#39; → &#39;shortName/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- ═══════════════════════════════════ Template detail -->
+
+        <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_model">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_model
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_model(anElement : uml::Element) : uml::Model = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the root model that owns the specified element, by navigating up the containment hierarchy to the first uml::Model ancestor. AQL equivalent of getModel().</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
+                <dd>- A UML element whose owning model is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Model</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">ancestors()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_model(
+  anElement : uml::Element) : uml::Model =
+  anElement.ancestors(uml::Model)-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_parent">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_parent
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_parent(anElement : uml::Element) : uml::Element = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the direct parent of the specified element in the UML containment hierarchy. AQL equivalent of eContainer().</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
+                <dd>- A UML element whose direct parent is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Element</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">ancestors()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_parent(
+  anElement : uml::Element) : uml::Element =
+  anElement.ancestors(uml::Element)-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_parent">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_parent
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_parent(aNamedElement : uml::NamedElement) : uml::NamedElement = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the direct parent of the specified named element in the UML containment hierarchy. AQL equivalent of eContainer().</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element whose direct parent is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::NamedElement</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">ancestors()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_parent(
+  aNamedElement : uml::NamedElement) : uml::NamedElement =
+  aNamedElement.ancestors(uml::NamedElement)-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_nearestPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_nearestPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_nearestPackage(anElement : uml::Element) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the nearest package that directly or indirectly owns the specified element, by navigating up the containment hierarchy to the first uml::Package ancestor.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
+                <dd>- A UML element whose nearest containing package is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Package</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">ancestors()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_nearestPackage(
+  anElement : uml::Element) : uml::Package =
+  anElement.ancestors(uml::Package)-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_nearestPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_nearestPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_nearestPackage(aNamedElement : uml::NamedElement) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the nearest package that directly or indirectly owns the specified named element, by navigating up the containment hierarchy to the first uml::Package ancestor.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element whose nearest containing package is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Package</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">ancestors()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_nearestPackage(
+  aNamedElement : uml::NamedElement) : uml::Package =
+  aNamedElement.ancestors(uml::Package)-&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_packageQualifiedName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_packageQualifiedName
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_packageQualifiedName(anElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the qualified name of the specified element in the form &#39;package::element&#39;, using the nearest containing package name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element whose package-qualified name is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_nearestPackage">u_nearestPackage</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_packageQualifiedName(
+  anElement : uml::NamedElement) : String =
+  anElement.u_nearestPackage().name + &#39;::&#39; + anElement.name
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_commentBody">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_commentBody
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_commentBody(anElement : uml::Element) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the body of the first owned comment of the specified element if it exists, trimmed of leading and trailing spaces, or a warning message otherwise.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
+                <dd>- A UML element whose first comment body is to be retrieved.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_commentBody(
+  anElement : uml::Element) : String =
+  if anElement.ownedComment-&gt;notEmpty() then
+    anElement.ownedComment-&gt;first().body.trim()
+  else
+    &#39;WARNING: ELEMENT HAS NO DOCUMENTATION!&#39;
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_shortDocumentation">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_shortDocumentation
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_shortDocumentation(anElement : uml::Element) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the first 100 characters of the first owned comment body of the specified element, followed by a newline and &#39;...&#39; if truncated. Returns a warning if there are no owned comments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+        </div>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substring" target="_blank">substring()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_shortDocumentation(
+  anElement : uml::Element) : String =
+  let d : String = anElement.u_commentBody() in
+  if d = &#39;&#39; then
+    &#39;WARNING: element has no documentation&#39;
+  else if d.size() &gt; 100 then
+    d.substring(1, 100) + &#39;\n...&#39;
+  else
+    d
+  endif
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_onlyDefinition">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_onlyDefinition
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_onlyDefinition(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the definition text extracted from the first owned comment of the specified named element: - strips section headings (Definition, Examples, Explanatory notes) - normalises whitespace - escapes curly braces as Unicode literals - truncates to 300 characters if longer Returns a warning string if there are no owned comments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+        </div>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substring" target="_blank">substring()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_onlyDefinition(
+  aNamedElement : uml::NamedElement) : String =
+  let s : String =
+    aNamedElement.u_commentBody()
+      .replace(&#39;Explanatory notes[\\s\\S\\&quot;=]+&#39;, &#39;&#39;)
+      .replace(&#39;Examples[\\s\\S\\&quot;=]+&#39;, &#39;&#39;)
+      .replace(&#39;Definition[\\s\\S]+?[\\&quot;=]+\\s+&#39;, &#39;&#39;)
+      .replaceAll(&#39;[\\s\\n\\r]+&#39;, &#39; &#39;)
+      .replaceAll(&#39;\\{&#39;, &#39;&lt;U+007B&gt;&#39;)
+      .replaceAll(&#39;\\}&#39;, &#39;&lt;U+007D&gt;&#39;)
+      .trim()
+  in
+  if s.size() &gt; 300 then
+    s.substring(1, 300).trim().concat(&#39; ...&#39;)
+  else
+    s
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_path">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_path
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_path(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the path of the specified element below the model root, using &#39;/&#39; as the separator between path segments.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_path(
+  aNamedElement : uml::NamedElement) : String =
+  let modelPrefix : String = aNamedElement.u_model().name.concat(&#39;::&#39;) in
+  aNamedElement.qualifiedName
+    .replace(modelPrefix, &#39;&#39;)
+    .replaceAll(&#39;::&#39;, &#39;/&#39;)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_namedElementByName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_namedElementByName
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_namedElementByName(aNamedElement : uml::NamedElement, aName : String) : uml::NamedElement = ...]</code>
+            </div>
+
+
+            <div class="description">Returns a named element that is a direct or indirect child of the specified named element, matched by name. Returns null if not found.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element used as search root.</dd>
+                <dt><code>aName</code> <span class="param-type">: String</span></dt>
+                <dd>- The name to search for.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::NamedElement</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_namedElementByName(
+  aNamedElement : uml::NamedElement,
+  aName : String) : uml::NamedElement =
+  aNamedElement.eAllContents(uml::NamedElement)
+    -&gt;select(n | n.name = aName)
+    -&gt;first()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isInAllowedPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isInAllowedPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isInAllowedPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is a child of the main package and not contained in any ignored package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_isNotInIgnoredPackage">u_isNotInIgnoredPackage</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isInAllowedPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  aNamedElement &lt;&gt; null
+  and aNamedElement.u_model()
+    .u_mainPackage()
+    .eAllContents(uml::NamedElement)
+    -&gt;includes(aNamedElement)
+  and aNamedElement.u_isNotInIgnoredPackage()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isNotInIgnoredPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isNotInIgnoredPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isNotInIgnoredPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is not contained in any package listed in the IGNORE_PACKAGE property (comma-separated list of package names).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_namedElementByName">u_namedElementByName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substituteall" target="_blank">substituteAll()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isNotInIgnoredPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  &#39;IGNORE_PACKAGE&#39;.getPropertyValue()
+    .substituteAll(&#39; &#39;, &#39;&#39;)
+    .tokenize(&#39;,&#39;)
+    -&gt;collect(p | aNamedElement.u_model().u_namedElementByName(p))
+    -&gt;excludes(aNamedElement)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isChildOfMainPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isChildOfMainPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isChildOfMainPackage(aNamedElement : uml::NamedElement) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the specified named element is a direct or indirect child of the main package.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isChildOfMainPackage(
+  aNamedElement : uml::NamedElement) : Boolean =
+  let mainPkg : uml::Package = aNamedElement.u_model().u_mainPackage() in
+  mainPkg.eAllContents(uml::NamedElement)-&gt;includes(aNamedElement)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_filePath">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_filePath
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_filePath(aNamedElement : uml::NamedElement, aTarget : String) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;. Example: &#39;xsd&#39; → &#39;shortName/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element.</dd>
+                <dt><code>aTarget</code> <span class="param-type">: String</span></dt>
+                <dd>- The generation target format identifier (e.g. &#39;xsd&#39;, &#39;doc&#39;).</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="oldModelQuery.html#e_modelShortName">e_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_filePath(
+  aNamedElement : uml::NamedElement,
+  aTarget : String) : String =
+  let root : String = aNamedElement.u_model().e_modelShortName()
+    + &#39;/&#39; + aTarget + &#39;/&#39;
+  in
+  let path : String =
+    aNamedElement.qualifiedName.replaceAll(&#39;::&#39;, &#39;/&#39;)
+  in
+  if aTarget = &#39;doc&#39; then
+    root + path.replace(aNamedElement.u_model().name, &#39;_rst&#39;)
+  else
+    root + path
+  endif
+/]</code></pre>
+    </details>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: cross-reference sections
+     Renders categorised call references extracted from the AST.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     Macro: source code dropdown
+     Uses native HTML <details>/<summary> — no JavaScript needed.
+     ═══════════════════════════════════════════════════════════ -->
+
+<script src="lunr.min.js"></script>
+<script src="search.js"></script>
+</body>
+</html>
