@@ -15,6 +15,7 @@
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::xsd::classXsd/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
 
 [template public processModelTest(aModel : uml::Model)]
@@ -30,18 +31,29 @@
 
 
     #######################
-    ownedComment	[aModel.ownedComment/]
+[comment]     ownedComment	[aModel.ownedComment/]
     ownedComment->first()	[aModel.ownedComment->first()/]
     ownedComment->first() 2
    	[aModel.ownedComment->first()/]
     ownedComment->first().body	[aModel.ownedComment->first().body/]
     ownedComment->first().body.trim()[aModel.ownedComment->first().body.trim()/]
     xsd_documentation
-    [aModel.u_commentBody().xsd_documentation()/]
-    [comment]     ['<xs:documentation>'+aModel.u_commentBody()+'</xs:documentation>'/] [/comment]
+    	[aModel.u_commentBody().xsd_documentation().replaceAll('[ ]{2}', '')/]
+[/comment]    [comment]     ['<xs:documentation>'+aModel.u_commentBody()+'</xs:documentation>'/] [/comment]
+    'MAIN_PACKAGE_NAME'.getPropertyValue(): ['MAIN_PACKAGE_NAME'.getPropertyValue()/]
+    u_mainPackage: [aModel.u_mainPackage().name/]
+
+    <xs:documentation>
+
+[aModel.u_commentBody()/]
     
+    </xs:documentation>   
 
     #######################
+[let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
+	[c.classXsd()/]
+[/let]
+				#######################
     subset name ['subset.name'.getPropertyValue()/]
 			[for (s : String | aModel.u_subsetClasses()->sortedBy(c | c))]
     		subset class [s/]
