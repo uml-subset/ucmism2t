@@ -1,0 +1,20 @@
+[**
+ * The documentation of the module indices.
+ */]
+[module aboutModelDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::doc::inheritanceTreeDiagramDocFile/]
+[import ucmism2t::templates::target::doc::puUtilityDoc/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+[**
+*/]
+[template public aboutModel(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/about/model/index.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    [aModel.u_commentBody()/]
+  [/file]
+[/template]

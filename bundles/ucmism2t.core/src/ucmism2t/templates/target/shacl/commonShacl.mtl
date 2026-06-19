@@ -1,0 +1,65 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module commonShacl(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::propertyQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[template public subClassesShapes(aClass : uml::Class)]
+  [let scs : OrderedSet(uml::Class) = aClass.u_subClasses()]
+    [if (scs->isEmpty())]
+      [aClass.fragment()/]
+    [else]
+      ['['/] sh:or ( [aClass.fragment()/]
+          [scs->asSequence()->collect(sc | sc.fragment())->sep(' ')/]
+      )]
+    [/if]
+  [/let]
+[/template]
+
+[template public allSubClasses(aClass : uml::Class)]
+    [aClass.iri()/]
+  [for (sc : uml::Class | aClass.u_subClasses())][sc.allSubClasses()/][/for][/template]
+
+[template public subDatatypesShapes(aDataType : uml::Type)]
+  [let sds : OrderedSet(uml::DataType) = aDataType.eInverse(uml::DataType)->sortedBy(temp1 | temp1.name)]
+    [if (sds->isEmpty())]
+      [aDataType.fragment()/]
+    [else]
+      ['['/] sh:or ( [aDataType.fragment()/]
+          [sds->asSequence()->collect(sd | sd.fragment())->sep(' ')/]
+      )]
+    [/if]
+  [/let]
+[/template]
+
+[template public allSubDataTypes(aDataType : uml::Type)]
+    [aDataType.iri()/]
+  [for (sc : uml::DataType | aDataType.eInverse(uml::DataType)->sortedBy(temp2 | temp2.name))][sc.allSubDataTypes()/][/for][/template]
+
+[template public attributeShape(anAttribute : uml::Property)]
+  [anAttribute.fragment()/] a sh:PropertyShape ;
+      sh:path [anAttribute.iri()/];
+  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))]
+        sh:datatype [anAttribute.type.iri()/];
+  [elseif (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
+        sh:node [anAttribute.type.subDatatypesShapes()/];
+  [else]
+        sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
+          [anAttribute.type.allSubDataTypes()/]
+        ) ]];
+  [/if]
+  [if (anAttribute.lower > 0)]
+        sh:minCount [anAttribute.lower/];
+  [/if]
+  [if (not anAttribute.upper.u_isUnlimited())]
+        sh:maxCount [anAttribute.upper/];
+  [/if]
+  .[/template]

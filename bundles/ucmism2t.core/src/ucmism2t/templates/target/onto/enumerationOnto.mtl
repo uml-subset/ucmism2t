@@ -1,0 +1,33 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module enumerationOnto(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::onto::commonOnto/]
+
+[comment encoding = UTF-8 /]
+[template public enumerationOnto(anEnumeration : uml::Enumeration)]
+  # enumeration [anEnumeration.name/]
+  # based on the UML enumeration [anEnumeration.qualifiedName/]
+  [anEnumeration.iri()/]
+    a rdfs:Class, owl:Class, ucmis:Enumeration;
+    rdfs:label "[anEnumeration.name/]";
+    [anEnumeration.rdfs_comment()/]
+    [anEnumeration.pac_superDataTypes()/]
+  .
+  
+  [for (aLiteral : uml::EnumerationLiteral | anEnumeration.ownedLiteral)]
+    [aLiteral.iri()/]
+      a [anEnumeration.iri()/];
+      rdfs:label "[aLiteral.name/]";
+      [aLiteral.rdfs_comment()/]
+    .
+    
+  [/for]
+[/template]

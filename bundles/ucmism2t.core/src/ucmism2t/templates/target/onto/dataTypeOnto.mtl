@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[**
+Module contains templates for .
+/]
+[module dataTypeOnto(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::templates::target::onto::commonOnto/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[comment encoding = UTF-8 /]
+[template public dataTypeOnto(aDataType : uml::DataType)]
+  # datatype [aDataType.name/]
+  # based on the UML data type [aDataType.qualifiedName/]
+  [aDataType.iri()/]
+    a rdfs:Class, owl:Class, ucmis:StructuredDataType;
+    rdfs:label "[aDataType.name/]";
+    [aDataType.rdfs_comment()/]
+    [aDataType.pac_superDataTypes()/]
+    owl:hasKey ([aDataType.u_attributes()->collect(p | p.iri())->sep(' ')/]);
+  .
+  
+  [for (anAttribute : uml::Property | aDataType.u_attributes())]
+    [anAttribute.attributeOnto()/]
+  [/for]
+[/template]

@@ -1,0 +1,106 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module classXsd(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::templates::target::xsd::commonXsd/]
+[import ucmism2t::templates::target::xsd::dataTypeXsd/]
+
+[**
+ * Generates XML Schema code for a class.
+ * @param aClass
+*/]
+[template public classXsd(aClass : uml::Class)]
+  <xs:element name="[aClass.name/]"
+              type="[aClass.name/]XsdType"
+              xml:id="[aClass.name/]">
+    <!-- based on the UML class [aClass.qualifiedName/] -->
+    <xs:annotation>
+['  X1<xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="[aClass.name/]XsdType"
+                  xml:id="[aClass.name/]XsdType">
+    <xs:annotation>
+['  X2<xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+    [if (aClass.u_allSuperClasses()->notEmpty())]
+      <xs:complexContent>
+        <xs:extension base="[aClass.u_allSuperClasses()->first().name/]XsdType">
+          [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
+            [aClass.propertyXsd()/]
+          [/if]
+        </xs:extension>
+      </xs:complexContent>
+    [else]
+      [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
+        [aClass.propertyXsd()/]
+      [/if]
+    [/if]
+  </xs:complexType>
+[/template]
+
+[**
+ * Generates XML Schema code for each attribute and association
+ * @param aClass
+*/]
+[comment ith multiplicity control/]
+[template public propertyXsd(aClass : uml::Class)]
+  <xs:sequence>
+    [for (anAttribute : uml::Property | aClass.u_attributes())]
+      <xs:element name="[anAttribute.name/]"
+                  type="[anAttribute.type.xsd_typeName()/]"
+                  minOccurs="[anAttribute.lower/]"
+                  maxOccurs="[anAttribute.xsd_upperCardinality()/]"
+                  xml:id="[aClass.name.concat('-').concat(anAttribute.name)/]">
+        <xs:annotation>
+['  X3<xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    [/for]
+    [for (aProperty : uml::Property | aClass.u_associationEndProperties())]
+      [let sourceClass : uml::Property = aProperty.association.ownedEnd->first()]
+        [let targetClass : uml::Property = sourceClass.getOtherEnd()]
+          <xs:element name="[aProperty.association.name/]"
+                      minOccurs="[targetClass.lower/]"
+                      maxOccurs="[targetClass.xsd_upperCardinality()/]"
+                      xml:id="[aProperty.association.name/]">
+            <xs:annotation>
+['  X4<xs:documentation>' + aProperty.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:restriction base="AssociationReferenceXsdType">
+                  <xs:sequence>
+                    <xs:element name="ddiReference"
+                                type="InternationalRegistrationDataIdentifierXsdType"
+                                minOccurs="0"
+                                maxOccurs="1"
+                                xml:id="[aProperty.association.name + '-ddiReference'/]"/>
+                    <xs:element name="validType"
+                                minOccurs="[sourceClass.lower/]"
+                                maxOccurs="[sourceClass.xsd_upperCardinality()/]"
+                                xml:id="[aProperty.association.name + '-validType'/]">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:NMTOKEN">
+                          [targetClass.type.xsd_referenceClass()/]
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:restriction>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        [/let]
+      [/let]
+    [/for]
+  </xs:sequence>
+[/template]

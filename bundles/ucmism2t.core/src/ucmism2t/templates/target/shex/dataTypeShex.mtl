@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module dataTypeShex(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::templates::target::shex::commonShex/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[template public dataTypeShex(aDataType : uml::DataType)]
+  # datatype [aDataType.name/]
+  # based on the UML data type [aDataType.qualifiedName/]
+  [aDataType.iri()/]Shape CLOSED {
+  	a ['['/][aDataType.iri()/]];
+  [if (aDataType.u_isGeneralDataType() and not aDataType.u_attributes()->isEmpty())]
+    	$[aDataType.iri()/]Properties (
+  [/if]
+  [for (anAttribute : uml::Property | aDataType.u_attributes())]
+    	[anAttribute.attributeShex()/]
+  [/for]
+  	[aDataType.pac_superDataTypes()/][if (aDataType.u_isGeneralDataType() and not aDataType.u_attributes()->isEmpty())]
+                                      	);
+                                    [/if]
+  }
+[/template]

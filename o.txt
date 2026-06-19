@@ -1,0 +1,7 @@
+./bundles/ucmism2t.cli/target
+./bundles/ucmism2t.core/src/ucmism2t/templates/target
+./bundles/ucmism2t.core/target
+./bundles/ucmism2t.core/target/classes/ucmism2t/templates/target
+./features/ucmism2t.feature/target
+./releng/ucmism2t.product/target
+./repository/ucmism2t.repository/target

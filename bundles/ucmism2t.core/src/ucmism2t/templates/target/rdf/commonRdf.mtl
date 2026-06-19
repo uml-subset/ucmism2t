@@ -1,0 +1,191 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module commonRdf(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::eobjectQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+
+[template public Ottl_prefixes(x : uml::NamedElement)]
+  PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX owl:   <http://www.w3.org/2002/07/owl#>
+  PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+  PREFIX dc:    <http://purl.org/dc/elements/1.1/>
+  PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:   <['RDF_NS'.getPropertyValue()/]>
+  PREFIX ucmis: <http://ddialliance.org/Specification/UCMIS/1.0/RDF>
+[/template]
+
+[**
+ Emits the standard Turtle prefix declarations used across all
+ generated TTL files, including the dynamic RDF prefix and namespace
+ drawn from generator properties, and the fixed UCMIS namespace.
+
+ @param anEObject - A model element (used as receiver only; content is static).
+/]
+[template public ttl_prefixes(anEObject : ecore::EObject) post(self.trim())]
+  PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX owl:   <http://www.w3.org/2002/07/owl#>
+  PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
+  PREFIX dc:    <http://purl.org/dc/elements/1.1/>
+  PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
+  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:  <['RDF_NS'.getPropertyValue()/]>
+  PREFIX ucmis: <http://ddialliance.org/Specification/UCMIS/1.0/RDF>
+[/template]
+
+[**
+ * Compute the IRI for a given element.
+ * NB: I was not able to retrieve the xmi:uuid, so I rebuild an IRI here.
+ * This may need to be adapted.
+ * TODO: maybe this should be a query rather than a template? (no need to post-process...
+ * Current version uses short id
+ * Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and
+ * iri2.
+*/]
+[template public iri(x : uml::NamedElement) post(self.cdiAdHoc())]
+  [if (x.ancestors()->notEmpty())]
+    [if (x.oclIsTypeOf(uml::Property))]
+      		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+    [else]
+      	    [x.name/]
+    [/if]
+  [else]
+    	[x.builtinIri()/]
+  [/if]
+[/template]
+
+[comment] NOT USED
+[template public iri1(x : ecore::EObject) post(self.cdiAdHoc())]
+  [if (x.ancestors()->notEmpty())]
+      [x.getXmiId()/]
+  [else][x.builtinIri()/][/if][/template]
+[/comment]
+
+[comment] NOT USED
+[template public iri2(x : ecore::EObject) post(self.cdiAdHoc())]
+  [if (x.ancestors()->notEmpty())]
+    [let aSize : Integer = x.ancestors()->size()]
+          m:[x.ancestors()->reverse()->subSequence(2, aSize)->append(x)->collect(x | x.eGet('name'))->sep('-')/]
+    [/let]
+  [else][x.builtinIri()/][/if][/template]
+[/comment]
+[**
+ * Creates a local fragment IRI named after x.
+*/]
+[template public fragment(x : uml::NamedElement) post(self.noWhitespace())]
+  <#[if (x.ancestors()->notEmpty())]
+      [if (x.oclIsTypeOf(uml::Property))]
+        		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+      [else]
+        	    [x.name/]
+      [/if]
+    [else]
+      	[x.builtinIri()/]
+    [/if]
+  >[/template]
+
+[**
+ * Creates a local fragment IRI named after x.
+*/]
+[template public fragmentRev(x : uml::NamedElement) post(self.noWhitespace())]
+  <#rev_[if (x.ancestors()->notEmpty())]
+          [if (x.oclIsTypeOf(uml::Property))]
+            		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+          [else]
+            	    [x.name/]
+          [/if]
+        [else]
+          	[x.builtinIri()/]
+        [/if]
+  >[/template]
+
+[**
+ * Return the IRI of a builtin primitive datatype
+ * TODO it would probably be better to fail with an error message here
+*/]
+[query public builtinIri(x : ecore::EObject) : String = x.toString().substring(x.toString().index('#') + 1).substitute(')', '')/]
+
+[query public builtinIri2(x : ecore::EObject) : String = let typeName : String = x.toString().substring(x.toString().index('#') + 1).substitute(')', '') in if typeName = 'String' then 'xsd:string' else if typeName = 'Boolean' then 'xsd:boolean' else if typeName = 'Integer' then 'xsd:integer' else if typeName = 'Real' then 'xsd:double' else if typeName = 'UnlimitedNatural' then 'xsd:nonNegativeInteger' else 'm:DEBUG-BUITIN-TYPE:'.concat(typeName) endif endif endif endif endif/]
+
+[comment    else if typeName = 'UnlimitedNatural' then 'xsd:double'/]
+
+[**
+Converts a UML comment into an RDFS comment.
+@param Any UML Element
+/]
+[template public rdfs_comment(anNamedElement : uml::NamedElement)]
+  rdfs:comment "[anNamedElement.u_commentBody().ttlEscape()/]"@[anNamedElement.u_model().e_modelLanguage()/];
+[/template]
+[comment] Acceleo 3.7 version
+[template public rdfs_comment(comments : OrderedSet(uml::Comment))]
+  [if (comments->notEmpty())]rdfs:comment "[comments->asSequence()->collect(temp1 | temp1.body)->collect(temp2 | temp2.trim())->collect(temp3 | temp3.ttlEscape())/]"@[comments->asSequence()->collect(temp4 | temp4.u_model())->collect(temp5 | temp5.e_modelLanguage())/];[/if][/template]
+[/comment]
+[template public noWhitespace(txt : String)]
+  [txt.replaceAll('\\s+', '')/][/template]
+
+[**
+ * Ensure that the IRI is valid and Turtle friendly.
+ * TODO: at the moment, the 'valid' part is not really checked,
+ * and the 'turtle friendly' part is managed in a very ad-hoc way
+*/]
+[template public iriEscape(txt : String) post(self.noWhitespace())]
+  [let trimmed : String = txt.trim()]
+    [if (trimmed.endsWith('.'))][trimmed/]-[else][trimmed/][/if]
+  [/let]
+[/template]
+
+[**
+ * TODO As its name imply, this method is specific to CDI.
+ * Ultimately, what it does should be generically supported by using UML traces,
+ * then it must be removed and its uses replaced with iriEscape.
+ * JW: Is it specific to CDI or to UCMIS?
+*/]
+[template public cdiAdHoc(txt : String) post(self.noWhitespace())]
+  [let iri : String = txt.iriEscape()]
+    [if (txt.u_mappedUcmisItemsRdf()->indexOf(iri) = 0)]
+      		['RDF_PREFIX'.getPropertyValue()/]:[iri/]
+    [else]
+      		[txt.u_mappedUcmisItemsRdfTargets()->at(txt.u_mappedUcmisItemsRdf()->indexOf(iri))/]
+    [/if]
+  [/let]
+[/template]
+
+[comment JW: not used /]
+[comment] [template public cdiAdHoc2(txt : String) post(self.noWhitespace())]
+  [let iri : String = txt.iriEscape()]
+    [if (iri.endsWith(':XsdAnyUri'))]
+       xsd:anyURI
+    [elseif (iri.endsWith(':XsdDate'))]
+      xsd:date
+    [elseif (iri.endsWith(':XsdLanguage'))]
+      xsd:language
+    [elseif (iri.endsWith(':LanguageString'))]
+      rdf:langString
+    [elseif (iri.endsWith(':CatalogDetails-creator'))]
+      dc:creator
+    [else]
+      [iri/]
+    [/if]
+  [/let]
+[/template]
+[/comment]
+[template public ttlEscape(txt : String)]
+  [txt.replaceAll('\\\\', '\\\\\\\\').replaceAll('\\n', '\\\\n').replaceAll('"', '\\\\"')/][/template]
+
+[query public shortName(anAssociation : uml::Association) : String = if anAssociation.name.tokenize('_')->size() < 3 then anAssociation.name else if 'DDI-CDI'.isPropertyTrue() and 'ddi-cdi_ambiguous_assoc_names'.getPropertyValue().substituteAll(' ', '').tokenize(',')->asSet()->count(anAssociation.name.tokenize('_')->at(2)) = 0 then anAssociation.name.tokenize('_')->at(2) else anAssociation.name.tokenize('_')->at(2).concat('_').concat(anAssociation.name.tokenize('_')->at(3)) endif endif/]
+
+[query public isComplex(aType : uml::Type) : Boolean = not aType.oclIsTypeOf(uml::Enumeration) and not aType.oclIsTypeOf(uml::PrimitiveType)/]
+
+[comment JW: Is it specific to CDI or to UCMIS? /]
+[query public isNotInMappedItems(aClassifier : uml::Classifier) : Boolean =
+	aClassifier.u_mappedUcmisItemsRdf()->indexOf(aClassifier.name) = 0
+/]

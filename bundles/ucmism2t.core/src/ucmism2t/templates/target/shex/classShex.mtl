@@ -1,0 +1,35 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module classShex(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::shex::associationShex/]
+[import ucmism2t::templates::target::shex::commonShex/]
+
+[template public classShex(aClass : uml::Class)]
+  # class [aClass.name/]
+  # based on the UML class [aClass.qualifiedName/]
+  [aClass.iri()/]Shape CLOSED {
+  	a ['['/][aClass.iri()/]];
+  [if (aClass.u_isSuperClass())]
+    	$[aClass.iri()/]Properties (
+  [/if]
+  [for (anAttribute : uml::Property | aClass.u_attributes())]
+    	[anAttribute.attributeShex()/]
+  [/for]
+  [for (anAssociation : uml::Association | aClass.u_associations())]
+    	[anAssociation.associationShex(aClass)/]
+  [/for]
+  	[aClass.superClasses()/][if (aClass.u_isSuperClass())]
+                             	);
+                           [/if]
+  }
+[/template]

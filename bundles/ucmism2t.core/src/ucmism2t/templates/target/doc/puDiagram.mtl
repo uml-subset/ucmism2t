@@ -1,0 +1,138 @@
+[comment encoding = UTF-8 /]
+
+[**
+Module contains templates for generating the PlantUml code for UML diagrams.
+/]
+[module puDiagram(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::classifierQuery/]
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::propertyQuery/]
+[import ucmism2t::queries::stringQuery/]
+[import ucmism2t::queries::typeQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::doc::puUtilityDoc/]
+
+[template public pu_itemDefinition(item : uml::Classifier, attributes : String,
+	multiplicity : Boolean, packageName : String, color : String, fontColor : String) post(self.u_removeEmptyLines())]
+  [if (item.oclIsKindOf(uml::DataType))]
+    ' Data type definition
+  [/if]
+  [if (item.isAbstract)]abstract [/if]class [item.qualifiedName/] as \
+    "<size:12>[if (packageName <> 'none')]<color:[fontColor/]>[item.package.name/]::[/if]\n<u><color:[fontColor/]><size:17>[item.name/]" \
+    [if (item.oclIsKindOf(uml::DataType))][item.oclAsType(uml::DataType).pu_dataTypeNotation()/] \[/if]
+    [item.pu_internalLink()/] \
+    [color/]
+  [if (attributes <> 'none' and item.u_attributes()->size() > 0)]
+      {
+    [for (anAttribute : uml::Property | item.u_attributes())]
+          <color:[fontColor/]>[anAttribute.name/] : [if (not(anAttribute.type.oclIsTypeOf(uml::PrimitiveType)))]<u>[/if][anAttribute.type.name/][if (multiplicity)]<plain> ['['/][anAttribute.u_docMultiplicity()/]][/if][if (not(anAttribute.type.oclIsTypeOf(uml::PrimitiveType)))] \
+						[anAttribute.type.pu_internalLinkType()/][/if]
+      
+    [/for]
+      }[/if]
+[/template]
+
+[**
+ * Defines associated classes (in Plantuml code) of the specified class.
+ * @param aClassifier An object of type Classifier, only Class is allowed.
+*/]
+[template public pu_linksItemDefinition(aClassifier : uml::Classifier, associatedClasses : OrderedSet(uml::Class), attributes : String, multiplicity : Boolean, packageName : String, color : String, fontColor : String, mainLevel : Boolean)]
+  [if (aClassifier.oclIsTypeOf(uml::Class))]
+	  [let aClass : uml::Class = aClassifier.oclAsType(uml::Class)]
+	    [if (associatedClasses->size() > 1)]
+	      ' Definition of associated classes of class [aClassifier.name/]
+	      [for (anAssociatedClass : uml::Class | associatedClasses)]
+	          [anAssociatedClass.pu_itemDefinition(attributes, multiplicity, packageName, color, fontColor)/]
+	      [/for]
+	      ' Definition of associations of class [aClassifier.name/]
+	      [let arrowType : String = if mainLevel then '--' else '-r-' endif]
+	        [for (anAssociatedClass : uml::Class | associatedClasses)]
+	          [for (anAssociation : uml::Association | anAssociatedClass.u_associations()->select(a | a.u_ownedEndClass() = aClass or a.u_otherEndClass() = aClass))]
+	            [if (aClass <> anAssociation.u_ownedEndClass())]
+	              [aClass.qualifiedName/] <[arrowType/][anAssociation.u_ownedEnd().aggregation.pu_aggregationKind()/] [anAssociation.u_ownedEndClass().qualifiedName/] \
+	                ['#'.pu_link('     ' + anAssociation.u_shortAssociationName() + ':\\n' + anAssociation.u_onlyDefinition())/] \
+	                : [anAssociation.u_shortAssociationName()/]
+	            [elseif (aClass <> anAssociation.u_otherEndClass())]
+	              [aClass.qualifiedName/] [anAssociation.u_otherEnd().aggregation.pu_aggregationKind()/][arrowType/]> [anAssociation.u_otherEndClass().qualifiedName/] \
+	                ['#'.pu_link('     ' + anAssociation.u_shortAssociationName() + ':\\n' + anAssociation.u_onlyDefinition())/] \
+	                : [anAssociation.u_shortAssociationName()/]
+	            [/if]
+	          [/for]
+	        [/for]
+	      [/let]
+	    [/if]
+	  [/let]
+  [/if]
+[/template]
+
+[**
+ * Defines classes and data types (in Plantuml code) that use the specified data type.
+ * @param aClassifier An object of type Classifier, only DataType is allowed.
+*/]
+[template public pu_linksItemDefinition(aClassifier : uml::Classifier, attributes : String, multiplicity : Boolean, packageName : String, color : String, fontColor : String)]
+  [if (aClassifier.oclIsKindOf(uml::DataType))]
+		  ' Definition of classes using the data type [aClassifier.name/]
+		  together {
+		  [for (aClass : uml::Class | aClassifier.oclAsType(uml::DataType).u_usingClasses())]
+		      [aClass.pu_itemDefinition(attributes, multiplicity, packageName, 'diagram.dataTypes.color'.getPropertyValue(), 'diagram.dataTypes.fontColor'.getPropertyValue())/]
+		  [/for]
+		  }
+		  
+		  ' Definition of data types using the data type [aClassifier.name/]
+		  together {
+		  [for (aDataType : uml::DataType | aClassifier.oclAsType(uml::DataType).u_usingDataTypes())]
+		      [aDataType.pu_itemDefinition(attributes, multiplicity, packageName, 'diagram.dataTypes.color'.getPropertyValue(), 'diagram.dataTypes.fontColor'.getPropertyValue())/]
+		  [/for]
+		  }
+		  ' Definition of using connections of the data type [aClassifier.name/]
+		  [for (anAttribute : uml::Property | aClassifier.oclAsType(uml::DataType).u_usingProperties())]
+		    [aClassifier.qualifiedName/] -['['/]dotted]- [anAttribute.qualifiedName/]
+		  [/for]
+	[/if]
+[/template]
+
+[template public pu_superClassifier(anItem : uml::Classifier, mainItem : uml::Classifier, attributes : String, multiplicity : Boolean, packageName : String)]
+  [for (aSuperItem : uml::Classifier | anItem.general)]
+    [if (aSuperItem.oclIsTypeOf(uml::Class))]
+      ' Definition of super item
+      [if (mainItem.oclAsType(uml::Class).u_associatedClasses()->excludes(aSuperItem))]
+        [aSuperItem.pu_itemDefinition(attributes, multiplicity, packageName, 'diagram.mainItemGeneral.color'.getPropertyValue(), 'diagram.mainItemGeneral.fontColor'.getPropertyValue())/]
+      [/if]
+      ' Definition of generalization
+      [aSuperItem.qualifiedName/] <|-['['/]['diagram.inheritancePath.color'.getPropertyValue()/]]- [anItem.qualifiedName/]
+      [let associatedClasses : OrderedSet(uml::Class) = aSuperItem.oclAsType(uml::Class).u_associatedClasses()->excluding(anItem)->excluding(mainItem)->asOrderedSet()]
+        [let upper : Integer = if associatedClasses->size() > 3 then 3 else associatedClasses->size() endif]
+          [if (associatedClasses->size() > 0)]
+            [if (associatedClasses->size() > 3)]
+              note left of [aSuperItem.qualifiedName/] : Class has [associatedClasses->size()/] associations.\nOnly [upper/] are shown here.
+            [/if]
+            [aSuperItem.pu_linksItemDefinition(associatedClasses->subOrderedSet(1, upper), attributes, multiplicity, packageName, 'diagram.mainItemContext.color'.getPropertyValue(), 'diagram.mainItemContext.fontColor'.getPropertyValue(), false)/]
+          [/if]
+        [/let]
+      [/let]
+      [aSuperItem.pu_superClassifier(mainItem, attributes, multiplicity, packageName)/]
+    [/if]
+  [/for]
+[/template]
+
+[template public pu_subClassifier(aClassifier : uml::Classifier, attributes : String, multiplicity : Boolean, packageName : String)]
+  [if (aClassifier.oclIsTypeOf(uml::Class) or aClassifier.oclIsKindOf(uml::DataType))]
+		  ' Sub classifiers
+		  [for (subClassifier : uml::Classifier | aClassifier.u_subClassesOrSubDataTypes())]
+		    [subClassifier.pu_itemDefinition(attributes, multiplicity, packageName, 'diagram.mainItemContext.color'.getPropertyValue(), 'diagram.mainItemContext.fontColor'.getPropertyValue())/]
+		    [aClassifier.qualifiedName/] <|--['['/]['diagram.inheritancePath.color'.getPropertyValue()/]]- [subClassifier.qualifiedName/] 
+		    [if (aClassifier.u_subClassesOrSubDataTypes()->notEmpty())]
+		      [subClassifier.pu_subClassifier(attributes, multiplicity, packageName)/]
+		    [/if]
+		  [/for]
+  [/if]
+[/template]

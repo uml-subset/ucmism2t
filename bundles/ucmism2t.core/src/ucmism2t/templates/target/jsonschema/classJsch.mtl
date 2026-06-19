@@ -1,0 +1,144 @@
+[comment encoding = UTF-8 /]
+[**
+Module contains templates for JSON Schema.
+/]
+[module classJsch(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::target::jsonschema::commonJsch/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[**
+ * Generates JSON-Schema code for a class.
+ * @param aClass
+*/]
+[template public classJsch(aClass : uml::Class) post(self.trim())]
+  "cls-[aClass.name/]": {
+    "description": "['RDF_NS'.getPropertyValue()/][aClass.name/]",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "$ref": "#/defs/at-context"
+      },
+      "@id": {
+        "type": "string",
+        "format": "iri-reference"
+      },
+      "@type": {
+        "const": "[aClass.name/]"
+      },
+      [aClass.genClassAttributes()/]
+      [aClass.genAssociations(OrderedSet{})/]
+      [aClass.genReverseAssociations()/]
+      "sameAs": {
+        "$ref": "#/defs/owl:sameAs"
+      }
+    },
+    "required": ['['/][aClass.requiredClassAttributes()/][aClass.requiredAssociations()/]"@type"],
+    "additionalProperties": false
+  },
+  "target-[aClass.name/]": {
+    "description": "all subclasses of ['RDF_NS'.getPropertyValue()/][aClass.name/]",
+    "anyOf": ['['/]
+      { "$ref": "#/defs/cls-[aClass.name/]" },
+  [for (sc : uml::Class | aClass.u_subClasses())]
+        { "$ref": "#/defs/cls-[sc.name/]" },
+  [/for]
+      { "type": "string", "format": "iri-reference" }
+    ]
+  },[/template]
+
+[template protected genClassAttributes(aClass : uml::Class) post(self.trim())]
+  [aClass.genAttributes()/]
+  [if (not aClass.superClass->isEmpty())]
+    [aClass.superClass->asSequence()->collect(temp1 | temp1.genClassAttributes())/]
+  [/if]
+[/template]
+
+[**
+ * Generate the "properties" entries for all associations of aClass and its superclass.
+ * In order to prevent duplicate keys, 'seen' is expected to contain all the keys already used.
+ * This is useful when a subclass specializes the constrains on an inherited association.
+*/]
+[template protected genAssociations(aClass : uml::Class, seen : OrderedSet(String)) post(self.trim())]
+  [let associations : OrderedSet(uml::Association) = aClass.u_associations()->select(a | a.u_ownedEndClass() = aClass)]
+    [for (anAssociation : uml::Association | associations->select(anAssociation | seen->excludes(anAssociation.name)))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd->first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          "[anAssociation.shortName()/]": {
+            "description": "[anAssociation.name/]",
+            "$comment": "cardinality [targetEnd.lowerBound()/]..[targetEnd.upperBound()/]",
+          [if (targetEnd.upperBound() = 1)]
+               "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+          [else]
+              "anyOf": ['['/]
+                {
+                  "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+                  }
+                }
+              ]
+          [/if]
+          },
+        [/let]
+      [/let]
+    [/for]
+    [if (not aClass.superClass->isEmpty())]
+      [aClass.superClass->asSequence()->collect(temp2 | temp2.genAssociations(seen + associations->asSequence()->collect(a | a.shortName())))/]
+    [/if]
+  [/let]
+[/template]
+
+[template protected genReverseAssociations(aClass : uml::Class) post(self.trim())]
+  [for (anAssociation : uml::Association | aClass.u_associations()->select(anAssociation | anAssociation.u_otherEndClass() = aClass))]
+    [let sourceEnd : uml::Property = anAssociation.ownedEnd->first()]
+      "[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]": {
+        "description": "[anAssociation.name/]",
+        "$comment": "cardinality [sourceEnd.lowerBound()/]..[sourceEnd.upperBound()/]",
+      [if (sourceEnd.upperBound() = 1)]
+          "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+      [else]
+          "anyOf": ['['/]
+            {
+              "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+              }
+            }
+          ]
+      [/if]
+      },
+    [/let]
+  [/for]
+  [if (not aClass.superClass->isEmpty())]
+    [aClass.superClass->asSequence()->collect(temp3 | temp3.genReverseAssociations())/]
+  [/if]
+[/template]
+
+[**
+ * List-items of the names of the required attributes
+*/]
+[template public requiredClassAttributes(aClass : uml::Class) post(self.trim())]
+  [aClass.requiredAttributes()/][if (not aClass.superClass->isEmpty())][aClass.superClass->asSequence()->collect(temp4 | temp4.requiredClassAttributes())/][/if][/template]
+
+[**
+ * List-items of the names of the required associations
+*/]
+[template public requiredAssociations(aClass : uml::Class) post(self.trim())]
+  [for (anAssociation : uml::Association | aClass.u_associations()->select(anAssociation | anAssociation.u_ownedEndClass() = aClass))][let sourceEnd : uml::Property = anAssociation.ownedEnd->first()][let targetEnd : uml::Property = sourceEnd.getOtherEnd()][if (targetEnd.lowerBound() > 0)]"[anAssociation.shortName()/]", [/if][/let][/let][/for][if (not aClass.superClass->isEmpty())]
+                                                                                                                                                                                                                                                                                                                                                           [aClass.superClass->asSequence()->collect(temp5 | temp5.requiredAssociations())/]
+                                                                                                                                                                                                                                                                                                                                                         [/if]
+[/template]

@@ -1,0 +1,115 @@
+[**
+ * The documentation of the module indices.
+ */]
+[module inheritanceTreeDiagramDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::doc::puUtilityDoc/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+[template public inheritanceTreeDiagram(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/InheritanceTreeDiagram/index.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. _inheritanceTreeDiagram:
+    
+    ['Inheritance by Package'.rst_header('=')/]
+    
+    .. toctree::
+       :titlesonly:
+    
+    [for (aPackage : uml::Package | aModel.u_packagesWithClasses())]
+      [if (aPackage.u_rootSuperClasses()->notEmpty() and aPackage.name <> 'Identification' and aPackage.name <> 'Miscellaneous')]
+           [aPackage.name/].rst
+        [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/InheritanceTreeDiagram/').concat(aPackage.name).concat('.rst'), overwrite, 'UTF-8')]
+          [aPackage.rst_generationMessageDoc()/]
+          [aPackage.name.rst_header('=')/]
+          
+          
+          .. container:: class-diagram
+          
+             .. uml::
+          
+                @startuml
+                title Inheritance tree of super classes starting from package **[aPackage.name/]** without leaf classes
+          
+                left to right direction
+                skinparam class {
+                  FontColor blue
+                }
+          ['      '.pu_options2()/]
+          
+          [for (aClass : uml::Class | aPackage.u_rootSuperClasses())][aClass.subClasses(aPackage)/][/for]
+                @enduml
+          
+        [/file]
+      [/if]
+    [/for]
+    
+    ----
+    
+    
+    .. container:: class-diagram
+    
+       .. uml::
+    
+          @startuml
+          title Inheritance tree of all super classes without leaf classes
+    
+          left to right direction
+          skinparam package {
+            FontColor blue
+          }
+    
+    ['      '.pu_options2()/]
+    
+    [for (aClass : uml::Class | aModel.u_rootSuperClasses())][aClass.subClassesForAll()/][/for]
+          @enduml
+    
+  [/file]
+[/template]
+
+[template public subClassesForAll(aClass : uml::Class)]
+  [if (aClass.eInverse(uml::Class)->notEmpty())]
+	  [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
+	          package [aClass.package.name/] [('../Appendices/InheritanceTreeDiagram/' + aClass.package.name + '.html').pu_link('Inheritance tree of super classes starting from package '.concat(aClass.package.name).concat(' without leaf classes'))/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
+	            [if (aClass.isAbstract)]abstract [/if]class [aClass.qualifiedName/] as "[aClass.name/]"
+	          }
+	  [/if]
+	  [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp1 | temp1.name))]
+	    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
+	            package [subClass.package.name/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
+	              [if (subClass.isAbstract)]abstract [/if]class [subClass.qualifiedName/] as "[subClass.name/]"
+	            }
+	      [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
+	              [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
+	      [/let]
+	    [/if]
+	  [/for]
+  [/if]
+[/template]
+
+[template public subClasses(aClass : uml::Class, aPackage : uml::Package)]
+  [if (aClass.eInverse(uml::Class)->notEmpty())]
+	  [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
+	          package [aClass.package.name/] [if (aPackage = aClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
+	            [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_elementWithLink('blue', '')/]
+	          }
+	  [/if]
+	  [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp2 | temp2.name))]
+	    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
+	            package [subClass.package.name/] [if (aPackage = subClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
+	              [if (subClass.isAbstract)]abstract [/if]class [subClass.pu_elementWithLink('blue', '')/]
+	            }
+	      [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
+	              [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
+	      [/let]
+	    [/if]
+	  [/for]
+  [/if]
+[/template]

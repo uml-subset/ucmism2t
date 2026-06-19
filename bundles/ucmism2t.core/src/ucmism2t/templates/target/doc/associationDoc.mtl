@@ -1,0 +1,17 @@
+[**
+ * The documentation of the module anAssociation.
+ */]
+[module associationDoc('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::propertyQuery/]
+
+[comment encoding = UTF-8 /]
+[**
+ * Processes an association.
+ * @param anAssociation - an association
+*/]
+[template public processAssociationDoc(anAssociation : uml::Association)]
+  Multiplicity [anAssociation.memberEnd->last().u_docMultiplicity()/]
+  Assocation name [anAssociation.name/]
+  Other class [anAssociation.memberEnd->first().type.name/]
+  Multiplicity of other class [anAssociation.memberEnd->first().u_docMultiplicity()/][/template]

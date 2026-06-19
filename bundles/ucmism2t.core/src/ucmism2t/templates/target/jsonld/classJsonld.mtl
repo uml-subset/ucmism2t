@@ -1,0 +1,90 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module classJsonld(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::jsonld::commonJsonld/]
+
+[**
+ * Generate the core of a type-scoped context for this class.
+*/]
+[template public classJsonldCore(aClass : uml::Class, modular : Boolean)]
+  [aClass.genAttributes(modular)/]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+    ->select(anAssociation | anAssociation.u_ownedEndClass() = aClass)
+    ->sortedBy(a | a.shortName())
+    )]
+    "[anAssociation.shortName()/]": {
+      "@id": "[anAssociation.iri()/]",
+      "@type": "@id"[if (modular)],[/if]
+    [if (modular)]
+        "@context": "[anAssociation.u_otherEndClass().name/].jsonld"
+    [/if]
+    },
+  [/for]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+    ->select(a1 | a1.u_otherEndClass() = aClass)
+    ->sortedBy(a2 | a2.shortName())
+    ->sortedBy(a3 | a3.u_ownedEndClass().name )
+    )]
+    "[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]": {
+      "@reverse": "[anAssociation.iri()/]",
+      "@type": "@id"[if (modular)],[/if]
+    [if (modular)]
+        "@context": "[anAssociation.u_ownedEndClass().name/].jsonld"
+    [/if]
+    },
+  [/for]
+  " comment ": "tag:json-should-support-trailing-commas"[/template]
+
+[**
+ * Generates a complete self-contained type-scoped context for this class,
+ * as a sequence of contexts to be included in a JSON array.
+*/]
+[template public classJsonldSelfContained(aClass : uml::Class)]
+  [if (aClass.superClass->notEmpty() and aClass.superClass->asSequence()->first().isNotInMappedItems())]
+    [aClass.superClass->asSequence()->collect(temp1 | temp1.classJsonldSelfContained())/],
+  [/if]
+  {
+    [aClass.classJsonldCore(false)/]
+  }[/template]
+
+[**
+*/]
+[template public classJsonldFile(aClass : uml::Class)]
+  [file (aClass.u_model().e_modelShortName() + '/encoding/json-ld/' + aClass.name + '.jsonld', overwrite, 'UTF-8')]
+    [aClass.classJsonldModular()/]
+  [/file]
+[/template]
+
+[**
+ * Generates a modular standalone context for this cmass.
+ * Mostly used for the HTML documentation.
+*/]
+[template public classJsonldModular(aClass : uml::Class)]
+  {
+    "@context": ['['/]
+  [if (aClass.superClass->notEmpty() and aClass.superClass->asSequence()->first().isNotInMappedItems())]
+        "[aClass.superClass->asSequence()->collect(temp2 | temp2.name)/].jsonld",
+  [/if]
+      {
+        "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+  
+        [aClass.classJsonldCore(true)/]
+      }
+    ],
+    "generatedBy": "[aClass.generationMessageJsonld()/]",
+    "basedOn": "based on the UML data type [aClass.qualifiedName/]"
+  }[/template]

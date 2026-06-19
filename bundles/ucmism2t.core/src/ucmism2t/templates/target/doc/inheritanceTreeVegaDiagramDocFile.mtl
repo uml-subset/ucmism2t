@@ -1,0 +1,52 @@
+[**
+ * The documentation of the module indices.
+ */]
+[module inheritanceTreeVegaDiagramDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::templates::target::doc::vegaJsonFile/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+[template public inheritanceTreeVegaDiagram(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/InheritanceTreeVegaDiagram.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. _inheritanceTreeVegaDiagram:
+    
+    ['Class Inheritance'.rst_header('=')/]
+    
+    .. raw:: html
+    
+       <!-- Due to CORS issues everything inline. Otherwise, grammar and data could be in separate files. -->
+       <div id="vis"/>
+       <script src="https://cdn.jsdelivr.net/npm/vega@6.1.2/build/vega.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2/build/vega-embed.min.js"></script>
+         <script>
+         const classData = 
+    
+    .. raw:: html
+       :file: VegaTreeLayoutClass.json
+    
+    .. raw:: html
+    
+         ;
+         const spec = 
+    
+    .. raw:: html
+       :file: TreeLayout.vega.json
+    
+    .. raw:: html
+    
+         ;
+         var opt = {
+           "actions": {"export": true, "source": false, "compiled": false, "editor": false},
+           "ast": true,
+           "downloadFileName": "ClassInheritance",
+           "mode": "vega",
+           "renderer": "svg"
+           };
+         vegaEmbed("#vis", spec, opt).then(console.log).catch(console.warn);
+       </script>
+  [/file]
+[/template]

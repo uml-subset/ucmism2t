@@ -1,0 +1,237 @@
+[**
+ * The documentation of the module aDataTypeFile.
+ */]
+[module dataTypeDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::classifierQuery/]
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::templates::target::doc::puDiagram/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+[import ucmism2t::templates::target::jsonld::dataTypeJsonld/]
+[import ucmism2t::templates::target::jsonschema::dataTypeJsch/]
+[import ucmism2t::templates::target::onto::dataTypeOnto/]
+[import ucmism2t::templates::target::shacl::dataTypeShacl/]
+[import ucmism2t::templates::target::shex::dataTypeShex/]
+[import ucmism2t::templates::target::xsd::dataTypeXsd/]
+
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the template processDataType.
+ * @param aDataType - a data type
+*/]
+[template public processDataTypeDoc(aDataType : uml::DataType)]
+	[comment] subset condition [/comment]
+  [if ('includeAllItems'.isPropertyTrue() or aDataType.u_subsetDataTypes()->includes(aDataType.name))]
+	  [file (aDataType.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+	    [aDataType.rst_generationMessageDoc()/]
+	    .. _[aDataType.qualifiedName/]:
+	    
+	    [aDataType.name.rst_header('*')/]
+	    
+	    .. index:: [aDataType.name/]
+	    
+	    [if (aDataType.u_isChildOfMainPackage())]
+	      Fully qualified [aDataType.eClass().name.toLower()/] name of the UML model [aDataType.u_model().e_modelAcronym()/] [aDataType.u_model().e_modelMajorVersion()/].[aDataType.u_model().e_modelMinorVersion()/]: **[aDataType.qualifiedName/]**
+	    [else]
+	      Fully qualified [aDataType.eClass().name.toLower()/] name: **[aDataType.qualifiedName/]**
+	    [/if]
+	    
+	    [aDataType.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
+	    
+	    
+	    [file (aDataType.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
+	      [aDataType.pu_dataTypeDiagram(0)/]
+	    [/file]
+	    Diagram
+	    =======
+	    
+	    .. dropdown:: Diagram
+	       :class-container: diagram-dropdown
+	       :open:
+	    
+	       .. raw:: html
+	    
+	          [aDataType.diagramModalPreCode()/]
+	    
+	       .. uml:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].pu
+	    
+	       .. raw:: html
+	    
+	          [aDataType.diagramModalPostCode()/]
+	    
+	    [if (aDataType.u_allSuperDataTypes()->notEmpty() or aDataType.u_subClassesOrSubDataTypes()->notEmpty())]
+	      [aDataType.rst_classOrDataTypeInheritance()/]
+	    [/if]
+	    
+	    [if (aDataType.u_attributes()->notEmpty() or aDataType.u_inheritedDataTypeAttributes()->notEmpty())]
+	      Attributes
+	      ==========
+	      
+	      .. dropdown:: Attributes
+	         :class-container: attributes-dropdown
+	      
+	         .. container::
+	            :name: attributes-responsive
+	      
+	            .. list-table:: Attributes
+	               :widths: 10 10 60 10 10 10
+	               :header-rows: 1
+	               :class: table table-striped table-hover main-table
+	      
+	               * - Name
+	                 - Inherited from
+	                 - Description
+	                 - Data Type
+	                 - Multiplicity
+	                 - Default value
+	      [for (p : uml::Property | aDataType.u_attributes())][p.rst_processAttributeInTable('         ', aDataType)/][/for][for (aClassifier : uml::Classifier | aDataType.u_allSuperDataTypes())][for (p : uml::Property | aClassifier.u_attributes())][p.rst_processAttributeInTable('         ', aDataType)/][/for][/for][/if]
+	    
+	    [if (aDataType.eInverse(uml::Property)->select(temp2 | temp2.u_parent() <> aDataType)->size() > 0)]
+	      Usage
+	      =====
+	      
+	      .. dropdown:: Usage
+	         :class-container: usage-dropdown
+	      
+	         .. container::
+	            :name: usage-responsive
+	      
+	            .. list-table:: Usage
+	               :widths: 25 25 25 25
+	               :header-rows: 1
+	               :class: table table-striped table-hover main-table
+	      
+	               * - Type
+	                 - Package
+	                 - Classifier
+	                 - Attribute
+	      [for (aProperty : uml::Property | aDataType.eInverse(uml::Property)->select(temp1 | temp1.u_parent() <> aDataType))]
+	                 * - [aProperty.u_parent().eClass().name/]
+	                   - [aProperty.u_parent().oclAsType(uml::Classifier).package.name/]
+	                   - :ref:`[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`
+	                   - [aProperty.name/]
+	      [/for]
+	    [/if]
+	    
+	    [if (aDataType.u_isChildOfMainPackage())]
+	      Encodings
+	      =========
+	      
+	      .. dropdown:: Syntax representations / encodings
+	         :class-container: encodings-dropdown
+	      
+	         All syntax representations except the Canonical XMI are provided as reference points
+	         for specific implementations, or for use as defaults if sufficient in the form presented.
+	      
+	         .. tab-set::
+	      
+	            .. tab-item:: Canonical XMI
+	               :class-content: encoding
+	      
+	               Fragment for the data type **[aDataType.name/]** (`entire model as XMI </encoding/xmi/[aDataType.u_model().e_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
+	      
+	               .. literalinclude:: /xmi/[aDataType.name/].xmi
+	                  :lines: 2-
+	                  :language: xml
+	                  :linenos:
+	                  :emphasize-lines: 4
+	      
+	      [if ('xsd'.isPropertyTrue())]
+	              .. tab-item:: XML Schema
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeXsd()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`entire XML Schema </encoding/xml-schema/[aDataType.u_model().e_modelAcronym().toLower()/].xsd>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
+	                    :language: xml
+	                    :linenos:
+	                    :emphasize-lines: 1
+	                    :dedent: 2
+	      [/if]
+	      
+	      [if ('jsonschema'.isPropertyTrue())]
+	              .. tab-item:: JSON Schema
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('.schema.json'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeJsch()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`entire JSON Schema </encoding/json-schema/[aDataType.u_model().e_modelAcronym().toLower()/].schema.json>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].schema.json 
+	                    :language: json
+	                    :linenos:
+	                    :emphasize-lines: 1
+	      [/if]
+	      
+	      [if ('onto'.isPropertyTrue())]
+	              .. tab-item:: Ontology (Turtle)
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeOnto()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`main ontology </encoding/ontology/[aDataType.u_model().e_modelAcronym().toLower()/].onto.ttl>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
+	                    :language: turtle
+	                    :linenos:
+	                    :emphasize-lines: 3
+	      [/if]
+	      
+	      [if ('jsonld'.isPropertyTrue())]
+	              .. tab-item:: JSON-LD
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('.jsonld'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeJsonldModular()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`entire JSON-LD </encoding/json-ld/[aDataType.u_model().e_modelAcronym().toLower()/].jsonld>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].jsonld 
+	                    :language: jsonld
+	                    :linenos:
+	                    :emphasize-lines: 2
+	      [/if]
+	      
+	      [if ('shacl'.isPropertyTrue())]
+	              .. tab-item:: SHACL
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('.shacl.ttl'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeShacl()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aDataType.u_model().e_modelAcronym().toLower()/].shacl.ttl>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].shacl.ttl 
+	                    :language: turtle
+	                    :linenos:
+	                    :emphasize-lines: 4
+	      [/if]
+	      
+	      [if ('shex'.isPropertyTrue())]
+	              .. tab-item:: ShEx
+	                 :class-content: encoding
+	        [file (aDataType.u_filePath('doc').concat('.shexc'), overwrite, 'UTF-8')]
+	          [aDataType.dataTypeShex()/]
+	        [/file]
+	        
+	                 Fragment for the data type **[aDataType.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aDataType.u_model().e_modelAcronym().toLower()/].shexc>`_)
+	        
+	                 .. literalinclude:: [aDataType.qualifiedName.replace(aDataType.u_model().name, '').replaceAll('::', '/')/].shexc 
+	                    :language: shexc
+	                    :linenos:
+	                    :emphasize-lines: 3
+	      [/if]
+	    [/if]
+	    
+	  [/file]
+  [/if][comment] subset condition [/comment]
+[/template]

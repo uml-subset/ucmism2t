@@ -7,6 +7,7 @@
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::dataTypeQuery/]
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::eobjectQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::propertyQuery/]
@@ -31,6 +32,25 @@
 
 
     #######################
+    txt.u_mappedUcmisItemsRdfTargets()->at(txt.u_mappedUcmisItemsRdf()->indexOf(iri))
+    
+    u_mappedUcmisItemsRdfTokens: [aModel.u_mappedUcmisItemsRdfTokens()/]
+    u_mappedUcmisItemsRdfTokens 1: [aModel.u_mappedUcmisItemsRdfTokens()->at(1)/]
+    u_mappedUcmisItemsRdfTokens 2: [aModel.u_mappedUcmisItemsRdfTokens()->at(2)/]
+    u_mappedUcmisItemsRdfTargets: [aModel.u_mappedUcmisItemsRdfTargets()/]
+    u_mappedUcmisItemsRdfTargets 1: [aModel.u_mappedUcmisItemsRdfTargets()->at(1)/]
+    u_mappedUcmisItemsRdfTargets 2: [aModel.u_mappedUcmisItemsRdfTargets()->at(2)/]
+    u_mappedUcmisItemsRdf: [aModel.u_mappedUcmisItemsRdf()/]
+    u_mappedUcmisItemsRdf 1: [aModel.u_mappedUcmisItemsRdf()->at(1)/]
+    u_mappedUcmisItemsRdf 2: [aModel.u_mappedUcmisItemsRdf()->at(2)/]
+    
+    RDF_PREFIX: ['RDF_PREFIX'.getPropertyValue()/]
+    
+    indexOf x: [aModel.u_mappedUcmisItemsRdf()->indexOf('x')/]
+    indexOf '': [aModel.u_mappedUcmisItemsRdf()->indexOf('')/]
+    indexOf alskndfaökljsnd: [aModel.u_mappedUcmisItemsRdf()->indexOf('alskndfaökljsnd')/]
+    indexOf String: [aModel.u_mappedUcmisItemsRdf()->indexOf('String')/]
+               [aModel.u_mappedUcmisItemsRdfTargets()->at(1)/]
 [comment]     ownedComment	[aModel.ownedComment/]
     ownedComment->first()	[aModel.ownedComment->first()/]
     ownedComment->first() 2
@@ -40,6 +60,10 @@
     xsd_documentation
     	[aModel.u_commentBody().xsd_documentation().replaceAll('[ ]{2}', '')/]
 [/comment]    [comment]     ['<xs:documentation>'+aModel.u_commentBody()+'</xs:documentation>'/] [/comment]
+[comment]     <xs:annotation>
+['  <xs:documentation>' + aModel.u_commentBody()/]</xs:documentation>
+    </xs:annotation>
+
     'MAIN_PACKAGE_NAME'.getPropertyValue(): ['MAIN_PACKAGE_NAME'.getPropertyValue()/]
     u_mainPackage: [aModel.u_mainPackage().name/]
 
@@ -48,7 +72,7 @@
 [aModel.u_commentBody()/]
     
     </xs:documentation>   
-
+[/comment]
     #######################
 [let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
 	[c.classXsd()/]

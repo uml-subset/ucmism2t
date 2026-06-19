@@ -1,0 +1,35 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module commonOnto(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[comment encoding = UTF-8 /]
+[template public attributeOnto(anAttribute : uml::Property)]
+  [anAttribute.iri()/]
+    a rdf:Property, [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))]owl:DatatypeProperty[else]owl:ObjectProperty[/if], ucmis:Attribute;
+    rdfs:label "[anAttribute.name/]";
+    [anAttribute.rdfs_comment()/]
+    rdfs:domain [anAttribute.u_parent().oclAsType(uml::Classifier).iri()/];
+    rdfs:range [anAttribute.type.iri()/];
+  .
+[/template]
+
+[template public superClasses(aClass : uml::Class)]
+  [let scs : Sequence(uml::Class) = aClass.superClass]
+	  [if (scs->notEmpty())]rdfs:subClassOf [scs->collect(sc | sc.iri())->sep(', ')/];[/if]
+  [/let]
+[/template]
+
+[template public pac_superDataTypes(aDataType : uml::DataType)]
+  [let scs : Sequence(uml::Classifier) = aDataType.general]
+  	[if (scs->notEmpty())]rdfs:subClassOf [scs->collect(sc | sc.iri())->sep(', ')/];[/if]
+  [/let]
+[/template]

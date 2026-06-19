@@ -1,0 +1,151 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module commonXsd(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::propertyQuery/]
+[import ucmism2t::queries::typeQuery/]
+
+[**
+ Generates XSD enumeration entries for a reference class type.
+ If the class has concrete subclasses (or is itself concrete),
+ one xs:enumeration element is emitted per concrete class.
+ Otherwise, a single xs:enumeration for the class itself is emitted.
+
+ @param aType - A UML type, expected to be a Class.
+/]
+[template public xsd_referenceClass(aType : uml::Type) post(self.trim())]
+  [let aClass : uml::Class = aType.oclAsType(uml::Class)]
+    [let concretes : OrderedSet(uml::Class) = aClass.u_allConcreteSubClassesPlusSelf()]
+      [if (concretes->notEmpty())]
+        [for (aSubClass : uml::Class | concretes)]
+          <xs:enumeration value="[aSubClass.name/]"/>
+        [/for]
+      [else]
+        <xs:enumeration value="[aClass.name/]"/>
+      [/if]
+    [/let]
+  [/let]
+[/template]
+
+[comment] [template public OLDxsd_referenceClass(aType : uml::Type) post(self.trim())]
+  [let aClass : uml::Class = aType.oclAsType(uml::Class)]
+    [if (aClass.u_allConcreteSubClassesPlusSelf()->notEmpty())]
+      [for (aSubClass : uml::Class | aClass.u_allConcreteSubClassesPlusSelf())]
+        <xs:enumeration value="[aSubClass.name/]"/>
+      [/for]
+    [else]
+      <xs:enumeration value="[aClass.name/]"/>
+    [/if]
+  [/let]
+[/template]
+[/comment]
+
+[**
+Returns the upper cardinality of the given property as an XSD string:
+unlimited is mapped to 'unbounded'; any other value is
+returned as its string representation.
+
+@param aProperty - A UML property.
+/]
+[query public xsd_upperCardinality(aProperty : uml::Property) : String =
+  if aProperty.upper.u_isUnlimited() then
+    'unbounded'
+  else
+    aProperty.upper.toString()
+  endif
+/]
+
+[**
+ Returns the XSD type name for the given UML type:
+ - Boolean → xs:boolean
+ - Integer → xs:integer
+ - String  → xs:string
+ - Real    → xs:double
+ - XMLSchemaDataTypes package members → primitive via xsd_primitive()
+ - Otherwise → <typeName>XsdType
+
+ @param aType - A UML type object.
+/]
+[query public xsd_typeName(aType : uml::Type) : String =
+  let n : String = aType.name in
+  if n = 'Boolean' then
+    'xs:boolean'
+  else if n = 'Integer' then
+    'xs:integer'
+  else if n = 'String' then
+    'xs:string'
+  else if n = 'Real' then
+    'xs:double'
+  else if aType.package.name = 'XMLSchemaDataTypes' then
+    aType.name.xsd_primitive()
+  else
+    n.concat('XsdType')
+  endif
+  endif
+  endif
+  endif
+  endif
+/]
+
+[**
+Returns the XSD built-in type name for the specified UML type
+name string. Returns 'UNRESOLVED TYPE' if no mapping exists.
+
+Supported mappings:
+  'XsdAnyUri'  → 'xs:anyURI'
+  'XsdDate'    → 'xs:date'
+  'XsdLanguage'→ 'xs:language'
+
+@param aTypeName - The name of the UML primitive type to map.
+/]
+[query public xsd_primitive(
+  aTypeName : String) : String =
+  if aTypeName = 'XsdAnyUri' then 'xs:anyURI'
+  else if aTypeName = 'XsdDate' then 'xs:date'
+  else if aTypeName = 'XsdLanguage' then 'xs:language'
+  else 'WARNING: unresolved type'
+  endif
+  endif
+  endif
+/]
+
+[**
+Returns the specified string with all XML special characters escaped:
+  '&' → '&amp;'  (replaced first to avoid double-escaping)
+  '<' → '&lt;'
+  '>' → '&gt;'
+  '"' → '&quot;'
+  ''' → '&apos;'
+
+@param aString - The string to escape.
+/]
+[query public OKxsd_escapeXmlCharacters(
+  aString : String) : String =
+  aString
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll('\'', '&apos;')
+/]
+
+[template public xsd_escapeXmlCharacters(aString : String) post(self.trim())]
+  [aString/]
+[/template]
+
+[**
+Returns the specified string as a xs:documentation element
+with all XML special characters escaped.
+
+@param aString - The string to be returned as xs:documentation element.
+/]
+[template public xsd_documentation(aString : String) post(self.replaceAll('[ ]{2}', ''))]
+  ['<xs:documentation>' + aString.xsd_escapeXmlCharacters() + '</xs:documentation>'/]
+[/template]

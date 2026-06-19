@@ -1,5 +1,21 @@
 # Maven
-target/
+# target/ excludes everything!
+# target/
+# Ignore contents of all Maven target folders (NOT the directory itself)
+#**/target/*
+# Un-ignore the Acceleo target language folder
+#!bundles/ucmism2t.core/src/ucmism2t/templates/target/
+#!bundles/ucmism2t.core/src/ucmism2t/templates/target/**
+# above did not work correctly
+# explicit listing of maven target folders
+bundles/ucmism2t.cli/target
+# NOT LISTED src folder: bundles/ucmism2t.core/src/ucmism2t/templates/target
+bundles/ucmism2t.core/target
+bundles/ucmism2t.core/target/classes/ucmism2t/templates/target
+features/ucmism2t.feature/target
+releng/ucmism2t.product/target
+repository/ucmism2t.repository/target
+# Maven cont.
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

@@ -1,0 +1,56 @@
+[comment encoding = UTF-8 /]
+[**
+Module contains templates for JSON Schema.
+/]
+[module commonJsch(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::classifierQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[template public arrayClassSchemas(aModel : uml::Model) post(self.trim())]
+  ['['/]
+  [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
+    {
+      "if": { "properties": { "@type": { "const": "[aClass.name/]" } } },
+      "then": { "$ref": "#/defs/cls-[aClass.name/]" },
+      "else": false
+    },
+  [/for]
+  false
+  ][/template]
+
+[**
+ * List-items of the names of the required attributes
+*/]
+[template public requiredAttributes(aClassifier : uml::Classifier) post(self.trim())]
+  [for (anAttribute : uml::Property | aClassifier.u_attributes())][if (anAttribute.lowerBound() > 0)]"[anAttribute.name/]",[/if][/for][/template]
+
+[template public genAttributes(aClassifier : uml::Classifier) post(self.trim())]
+  [for (anAttribute : uml::Property | aClassifier.u_attributes())]
+    "[anAttribute.name/]": {
+      "$comment": "cardinality [anAttribute.lowerBound()/]..[anAttribute.upperBound()/] – from [aClassifier.iri()/]",
+    [if (anAttribute.upperBound() = 1)]
+        [anAttribute.ref()/]
+    [else]
+        "if": { "type": "array" },
+        "then": { "items": { [anAttribute.ref()/] } },
+        "else": { [anAttribute.ref()/] }
+    [/if]
+    },
+  [/for]
+[/template]
+
+[template protected ref(anAttribute : uml::Property) post(self.trim())]
+  [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
+    "$ref": "#/defs/enum-[anAttribute.type.name/]"
+  [elseif (anAttribute.type.isComplex())]
+    "$ref": "#/defs/dt-[anAttribute.type.name/]"
+  [else]
+    "$ref": "#/defs/[anAttribute.type.iri()/]"
+  [/if]
+[/template]

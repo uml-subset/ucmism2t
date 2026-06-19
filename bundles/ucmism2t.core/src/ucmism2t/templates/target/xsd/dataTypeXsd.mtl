@@ -1,0 +1,118 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module dataTypeXsd(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::target::xsd::commonXsd/]
+
+[**
+ * Generates XML Schema code for a data type.
+ * @param aDataType
+*/]
+[template public dataTypeXsd(aDataType : uml::DataType)]
+  [comment] XML Schema Data Types condition [/comment]
+  [if (not aDataType.qualifiedName.contains('XMLSchemaDataTypes'))]
+    <xs:element name="[aDataType.name/]"
+                type="[aDataType.name/]XsdType"
+                xml:id="[aDataType.name/]">
+      <!-- based on the UML data type [aDataType.qualifiedName/] -->
+      <xs:annotation>
+        <xs:documentation>
+[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
+        </xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:complexType name="[aDataType.name/]XsdType"
+                    xml:id="[aDataType.name/]XsdType">
+      <xs:annotation>
+        <xs:documentation>
+[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
+        </xs:documentation>
+      </xs:annotation>
+      [if (aDataType.u_allSuperDataTypes()->notEmpty())]
+        <xs:complexContent>
+          <xs:extension base="[aDataType.u_allSuperDataTypes()->collect(temp1 | temp1.name)/]XsdType">
+            [if (aDataType.u_attributes()->notEmpty())]
+              [aDataType.attributeXsd(aDataType.name)/]
+            [/if]
+          </xs:extension>
+        </xs:complexContent>
+      [else]
+        [if (aDataType.u_attributes()->notEmpty())]
+          [aDataType.attributeXsd(aDataType.name)/]
+        [/if]
+      [/if]
+    </xs:complexType>
+    [if ('DDI-CDI'.isPropertyTrue() and aDataType.name = 'Reference')]
+      <xs:element name="AssociationReference"
+                  type="AssociationReferenceXsdType"
+                  xml:id="AssociationReference">
+        <!-- related to the UML data type [aDataType.qualifiedName/] -->
+        <xs:annotation>
+          <xs:documentation>AssociationReference
+[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:complexType name="AssociationReferenceXsdType"
+                      xml:id="AssociationReferenceXsdType">
+        <xs:annotation>
+          <xs:documentation>
+[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
+          </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="ddiReference"
+                      type="InternationalRegistrationDataIdentifierXsdType"
+                      minOccurs="0"
+                      maxOccurs="1"
+                      xml:id="AssociationReference-ddiReference">
+            <xs:annotation>
+              <xs:documentation>A DDI type reference to a DDI object.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="validType"
+                      type="xs:string"
+                      minOccurs="0"
+                      maxOccurs="unbounded"
+                      xml:id="AssociationReference-validType">
+            <xs:annotation>
+              <xs:documentation>The expected type of the reference (e.g., the class or element according to the schema of the referenced resource).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute name="isAssociationReference"
+                      type="xs:boolean"
+                      fixed="true"
+                      xml:id="isAssociationReference"/>
+      </xs:complexType>
+    [/if]
+  [/if] [comment] XML Schema Data Types condition [/comment]
+[/template]
+
+[comment ith multiplicity control/]
+[template public attributeXsd(aDataType : uml::DataType, itemName : String)]
+  <xs:sequence>
+    [for (anAttribute : uml::Property | aDataType.u_attributes())]
+      <xs:element name="[anAttribute.name/]"
+                  type="[anAttribute.type.xsd_typeName()/]"
+                  minOccurs="[anAttribute.lower/]"
+                  maxOccurs="[anAttribute.xsd_upperCardinality()/]"
+                  xml:id="[itemName.concat('-').concat(anAttribute.name)/]">
+        <xs:annotation>
+          <xs:documentation>
+[anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    [/for]
+  </xs:sequence>
+[/template]

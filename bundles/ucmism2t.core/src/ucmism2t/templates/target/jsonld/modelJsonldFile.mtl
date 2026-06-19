@@ -1,0 +1,60 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module modelJsonldFile(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::jsonld::classJsonld/]
+[import ucmism2t::templates::target::jsonld::commonJsonld/]
+[import ucmism2t::templates::target::jsonld::dataTypeJsonld/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+
+[**
+ * This generator creates a root context which depends on one additional context for each class and datatype
+ * As this creates a lot of contexts, this does not scale very well when the contexts are loaded from the Web.
+ * An external script can be used to *inline* most of the class- and datatype-contexts in the root context,
+ * (this proved much more flexible than trying to generate the inline context directly).
+*/]
+[template public generateJsonld(aModel : uml::Model)]
+  [file (aModel.e_modelShortName() + '/encoding/json-ld/' + aModel.e_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+    [let classes : Sequence(uml::Class) =
+            aModel.eAllContents(uml::Class)
+            ->select(aClass | aClass.u_isInAllowedPackage()),
+         datatypes : Sequence(uml::DataType) =
+            aModel.eAllContents(uml::DataType)
+            ->select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems())
+      ]
+      {
+        "@context": {
+          "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+       	  "xsd": "http://www.w3.org/2001/XMLSchema#",
+          "[aModel.name/]": "@included",
+          [for (aClass : uml::Class | classes) separator(',\n    ')]
+            "[aClass.name/]": {
+              "@id": "[aClass.iri()/]",
+              "@context": ['['/]
+                [aClass.classJsonldSelfContained()/][aClass.classJsonldFile()/]
+              ]
+            }[/for]
+          [if (datatypes->size()>0)],[/if]
+          [for (aDataType : uml::DataType | datatypes) separator(',\n    ')]
+            "[aDataType.name/]": {
+              "@id": "[aDataType.iri()/]",
+              "@context": ['['/]
+                [aDataType.dataTypeJsonldSelfContained()/][aDataType.dataTypeJsonldFile()/]
+              ]
+            }[/for]
+        },
+        "generatedBy": "[aModel.generationMessageJsonld()/]",
+        "basedOn": "based on the UML model [aModel.qualifiedName/]"
+      }
+    [/let]
+  [/file]
+[/template]

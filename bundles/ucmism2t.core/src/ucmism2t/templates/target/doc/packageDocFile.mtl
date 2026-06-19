@@ -1,0 +1,57 @@
+[comment encoding = UTF-8 /]
+[**
+The documentation of the module packageDocFile.
+/]
+[module packageDocFile(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::doc::classDocFile/]
+[import ucmism2t::templates::target::doc::dataTypeDocFile/]
+[import ucmism2t::templates::target::doc::enumerationDocFile/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[**
+ * Process a package. Write a file.
+ * @param aPackage a package
+*/]
+[template public processPackageDoc(aPackage : uml::Package)]
+  [if ('includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(aPackage.name))]
+	  [file (aPackage.u_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
+	    [aPackage.rst_generationMessageDoc()/]
+	    .. _[aPackage.qualifiedName/]:
+	    
+	    [aPackage.name.rst_header('*')/]
+	    
+	    | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
+	    
+	    [aPackage.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
+	    
+	    -----
+	    
+	    .. toctree::
+	       :titlesonly:
+	    
+	    [for (childPackage : uml::Package | aPackage.u_childPackages()->select(p | 'includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(p.name)))]
+	         [childPackage.name.concat('/index.rst')/]
+	      [childPackage.processPackageDoc()/][/for]
+	    [for (aClass : uml::Class | aPackage.u_childClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetAllClasses()->includes(c.name)))]
+	         [aClass.name.concat('.rst')/]
+	      [aClass.processClassDoc()/][/for]
+	    [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(d | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d.name))->select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
+	         [aDataType.name.concat('.rst')/]
+	      [aDataType.processDataTypeDoc()/][/for]
+	    [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()->select(e | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetEnumerations()->includes(e.name)))]
+	         [anEnumeration.name.concat('.rst')/]
+	      [anEnumeration.processEnumerationDoc()/][/for]
+	  [/file]
+  [/if]
+[/template]

@@ -1,0 +1,138 @@
+[comment encoding = UTF-8 /]
+[module vegaJsonFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+
+[comment for all classes with an outgoing (also inherited) association /]
+[template public vegaEdgeBundlingAssociationJsonFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/VegaEdgeBundlingAssociation.json'), overwrite, 'UTF-8')]
+    ['['/]
+    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)
+    	->select(c | c.u_outgoingAssociatedClasses()->size() > 0)
+    	) separator(',\n')
+    	]
+        [for (targetClass : uml::Class | aClass.u_outgoingAssociatedClasses())
+        	separator(',\n')]
+            {
+              "source": "[aClass.name/]",
+              "target": "[targetClass.name/]"
+            }[/for]
+    [/for]
+    
+    ]
+  [/file]
+[/template]
+
+[comment classes in package hierarchy /]
+[template public vegaEdgeBundlingClassJsonFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/VegaEdgeBundlingClass.json'), overwrite, 'UTF-8')]
+    ['['/]
+      {
+        "id": "[aModel.u_mainPackage().name/]",
+        "name": "[aModel.u_mainPackage().name/]",
+        "parent": null
+      },
+    [for (aPackage : uml::Package | aModel.u_mainPackage().eAllContents(uml::Package)->select(temp6 | temp6.eAllContents(uml::Class)->size() > 0)->sortedBy(temp7 | temp7.qualifiedName)) separator(',\n')]
+        {
+          "id": "[aPackage.name/]",
+          "name": "[aPackage.qualifiedName/]",
+          "parent": "[aPackage.nestingPackage.name/]"
+        }[/for]
+    ,
+    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp8 | temp8.qualifiedName)) separator(',\n')]
+        {
+          "id": "[aClass.name/]",
+          "name": "[aClass.package.name/]::[aClass.name/]",
+          "definition": "[aClass.u_onlyDefinition().replaceAll('"', '\\\\"')/]",
+          "parent": "[aClass.package.name/]"
+        }[/for]
+    
+    ]
+  [/file]
+[/template]
+
+[template public vegaTreeLayoutClassJsonFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/VegaTreeLayoutClass.json'), overwrite, 'UTF-8')]
+    [let allTopSuperClasses : Sequence(uml::Class) = aModel.u_mainPackage().u_rootSuperClasses()]
+      [let allClasses : Sequence(uml::Class) = aModel.u_mainPackage().eAllContents(uml::Class)->select(aClass | aClass.superClass->size() > 0 or allTopSuperClasses->includes(aClass))->sortedBy(temp9 | temp9.name)->sortedBy(temp10 | temp10.package.name)->sortedBy(temp11 | temp11.u_allSuperClasses()->size())]
+           ['['/]
+             {
+               "id": "Root",
+               "name": "Diagram root (no class)"
+             },
+        [for (aClass : uml::Class | allClasses) separator(',\n')]
+               {
+                 "id": "[aClass.name/]",
+                 "name": "[aClass.package.name/]::[aClass.name/]",
+                 "definition": "[aClass.u_onlyDefinition().replaceAll('"', '\\\\"')/]",
+                 "parent": "[if (aClass.superClass->size() > 0)][aClass.superClass->asSequence()->at(1).name/][elseif (allTopSuperClasses->includes(aClass))]Root[/if]"
+          
+               }[/for]
+        
+           ]
+      [/let]
+    [/let]
+  [/file]
+[/template]
+
+[comment for 3d, NOT USED /]
+[template public createAssociationJsonFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/association.json'), overwrite, 'UTF-8')]
+    ['['/]
+    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp12 | temp12.name)) separator(',\n')]  [aClass.classJson()/][/for]
+    ]
+  [/file]
+[/template]
+
+[comment NOT USED /]
+[template public createClassifierMappingTableJsFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/ClassifierMappingTable.js'), overwrite, 'UTF-8')]
+    var classifierMappingTable = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()->collect(p | p.oclAsType(uml::NamedElement))->union(aModel.u_allClasses())->union(aModel.u_allDataTypes())->select(temp13 | temp13.qualifiedName.tokenize('::')->asOrderedSet()->intersection('ddi-cdi_packages_ignore2'.getPropertyValue().substituteAll(' ', '').tokenize(',')->asOrderedSet())->size() = 0)->sortedBy(temp14 | temp14.name))]
+        "[aNamedElement.name/]" : "[aNamedElement.qualifiedName.replace('DDICDIModels::', '').replaceAll('::', '/') + '.html'/]",
+    [/for]
+    }
+  [/file]
+[/template]
+
+[comment]   [let targetClassList : OrderedSet(uml::Class) = aClass.u_allSuperClasses()->union(OrderedSet{aClass}->asSequence())->collect(temp15 | temp15.u_outgoingAssociatedClasses())->asOrderedSet()->sortedBy(temp16 | temp16.name)]
+[/comment]
+[template public classJson(aClass : uml::Class)]
+  [let targetClassList : OrderedSet(uml::Class) =
+  	aClass.u_allSuperClasses()
+  	->union(OrderedSet{aClass})
+  	->collect(c1 | c1.u_outgoingAssociatedClasses())
+  	->sortedBy(c2 | c2.name)
+  	]
+    {
+      "name": "[aClass.nodeName()/]"[if (targetClassList->size() > 0)]
+                                      ,
+                                        "imports": ['['/]
+                                      [for (targetClass : uml::Class | targetClassList) separator(',\n')]    "[targetClass.nodeName()/]"[/for]
+                                        ][/if]
+    
+    }[/let]
+[/template]
+
+[template public associationJson(anAssociation : uml::Association)]
+  [let targetClass : uml::Class = anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(uml::Class)]
+    "[targetClass.nodeName()/]",
+    [for (aClass : uml::Class | targetClass.u_allSubClasses())]
+      "[aClass.nodeName()/]",
+    [/for]
+  [/let]
+[/template]
+
+[comment]
+"[anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(Class).qualifiedName.replaceAll('::', '.')/]"
+
+Assocation name [anAssociation.name/]
+source: [anAssociation.ownedEnd->first().type.name/]
+[/comment]
+[comment]"[anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(Class).u_simpleQualifiedClassifierName()/]"[/comment]
+[template public nodeName(aClass : uml::Class)]
+  [aClass.package.qualifiedName.replaceAll('::', '.')/].[aClass.package.name/]::[aClass.name/][/template]

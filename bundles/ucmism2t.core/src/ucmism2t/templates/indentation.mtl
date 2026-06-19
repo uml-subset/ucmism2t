@@ -1,0 +1,36 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module indentation.
+ */]
+
+[module indentation(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[comment @main/]
+[template public mainTemplate(aModel : uml::Model)]
+  [file ('myFragment.xml', overwrite, 'UTF-8')]
+    <level1>
+      <xs:annotation>
+  ['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+      [aModel.level2()/]
+    </level1>
+  [/file]
+[/template]
+
+[template public level2 (aModel : uml::Model)]
+  <level2>
+    <xs:annotation>
+['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2>
+[/template]
+
+[template public xsd_escapeXmlCharacters(anAttribute : uml::Element) post(self.trim())]
+  line 1
+  line 2
+  line 3
+[/template]

@@ -1,0 +1,52 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module dataTypeShacl(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::dataTypeQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::target::shacl::commonShacl/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::queries::configurationQuery/]
+
+[template public dataTypeShacl(aDataType : uml::DataType)]
+  # datatype [aDataType.name/]
+  # based on the UML data type [aDataType.qualifiedName/]
+  [aDataType.fragment()/] a sh:NodeShape;
+  [if (aDataType.oclIsTypeOf(uml::Enumeration))]
+        sh:in ( [for (aLiteral : uml::EnumerationLiteral | aDataType.oclAsType(uml::Enumeration).ownedLiteral)][aLiteral.iri()/] [/for] );
+  [else]
+        sh:targetClass [aDataType.iri()/];
+    	sh:message "See ['RDF_NS'.getPropertyValue()/][aDataType.name/]";
+    	sh:closed true;
+    	sh:ignoredProperties ( owl:sameAs );
+        sh:property ['['/]
+    			sh:path rdf:type;
+    			sh:in ( [aDataType.allSubDataTypes()/] ) ;
+        ];
+  [/if]
+  [aDataType.datatypePropertiesShacl()/]
+  .
+  
+  [for (anAttribute : uml::Property | aDataType.u_attributes())]
+    [anAttribute.attributeShape()/]
+  [/for]
+[/template]
+
+[template public datatypePropertiesShacl(aDataType : uml::DataType)]
+      # attributes
+  [for (anAttribute : uml::Property | aDataType.u_attributes())]
+        sh:property [anAttribute.fragment()/];
+  [/for]
+  
+  [for (sd : uml::DataType | aDataType.general->asSequence()->collect(temp1 | temp1.oclAsType(uml::DataType)))]
+        # ---- superclass: [sd.name/]
+    [sd.datatypePropertiesShacl()/]
+  [/for]
+  
+[/template]

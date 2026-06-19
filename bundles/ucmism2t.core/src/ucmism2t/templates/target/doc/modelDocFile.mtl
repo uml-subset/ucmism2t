@@ -1,0 +1,168 @@
+[**
+ * All templates in the *Doc.mtl modules generate reStructuredText for processing with Sphinx.
+ */]
+[module modelDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::services::PropertiesService /]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::doc::aboutModelDocFile/]
+[import ucmism2t::templates::target::doc::appendicesDocFile/]
+[import ucmism2t::templates::target::doc::packageDocFile/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+[import ucmism2t::templates::target::doc::vegaJsonFile/]
+
+[comment encoding = UTF-8 /]
+[**
+ * Processes an UML class model complying to UCMIS.
+ * See: https://bitbucket.org/ddi-alliance/ucmis/
+ * Creates a file for the model.
+ * @param aModel a model
+*/]
+[template public processModelDoc(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    .. _[aModel.qualifiedName/]:
+    
+    [if (not 'includeAllItems'.isPropertyTrue())]
+      [aModel.u_subsetTitle().rst_header('*')/]
+      
+      *Description of subset ...*
+      
+      -----
+      
+    [/if]
+    [aModel.rst_mainIndexHead()/]
+    [for (aPackage : uml::Package | aModel.u_childPackages()->select(p | 'includeAllItems'.isPropertyTrue() or aModel.u_model().u_subsetPackages()->includes(p.name)))]
+         [aPackage.name.concat('/index.rst')/]
+      [aPackage.processPackageDoc()/][/for]
+    [if ('includeAllItems'.isPropertyTrue())]
+         Appendices/index.rst
+    [/if]
+       about/index.rst
+  [/file]
+  [if ('includeAllItems'.isPropertyTrue())]
+    [aModel.appendicesIndex()/]
+  [/if]
+  [aModel.aboutModel()/]
+  [aModel.modelInformationJs()/]
+  [aModel.createRedirectHtml()/]
+  [aModel.vegaTreeLayoutClassJsonFile()/]
+  [aModel.vegaEdgeBundlingClassJsonFile()/]
+  [aModel.vegaEdgeBundlingAssociationJsonFile()/]
+[/template]
+
+[template public modelInformationJs(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/_modelInformation.js'), overwrite, 'UTF-8')]
+    var modelUrl = '[aModel.e_modelUri()/]';
+    var modelDocumentationUrl = '['DOCUMENTATION_URL'.getPropertyValue()/]';
+    var definition = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()->collect(p | p.oclAsType(uml::NamedElement))->union(aModel.u_allClasses())->union(aModel.u_allDataTypes()))]
+      	"[aNamedElement.name/]": "[aNamedElement.u_onlyDefinition().replaceAll('"', '\\\\"')/]",
+    [/for]
+    	"tooltip.aggregation-kind": "['tooltip.aggregation-kind'.getPropertyValue()/]",
+    	"tooltip.association": "['tooltip.association'.getPropertyValue()/]",
+    	"tooltip.attribute": "['tooltip.attribute'.getPropertyValue()/]",
+    	"tooltip.canonical-xmi": "['tooltip.canonical-xmi'.getPropertyValue()/]",
+    	"tooltip.class": "['tooltip.class'.getPropertyValue()/]",
+    	"tooltip.classifier": "['tooltip.classifier'.getPropertyValue()/]",
+    	"tooltip.coupling": "['tooltip.coupling'.getPropertyValue()/]",
+    	"tooltip.data-type": "['tooltip.data-type'.getPropertyValue()/]",
+    	"tooltip.diagram": "['tooltip.diagram'.getPropertyValue()/]",
+    	"tooltip.enumeration": "['tooltip.enumeration'.getPropertyValue()/]",
+    	"tooltip.encoding": "['tooltip.encoding'.getPropertyValue()/]",
+    	"tooltip.enumeration-literal": "['tooltip.enumeration-literal'.getPropertyValue()/]",
+    	"tooltip.inheritance": "['tooltip.inheritance'.getPropertyValue()/]",
+    	"tooltip.json-schema": "['tooltip.json-schema'.getPropertyValue()/]",
+    	"tooltip.json-ld": "['tooltip.json-ld'.getPropertyValue()/]",
+    	"tooltip.multiplicity": "['tooltip.multiplicity'.getPropertyValue()/]",
+    	"tooltip.navigability": "['tooltip.navigability'.getPropertyValue()/]",
+    	"tooltip.rdf-ontology": "['tooltip.rdf-ontology'.getPropertyValue()/]",
+    	"tooltip.shacl": "['tooltip.shacl'.getPropertyValue()/]",
+    	"tooltip.shex": "['tooltip.shex'.getPropertyValue()/]",
+    	"tooltip.usage": "['tooltip.usage'.getPropertyValue()/]",
+    	"tooltip.xml-schema": "['tooltip.xml-schema'.getPropertyValue()/]",
+    }
+  [/file]
+[/template]
+
+[**
+ * Writes the model URL to a Javascript file
+ * which is used by the generated documentation as logo link.
+*/]
+[template public modelUrlJsFile(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc') + '/_modelUrl.js', overwrite, 'UTF-8')]
+    var modelUrl = '[aModel.e_modelUri()/]';
+  [/file]
+[/template]
+
+[comment NOT USED /]
+[template public addLinksInSpecificationOverview(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/addLinksInSpecificationOverview.sed'), overwrite, 'UTF-8')]
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()->collect(p | p.oclAsType(uml::NamedElement))->union(aModel.u_mainPackage().eAllContents(uml::Class))->union(aModel.u_mainPackage().eAllContents(uml::DataType))->sortedBy(temp1 | temp1.name)->reverse())]
+      s/ [aNamedElement.name/]s/ :ref:`[aNamedElement.name/]s\<[aNamedElement.qualifiedName/]\>`/g
+      s/*[aNamedElement.name/]s/*:ref:`[aNamedElement.name/]s\<[aNamedElement.qualifiedName/]\>`/g
+      s/^[aNamedElement.name/]s/:ref:`[aNamedElement.name/]s\<[aNamedElement.qualifiedName/]\>`/g
+      s/ [aNamedElement.name/]/ :ref:`[aNamedElement.name/]\<[aNamedElement.qualifiedName/]\>`/g
+      s/*[aNamedElement.name/]/*:ref:`[aNamedElement.name/]\<[aNamedElement.qualifiedName/]\>`/g
+      s/^[aNamedElement.name/]/:ref:`[aNamedElement.name/]\<[aNamedElement.qualifiedName/]\>`/g
+    [/for]
+  [/file]
+[/template]
+
+[template public createRedirectHtml(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/rewrite.html'), overwrite, 'UTF-8')]
+    <!DOCTYPE html>
+    <html>
+      <body onload="redirect()">
+        <script>
+          var mappingTable = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp2 | temp2.name)->union(aModel.u_mainPackage().eAllContents(uml::DataType)->sortedBy(temp3 | temp3.name)))]
+              "[aNamedElement.name/]": "[aNamedElement.qualifiedName.replace(aModel.name + '::', '').replaceAll('::', '/') + '.html'/]",
+    [/for]
+          }
+          function redirect() {
+            pathname = window.location.pathname;
+            lastSlashPosition = pathname.lastIndexOf('/');
+            documentationRoot = pathname.substring(0, lastSlashPosition+1);
+            if (window.location.hash) {
+    	      var fragmentIdentifier = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+    	      window.location.replace(documentationRoot+mappingTable['['/]['['/]fragmentIdentifier]]);
+            } else {
+              window.location.replace(documentationRoot);
+            }
+          }
+        </script>
+      </body>
+    </html>
+  [/file]
+[/template]
+
+[template public XcreateRedirectHtml(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/rewrite_index.html'), overwrite, 'UTF-8')]
+    <!DOCTYPE html>
+    <html>
+    <body onload="redirect()">
+    <script>
+    function redirect() {
+    	documentationRoot = "['DDI-CDI_DOCUMENTATION_ROOT'.getPropertyValue()/]";
+    	var mappingTable = {
+    [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()->collect(p | p.oclAsType(uml::NamedElement))->union(aModel.u_allClasses())->union(aModel.u_allDataTypes())->select(temp4 | temp4.qualifiedName.tokenize('::')->asOrderedSet()->intersection('ddi-cdi_packages_ignore2'.getPropertyValue().substituteAll(' ', '').tokenize(',')->asOrderedSet())->size() = 0)->sortedBy(temp5 | temp5.name))]
+              "[aNamedElement.name/]" : "[aNamedElement.qualifiedName.replace('DDICDIModels::', '').replaceAll('::', '/') + '.html'/]",
+    [/for]
+    	}
+    	if (window.location.hash) {
+    		var fragmentIdentifier = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+    		window.location.replace(documentationRoot+mappingTable['['/]['['/]fragmentIdentifier]]);
+    	} else {
+    		window.location.replace(documentationRoot);
+    	}
+    }
+    </script>
+    </body>
+    </html>
+  [/file]
+[/template]

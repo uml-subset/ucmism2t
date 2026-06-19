@@ -1,0 +1,40 @@
+[comment encoding = UTF-8 /]
+[**
+
+/]
+[module modelShaclFile(
+	'http://www.eclipse.org/uml2/5.0.0/UML',
+	'http://www.eclipse.org/uml2/5.0.0/Types',
+	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::templates::query::oldModelQuery/]
+[import ucmism2t::templates::target::shacl::classShacl/]
+[import ucmism2t::templates::target::shacl::dataTypeShacl/]
+[import ucmism2t::templates::target::rdf::commonRdf/]
+[import ucmism2t::templates::target::shacl::commonShacl/]
+[import ucmism2t::queries::configurationQuery/]
+
+[comment encoding = UTF-8 /]
+[**
+ * Processes an UML class model according to the the rules described in the
+ * document "UML Class Interoperable Subset".
+ * See {@https://bitbucket.org/ddi-alliance/ucmis/}.
+ * Creates a file for the model.
+ * @param aModel a model
+*/]
+[template public packageShaclFile(aModel : uml::Model)]
+  [file (aModel.e_modelShortName() + '/encoding/shacl/' + aModel.e_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
+    [aModel.u_model().ttl_prefixes()/]
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+    
+    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
+      [aClass.classShacl()/]
+    [/for]
+    [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)->sortedBy(temp2 | temp2.name)->select(temp3 | not temp3.qualifiedName.contains('XMLSchemaDataTypes')))]
+      [aDataType.dataTypeShacl()/]
+    [/for]
+  [/file]
+[/template]
