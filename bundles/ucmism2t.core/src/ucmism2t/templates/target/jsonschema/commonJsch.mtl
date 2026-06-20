@@ -12,23 +12,24 @@ Module contains templates for JSON Schema.
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
-[template public arrayClassSchemas(aModel : uml::Model) post(self.trim())]
-  ['['/]
-  [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
+[template public arrayClassSchemas(aModel : uml::Model)]
+  [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(c | c.name))]
     {
       "if": { "properties": { "@type": { "const": "[aClass.name/]" } } },
       "then": { "$ref": "#/defs/cls-[aClass.name/]" },
       "else": false
     },
   [/for]
-  false
-  ][/template]
+[/template]
 
 [**
- * List-items of the names of the required attributes
+ * List-items of the names of the required attributes returned as string
 */]
-[template public requiredAttributes(aClassifier : uml::Classifier) post(self.trim())]
-  [for (anAttribute : uml::Property | aClassifier.u_attributes())][if (anAttribute.lowerBound() > 0)]"[anAttribute.name/]",[/if][/for][/template]
+[query public requiredAttributes(aClassifier : uml::Classifier) : String =
+  aClassifier.u_attributes()->select(p1 | p1.lower > 0)
+    ->collect(p2 | '"' + p2.name + '",')
+    ->toString()
+/]
 
 [template public genAttributes(aClassifier : uml::Classifier) post(self.trim())]
   [for (anAttribute : uml::Property | aClassifier.u_attributes())]

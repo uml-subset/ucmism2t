@@ -8,13 +8,28 @@
 #!bundles/ucmism2t.core/src/ucmism2t/templates/target/**
 # above did not work correctly
 # explicit listing of maven target folders
-bundles/ucmism2t.cli/target
+bundles/ucmism2t.cli/target/
 # NOT LISTED src folder: bundles/ucmism2t.core/src/ucmism2t/templates/target
-bundles/ucmism2t.core/target
-bundles/ucmism2t.core/target/classes/ucmism2t/templates/target
-features/ucmism2t.feature/target
-releng/ucmism2t.product/target
-repository/ucmism2t.repository/target
+bundles/ucmism2t.core/target/
+bundles/ucmism2t.core/target/classes/ucmism2t/templates/target/
+features/ucmism2t.feature/target/
+releng/ucmism2t.product/target/
+#CHECK when more platforms are there and clear which files per platform should be in github.
+# these statements seem to work
+# 1. Ignore the CONTENTS of the target folder, but not the folder itself
+#releng/ucmism2t.product/target/*
+
+# 2. Allow Git to enter the products subfolder structure
+#!releng/ucmism2t.product/target/products/
+#!releng/ucmism2t.product/target/products/ucmism2t.product/
+
+# 3. Track everything inside the final product folder
+#!releng/ucmism2t.product/target/products/ucmism2t.product/**
+
+#releng/ucmism2t.product/target/
+#!releng/ucmism2t.product/target/products/ucmism2t.product/
+#!releng/ucmism2t.product/target/products/ucmism2t.product/**
+repository/ucmism2t.repository/target/
 # Maven cont.
 pom.xml.tag
 pom.xml.releaseBackup

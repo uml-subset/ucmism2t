@@ -40,7 +40,10 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
         "root-object": {
           "type": "object",
           "required": ['['/]"@type"],
-          "anyOf": [aModel.arrayClassSchemas()/]
+          "anyOf": ['['/]
+            [aModel.arrayClassSchemas()/]
+            false
+          ]
         },
         "root-array": {
           "type": "array",

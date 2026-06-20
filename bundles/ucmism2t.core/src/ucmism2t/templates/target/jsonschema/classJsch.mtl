@@ -56,8 +56,8 @@ Module contains templates for JSON Schema.
 
 [template protected genClassAttributes(aClass : uml::Class) post(self.trim())]
   [aClass.genAttributes()/]
-  [if (not aClass.superClass->isEmpty())]
-    [aClass.superClass->asSequence()->collect(temp1 | temp1.genClassAttributes())/]
+  [if (aClass.superClass->notEmpty())]
+    [aClass.superClass->first().genClassAttributes()/]
   [/if]
 [/template]
 
@@ -129,16 +129,32 @@ Module contains templates for JSON Schema.
 [/template]
 
 [**
- * List-items of the names of the required attributes
+ * List-items of the names of the required attributes returned as string.
 */]
-[template public requiredClassAttributes(aClass : uml::Class) post(self.trim())]
-  [aClass.requiredAttributes()/][if (not aClass.superClass->isEmpty())][aClass.superClass->asSequence()->collect(temp4 | temp4.requiredClassAttributes())/][/if][/template]
+[query public requiredClassAttributes(aClass : uml::Class) : String =
+  let s : String = aClass.requiredAttributes()
+  in
+  if (aClass.superClass->isEmpty())
+    s
+  else
+    s + aClass.superClass->first().requiredClassAttributes()
+  endif
+/]
 
 [**
- * List-items of the names of the required associations
+ * List-items of the names of the required associations in the returned string.
 */]
-[template public requiredAssociations(aClass : uml::Class) post(self.trim())]
-  [for (anAssociation : uml::Association | aClass.u_associations()->select(anAssociation | anAssociation.u_ownedEndClass() = aClass))][let sourceEnd : uml::Property = anAssociation.ownedEnd->first()][let targetEnd : uml::Property = sourceEnd.getOtherEnd()][if (targetEnd.lowerBound() > 0)]"[anAssociation.shortName()/]", [/if][/let][/let][/for][if (not aClass.superClass->isEmpty())]
-                                                                                                                                                                                                                                                                                                                                                           [aClass.superClass->asSequence()->collect(temp5 | temp5.requiredAssociations())/]
-                                                                                                                                                                                                                                                                                                                                                         [/if]
-[/template]
+[query public requiredAssociations(aClass : uml::Class) : String =
+  let s : String =
+    aClass.u_associations()
+      ->select(a1 | a1.u_ownedEndClass() = aClass)
+      ->select(a2 | a2.u_otherEnd().lower > 0)
+      ->collect(a3 | '"' + a3.shortName() + '", ')
+      ->toString()
+  in  
+  if (aClass.superClass->isEmpty())
+    s
+  else
+    s + aClass.superClass->first().requiredAssociations()
+  endif
+/]

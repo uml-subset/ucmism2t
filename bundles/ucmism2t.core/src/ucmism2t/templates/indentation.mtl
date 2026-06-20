@@ -16,17 +16,89 @@
       <xs:annotation>
   ['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
-      [aModel.level2()/]
+      [aModel.level2a()/]
+      [aModel.level2b()/]
+      [aModel.level2b2()/]
+      [aModel.level2c()/]
+      [aModel.level2d()/]
+      [aModel.level2e()/]
+      [aModel.level2f()/]
+      [aModel.level2g()/]
+      [aModel.level2h()/]
     </level1>
   [/file]
 [/template]
 
-[template public level2 (aModel : uml::Model)]
-  <level2>
+[template public level2a (aModel : uml::Model)]
+  <level2a>
     <xs:annotation>
 ['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
     </xs:annotation>
-  </level2>
+  </level2a>
+[/template]
+
+[template public level2b (aModel : uml::Model)]
+  <level2b>
+    <xs:annotation>
+  ['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2b>
+[/template]
+
+[template public level2b2 (aModel : uml::Model)]
+  <level2b2>
+    <xs:annotation>
+['  <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2b2>
+[/template]
+
+[template public level2c (aModel : uml::Model)]
+  <level2c>
+    <xs:annotation>
+['            <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2c>
+[/template]
+
+[template public level2d (aModel : uml::Model)]
+  <level2d>
+    <xs:annotation>
+  ['      <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2d>
+[/template]
+
+[template public level2e (aModel : uml::Model)]
+  <level2e>
+    <xs:annotation>
+['        <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2e>
+[/template]
+
+[template public level2f (aModel : uml::Model)]
+  <level2f>
+    <xs:annotation>
+  ['        <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+    </xs:annotation>
+  </level2f>
+[/template]
+
+[template public level2g (aModel : uml::Model)]
+    <level2g>
+      <xs:annotation>
+    ['    <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+    </level2g>
+[/template]
+
+[template public level2h (aModel : uml::Model)]
+    <level2h>
+      <xs:annotation>
+    ['      <xs:documentation>' + aModel.xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+    </level2h>
 [/template]
 
 [template public xsd_escapeXmlCharacters(anAttribute : uml::Element) post(self.trim())]
