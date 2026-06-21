@@ -355,7 +355,7 @@
 
 [template public rst_refDataType(aType : uml::Type) post(self.trim())]
   [if (aType.ancestors()->notEmpty())]
-    :ref:`[aType.u_typeQualifiedName()/]`
+    :ref:`[aType.qualifiedName/]`
   [else]
     [aType.name/]
   [/if]

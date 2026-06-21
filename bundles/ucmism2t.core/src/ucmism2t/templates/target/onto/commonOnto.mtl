@@ -11,7 +11,6 @@
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
-[comment encoding = UTF-8 /]
 [template public attributeOnto(anAttribute : uml::Property)]
   [anAttribute.iri()/]
     a rdf:Property, [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))]owl:DatatypeProperty[else]owl:ObjectProperty[/if], ucmis:Attribute;

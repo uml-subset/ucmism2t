@@ -14,16 +14,21 @@ Module contains queries with a UML element or named element as receiver.
 [import ucmism2t::templates::query::oldModelQuery/]
 
 [**
-Returns the root model that owns the specified element,
-by navigating up the containment hierarchy to the first
-uml::Model ancestor. AQL equivalent of getModel().
-
-@param anElement - A UML element whose owning model is
-                   to be retrieved.
+ * Returns the root model that owns the specified element,
+ * by navigating up the containment hierarchy to the first
+ * uml::Model ancestor. Returns the element itself if it
+ * is already a uml::Model. AQL equivalent of getModel().
+ *
+ * @param anElement - A UML element whose owning model is
+ *                    to be retrieved. May itself be a
+ *                    uml::Model.
 /]
 [query public u_model(
   anElement : uml::Element) : uml::Model =
-  anElement.ancestors(uml::Model)->first()
+  if anElement.oclIsKindOf(uml::Model)
+  then anElement.oclAsType(uml::Model)
+  else anElement.ancestors(uml::Model)->first()
+  endif
 /]
 
 [**
@@ -87,6 +92,27 @@ Returns the qualified name of the specified element in the form
 /]
 
 [**
+ * Returns the body of the first owned comment of the specified
+ * element if it exists, trimmed of leading and trailing spaces,
+ * or a warning message if the element has no comment and the
+ * 'WARNING_MISSING_DOCUMENTATION' property is set to true,
+ * or an empty string otherwise.
+ *
+ * @param anElement - A UML element whose first comment body
+ *                    is to be retrieved.
+/]
+[query public u_commentBody(
+  anElement : uml::Element) : String =
+  if anElement.ownedComment->notEmpty()
+  then anElement.ownedComment->first().body.trim()
+  else
+    if 'WARNING_MISSING_DOCUMENTATION'.isPropertyTrue()
+    then 'WARNING: ELEMENT HAS NO DOCUMENTATION!'
+    else ''
+    endif
+  endif
+/]
+[**
 Returns the body of the first owned comment of the specified
 element if it exists, trimmed of leading and trailing spaces,
 or a warning message otherwise.
@@ -94,12 +120,15 @@ or a warning message otherwise.
 @param anElement - A UML element whose first comment body
                    is to be retrieved.
 /]
-[query public u_commentBody(
+[query public Xu_commentBody(
   anElement : uml::Element) : String =
   if anElement.ownedComment->notEmpty() then
     anElement.ownedComment->first().body.trim()
-  else
+  else if 'WARNING_MISSING_DOCUMENTATION'.isPropertyTrue()
     'WARNING: ELEMENT HAS NO DOCUMENTATION!'
+  else
+    ''
+  endif
   endif
 /]
 

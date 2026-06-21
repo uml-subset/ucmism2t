@@ -26,7 +26,7 @@
   	sh:ignoredProperties ( owl:sameAs );
       sh:property ['['/]
   			sh:path rdf:type;
-  			sh:in ( [aClass.allSubClasses()/] ) ;
+  			sh:in ( [aClass.allSubClasses()/]);
       ];
   [aClass.classPropertiesShacl()/]
   .

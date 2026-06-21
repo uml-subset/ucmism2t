@@ -38,8 +38,8 @@
   PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
   PREFIX dc:    <http://purl.org/dc/elements/1.1/>
   PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
-  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:  <['RDF_NS'.getPropertyValue()/]>
-  PREFIX ucmis: <http://ddialliance.org/Specification/UCMIS/1.0/RDF>
+  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:   <['RDF_NS'.getPropertyValue()/]>
+  PREFIX ucmis: <http://ddialliance.org/Specification/UCMIS/1.0/RDF/>
 [/template]
 
 [**
@@ -123,7 +123,9 @@ Converts a UML comment into an RDFS comment.
 @param Any UML Element
 /]
 [template public rdfs_comment(anNamedElement : uml::NamedElement)]
-  rdfs:comment "[anNamedElement.u_commentBody().ttlEscape()/]"@[anNamedElement.u_model().e_modelLanguage()/];
+  [if (anNamedElement.u_commentBody().size()>0)]
+    rdfs:comment "[anNamedElement.u_commentBody().ttlEscape()/]"@[anNamedElement.u_model().e_modelLanguage()/];
+  [/if]
 [/template]
 [comment] Acceleo 3.7 version
 [template public rdfs_comment(comments : OrderedSet(uml::Comment))]

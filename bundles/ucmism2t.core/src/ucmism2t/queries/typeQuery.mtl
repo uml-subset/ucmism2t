@@ -89,7 +89,7 @@ is present.
 @param aType - A UML type whose simple name is to be returned,
                including unresolved primitive type proxies.
 /]
-[query public u_typeQualifiedName(aType : uml::Type) : String =
+[comment] [query public u_typeQualifiedName(aType : uml::Type) : String =
   if aType.eClass().name = 'PrimitiveType' then
     let s : String = aType.toString()
     in
@@ -98,3 +98,4 @@ is present.
     aType.qualifiedName
   endif
 /]
+[/comment]

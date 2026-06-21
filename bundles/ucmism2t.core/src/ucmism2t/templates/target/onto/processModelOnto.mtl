@@ -10,17 +10,13 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::packageQuery/]
+[import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::onto::classOnto/]
 [import ucmism2t::templates::target::onto::dataTypeOnto/]
 [import ucmism2t::templates::target::onto::enumerationOnto/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
-[comment JW: why is condition here required? Filter for subpackages is defined below in for loop.
-[template public packageOntoFile(aPackage : Package)
-	? ( not ( getProperty('ddi-cdi_packages_ignore').substituteAll(' ', '').tokenize(',')->exists(s|s=aPackage.name) ) )]
-[template public packageOntoFile(aPackage : Package) ? (aPackage.u_isAllowedPackage()) ] JW: does not work??
-/]
 [template public packageOntoFile(aPackage : uml::Package)]
   [file (aPackage.u_model().e_modelShortName() + '/encoding/ontology/' + aPackage.name + '.onto.ttl', overwrite, 'UTF-8')]
     # PLEASE DO NOT EDIT THIS CODE!
@@ -34,7 +30,10 @@
     <[aPackage.name/].onto.ttl> a owl:Ontology;
       rdfs:label "[aPackage.name/]";
       [aPackage.rdfs_comment()/]
-    [for (subPackage : uml::Package | aPackage.u_childPackages()->select(p | p.u_isAllowedPackage()))]
+    [for (subPackage : uml::Package | aPackage.u_childPackages()
+      ->select(p1 | p1.u_isAllowedPackage())
+      ->select(p2 | 'IGNORE_PACKAGE'.getPropertyValue().substituteAll(' ', '').tokenize(',')->excludes(s | s=aPackage.name) )
+      )]
         owl:imports <[subPackage.name/].onto.ttl>;[subPackage.packageOntoFile()/]
     [/for]
     .
@@ -43,7 +42,8 @@
       [aClass.classOnto()/]
     [/for]
     
-    [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(aDataType | aDataType.isComplex() and aDataType.isNotInMappedItems()))]
+    [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()
+      ->select(aDataType | aDataType.isComplex() and aDataType.isNotInMappedItems()))]
       [aDataType.dataTypeOnto()/]
     [/for]
     

@@ -24,9 +24,12 @@
   [/let]
 [/template]
 
-[template public allSubClasses(aClass : uml::Class)]
-    [aClass.iri()/]
-  [for (sc : uml::Class | aClass.u_subClasses())][sc.allSubClasses()/][/for][/template]
+[template public allSubClasses(aClass : uml::Class) post(self.removeLineSeparators().replaceAll('  ', ' '))]
+  [aClass.iri() + ' '/]
+  [for (sc : uml::Class | aClass.u_subClasses())]
+    [sc.allSubClasses() + ' '/]
+  [/for]
+[/template]
 
 [template public subDatatypesShapes(aDataType : uml::Type)]
   [let sds : OrderedSet(uml::DataType) = aDataType.eInverse(uml::DataType)->sortedBy(temp1 | temp1.name)]
