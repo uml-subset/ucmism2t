@@ -21,7 +21,7 @@ Not tested with other classifier types.
 
 @param aClassifier A UML classifier
 /]
-[query public Xu_subClassesOrSubDataTypes(
+[comment] [query public Xu_subClassesOrSubDataTypes(
 		aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
 	if aClassifier.oclIsTypeOf(uml::Class)
 	then
@@ -34,7 +34,7 @@ Not tested with other classifier types.
 		endif
 	endif
 /]
-
+[/comment]
 [**
 Returns an ordered set of direct subclasses or sub data types
 of a classifier, sorted by classifier name.

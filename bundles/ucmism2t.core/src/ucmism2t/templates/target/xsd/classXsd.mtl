@@ -23,13 +23,13 @@
               xml:id="[aClass.name/]">
     <!-- based on the UML class [aClass.qualifiedName/] -->
     <xs:annotation>
-['  X1<xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+['    <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="[aClass.name/]XsdType"
                   xml:id="[aClass.name/]XsdType">
     <xs:annotation>
-['  X2<xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+['    <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
     </xs:annotation>
     [if (aClass.u_allSuperClasses()->notEmpty())]
       <xs:complexContent>
@@ -61,7 +61,7 @@
                   maxOccurs="[anAttribute.xsd_upperCardinality()/]"
                   xml:id="[aClass.name.concat('-').concat(anAttribute.name)/]">
         <xs:annotation>
-['  X3<xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+    ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
       </xs:element>
     [/for]
@@ -73,7 +73,7 @@
                       maxOccurs="[targetClass.xsd_upperCardinality()/]"
                       xml:id="[aProperty.association.name/]">
             <xs:annotation>
-['  X4<xs:documentation>' + aProperty.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+    ['    <xs:documentation>' + aProperty.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
             </xs:annotation>
             <xs:complexType>
               <xs:complexContent>

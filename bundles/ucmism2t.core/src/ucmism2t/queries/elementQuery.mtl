@@ -37,11 +37,11 @@ containment hierarchy. AQL equivalent of eContainer().
 
 @param anElement - A UML element whose direct parent is to be retrieved.
 /]
-[query public u_parent(
+[comment] [query public u_parent(
   anElement : uml::Element) : uml::Element =
   anElement.ancestors(uml::Element)->first()
 /]
-
+[/comment]
 [**
 Returns the direct parent of the specified named element in the UML
 containment hierarchy. AQL equivalent of eContainer().
@@ -54,6 +54,26 @@ containment hierarchy. AQL equivalent of eContainer().
 /]
 
 [**
+Returns the nearest containing package of the specified named
+element, by navigating up the containment hierarchy to the
+first uml::Package ancestor.
+- For a uml::Class or any non-package element: returns the
+  directly owning package.
+- For a uml::Package: returns the parent package.
+- For a uml::Model (no container): returns itself as there
+  is no parent package to navigate to.
+
+@param aNamedElement - A UML named element.
+/]
+[query public u_nearestPackage(
+  aNamedElement : uml::NamedElement) : uml::Package =
+  if aNamedElement.oclIsKindOf(uml::Model)
+  then aNamedElement.oclAsType(uml::Model)
+  else aNamedElement.ancestors(uml::Package)->first()
+  endif
+/]
+
+[**
 Returns the nearest package that directly or indirectly owns the
 specified element, by navigating up the containment hierarchy to
 the first uml::Package ancestor.
@@ -61,11 +81,11 @@ the first uml::Package ancestor.
 @param anElement - A UML element whose nearest containing package
                    is to be retrieved.
 /]
-[query public u_nearestPackage(
+[comment] [query public u_nearestPackage(
   anElement : uml::Element) : uml::Package =
   anElement.ancestors(uml::Package)->first()
 /]
-
+[/comment]
 [**
 Returns the nearest package that directly or indirectly owns the
 specified named element, by navigating up the containment hierarchy to
@@ -74,7 +94,15 @@ the first uml::Package ancestor.
 @param aNamedElement - A UML named element whose nearest containing package
                    is to be retrieved.
 /]
-[query public u_nearestPackage(
+[query public OK2u_nearestPackage(
+  aNamedElement : uml::NamedElement) : uml::Package =
+  if aNamedElement.oclIsKindOf(uml::Model)
+  then aNamedElement.oclAsType(uml::Model)
+  else
+  aNamedElement.ancestors(uml::Package)->first()
+  endif
+/]
+[query public OKu_nearestPackage(
   aNamedElement : uml::NamedElement) : uml::Package =
   aNamedElement.ancestors(uml::Package)->first()
 /]
@@ -120,7 +148,7 @@ or a warning message otherwise.
 @param anElement - A UML element whose first comment body
                    is to be retrieved.
 /]
-[query public Xu_commentBody(
+[comment] [query public Xu_commentBody(
   anElement : uml::Element) : String =
   if anElement.ownedComment->notEmpty() then
     anElement.ownedComment->first().body.trim()
@@ -131,7 +159,7 @@ or a warning message otherwise.
   endif
   endif
 /]
-
+[/comment]
 [**
 Returns the first 100 characters of the first owned comment body
 of the specified element, followed by a newline and '...'
@@ -213,7 +241,8 @@ specified named element, matched by name. Returns null if not found.
 
 [**
 Returns true if the specified named element is a child of the main
-package and not contained in any ignored package.
+package and not contained in any ignored package
+listed in the IGNORE_PACKAGE property.
 
 @param aNamedElement - A UML named element.
 /]

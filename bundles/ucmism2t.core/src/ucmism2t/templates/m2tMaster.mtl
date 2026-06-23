@@ -39,10 +39,11 @@ data type with detailed information.
 [template public processModel(aModel : uml::Model)]
 	[aModel.initProperties()/]
 	[aModel.writeConfigurationReport()/]
-	[aModel.writeDiagnostic()/]
+  [if ('diagnostic'.isPropertyTrue())]
+    [aModel.writeDiagnostic()/]
+  [/if]
   [aModel.writeModelProperties()/]
   [aModel.writeModelPropertiesPy()/]
-
   [if (aModel.name = 'Mapping')]
     	[aModel.encodingMapping()/]
     	[aModel.processModelTest()/]
@@ -115,6 +116,6 @@ data type with detailed information.
 
 [template public writeDiagnostic(aModel : uml::Model)]
 [file ('_diagnostic.txt', overwrite, 'UTF-8')]
-[aModel.getDiagnosticInfo()/]
+  [aModel.getDiagnosticInfo()/]
 [/file]
 [/template]

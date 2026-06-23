@@ -30,14 +30,14 @@ correct navigation regardless of association ownership pattern
 @param anAssociation - A UML binary association whose source class
                        is to be retrieved.
 /]
-[query public Xu_ownedEndClass(
+[comment] [query public Xu_ownedEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->reject(p | anAssociation.ownedEnd->includes(p))
     ->first()
     .type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the type of the first owned end of a binary directed
 association, cast to uml::Class. Intended for associations where
@@ -65,10 +65,10 @@ AQL operations used:
 @param anAssociation - A UML association whose first owned end type
                        is to be returned as a uml::Class.
 /]
-[query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class =
+[comment] [query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd->first().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 
 [**
 Returns the target class of a binary association — the class at
@@ -79,14 +79,14 @@ pattern (directed, bidirectional, or non-navigable).
 @param anAssociation - A UML binary association whose target class
                        is to be retrieved.
 /]
-[query public Xu_otherEndClass(
+[comment] [query public Xu_otherEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->select(p | anAssociation.ownedEnd->includes(p))
     ->first()
     .type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the type of the non-owned end of a binary directed
 association, cast to uml::Class. Navigates from the first owned end
@@ -118,10 +118,10 @@ AQL operations used:
 @param anAssociation - A UML association whose non-owned end type
                        is to be returned as a uml::Class.
 /]
-[query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class =
+[comment] [query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the source class of a binary directed association.
 The source end is owned by the association itself (ownedEnd),
@@ -132,13 +132,13 @@ See: u_otherEndClass(uml::Association) - Returns the target class.
 @param anAssociation - A UML binary directed association whose
                        source class is to be retrieved.
 /]
-[query public X2u_ownedEndClass(
+[comment] [query public X2u_ownedEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd
     ->first()
     .type.oclAsType(uml::Class)
 /]
-
+[/comment]
 
 [**
 Returns the target class of a binary directed association.
@@ -150,14 +150,14 @@ See: u_ownedEndClass(uml::Association) - Returns the source class.
 @param anAssociation - A UML binary directed association whose
                        target class is to be retrieved.
 /]
-[query public X2u_otherEndClass(
+[comment] [query public X2u_otherEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->reject(p | anAssociation.ownedEnd->includes(p))
     ->first()
     .type.oclAsType(uml::Class)
 /]
-
+[/comment]
 [**
 Returns the source (subject) end of a binary directed association.
 A binary directed association can be understood as a triple:
@@ -244,7 +244,7 @@ Returns the full name if it contains no underscores.
 
 @param anAssociation - A UML association.
 /]
-[query public u_shortAssociationName(
+[comment] [query public OKu_shortAssociationName(
   anAssociation : uml::Association) : String =
   if anAssociation.name.contains('_') then
     let nameAfterFirst : String =
@@ -255,3 +255,39 @@ Returns the full name if it contains no underscores.
     anAssociation.name
   endif
 /]
+[/comment]
+[**
+Returns the predicate (middle segment) of the association name,
+which follows the subject-predicate-object naming convention:
+  <subject>_<predicate>_<object>
+Returns a warning string if the name does not conform:
+- 'WARNING: no association name!' if the name is empty.
+- the full name if no underscore is present, as the model
+  may use simple association names without the convention.
+- 'WARNING: association name has only one underscore!' if only
+  one underscore is present, making the predicate ambiguous.
+
+@param anAssociation - A binary directed UML association whose
+                       name follows the subject_predicate_object
+                       convention, or a simple name.
+/]
+[query public u_shortAssociationName(
+  anAssociation : uml::Association) : String =
+  let n : String = anAssociation.name in
+  if n = ''
+  then 'WARNING: no association name!'
+  else
+    if n.contains('_')
+    then
+      let nameAfterFirst : String =
+        n.substring(n.index('_') + 1)
+      in
+      if nameAfterFirst.contains('_')
+      then nameAfterFirst.substring(1, nameAfterFirst.index('_') - 1)
+      else 'WARNING: association name has only one underscore!' + n
+      endif
+    else n
+    endif
+  endif
+/]
+

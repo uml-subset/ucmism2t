@@ -25,17 +25,13 @@
                 xml:id="[aDataType.name/]">
       <!-- based on the UML data type [aDataType.qualifiedName/] -->
       <xs:annotation>
-        <xs:documentation>
-[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
-        </xs:documentation>
+['    <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
     </xs:element>
     <xs:complexType name="[aDataType.name/]XsdType"
                     xml:id="[aDataType.name/]XsdType">
       <xs:annotation>
-        <xs:documentation>
-[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
-        </xs:documentation>
+  ['    <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
       [if (aDataType.u_allSuperDataTypes()->notEmpty())]
         <xs:complexContent>
@@ -57,17 +53,13 @@
                   xml:id="AssociationReference">
         <!-- related to the UML data type [aDataType.qualifiedName/] -->
         <xs:annotation>
-          <xs:documentation>AssociationReference
-[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
-          </xs:documentation>
+    ['    <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:complexType name="AssociationReferenceXsdType"
                       xml:id="AssociationReferenceXsdType">
         <xs:annotation>
-          <xs:documentation>
-[aDataType.u_commentBody().xsd_escapeXmlCharacters()/]
-          </xs:documentation>
+    ['    <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
         <xs:sequence>
           <xs:element name="ddiReference"
@@ -108,9 +100,7 @@
                   maxOccurs="[anAttribute.xsd_upperCardinality()/]"
                   xml:id="[itemName.concat('-').concat(anAttribute.name)/]">
         <xs:annotation>
-          <xs:documentation>
-[anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]
-          </xs:documentation>
+    ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
       </xs:element>
     [/for]

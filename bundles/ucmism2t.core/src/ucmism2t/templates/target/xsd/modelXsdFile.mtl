@@ -64,11 +64,10 @@ All templates in the *Xsd.mtl modules generate XML Schema.
         <xs:documentation>This group comprehends all elements which are based on classes in the UML model.</xs:documentation>
       </xs:annotation>
       <xs:sequence>
-        <xs:choice minOccurs="1"
-                   maxOccurs="unbounded">
-  [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp7 | temp7.name))]
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+          [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp7 | temp7.name))]
             <xs:element ref="[aClass.name/]" minOccurs="0" maxOccurs="unbounded"/>
-  [/for]
+          [/for]
         </xs:choice>
       </xs:sequence>
     </xs:group>
@@ -76,17 +75,13 @@ All templates in the *Xsd.mtl modules generate XML Schema.
                 type="[aModel.name/]XsdType"
                 xml:id="[aModel.name/]">
       <xs:annotation>
-        <xs:documentation>
-[aModel.u_commentBody().xsd_escapeXmlCharacters()/]
-        </xs:documentation>
+['      <xs:documentation>' + aModel.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
     </xs:element>
     <xs:complexType name="[aModel.name/]XsdType"
                     xml:id="[aModel.name/]XsdType">
       <xs:annotation>
-        <xs:documentation>
-[aModel.u_commentBody().xsd_escapeXmlCharacters()/]
-        </xs:documentation>
+['      <xs:documentation>' + aModel.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
       <xs:sequence>
         <xs:group ref="AllElementsDerivedFromClasses"
@@ -95,7 +90,8 @@ All templates in the *Xsd.mtl modules generate XML Schema.
         </xs:group>
         <xs:element ref="Wrapper" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
-    </xs:complexType>[/template]
+    </xs:complexType>
+[/template]
 
 [template public xsdVersion(aModel : uml::Model)]
   [aModel.e_modelIdentication().eContents(uml::Property)->select(temp8 | temp8.name = 'majorVersion')->collect(temp9 | temp9.default) + '.' + aModel.e_modelIdentication().eContents(uml::Property)->select(temp10 | temp10.name = 'minorVersion')->collect(temp11 | temp11.default)/][/template]

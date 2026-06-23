@@ -76,6 +76,10 @@
     #######################
 [let c : uml::Class = aModel.eAllContents(uml::Class)->select(p | p.name = 'InstanceVariable')->first()]
 	[c.classXsd()/]
+  	u_isNotInIgnoredPackage [c.u_isNotInIgnoredPackage()/]
+    u_namedElementByName: [aModel.u_namedElementByName('AgentListing')/]
+    u_namedElementByName: [aModel.u_namedElementByName('x')/]
+    u_namedElementByName: [aModel.u_namedElementByName('x')->size()/]
 [/let]
 				#######################
     subset name ['subset.name'.getPropertyValue()/]
