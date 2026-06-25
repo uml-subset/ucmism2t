@@ -28,7 +28,6 @@
 [import ucmism2t::templates::target::shex::classShex/]
 [import ucmism2t::templates::target::xsd::classXsd/]
 
-[comment encoding = UTF-8 /]
 [comment][import ucmism2t::templates::target::doc::attributeDoc /][/comment]
 [**
  * Processes a class. Writes a file.
@@ -37,276 +36,275 @@
  * @param aClass a class
 */]
 [template public processClassDoc(aClass : uml::Class)]
-	[comment] subset condition [/comment]
-	[if ('includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(aClass.name))]  
-	  [file (aClass.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
-	    [aClass.rst_generationMessageDoc()/]
-	    .. _[aClass.qualifiedName/]:
-	    
-	    [aClass.rst_className().rst_header('*')/]
-	    
-	    .. index:: [aClass.name/]
-	    
-	    [if (aClass.u_isChildOfMainPackage())]
-	      Fully qualified [aClass.eClass().name.toLower()/] name of the UML model [aClass.u_model().e_modelAcronym()/] [aClass.u_model().e_modelMajorVersion()/].[aClass.u_model().e_modelMinorVersion()/]: **[aClass.qualifiedName/]**
-	    [else]
-	      Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
-	    [/if]
-	    [if (aClass.isAbstract)]   | Class is abstract.[/if]
-	    
-	    [aClass.u_commentBody().replaceAll('(=\\s)', '$1\r').rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
-	    
-	    
-	    [file (aClass.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-	      [aClass.pu_classDiagram(0)/]
-	    [/file]
-	    Diagram
-	    =======
-	    
-	    .. dropdown:: Diagram
-	       :class-container: diagram-dropdown
-	       :open:
-	    
-	       .. On the basis of the pu file, a svg file is generated which is used by an html object tag.
-	       .. The combination of the object tag with panzoom is not successful.
-	       .. Either the pan/zoom is possible and the svg links are not active or
-	       ..   the links are active but not pan/zoom.
-	       ..   See also FAQ no 2: https://github.com/timmywil/panzoom/blob/main/README.md#faq   
-	       .. .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].pu
-	    
-	       .. raw:: html
-	    
-	          [aClass.diagramModalPreCode()/]
-	    
-	       .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].pu
-	    
-	    
-	       .. raw:: html
-	    
-	          [aClass.diagramModalPostCode()/]
-	    
-	    [if (aClass.u_allSuperClasses()->notEmpty() or aClass.u_subClassesOrSubDataTypes()->notEmpty())]
-	      [aClass.rst_classOrDataTypeInheritance()/]
-	    [/if]
-	    
-	    [if (aClass.u_attributes()->notEmpty() or aClass.u_inheritedClassAttributes()->notEmpty())]
-	      Attributes
-	      ==========
-	      
-	      .. dropdown:: Attributes
-	         :class-container: attributes-dropdown
-	          
-	         ..
-	      		for Bootstrap, see: https://getbootstrap.com/docs/5.3/content/tables/#responsive-tables
-	      			div wrapper		.. container:: table-responsive
-	      			table classes	:class: table table-striped
-	      		for DataTables
-	      			main-table class for own CSS
-	      							:class: main-table
-	      			identifier		:name: attributes-responsive (#attributes-responsive table.main-table) 
-	      
-	         .. container::
-	            :name: attributes-responsive
-	      
-	            .. list-table:: Attributes
-	               :widths: 10 10 60 10 10 10
-	               :header-rows: 1
-	               :class: table table-striped table-hover main-table
-	      
-	               * - Name
-	                 - Inherited from
-	                 - Description
-	                 - Data Type
-	                 - Multiplicity
-	                 - Default value
-	      [for (p : uml::Property | aClass.u_attributes())]
-	      	[p.rst_processAttributeInTable('         ', aClass)/][/for]
-	      [for (c2 : uml::Classifier | aClass.u_allSuperClasses())]
-	      [for (p : uml::Property | c2.u_attributes())]
-	      [p.rst_processAttributeInTable('         ', aClass)/][/for]
-	      [/for]
-	    [/if]
-	
-			[if (aClass.u_allSuperClasses()->union(OrderedSet{aClass})->collect(c | c.u_associations())->size() > 0)]
-	      Associations
-	      ============
-	      
-	      .. dropdown:: Associations
-	         :class-container: associations-dropdown
-	          
-	         .. container::
-	            :name: associations-responsive
-	      
-	            .. list-table:: Associations
-	               :widths: 5 10 30 5 10 10 5 5 15
-	               :header-rows: 1
-	               :class: table table-striped table-hover main-table
-	             
-	               * - Direction
-	                 - Association
-	                 - Description
-	                 - Multiplicity of [aClass.name/]
-	                 - Package of Other Class
-	                 - Other Class
-	                 - Multiplicity of other class
-	                 - Aggregation Kind
-	                 - Inherited from
-	      [for (c2 : uml::Class | aClass.u_allSuperClasses()->union(OrderedSet{aClass}))]
-	        [for (anAssociation : uml::Association | c2.u_associations())]
-	          [let source : uml::Property = anAssociation.ownedEnd->first()]
-	            [let target : uml::Property = anAssociation.ownedEnd->first().getOtherEnd()]
-	              [if (c2 <> target.type.oclAsType(uml::Class))]
-	                         * - from
-	              [else]
-	                         * - to
-	              [/if]
-	                         - [anAssociation.name.replaceAll('_', ' ')/]
-	                         - [anAssociation.ownedComment->asSequence()->collect(temp1 | temp1.body)/]
-	              [if (c2 <> target.type.oclAsType(uml::Class))]
-	                           - [source.u_docMultiplicity()/]
-	                           - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-	                           - :ref:`[target.type.qualifiedName/]`
-	                           - [target.u_docMultiplicity()/]
-	                           - [target.aggregation.toString()/]
-	              [else]
-	                           - [target.u_docMultiplicity()/]
-	                           - [if (aClass.package <> source.type.package)]:ref:`[source.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-	                           - :ref:`[source.type.qualifiedName/]`
-	                           - [source.u_docMultiplicity()/]
-	                           - [source.aggregation.toString()/]
-	              [/if]
-	                         - [if (c2 = aClass)]*own class*[else][c2.rst_simpleQualifiedClassNameReference()/][/if]
-	            [/let]
-	          [/let]
-	        [/for]
-	      [/for]
-	    [/if]
-	    
-	    [if (aClass.u_isChildOfMainPackage())]
-	      Encodings
-	      =========
-	      
-	      .. dropdown:: Syntax representations / encodings
-	         :class-container: encodings-dropdown
-	          
-	         All syntax representations except the Canonical XMI are provided as reference points
-	         for specific implementations, or for use as defaults if sufficient in the form presented.
-	          
-	         .. tab-set::
-	          
-	            .. tab-item:: Canonical XMI
-	               :class-content: encoding
-	          
-	               .. The path of the encoding URIs is adjusted by the Javascript function changeUrl in custom.js.
-	      
-	               Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/[aClass.u_model().e_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
-	          
-	               .. literalinclude:: /xmi/[aClass.name/].xmi
-	                  :lines: 2-
-	                  :language: xml
-	                  :linenos:
-	                  :emphasize-lines: 4
-	      
-	      [if ('xsd'.isPropertyTrue())]
-	              .. tab-item:: XML Schema
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
-	          [aClass.classXsd()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().e_modelAcronym().toLower()/].xsd>`_)
-	            
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
-	                    :language: xml
-	                    :linenos:
-	                    :emphasize-lines: 1
-	                    :dedent: 2
-	      [/if]
-	      
-	      [if ('jsonschema'.isPropertyTrue())]
-	              .. tab-item:: JSON Schema
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('.schema.json'), overwrite, 'UTF-8')]
-	          [aClass.classJsch()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().e_modelAcronym().toLower()/].schema.json>`_)
-	        
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].schema.json 
-	                    :language: json
-	                    :linenos:
-	                    :emphasize-lines: 1
-	      [/if]
-	      
-	      [if ('onto'.isPropertyTrue())]
-	              .. tab-item:: Ontology (Turtle)
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
-	          [aClass.classOnto()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().e_modelAcronym().toLower()/].onto.ttl>`_)
-	            
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
-	                    :language: turtle
-	                    :linenos:
-	                    :emphasize-lines: 3
-	      [/if]
-	      
-	      [if ('jsonld'.isPropertyTrue())]
-	              .. tab-item:: JSON-LD
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('.jsonld'), overwrite, 'UTF-8')]
-	          [aClass.classJsonldModular()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().e_modelAcronym().toLower()/].jsonld>`_)
-	            
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].jsonld 
-	                    :language: JSON-LD
-	                    :linenos:
-	                    :emphasize-lines: 2
-	      [/if]
-	      
-	      [if ('shacl'.isPropertyTrue())]
-	              .. tab-item:: SHACL
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('.shacl.ttl'), overwrite, 'UTF-8')]
-	          [aClass.classShacl()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().e_modelAcronym().toLower()/].shacl.ttl>`_)
-	        
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shacl.ttl 
-	                    :language: turtle
-	                    :linenos:
-	                    :emphasize-lines: 4
-	      [/if]
-	      
-	      [if ('shex'.isPropertyTrue())]
-	              .. tab-item:: ShEx
-	                 :class-content: encoding
-	        [file (aClass.u_filePath('doc').concat('.shexc'), overwrite, 'UTF-8')]
-	          [aClass.classShex()/]
-	        [/file]
-	        
-	                 Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().e_modelAcronym().toLower()/].shexc>`_)
-	        
-	                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shexc 
-	                    :language: shexc
-	                    :linenos:
-	                    :emphasize-lines: 3
-	      [/if]
-	    [/if]
-	  [/file]
+  [comment] subset condition [/comment]
+  [if ('includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(aClass.name))]  
+    [file (aClass.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+      [aClass.rst_generationMessageDoc()/]
+      .. _[aClass.qualifiedName/]:
+      
+      [aClass.rst_className().rst_header('*')/]
+      
+      .. index:: [aClass.name/]
+      
+      [if (aClass.u_isChildOfMainPackage())]
+        Fully qualified [aClass.eClass().name.toLower()/] name of the UML model [aClass.u_model().e_modelAcronym()/] [aClass.u_model().e_modelMajorVersion()/].[aClass.u_model().e_modelMinorVersion()/]: **[aClass.qualifiedName/]**
+      [else]
+        Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
+      [/if]
+      [if (aClass.isAbstract)]   | Class is abstract.[/if]
+      
+      [aClass.u_commentBody().replaceAll('(=\\s)', '$1\r').rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
+      
+      [file (aClass.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
+        [aClass.pu_classDiagram(0)/]
+      [/file]
+      Diagram
+      =======
+      
+      .. dropdown:: Diagram
+         :class-container: diagram-dropdown
+         :open:
+      
+         .. On the basis of the pu file, a svg file is generated which is used by an html object tag.
+         .. The combination of the object tag with panzoom is not successful.
+         .. Either the pan/zoom is possible and the svg links are not active or
+         ..   the links are active but not pan/zoom.
+         ..   See also FAQ no 2: https://github.com/timmywil/panzoom/blob/main/README.md#faq   
+         .. .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].pu
+      
+         .. raw:: html
+      
+            [aClass.diagramModalPreCode()/]
+      
+         .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].pu
+      
+      
+         .. raw:: html
+      
+            [aClass.diagramModalPostCode()/]
+      
+      [if (aClass.u_allSuperClasses()->notEmpty() or aClass.u_subClassesOrSubDataTypes()->notEmpty())]
+        [aClass.rst_classOrDataTypeInheritance()/]
+      [/if]
+      
+      [if (aClass.u_attributes()->notEmpty() or aClass.u_inheritedClassAttributes()->notEmpty())]
+        Attributes
+        ==========
+        
+        .. dropdown:: Attributes
+           :class-container: attributes-dropdown
+            
+           ..
+            for Bootstrap, see: https://getbootstrap.com/docs/5.3/content/tables/#responsive-tables
+              div wrapper    .. container:: table-responsive
+              table classes  :class: table table-striped
+            for DataTables
+              main-table class for own CSS
+                      :class: main-table
+              identifier    :name: attributes-responsive (#attributes-responsive table.main-table) 
+        
+           .. container::
+              :name: attributes-responsive
+        
+              .. list-table:: Attributes
+                 :widths: 10 10 60 10 10 10
+                 :header-rows: 1
+                 :class: table table-striped table-hover main-table
+        
+                 * - Name
+                   - Inherited from
+                   - Description
+                   - Data Type
+                   - Multiplicity
+                   - Default value
+                 [for (p1 : uml::Property | aClass.u_attributes())]
+                   [p1.rst_processAttributeInTable(aClass)/][/for]
+                 [for (c2 : uml::Classifier | aClass.u_allSuperClasses())]
+                   [for (p2 : uml::Property | c2.u_attributes())]
+                     [p2.rst_processAttributeInTable(aClass)/][/for][/for]
+      [/if]
+
+      [if (aClass.u_allSuperClasses()->union(OrderedSet{aClass})->collect(c | c.u_associations())->size() > 0)]
+        Associations
+        ============
+        
+        .. dropdown:: Associations
+           :class-container: associations-dropdown
+            
+           .. container::
+              :name: associations-responsive
+        
+              .. list-table:: Associations
+                 :widths: 5 10 30 5 10 10 5 5 15
+                 :header-rows: 1
+                 :class: table table-striped table-hover main-table
+               
+                 * - Direction
+                   - Association
+                   - Description
+                   - Multiplicity of [aClass.name/]
+                   - Package of Other Class
+                   - Other Class
+                   - Multiplicity of other class
+                   - Aggregation Kind
+                   - Inherited from
+        [for (c2 : uml::Class | aClass.u_allSuperClasses()->union(OrderedSet{aClass}))]
+          [for (anAssociation : uml::Association | c2.u_associations())]
+            [let source : uml::Property = anAssociation.ownedEnd->first()]
+              [let target : uml::Property = anAssociation.ownedEnd->first().getOtherEnd()]
+                [if (c2 <> target.type.oclAsType(uml::Class))]
+                           * - from
+                [else]
+                           * - to
+                [/if]
+                           - [anAssociation.name.replaceAll('_', ' ')/]
+                           - [anAssociation.ownedComment->asSequence()->collect(temp1 | temp1.body)/]
+                [if (c2 <> target.type.oclAsType(uml::Class))]
+                             - [source.u_docMultiplicity()/]
+                             - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
+                             - :ref:`[target.type.qualifiedName/]`
+                             - [target.u_docMultiplicity()/]
+                             - [target.aggregation.toString()/]
+                [else]
+                             - [target.u_docMultiplicity()/]
+                             - [if (aClass.package <> source.type.package)]:ref:`[source.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
+                             - :ref:`[source.type.qualifiedName/]`
+                             - [source.u_docMultiplicity()/]
+                             - [source.aggregation.toString()/]
+                [/if]
+                           - [if (c2 = aClass)]*own class*[else][c2.rst_simpleQualifiedClassNameReference()/][/if]
+              [/let]
+            [/let]
+          [/for]
+        [/for]
+      [/if]
+      
+      [if (aClass.u_isChildOfMainPackage())]
+        Encodings
+        =========
+        
+        .. dropdown:: Syntax representations / encodings
+           :class-container: encodings-dropdown
+            
+           All syntax representations except the Canonical XMI are provided as reference points
+           for specific implementations, or for use as defaults if sufficient in the form presented.
+            
+           .. tab-set::
+            
+              .. tab-item:: Canonical XMI
+                 :class-content: encoding
+            
+                 .. The path of the encoding URIs is adjusted by the Javascript function changeUrl in custom.js.
+        
+                 Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/[aClass.u_model().e_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
+            
+                 .. literalinclude:: /xmi/[aClass.name/].xmi
+                    :lines: 2-
+                    :language: xml
+                    :linenos:
+                    :emphasize-lines: 4
+        
+        [if ('xsd'.isPropertyTrue())]
+                .. tab-item:: XML Schema
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
+            [aClass.classXsd()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().e_modelAcronym().toLower()/].xsd>`_)
+              
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
+                      :language: xml
+                      :linenos:
+                      :emphasize-lines: 1
+                      :dedent: 0
+        [/if]
+        
+        [if ('jsonschema'.isPropertyTrue())]
+                .. tab-item:: JSON Schema
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('.schema.json'), overwrite, 'UTF-8')]
+            [aClass.classJsch()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().e_modelAcronym().toLower()/].schema.json>`_)
+          
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].schema.json 
+                      :language: json
+                      :linenos:
+                      :emphasize-lines: 1
+        [/if]
+        
+        [if ('onto'.isPropertyTrue())]
+                .. tab-item:: Ontology (Turtle)
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
+            [aClass.classOnto()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().e_modelAcronym().toLower()/].onto.ttl>`_)
+              
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
+                      :language: turtle
+                      :linenos:
+                      :emphasize-lines: 3
+        [/if]
+        
+        [if ('jsonld'.isPropertyTrue())]
+                .. tab-item:: JSON-LD
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('.jsonld'), overwrite, 'UTF-8')]
+            [aClass.classJsonldModular()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().e_modelAcronym().toLower()/].jsonld>`_)
+              
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].jsonld 
+                      :language: JSON-LD
+                      :linenos:
+                      :emphasize-lines: 2
+        [/if]
+        
+        [if ('shacl'.isPropertyTrue())]
+                .. tab-item:: SHACL
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('.shacl.ttl'), overwrite, 'UTF-8')]
+            [aClass.classShacl()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().e_modelAcronym().toLower()/].shacl.ttl>`_)
+          
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shacl.ttl 
+                      :language: turtle
+                      :linenos:
+                      :emphasize-lines: 4
+        [/if]
+        
+        [if ('shex'.isPropertyTrue())]
+                .. tab-item:: ShEx
+                   :class-content: encoding
+          [file (aClass.u_filePath('doc').concat('.shexc'), overwrite, 'UTF-8')]
+            [aClass.classShex()/]
+          [/file]
+          
+                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().e_modelAcronym().toLower()/].shexc>`_)
+          
+                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shexc 
+                      :language: shexc
+                      :linenos:
+                      :emphasize-lines: 3
+        [/if]
+      [/if]
+    [/file]
   [/if][comment] subset condition [/comment]
 [/template]
 
 [template public subClasses(aClass : uml::Class, indent : String)]
   [for (c : uml::Class | aClass.u_subClasses())]
-       [if (c.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
+    [if (c.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
     
-          | [indent/]ᐊ── [c.rst_simpleQualifiedClassNameReference()/]
+       | [indent/]ᐊ── [c.rst_simpleQualifiedClassNameReference()/]
     
-    [if (c.u_subClasses()->notEmpty())][c.subClasses(indent.concat('|_| '))/][/if][/for]
+    [if (c.u_subClasses()->notEmpty())][c.subClasses(indent.concat('|_| '))/][/if]
+  [/for]
 [/template]

@@ -1,0 +1,20 @@
+<project name="ucmis.m2t" default="ucmis.m2t">
+	<property environment="env" />
+	<echo message="DDICDIHOME = ${env.DDICDIHOME}" />
+	<property name="lib.dir" location="${env.DDICDIHOME}/ucmis.m2t_standalone/standalone/jar" />
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="ucmis.m2t-1.0.0-SNAPSHOT.jar" />
+			<include name="lib/*.jar" />
+		</fileset>
+	</path>
+	<target name="ucmis.m2t">
+		<java classname="ucmis.m2t.main.M2tMaster" classpathref="classpath" fork="true"
+			error="step1_ucmis.m2t_error.log" output="step1_ucmis.m2t_output.log">
+			<arg value="model/ddi-cdi_canonical-unique-names-eclipse.xmi" />
+			<arg value="generated" />
+			<arg value="src/ucmis/m2t/property/generic.properties" />
+			<arg value="src/ucmis/m2t/property/ddicdi.properties" />
+		</java>
+	</target>
+</project>

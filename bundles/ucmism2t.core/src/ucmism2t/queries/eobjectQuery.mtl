@@ -46,3 +46,15 @@ tokens (the part after ">").
 	anEObject.u_mappedUcmisItemsRdfTokens()
 		->collect(s | s.tokenize('>')->at(2))
 /]
+
+[**
+Returns an ordered set of package names defined in the property TEST_PACKAGE.
+
+@param anEObject - Only used as entry point.
+/]
+[query public u_testPackages(anEObject : ecore::EObject) : OrderedSet(String) =
+  'TEST_PACKAGE'.getPropertyValue()
+    .substituteAll(' ', '')
+    .tokenize(',')
+    ->asOrderedSet()
+/]

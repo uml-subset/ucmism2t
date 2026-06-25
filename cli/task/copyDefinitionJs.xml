@@ -1,0 +1,8 @@
+<project name="copyDefinitionJs" default="copy">
+	<target name="copy">
+		<property environment="env" />
+		<copy file="${env.GENERATED_FOLDER}/DDI-CDI_1-0/doc/_rst/modelInformation.js"
+			todir="${env.UCMISM2T_DIR}/sphinx/bookTheme/_static"
+			failonerror="false" />
+	</target>
+</project>

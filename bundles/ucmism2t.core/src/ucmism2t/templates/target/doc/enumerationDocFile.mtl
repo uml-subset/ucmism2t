@@ -139,7 +139,7 @@
 	                  .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
 	                     :language: xml
 	                     :linenos:
-	                     :dedent: 2
+	                     :dedent: 0
 	                     :emphasize-lines: 1
 	      
 	      [if ('onto'.isPropertyTrue())]

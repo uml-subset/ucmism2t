@@ -1,0 +1,417 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "An one-page synopsis of a UML model. A network diagram of UML model classes, where the edges (associations) are grouped by hierarchical edge bundling. Based on Vega 'Edge Bundling', see: https://vega.github.io/vega/examples/edge-bundling/",
+  "padding": 5,
+  "width": 1300,
+  "height": 1300,
+  "signals": [
+    {
+      "name": "tension",
+      "value": 0.9,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 1,
+        "step": 0.01
+      }
+    },
+    {
+      "name": "radius",
+      "value": 250,
+      "bind": {
+        "input": "range",
+        "min": 20,
+        "max": 400
+      }
+    },
+    {
+      "name": "extent",
+      "value": 360
+    },
+    {
+      "name": "rotate",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 360,
+        "step": 1
+      }
+    },
+    {
+      "name": "textSize",
+      "value": 8,
+      "bind": {
+        "input": "range",
+        "min": 2,
+        "max": 20,
+        "step": 1
+      }
+    },
+    {
+      "name": "textOffset",
+      "value": 6
+    },
+    {
+      "name": "layout",
+      "value": "cluster"
+    },
+    {
+      "name": "colorIn",
+      "value": "firebrick"
+    },
+    {
+      "name": "colorOut",
+      "value": "forestgreen"
+    },
+    {
+      "name": "originX",
+      "update": "width / 2"
+    },
+    {
+      "name": "originY",
+      "update": "height / 2"
+    },
+    {
+      "name": "active",
+      "value": null,
+      "on": [
+        {
+          "events": "text:click",
+          "update": "datum.id"
+        },
+        {
+          "events": "mousedown",
+          "update": "null"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "tree",
+      "values": classData,
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "tree",
+          "method": {
+            "signal": "layout"
+          },
+          "size": [
+            1,
+            1
+          ],
+          "as": [
+            "alpha",
+            "beta",
+            "depth",
+            "children"
+          ]
+        },
+        {
+          "type": "formula",
+          "expr": "(rotate + extent * datum.alpha + 270) % 360",
+          "as": "angle"
+        },
+        {
+          "type": "formula",
+          "expr": "inrange(datum.angle, [90, 270])",
+          "as": "leftside"
+        },
+        {
+          "type": "formula",
+          "expr": "originX + radius * datum.beta * cos(PI * datum.angle / 180)",
+          "as": "x"
+        },
+        {
+          "type": "formula",
+          "expr": "originY + radius * datum.beta * sin(PI * datum.angle / 180)",
+          "as": "y"
+        },
+        {
+          "type": "formula",
+          "expr": "'../../rewrite.html#' + substring(datum.name, indexof(datum.name, '::')+2)",
+          "as": "url"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    },
+    {
+      "name": "dependencies",
+      "values": associationData,
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "treePath('tree', datum.source, datum.target)",
+          "as": "treepath",
+          "initonly": true
+        }
+      ]
+    },
+    {
+      "name": "selected",
+      "source": "dependencies",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.source === active || datum.target === active"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "text": {
+            "field": "name"
+          },
+          "baseline": {
+            "value": "middle"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "dx": {
+            "signal": "textOffset * (datum.leftside ? -1 : 1)"
+          },
+          "angle": {
+            "signal": "datum.leftside ? datum.angle - 180 : datum.angle"
+          },
+          "align": {
+            "signal": "datum.leftside ? 'right' : 'left'"
+          },
+          "fontSize": {
+            "signal": "textSize"
+          },
+          "fontWeight": [
+            {
+              "test": "indata('selected', 'source', datum.id)",
+              "value": "bold"
+            },
+            {
+              "test": "indata('selected', 'target', datum.id)",
+              "value": "bold"
+            },
+            {
+              "value": null
+            }
+          ],
+          "fill": [
+            {
+              "test": "datum.id === active",
+              "value": "black"
+            },
+            {
+              "test": "indata('selected', 'source', datum.id)",
+              "signal": "colorIn"
+            },
+            {
+              "test": "indata('selected', 'target', datum.id)",
+              "signal": "colorOut"
+            },
+            {
+              "value": "black"
+            }
+          ],
+          "cursor": {
+            "value": "default"
+          },
+          "tooltip": {
+            "signal": "{'Name': datum.name, 'Definition': datum.definition, 'Click': 'to highlight its associations.'}"
+          }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "size": {
+            "value": 40
+          },
+          "stroke": {
+            "value": "grey"
+          },
+          "fill": {
+            "value": "grey"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "dx": {
+            "signal": "textOffset * (datum.leftside ? -1 : 1)"
+          }
+        }
+      }
+    },
+    {
+      "type": "symbol",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "size": {
+            "value": 200
+          },
+          "opacity": {
+            "value": 0
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x"
+          },
+          "y": {
+            "field": "y"
+          },
+          "dx": {
+            "signal": "textOffset * (datum.leftside ? -1 : 1)"
+          },
+          "cursor": {
+            "value": "pointer"
+          },
+          "tooltip": {
+            "signal": "{'Name': datum.name, 'Click': 'to open the details page (Ctrl+click for new tab, Shift+click for new window)'}"
+          },
+          "href": {
+            "signal": "isValid(datum[\"url\"]) ? datum[\"url\"] : \"\"+datum[\"url\"]"
+          }
+        }
+      }
+    },
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "path",
+          "data": "dependencies",
+          "field": "treepath"
+        }
+      },
+      "marks": [
+        {
+          "type": "line",
+          "interactive": false,
+          "from": {
+            "data": "path"
+          },
+          "encode": {
+            "enter": {
+              "interpolate": {
+                "value": "bundle"
+              },
+              "strokeWidth": {
+                "value": 1.5
+              }
+            },
+            "update": {
+              "stroke": [
+                {
+                  "test": "parent.source === active",
+                  "signal": "colorOut"
+                },
+                {
+                  "test": "parent.target === active",
+                  "signal": "colorIn"
+                },
+                {
+                  "value": "steelblue"
+                }
+              ],
+              "strokeOpacity": [
+                {
+                  "test": "parent.source === active || parent.target === active",
+                  "value": 1
+                },
+                {
+                  "value": 0.2
+                }
+              ],
+              "tension": {
+                "signal": "tension"
+              },
+              "x": {
+                "field": "x"
+              },
+              "y": {
+                "field": "y"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "incoming",
+        "outgoing"
+      ],
+      "range": [
+        {
+          "signal": "colorIn"
+        },
+        {
+          "signal": "colorOut"
+        }
+      ]
+    }
+  ],
+  "title": {
+    "text": "Bird's Eye View of the Model with the Associations of all Classes",
+    "fontSize": 20,
+    "subtitle": [
+      "Grouped and bundled by package name.",
+      "⠀",
+      "Move the mouse pointer over a class to see its definition.",
+      "Click on a class to highlight its associations (click on the empty area to get the original view).",
+      "Click on the gray bullet point (•) next to a class to open the details page."
+    ],
+    "subtitleFontSize": 11,
+    "subtitlePadding": 10
+  },
+  "legends": [
+    {
+      "stroke": "color",
+      "orient": "top-left",
+      "title": "Associations",
+      "symbolType": "stroke"
+    }
+  ]
+}

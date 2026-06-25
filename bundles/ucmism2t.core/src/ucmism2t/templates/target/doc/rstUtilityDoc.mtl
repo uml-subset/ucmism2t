@@ -335,21 +335,23 @@
  * @param p An attribute object.
  * @param indent String with blanks for indentation.
 */]
-[template public rst_processAttributeInTable(anAttribute : uml::Property, indent : String, aClassifier : uml::Classifier)]
-	[if ('includeAllItems'.isPropertyTrue() or aClassifier.name.u_subsetDataTypeAttributes()->includes(anAttribute.name) or aClassifier.name.u_subsetClassAttributes()->includes(anAttribute.name))]
-	  [let attributeClassifier : uml::Classifier = anAttribute.u_parent().oclAsType(uml::Classifier)]
-	    [indent/]* - [anAttribute.name/]
-	    [if (attributeClassifier = aClassifier)]
-	      [indent/]  - \- *own [aClassifier.eClass().name.toLower()/]* \-
-	    [else]
-	      [indent/]  - :ref:`[attributeClassifier.package.name/]::[attributeClassifier.name/]<[attributeClassifier.qualifiedName/]>`
-	    [/if]
-	    [indent/]  - [anAttribute.ownedComment->asSequence()->collect(temp35 | temp35.body)->collect(temp36 | temp36.replaceAll('-', '\\-'))->collect(temp37 | temp37.replaceAll('(\\n)', '$1    '.concat(indent)))->collect(temp38 | temp38.trim())/]
-	    [indent/]  - [anAttribute.type.rst_refDataType()/] 
-	    [indent/]  - [anAttribute.u_docMultiplicity()/]
-	    [indent/]  - [anAttribute.default/]
-	  [/let]
-  
+[template public rst_processAttributeInTable(anAttribute : uml::Property, aClassifier : uml::Classifier)]
+  [if ('includeAllItems'.isPropertyTrue() 
+      or aClassifier.name.u_subsetDataTypeAttributes()->includes(anAttribute.name)
+      or aClassifier.name.u_subsetClassAttributes()->includes(anAttribute.name)
+    )]
+    [let attributeClassifier : uml::Classifier = anAttribute.u_parent().oclAsType(uml::Classifier)]
+      * - [anAttribute.name/]
+      [if (attributeClassifier = aClassifier)]
+          - \- *own [aClassifier.eClass().name.toLower()/]* \-
+      [else]
+          - :ref:`[attributeClassifier.u_packageQualifiedName()/]<[attributeClassifier.qualifiedName/]>`
+      [/if]
+        - [anAttribute.u_commentBody()->collect(c1 | c1.replaceAll('-', '\\-'))->collect(c2 | c2.replaceAll('\\s+', ' '))/]
+        - [anAttribute.type.rst_refDataType()/] 
+        - [anAttribute.u_docMultiplicity()/]
+        - [anAttribute.default/]
+    [/let]
   [/if]
 [/template]
 

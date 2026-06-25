@@ -1,0 +1,14 @@
+<project name="step2_preSphinx" default="preparation">
+	<target name="preparation">
+		<property environment="env" />
+		<!-- <record name="${env.LOG_FOLDER}/log/step2_preSphinx.log" /> -->
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/copyAboutFiles.xml" />
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/copyDefinitionJs.xml" />
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/copyVegaFiles.xml" />
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/copyXmlXsd.xml" />
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/extractXmiFragments.xml" />
+		<ant antfile="${env.UCMISM2T_DIR}/cli/task/provideEncodingFiles.xml" />
+		<copy file="${env.MODEL_FILE}"
+			todir="${env.GENERATED_FOLDER}/DDI-CDI_1-0/encoding/xmi" overwrite="true" verbose="true" />
+	</target>
+</project>

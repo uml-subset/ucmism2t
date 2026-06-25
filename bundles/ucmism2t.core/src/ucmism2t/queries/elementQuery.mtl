@@ -94,7 +94,7 @@ the first uml::Package ancestor.
 @param aNamedElement - A UML named element whose nearest containing package
                    is to be retrieved.
 /]
-[query public OK2u_nearestPackage(
+[comment] [query public OK2u_nearestPackage(
   aNamedElement : uml::NamedElement) : uml::Package =
   if aNamedElement.oclIsKindOf(uml::Model)
   then aNamedElement.oclAsType(uml::Model)
@@ -106,7 +106,7 @@ the first uml::Package ancestor.
   aNamedElement : uml::NamedElement) : uml::Package =
   aNamedElement.ancestors(uml::Package)->first()
 /]
-
+[/comment]
 [**
 Returns the qualified name of the specified element in the form
 'package::element', using the nearest containing package name.
@@ -119,6 +119,23 @@ Returns the qualified name of the specified element in the form
   anElement.u_nearestPackage().name + '::' + anElement.name
 /]
 
+[query public u_commentBody(
+  anElement : uml::Element) : String =
+  if anElement.ownedComment->notEmpty()
+  then anElement.ownedComment->first().body
+    .replaceAll('\\r\\n', '\\n')
+    .replaceAll('[\\p{C}&&[^\\r\\n\\t]]', ' ')
+    .replaceAll('[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]', ' ')
+    .replaceAll(' ', ' ')
+    .trim()
+  else
+    if 'WARNING_MISSING_DOCUMENTATION'.isPropertyTrue()
+    then 'WARNING: element has no documentation!'
+    else ''
+    endif
+  endif
+/]
+
 [**
  * Returns the body of the first owned comment of the specified
  * element if it exists, trimmed of leading and trailing spaces,
@@ -129,7 +146,7 @@ Returns the qualified name of the specified element in the form
  * @param anElement - A UML element whose first comment body
  *                    is to be retrieved.
 /]
-[query public u_commentBody(
+[query public OKu_commentBody(
   anElement : uml::Element) : String =
   if anElement.ownedComment->notEmpty()
   then anElement.ownedComment->first().body.trim()

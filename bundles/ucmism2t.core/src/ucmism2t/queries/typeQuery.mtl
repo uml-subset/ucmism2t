@@ -99,3 +99,29 @@ is present.
   endif
 /]
 [/comment]
+
+[**
+ * Checks whether a given UML type is one of the five standard UML
+ * primitive types defined in the UML Primitive Types library
+ * (Boolean, Integer, String, Real, UnlimitedNatural), as opposed to
+ * a user-defined type.
+ *
+ * The check first guards that the type is actually a uml::PrimitiveType,
+ * then compares the resource URI of the type against the known URI of
+ * the UML Primitive Types library resource. This is more reliable than
+ * a name-based check, since it is independent of user-defined types
+ * that may share names with standard ones.
+ *
+ * Note: This query requires access to the element's containing resource
+ * via eResource() and is therefore not expressible in pure AQL. A Java
+ * service call is needed to resolve the resource URI.
+ *
+ * @param aType   The UML type to check (e.g. from a Property or Parameter).
+ * @return        true if the type is a standard UML primitive type,
+ *                false if it is user-defined or not a primitive type at all.
+ */]
+[query public u_isUmlPrimitive(aType : uml::Type) : Boolean =
+  aType.oclIsKindOf(uml::PrimitiveType)
+  and aType.eResource().getURI().toString()
+  = 'pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml'
+/]

@@ -1,0 +1,8 @@
+<project name="copyAboutFiles" default="copy">
+	<property file="generated/_currentModel.properties"/>
+	<target name="copy">
+		<copy todir="generated/${MODEL_SHORTNAME}/doc/_rst/Appendices/ExploratoryDiagrams" failonerror="false">
+			<fileset dir="${env.UCMISM2T_DIR}/vega"/>
+		</copy>
+	</target>
+</project>

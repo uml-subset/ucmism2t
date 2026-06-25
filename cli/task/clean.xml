@@ -1,0 +1,13 @@
+<project name="ucmis.m2t">
+    <property environment="env" />
+    <echo message="DDICDIHOME = ${env.DDICDIHOME}" />
+    <target name="clean">
+        <delete dir="${env.DDICDIHOME}/ucmis.m2t_standalone/generated" />
+        <delete dir="${env.DDICDIHOME}/ucmis.m2t_standalone/model" />
+        <delete>
+            <fileset dir="${env.DDICDIHOME}/ucmis.m2t_standalone">
+                <filename name="*.log" />
+            </fileset>
+        </delete>
+    </target>
+</project>

@@ -20,8 +20,6 @@ Related modules:
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
-[import ucmism2t::templates::query::oldModelQuery/]
-
 [**
 Returns an ordered set of direct sub datatypes of a datatype,
 sorted by datatype name.

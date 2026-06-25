@@ -1,0 +1,15 @@
+<project name="extractXmiFragments" default="transform">
+	<property environment="env" />
+	<property file="${env.GENERATED_FOLDER}/_currentModel.properties"/>
+	<target name="transform">
+		<xslt style="${env.UCMISM2T_DIR}/xslt/ExtractClassifier.xslt"
+			in="${env.MODEL_FILE}"
+			out="${env.GENERATED_FOLDER}/DDI-CDI_1-0/doc/_rst/xmi/dummy">
+			<param name="MAIN_PACKAGE_XMI_ID" expression="${MAIN_PACKAGE_XMI_ID}"/>
+			<param name="MAIN_PACKAGE_NAME" expression="${MAIN_PACKAGE_NAME}"/>
+			<!-- set classpath for Saxon externally to Ant
+			     see: https://www.saxonica.com/html/documentation12/using-xsl/xsltfromant.html -->
+			<factory name="net.sf.saxon.BasicTransformerFactory" />
+		</xslt>
+	</target>
+</project>

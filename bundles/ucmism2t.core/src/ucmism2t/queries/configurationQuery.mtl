@@ -8,8 +8,6 @@ dynamically using the 'subset.name' property as a prefix.
   'http://www.eclipse.org/uml2/5.0.0/UML'
 )/]
 
-[import ucmism2t::queries::elementQuery/]
-[import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService/]
 
 [**

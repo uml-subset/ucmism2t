@@ -1,0 +1,9 @@
+<project name="copyAboutFiles" default="copy">
+	<target name="copy">
+		<property environment="env" />
+		<copy todir="${env.GENERATED_FOLDER}/DDI-CDI_1-0/doc/_rst/about"
+				failonerror="false">
+			<fileset dir="${env.UCMISM2T_DIR}/about" />
+		</copy>
+	</target>
+</project>

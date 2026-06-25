@@ -1,0 +1,20 @@
+div.body {
+	font-size: 80%;
+	min-height: 73vh;
+}
+
+div.sphinxsidebar {
+	font-size: 70%;
+}
+
+/* make top bar sticky */
+div.related {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+/* put body below top bar */
+div.documentwrapper {
+	margin-top: 1.9em;
+}

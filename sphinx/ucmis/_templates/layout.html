@@ -1,0 +1,26 @@
+{#
+
+	Sphinx templating: https://www.sphinx-doc.org/en/master/templating.html
+	
+	DataTables
+	https://datatables.net/extensions/buttons/examples/column_visibility/columnsToggle.html
+	https://datatables.net/examples/api/show_hide.html
+	https://datatables.net/extensions/fixedcolumns/examples/initialisation/scrollX.html
+	
+#}
+
+{% extends "!layout.html" %}
+
+{%- block extrahead %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css"/>
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js" type="text/javascript" language="javascript"></script>
+	<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js" type="text/javascript" language="javascript"></script>
+	<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js" type="text/javascript" language="javascript"></script>
+	<script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js" type="text/javascript" language="javascript"></script>
+{% endblock %}
+
+{% block relbar2 %}{% endblock %}
+

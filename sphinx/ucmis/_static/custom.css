@@ -1,0 +1,58 @@
+section#ucmis-syntax-representations-encodings {
+	padding-left: 1em;
+}
+
+/* disable browser scrollbars */
+body {
+	overflow: hidden;
+}
+
+div.body {
+	padding: 0;
+}
+
+div.footer {
+	display: none;
+}
+
+/* workaround for sphinx artifact */
+div.dtfc-right-top-blocker {
+	display: none !important;
+}
+
+table.dataTable {
+	/* width: 100%; */
+	/* table-layout: fixed; */
+}
+
+table.dataTable th, table.dataTable td {
+	/* width: 150em; */
+	/* background-color: lightblue; */
+	vertical-align: top !important;
+	/* padding-left: 0; */
+}
+
+/* first column */
+table.dataTable th:nth-of-type(1), table.dataTable td:nth-of-type(1) {
+	/* width: 20px !important; */
+}
+
+table.dataTable tbody, table.dataTable tbody td {
+	border-style: solid;
+}
+
+pre {
+	white-space: break-spaces;
+}
+
+button.buttons-columnVisibility {
+	color: grey !important;
+}
+
+button.buttons-columnVisibility.active {
+	color: black !important;
+}
+
+button.buttons-colvisGroup {
+	font-weight: bold;
+}
