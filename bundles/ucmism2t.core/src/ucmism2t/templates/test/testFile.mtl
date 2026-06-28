@@ -28,7 +28,6 @@
     e_modelShortName '[aModel.e_modelShortName()/]'
     
     'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
-    'xx'.getPropertyValue() ['xx'.getPropertyValue()/]
 
 
     #######################
@@ -229,7 +228,7 @@
 					toString [p.upperValue.toString()/]
 					is it -1 [p.upperValue = -1/]
 					is it * [p.upperValue = '*'/]
-					unlimitedValue XX [p.upperValue.unlimitedValue()/]
+					unlimitedValue [p.upperValue.unlimitedValue()/]
 					eClass [p.upperValue.eClass().name/]
 			[/for]
 	

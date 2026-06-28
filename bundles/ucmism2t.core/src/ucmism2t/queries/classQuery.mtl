@@ -904,6 +904,32 @@ See also: u_contextPackages(uml::DataType)
 /]
 
 [**
+ * Returns an ordered set of associations of aSuperClass that are neither
+ * directly connected to aClass nor to any of aClass's superclasses.
+ * This reduces unnecessary Graphviz constraints that would otherwise
+ * create associations parallel to the inheritance path at the level of
+ * superclasses starting from the second ancestor.
+ *
+ * Note: u_allSuperClasses() returns strict ancestors only (aClass itself
+ * is excluded), hence the explicit exclusion of aClass in the filter.
+ *
+ * @param aSuperClass - A UML class that is a superclass of aClass.
+ * @param aClass      - The UML class whose context is being computed.
+ */]
+[comment] [query public X2u_limitedAssociations2(
+  aSuperClass : uml::Class,
+  aClass : uml::Class) : OrderedSet(uml::Association) =
+  let superClasses : OrderedSet(uml::Class) =
+    aClass.u_allSuperClasses()
+  in
+  aSuperClass.u_associations()
+    ->select(a |
+        a.u_ownedEndClass() <> aClass
+        and a.u_otherEndClass() <> aClass
+        and superClasses->excludes(a.u_ownedEndClass())
+        and superClasses->excludes(a.u_otherEndClass()))
+/]
+[/comment][**
 Returns an ordered set of associations of aSuperClass that are neither
 directly connected to aClass nor to any of aClass's superclasses.
 This reduces unnecessary Graphviz constraints that would otherwise
@@ -913,7 +939,7 @@ superclasses starting from the second ancestor.
 @param aSuperClass - A UML class that is a superclass of aClass.
 @param aClass      - The UML class whose context is being computed.
 /]
-[query public u_limitedAssociations2(
+[comment] [query public Xu_limitedAssociations2(
   aSuperClass : uml::Class,
   aClass : uml::Class) : OrderedSet(uml::Association) =
   let superClasses : OrderedSet(uml::Class) =
@@ -927,7 +953,7 @@ superclasses starting from the second ancestor.
         superClasses->excludes(a.u_ownedEndClass())
         and superClasses->excludes(a.u_otherEndClass()))
 /]
-
+[/comment]
 [**
 Returns at most 3 associations from u_limitedAssociations2
 to keep diagrams manageable.
@@ -935,7 +961,7 @@ to keep diagrams manageable.
 @param aSuperClass - A UML class that is a superclass of aClass.
 @param aClass      - A UML class.
 /]
-[query public u_limitedAssociations3(
+[comment] [query public Xu_limitedAssociations3(
   aSuperClass : uml::Class,
   aClass : uml::Class) : OrderedSet(uml::Association) =
   let limited : OrderedSet(uml::Association) =
@@ -946,3 +972,4 @@ to keep diagrams manageable.
   else limited
   endif
 /]
+[/comment]

@@ -30,16 +30,16 @@ All templates in the *Xsd.mtl modules generate XML Schema.
       [aModel.xsdWrapper()/]
     [/if]
     [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(c | c.name))]
-        [aClass.classXsd()/]
+      [aClass.classXsd()/]
     [/for]
     [for (anEnumeration : uml::Enumeration | aModel.u_mainPackage().eAllContents(uml::Enumeration)->sortedBy(e | e.name))]
-        [anEnumeration.enumerationXsd()/]
+      [anEnumeration.enumerationXsd()/]
     [/for]
     [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)
       ->sortedBy(d1 | d1.name)
       ->select(d2 | not d2.oclIsTypeOf(uml::Enumeration))
       ->select(d3 | not d3.qualifiedName.contains('XMLSchemaDataTypes')))]
-        [aDataType.dataTypeXsd()/]
+      [aDataType.dataTypeXsd()/]
     [/for]
     [aModel.xsdFooter()/]
   [/file]

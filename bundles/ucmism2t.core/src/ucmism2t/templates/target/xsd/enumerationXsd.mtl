@@ -16,24 +16,20 @@
  * @param anEnumeration
 */]
 [template public enumerationXsd(anEnumeration : uml::Enumeration)]
-  <xs:simpleType name="[anEnumeration.name.concat('XsdType')/]"
-                 xml:id="[anEnumeration.name.concat('XsdType')/]">
-    <!-- based on the UML enumeration [anEnumeration.qualifiedName/] -->
-    <xs:annotation>
-      <xs:documentation>
-[anEnumeration.u_commentBody().xsd_escapeXmlCharacters()/]
-      </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:NMTOKEN">
-      [for (aLiteral : uml::EnumerationLiteral | anEnumeration.ownedLiteral)]
-        <xs:enumeration value="[aLiteral.name/]">
-          <xs:annotation>
-            <xs:documentation>
-[aLiteral.u_commentBody().xsd_escapeXmlCharacters()/]
-            </xs:documentation>
-          </xs:annotation>
-        </xs:enumeration>
-      [/for]
-    </xs:restriction>
-  </xs:simpleType>
+    <xs:simpleType name="[anEnumeration.name.concat('XsdType')/]"
+                   xml:id="[anEnumeration.name.concat('XsdType')/]">
+      <!-- based on the UML enumeration [anEnumeration.qualifiedName/] -->
+      <xs:annotation>
+  ['      <xs:documentation>' + anEnumeration.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:NMTOKEN">
+        [for (aLiteral : uml::EnumerationLiteral | anEnumeration.ownedLiteral)]
+          <xs:enumeration value="[aLiteral.name/]">
+            <xs:annotation>
+  ['    <xs:documentation>' + aLiteral.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        [/for]
+      </xs:restriction>
+    </xs:simpleType>
 [/template]

@@ -39,6 +39,7 @@
 -Xmx1024m
 -Dfile.encoding=UTF-8
       </vmArgs>
+      <vmArgsLin>-Xss8m</vmArgsLin>
    </launcherArgs>
 
    <launcher name="ucmism2t">

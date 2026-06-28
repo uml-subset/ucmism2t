@@ -89,19 +89,57 @@
   [/if]
 [/template]
 
-[template public pu_attributeLink(url : String, tooltip : String)]
+[template public T2pu_attributeLink(url : String, tooltip : String) post(self.trim())]
+  ['['/]['['/]['['/]['../'.concat(url).concat('.html#diagram')/]{[tooltip/]}]]]
+[/template]
+[template public Tpu_attributeLink(url : String, tooltip : String)]
+  \
+    ['['/]['['/]['['/][url/]{[tooltip/]}]]]
+[/template]
+[template public pu_attributeLink(url : String, tooltip : String) post(self.trim())]
+  ['['/]['['/]['['/][url/]{[tooltip/]}]]]
+[/template]
+[template public OKpu_attributeLink(url : String, tooltip : String)]
   \
     ['['/]['['/]['['/][url/]{[tooltip/]}]]][/template]
 
 [template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String) post(self.trim())]
   [aClassifier.pu_classifierNameWithLabel(color, prefix)/] [('../' + aClassifier.u_path() + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][/template]
 
+[template public T3pu_typeWithLink(aType : uml::Type) post(self.trim())]
+  [if (aType.ancestors()->isEmpty())]
+    [aType.name/]
+  [else]
+    <color:blue> [aType.name/] \[aType.u_path().pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+  [/if]
+[/template]
+[template public T2pu_typeWithLink(aType : uml::Type) post(self.trim())]
+  [if (aType.ancestors()->isEmpty())]
+    [aType.name/]
+  [else]
+    <color:blue> [aType.name/] \
+    [aType.u_path().pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+  [/if]
+[/template]
+
+[template public Tpu_typeWithLink(aType : uml::Type) post(self.trim())]
+  [if (aType.ancestors()->isEmpty())]
+    [aType.name/]
+  [else]
+    [let url : String = '../'.concat(aType.u_path()).concat('.html#diagram')]
+      [let tooltip : String = ' <U+2022> ' + aType.name + ':\n' + aType.u_onlyDefinition()]
+        <color:blue> [aType.name/] [url.pu_attributeLink(tooltip)/]
+      [/let]
+    [/let]
+  [/if]
+[/template]
 [template public pu_typeWithLink(aType : uml::Type) post(self.trim())]
   [if (aType.ancestors()->isEmpty())]
-    	[aType.name/]
+    [aType.name/]
   [else]
-    	<color:blue>[aType.name/] ['../'.concat(aType.u_path()).concat('.html#diagram')
-    		.pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+    <color:blue> [aType.name/] [
+      '../'.concat(aType.u_path()).concat('.html#diagram')
+      .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
   [/if]
 [/template]
 

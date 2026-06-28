@@ -61,6 +61,7 @@
 [template public modelItemListsIndex(aModel : uml::Model)]
   [file (aModel.u_filePath('doc').concat('/Appendices/ModelItemLists/index.rst'), overwrite, 'UTF-8')]
     [aModel.rst_generationMessageDoc()/]
+    
     ['Model Item Lists'.rst_header('=')/]
     
     .. toctree::

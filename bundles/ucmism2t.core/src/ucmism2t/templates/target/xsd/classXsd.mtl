@@ -18,33 +18,33 @@
  * @param aClass
 */]
 [template public classXsd(aClass : uml::Class)]
-  <xs:element name="[aClass.name/]"
-              type="[aClass.name/]XsdType"
-              xml:id="[aClass.name/]">
-    <!-- based on the UML class [aClass.qualifiedName/] -->
-    <xs:annotation>
-['    <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
-    </xs:annotation>
-  </xs:element>
-  <xs:complexType name="[aClass.name/]XsdType"
-                  xml:id="[aClass.name/]XsdType">
-    <xs:annotation>
-['    <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
-    </xs:annotation>
-    [if (aClass.u_allSuperClasses()->notEmpty())]
-      <xs:complexContent>
-        <xs:extension base="[aClass.u_allSuperClasses()->first().name/]XsdType">
-          [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
-            [aClass.propertyXsd()/]
-          [/if]
-        </xs:extension>
-      </xs:complexContent>
-    [else]
-      [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
-        [aClass.propertyXsd()/]
+    <xs:element name="[aClass.name/]"
+                type="[aClass.name/]XsdType"
+                xml:id="[aClass.name/]">
+      <!-- based on the UML class [aClass.qualifiedName/] -->
+      <xs:annotation>
+  ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:complexType name="[aClass.name/]XsdType"
+                    xml:id="[aClass.name/]XsdType">
+      <xs:annotation>
+  ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+      [if (aClass.u_allSuperClasses()->notEmpty())]
+        <xs:complexContent>
+          <xs:extension base="[aClass.u_allSuperClasses()->first().name/]XsdType">
+            [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
+              [aClass.propertyXsd()/]
+            [/if]
+          </xs:extension>
+        </xs:complexContent>
+      [else]
+        [if (aClass.u_attributes()->notEmpty() or aClass.u_associationEndProperties()->notEmpty())]
+          [aClass.propertyXsd()/]
+        [/if]
       [/if]
-    [/if]
-  </xs:complexType>
+    </xs:complexType>
 [/template]
 
 [**

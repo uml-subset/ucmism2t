@@ -1,0 +1,25 @@
+<project name="sphinx-build" default="build">
+	
+	<property name="pipeline.properties" value="pipeline.properties"/>
+	<property file="${pipeline.properties}"/>
+	<property file="${generated_folder}/_currentModel.properties"/>
+	<property name="html_title" value="UML Model: ${MODEL_TITLE} (${MODEL_ACRONYM} ${MODEL_MAJORVERSION}.${MODEL_MINORVERSION})"/>
+	
+	<!-- <echoproperties /> -->
+	
+	<target name="build">
+		<!-- <record name="${log_folder}/step3_sphinx_ant.log" /> -->
+		<exec executable="sphinx-build" output="${log_folder}/step3_sphinx_output.log">
+			<arg line="-b html" />
+			<arg line="-c ${ucmism2t_dir}/pipeline/sphinx/bookTheme" />
+			<arg line="-w ${log_folder}/step3_sphinx_warning.log" />
+			<arg line="-n" />
+			<arg line="-D copyright=&quot;${COPYRIGHT}&quot;" />
+			<!-- TODO: logo should be more flexible -->
+			<arg line="-D html_logo=&quot;${ucmism2t_dir}/example/logo/${LOGO_FILE}&quot;" />
+			<arg line="-D html_title=&quot;${html_title}&quot;" />
+			<arg line="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst" />
+			<arg line="${generated_folder}/${MODEL_SHORTNAME}/doc/_build" />
+		</exec>
+	</target>
+</project>

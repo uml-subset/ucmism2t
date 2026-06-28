@@ -1,0 +1,25 @@
+<project name="provide_generated" default="build">
+	
+	<property name="pipeline.properties" value="pipeline.properties"/>
+	<property file="${pipeline.properties}"/>
+	<property file="${generated_folder}/_currentModel.properties"/>
+	
+	<target name="build">
+		<delete dir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation" />
+		<copy todir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation">
+			<fileset dir="${generated_folder}/${MODEL_SHORTNAME}/doc/_build">
+				<include name="**" />
+				<exclude name="_plantuml/**" />
+				<exclude name="_sources/**" />
+			</fileset>
+		</copy>
+		<!-- <copy todir="${generated_folder}/${MODEL_SHORTNAME}/encoding">
+			<fileset dir="${generated_folder}/${MODEL_SHORTNAME}/encoding">
+				<include name="**" />
+			</fileset>
+		</copy> -->
+		<echo message="" />				
+		<echo message="Generated documentation at: ${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation/index.html" />
+	</target>
+
+</project>

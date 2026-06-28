@@ -158,7 +158,7 @@
                            * - to
                 [/if]
                            - [anAssociation.name.replaceAll('_', ' ')/]
-                           - [anAssociation.ownedComment->asSequence()->collect(temp1 | temp1.body)/]
+                           - [anAssociation.u_commentBody()/]
                 [if (c2 <> target.type.oclAsType(uml::Class))]
                              - [source.u_docMultiplicity()/]
                              - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]

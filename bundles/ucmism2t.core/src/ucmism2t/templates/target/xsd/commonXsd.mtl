@@ -126,7 +126,7 @@ Returns the specified string with all XML special characters escaped:
 
 @param aString - The string to escape.
 /]
-[query public OKxsd_escapeXmlCharacters(
+[query public xsd_escapeXmlCharacters(
   aString : String) : String =
   aString
   .replaceAll('&', '&amp;')
@@ -135,17 +135,3 @@ Returns the specified string with all XML special characters escaped:
   .replaceAll('"', '&quot;')
   .replaceAll('\'', '&apos;')
 /]
-
-[template public xsd_escapeXmlCharacters(aString : String) post(self.trim())]
-  [aString/]
-[/template]
-
-[**
-Returns the specified string as a xs:documentation element
-with all XML special characters escaped.
-
-@param aString - The string to be returned as xs:documentation element.
-/]
-[template public xsd_documentation(aString : String) post(self.replaceAll('[ ]{2}', ''))]
-  ['<xs:documentation>' + aString.xsd_escapeXmlCharacters() + '</xs:documentation>'/]
-[/template]

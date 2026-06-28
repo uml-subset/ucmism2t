@@ -1,0 +1,74 @@
+<project name="pre_sphinx" default="run-defaults">
+    
+    <property name="pipeline.properties" value="pipeline.properties"/>
+    <property file="${pipeline.properties}"/>
+    <property file="${generated_folder}/_currentModel.properties"/>
+    
+    <!-- <echoproperties /> -->
+    
+    <target name="copy_about_files">
+        <copy todir="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/about"
+              failonerror="false">
+            <fileset dir="${ucmism2t_dir}/about" />
+        </copy>
+    </target>
+    
+    <target name="copy_model_information">
+        <copy file="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/_modelInformation.js"
+              todir="${ucmism2t_dir}/pipeline/sphinx/bookTheme/_static"
+              failonerror="false" />
+    </target>
+    
+    <target name="copy_vega_files">
+        <copy todir="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/Appendices/ExploratoryDiagrams" failonerror="false">
+            <fileset dir="${ucmism2t_dir}/pipeline/vega"/>
+        </copy>
+    </target>
+    
+    <target name="copy_xml_xsd">
+        <copy file="${ucmism2t_dir}/pipeline/xsd/xml.xsd" todir="${generated_folder}/${MODEL_SHORTNAME}/encoding/xml-schema" />
+    </target>
+    
+    <target name="extract_xmi_fragments">
+        <xslt style="${ucmism2t_dir}/pipeline/xslt/ExtractClassifier.xslt"
+              in="${model_file}"
+              out="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/xmi/dummy">
+            <param name="MAIN_PACKAGE_NAME" expression="${MAIN_PACKAGE_NAME}"/>
+            <classpath>
+                <!-- path to saxon he jar file -->
+                <pathelement location="${saxon_jar}"/>
+            </classpath>
+            <!-- Explicitly tells Ant to use Saxon instead of the default Xalan -->
+            <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        </xslt>
+    </target>
+    
+    <target name="compile">
+        <echo message="Compiling source code..."/>
+    </target>
+    
+    <!-- TODO -->
+    <target name="provide_onto_file">
+        <copy file="${encoding}/ontology/DDICDIModels.onto.ttl"
+            tofile="${encoding}/ontology/ddi-cdi.onto.ttl"
+            failonerror="false" />
+    </target>
+    
+    <target name="copy_model_file">
+        <copy file="${model_file}"
+              todir="${generated_folder}/${MODEL_SHORTNAME}/encoding/xmi" overwrite="true" verbose="true" />
+    </target>
+    
+    <target name="run-defaults"
+            depends="
+                copy_about_files,
+                copy_model_information,
+                copy_vega_files,
+                copy_xml_xsd,
+                extract_xmi_fragments,
+                provide_onto_file,
+                copy_model_file
+                ">
+    </target>
+    
+</project>

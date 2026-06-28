@@ -11,16 +11,15 @@
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 
-[comment encoding = UTF-8 /]
 [template public inheritanceTreeDiagram(aModel : uml::Model)]
   [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/InheritanceTreeDiagram/index.rst'), overwrite, 'UTF-8')]
     [aModel.rst_generationMessageDoc()/]
     
-    .. _inheritanceTreeDiagram:
+       _inheritanceTreeDiagram:
     
     ['Inheritance by Package'.rst_header('=')/]
     
-    .. toctree::
+       toctree::
        :titlesonly:
     
     [for (aPackage : uml::Package | aModel.u_packagesWithClasses())]
@@ -28,8 +27,8 @@
            [aPackage.name/].rst
         [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/InheritanceTreeDiagram/').concat(aPackage.name).concat('.rst'), overwrite, 'UTF-8')]
           [aPackage.rst_generationMessageDoc()/]
+
           [aPackage.name.rst_header('=')/]
-          
           
           .. container:: class-diagram
           

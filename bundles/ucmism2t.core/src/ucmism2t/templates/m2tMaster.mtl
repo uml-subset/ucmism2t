@@ -80,7 +80,7 @@ data type with detailed information.
     # Temporary properties file for Ant tasks with information extracted from the model and
     # the model properties file. 
     COPYRIGHT = ['COPYRIGHT'.getPropertyValue()/]
-    LOGO_PATH = ['LOGO_PATH'.getPropertyValue()/]
+    LOGO_FILE = ['LOGO_FILE'.getPropertyValue()/]
     MODEL_ACRONYM = [aModel.e_modelAcronym()/]
     MODEL_ACRONYM_LOWERCASE = [aModel.e_modelAcronym().toLower()/]
     MODEL_MAJORVERSION = [aModel.e_modelMajorVersion()/]

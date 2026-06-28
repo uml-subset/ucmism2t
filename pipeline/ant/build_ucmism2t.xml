@@ -1,0 +1,17 @@
+<project name="build_ucmism2t" default="build">
+	
+	<property name="pipeline.properties" value="pipeline.properties"/>
+    <property file="${pipeline.properties}"/>
+    
+    <!-- <echoproperties /> -->
+    
+    <target name="build">
+        <exec executable="mvn" dir="${ucmism2t_dir}" failonerror="true">
+            <arg value="clean"/>
+            <arg value="verify"/>
+            <arg value="-Dbuild.platform=${platform}"/>
+            <arg value="-Dstyle.color=always"/>
+        </exec>
+    </target>
+
+</project>
