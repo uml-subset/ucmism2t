@@ -1,5 +1,6 @@
 #!/bin/sh
 
-ant -buildfile ../ant/step4_provide_generated.xml \
-    -DDpipeline.properties=pipeline.properties \
-    -Dbasedir=.
+ucmism2t_dir=$(sed -n 's/^ucmism2t_dir *= *//p' pipeline.properties)
+
+ant -buildfile ${ucmism2t_dir}/pipeline/ant/step4_provide_generated.xml \
+    -propertyfile pipeline.properties

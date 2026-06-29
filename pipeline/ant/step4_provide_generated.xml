@@ -1,7 +1,5 @@
 <project name="step4_provide_generated" default="provide_generated">
 	
-	<property name="pipeline.properties" value="pipeline.properties"/>
-	<property file="${pipeline.properties}"/>
 	<property file="${generated_folder}/_currentModel.properties"/>
 	<property name="html.file" location="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation/index.html" />
 	

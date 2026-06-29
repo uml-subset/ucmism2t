@@ -1,8 +1,7 @@
 <project name="step1_generate" default="generate">
-	
-	<property name="pipeline.properties" value="pipeline.properties"/>
-	<property file="${pipeline.properties}"/>
     
+    <property file="${generated_folder}/_currentModel.properties"/>
+
     <condition property="isWindows">
         <os family="windows" />
     </condition>
@@ -25,14 +24,15 @@
         <echo message="Step 1 - generate completed. Files in: ${generated_folder}/${MODEL_SHORTNAME}" />
     </target>
     
+    <!-- TODO -->
     <target name="generate_windows" if="isWindows">
-        <exec dir="." executable="cmd">
+        <exec executable="cmd">
             <arg line="/c TODO" />
         </exec>
     </target>
 
     <target name="generate_unix" if="isUnix">
-        <exec executable="./ucmism2t-wrapper.sh">
+        <exec executable="${ucmism2t_dir}/pipeline/script/ucmism2t-wrapper.sh">
             <env key="LAUNCHER" value="${launcher}"/>
             <arg line="-input ${model_file_eclipse}" />
             <arg line="-output ${generated_folder}" />

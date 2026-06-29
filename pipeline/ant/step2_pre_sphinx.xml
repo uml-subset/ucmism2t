@@ -1,7 +1,5 @@
 <project name="step2_pre_sphinx" default="pre_sphinx">
     
-    <property name="pipeline.properties" value="pipeline.properties"/>
-    <property file="${pipeline.properties}"/>
     <property file="${generated_folder}/_currentModel.properties"/>
     
     <!-- <echoproperties /> -->

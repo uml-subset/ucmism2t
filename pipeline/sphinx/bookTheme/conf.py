@@ -54,7 +54,8 @@ extensions = [
 # See https://sphinx-hoverxref.readthedocs.io/en/latest/development.html#avoid-cors-on-local-backend.
 
 # see: https://github.com/sphinx-contrib/plantuml
-plantuml = 'java -jar /home/wackerow/software/plantuml/plantuml-1.2025.2.jar'
+plantuml = 'java -jar ' + os.environ["plantuml_jar"]
+#plantuml = 'java -jar /home/wackerow/software/plantuml/plantuml-1.2025.2.jar'
 plantuml_output_format = 'svg_obj' # svg only
 #plantuml_output_format = 'svg'    # svg + png
 

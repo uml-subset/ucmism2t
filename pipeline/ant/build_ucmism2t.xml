@@ -1,8 +1,5 @@
 <project name="build_ucmism2t" default="build">
 	
-	<property name="pipeline.properties" value="pipeline.properties"/>
-    <property file="${pipeline.properties}"/>
-    
     <!-- <echoproperties /> -->
     
     <target name="build">

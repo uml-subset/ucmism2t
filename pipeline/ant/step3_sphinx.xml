@@ -1,7 +1,5 @@
 <project name="step3_sphinx" default="sphinx">
 	
-	<property name="pipeline.properties" value="pipeline.properties"/>
-	<property file="${pipeline.properties}"/>
 	<property file="${generated_folder}/_currentModel.properties"/>
 	<property name="html_title" value="UML Model: ${MODEL_TITLE} (${MODEL_ACRONYM} ${MODEL_MAJORVERSION}.${MODEL_MINORVERSION})"/>
 	
@@ -10,12 +8,15 @@
 	<target name="sphinx">
 		<echo message="--------------------" />				
 		<echo message="Step 3 - sphinx started ..." />
-		<!-- <record name="${log_folder}/step3_sphinx_ant.log" /> -->
-		<exec executable="sphinx-build" output="${log_folder}/step3_sphinx_output.log">
+		<exec executable="sphinx-build">
+			<env key="plantuml_jar" value="${plantuml_jar}"/>
 			<arg line="-b html" />
 			<arg line="-c ${ucmism2t_dir}/pipeline/sphinx/bookTheme" />
-			<arg line="-w ${log_folder}/step3_sphinx_warning.log" />
+			<!-- similar output as in terminal window -->
+			<arg line="-w ${log_folder}/step3_sphinx_error.log" />
 			<arg line="-n" />
+			<!-- suppresses terminal codes -->
+			<arg line="-q" />
 			<arg line="-D copyright=&quot;${COPYRIGHT}&quot;" />
 			<arg line="-D html_logo=&quot;${logo_file}&quot;" />
 			<arg line="-D html_title=&quot;${html_title}&quot;" />
