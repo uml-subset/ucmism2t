@@ -1,10 +1,26 @@
-<project name="provide_generated" default="build">
+<project name="step4_provide_generated" default="provide_generated">
 	
 	<property name="pipeline.properties" value="pipeline.properties"/>
 	<property file="${pipeline.properties}"/>
 	<property file="${generated_folder}/_currentModel.properties"/>
+	<property name="html.file" location="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation/index.html" />
+	
+	<!-- Detect the Operating System -->
+	<condition property="isWindows">
+		<os family="windows" />
+	</condition>
+	<condition property="isMac">
+		<os family="mac" />
+	</condition>
+	<condition property="isLinux">
+		<os family="unix" />
+	</condition>
+	
+	<!-- <echoproperties /> -->
 	
 	<target name="build">
+		<echo message="--------------------" />				
+		<echo message="Step 4 - provide generated started ..." />
 		<delete dir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation" />
 		<copy todir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation">
 			<fileset dir="${generated_folder}/${MODEL_SHORTNAME}/doc/_build">
@@ -18,8 +34,39 @@
 				<include name="**" />
 			</fileset>
 		</copy> -->
-		<echo message="" />				
-		<echo message="Generated documentation at: ${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation/index.html" />
+		<property name="build.success" value="true" />
 	</target>
-
+	
+	<!-- Master target that calls the OS-specific targets -->
+	<target name="provide_generated" depends="build, open-windows, open-mac, open-linux" if="build.success">
+		<echo message="----------" />				
+		<echo message="Step 4 - Provide generated completed." />
+		<echo message="Documentation at: ${html.file}" />
+	</target>
+	
+	<!-- Windows Target -->
+	<target name="open-windows" if="isWindows">
+		<echo message="Opening HTML on Windows..." />
+		<exec executable="cmd" spawn="yes">
+			<arg value="/c" />
+			<arg file="${html.file}" />
+		</exec>
+	</target>
+	
+	<!-- macOS Target -->
+	<target name="open-mac" if="isMac" unless="isWindows">
+		<echo message="Opening HTML on macOS..." />
+		<exec executable="open" spawn="yes">
+			<arg file="${html.file}" />
+		</exec>
+	</target>
+	
+	<!-- Linux Target -->
+	<target name="open-linux" if="isLinux" unless="isMac">
+		<echo message="Opening HTML on Linux..." />
+		<exec executable="xdg-open" spawn="yes">
+			<arg file="${html.file}" />
+		</exec>
+	</target>
+	
 </project>

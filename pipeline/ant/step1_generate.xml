@@ -13,8 +13,18 @@
     
     <!-- <echoproperties /> -->
     
-    <target name="generate" depends="generate_windows, generate_unix"/>
-
+    <target name="generate" depends="startmessage, generate_windows, generate_unix, endmessage"/>
+    
+    <target name="startmessage">
+        <echo message="--------------------" />				
+        <echo message="Step 1 - generate started ..." />
+    </target>
+    
+    <target name="endmessage">
+        <echo message="----------" />				
+        <echo message="Step 1 - generate completed. Files in: ${generated_folder}/${MODEL_SHORTNAME}" />
+    </target>
+    
     <target name="generate_windows" if="isWindows">
         <exec dir="." executable="cmd">
             <arg line="/c TODO" />

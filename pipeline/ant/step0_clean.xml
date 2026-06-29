@@ -1,0 +1,17 @@
+<project name="step0_clean" default="clean">
+	
+	<property name="pipeline.properties" value="pipeline.properties"/>
+	<property file="${pipeline.properties}"/>
+    <property file="${generated_folder}/_currentModel.properties"/>
+    
+    <target name="clean">
+        <echo message="--------------------" />				
+        <echo message="Step 0 - clean started ..." />
+        <delete dir="${generated_folder}/${MODEL_SHORTNAME}" />
+        <delete dir="${log_folder}" />
+        <echo message="----------" />				
+        <echo message="Step 0 - clean completed" />				
+        
+    </target>
+    
+</project>

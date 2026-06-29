@@ -1,9 +1,0 @@
-<project name="zipRdfEncodings" default="provide">
-	<!-- <property name="root" location="generated" /> -->
-	<property environment="env" />
-	<property name="encoding" location="${env.GENERATED_FOLDER}/DDI-CDI_1-0/encoding" />
-	<target name="provide">
-		<copy file="${encoding}/ontology/DDICDIModels.onto.ttl"
-			tofile="${encoding}/ontology/ddi-cdi.onto.ttl" failonerror="false" />
-	</target>
-</project>

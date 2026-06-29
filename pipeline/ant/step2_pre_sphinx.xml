@@ -1,4 +1,4 @@
-<project name="pre_sphinx" default="run-defaults">
+<project name="step2_pre_sphinx" default="pre_sphinx">
     
     <property name="pipeline.properties" value="pipeline.properties"/>
     <property file="${pipeline.properties}"/>
@@ -6,6 +6,11 @@
     
     <!-- <echoproperties /> -->
     
+    <target name="startmessage">
+        <echo message="--------------------" />				
+        <echo message="Step 2 - pre sphinx started ..." />
+    </target>
+
     <target name="copy_about_files">
         <copy todir="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/about"
               failonerror="false">
@@ -59,8 +64,9 @@
               todir="${generated_folder}/${MODEL_SHORTNAME}/encoding/xmi" overwrite="true" verbose="true" />
     </target>
     
-    <target name="run-defaults"
+    <target name="pre_sphinx"
             depends="
+                startmessage,
                 copy_about_files,
                 copy_model_information,
                 copy_vega_files,
@@ -69,6 +75,8 @@
                 provide_onto_file,
                 copy_model_file
                 ">
+        <echo message="----------" />				
+        <echo message="Step 2 - pre Sphinx completed" />
     </target>
     
 </project>

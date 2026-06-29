@@ -1,6 +1,0 @@
-<project name="copyXmlXsd" default="copy">
-	<target name="copy">
-		<property environment="env" />
-		<copy file="${env.UCMISM2T_DIR}/xsd/xml.xsd" todir="${env.GENERATED_FOLDER}/DDI-CDI_1-0/encoding/xml-schema" />
-	</target>
-</project>

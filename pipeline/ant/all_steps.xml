@@ -4,6 +4,7 @@
     <property file="${pipeline.properties}"/>
     
     <target name="build">
+        <ant antfile="${ucmism2t_dir}/pipeline/ant/step0_clean.xml" />
         <ant antfile="${ucmism2t_dir}/pipeline/ant/step1_generate.xml" />
         <ant antfile="${ucmism2t_dir}/pipeline/ant/step2_pre_sphinx.xml" />
         <ant antfile="${ucmism2t_dir}/pipeline/ant/step3_sphinx.xml" />
