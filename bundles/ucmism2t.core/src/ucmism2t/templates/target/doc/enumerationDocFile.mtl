@@ -5,7 +5,6 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 [import ucmism2t::templates::target::onto::enumerationOnto/]
@@ -28,7 +27,7 @@
 	    .. index:: [anEnumeration.name/]
 	    
 	    [if (anEnumeration.u_isChildOfMainPackage())]
-	      Fully qualified [anEnumeration.eClass().name.toLower()/] name of the UML model [anEnumeration.u_model().e_modelAcronym()/] [anEnumeration.u_model().e_modelMajorVersion()/].[anEnumeration.u_model().e_modelMinorVersion()/]: **[anEnumeration.qualifiedName/]**
+	      Fully qualified [anEnumeration.eClass().name.toLower()/] name of the UML model [anEnumeration.u_model().u_modelAcronym()/] [anEnumeration.u_model().u_modelMajorVersion()/].[anEnumeration.u_model().u_modelMinorVersion()/]: **[anEnumeration.qualifiedName/]**
 	    [else]
 	      Fully qualified [anEnumeration.eClass().name.toLower()/] name: **[anEnumeration.qualifiedName/]**
 	    [/if]
@@ -149,7 +148,7 @@
 	          [anEnumeration.enumerationOnto()/]
 	        [/file]
 	        
-	                    Fragment for the enumeration **[anEnumeration.name/]** (`main ontology </encoding/ontology/[anEnumeration.u_model().e_modelAcronym().toLower()/].onto.ttl>`_)
+	                    Fragment for the enumeration **[anEnumeration.name/]** (`main ontology </encoding/ontology/[anEnumeration.u_model().u_modelAcronym().toLower()/].onto.ttl>`_)
 	        
 	                    .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
 	                       :language: turtle

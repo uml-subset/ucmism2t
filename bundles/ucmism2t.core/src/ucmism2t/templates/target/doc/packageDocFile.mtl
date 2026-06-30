@@ -14,7 +14,6 @@ The documentation of the module packageDocFile.
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::classDocFile/]
 [import ucmism2t::templates::target::doc::dataTypeDocFile/]
 [import ucmism2t::templates::target::doc::enumerationDocFile/]

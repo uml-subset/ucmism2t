@@ -18,7 +18,6 @@ Module contains templates for generating the PlantUml code for UML diagrams.
 [import ucmism2t::queries::stringQuery/]
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 
 [template public pu_itemDefinition(item : uml::Classifier, attributes : String,

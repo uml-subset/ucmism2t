@@ -10,7 +10,6 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::shacl::classShacl/]
 [import ucmism2t::templates::target::shacl::dataTypeShacl/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
@@ -26,7 +25,7 @@
  * @param aModel a model
 */]
 [template public packageShaclFile(aModel : uml::Model)]
-  [file (aModel.e_modelShortName() + '/encoding/shacl/' + aModel.e_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/shacl/' + aModel.u_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
     [aModel.u_model().ttl_prefixes()/]
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     

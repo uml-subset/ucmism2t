@@ -11,7 +11,6 @@ All templates in the *Xsd.mtl modules generate XML Schema.
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::xsd::classXsd/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
 [import ucmism2t::templates::target::xsd::dataTypeXsd/]
@@ -24,7 +23,7 @@ All templates in the *Xsd.mtl modules generate XML Schema.
  * @param aModel a model
 */]
 [template public processModelXsd(aModel : uml::Model)]
-  [file (aModel.e_modelShortName() + '/encoding/xml-schema/' + aModel.e_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
     [aModel.xsdHeader()/]
     [if ('DDI-CDI'.isPropertyTrue())]
       [aModel.xsdWrapper()/]
@@ -93,8 +92,9 @@ All templates in the *Xsd.mtl modules generate XML Schema.
     </xs:complexType>
 [/template]
 
-[template public xsdVersion(aModel : uml::Model)]
-  [aModel.e_modelIdentication().eContents(uml::Property)->select(temp8 | temp8.name = 'majorVersion')->collect(temp9 | temp9.default) + '.' + aModel.e_modelIdentication().eContents(uml::Property)->select(temp10 | temp10.name = 'minorVersion')->collect(temp11 | temp11.default)/][/template]
+[template public xsdVersion(aModel : uml::Model) post(self.trim())]
+  [aModel.u_modelMajorVersion() + '.' + aModel.u_modelMinorVersion()/]
+[/template]
 
 [template public xsdFooter(aModel : uml::Model)]
   </xs:schema>
@@ -110,14 +110,14 @@ All templates in the *Xsd.mtl modules generate XML Schema.
 [template public xsdModelIdentificationComment(aModel : uml::Model)]
   <!--
   
-  XML Schema generated on the basis of the UML model [aModel.e_modelIdentication().eContents(uml::Property)->select(temp12 | temp12.name = 'acronym')->collect(temp13 | temp13.default)/].
+  XML Schema generated on the basis of the UML model [aModel.u_modelAcronym()/].
   
-  Acronym:       [aModel.e_modelIdentication().eContents(uml::Property)->select(temp14 | temp14.name = 'acronym')->collect(temp15 | temp15.default)/] 
-  Title:         [aModel.e_modelIdentication().eContents(uml::Property)->select(temp16 | temp16.name = 'title')->collect(temp17 | temp17.default)/]
-  Subtitle:      [aModel.e_modelIdentication().eContents(uml::Property)->select(temp18 | temp18.name = 'subtitle')->collect(temp19 | temp19.default)/]
-  Major version: [aModel.e_modelIdentication().eContents(uml::Property)->select(temp20 | temp20.name = 'majorVersion')->collect(temp21 | temp21.default)/]
-  Minor version: [aModel.e_modelIdentication().eContents(uml::Property)->select(temp22 | temp22.name = 'minorVersion')->collect(temp23 | temp23.default)/]
-  URI:           [aModel.e_modelIdentication().eContents(uml::Property)->select(temp24 | temp24.name = 'uri')->collect(temp25 | temp25.default)/]
+  Acronym:       [aModel.u_modelAcronym()/] 
+  Title:         [aModel.u_modelTitle()/]
+  Subtitle:      [aModel.u_modelSubtitle()/]
+  Major version: [aModel.u_modelMajorVersion()/]
+  Minor version: [aModel.u_modelMajorVersion()/]
+  URI:           [aModel.u_modelUri()/]
   
   -->[/template]
 

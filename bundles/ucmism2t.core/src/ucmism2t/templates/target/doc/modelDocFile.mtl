@@ -8,7 +8,6 @@
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::aboutModelDocFile/]
 [import ucmism2t::templates::target::doc::appendicesDocFile/]
 [import ucmism2t::templates::target::doc::packageDocFile/]
@@ -57,7 +56,7 @@
 
 [template public modelInformationJs(aModel : uml::Model)]
   [file (aModel.u_filePath('doc').concat('/_modelInformation.js'), overwrite, 'UTF-8')]
-    var modelUrl = '[aModel.e_modelUri()/]';
+    var modelUrl = '[aModel.u_modelUri()/]';
     var modelDocumentationUrl = '['DOCUMENTATION_URL'.getPropertyValue()/]';
     var definition = {
     [for (aNamedElement : uml::NamedElement | aModel.u_allPackages()->collect(p | p.oclAsType(uml::NamedElement))->union(aModel.u_allClasses())->union(aModel.u_allDataTypes()))]
@@ -96,7 +95,7 @@
 [comment] NOT USED
 [template public modelUrlJsFile(aModel : uml::Model)]
   [file (aModel.u_filePath('doc') + '/_modelUrl.js', overwrite, 'UTF-8')]
-    var modelUrl = '[aModel.e_modelUri()/]';
+    var modelUrl = '[aModel.u_modelUri()/]';
   [/file]
 [/template]
 [/comment]

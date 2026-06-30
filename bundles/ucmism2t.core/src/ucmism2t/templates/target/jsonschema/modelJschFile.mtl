@@ -10,7 +10,6 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::jsonschema::classJsch/]
 [import ucmism2t::templates::target::jsonschema::commonJsch/]
 [import ucmism2t::templates::target::jsonschema::dataTypeJsch/]
@@ -22,7 +21,7 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
  * @param aModel a model
 */]
 [template public generateJsonSchema(aModel : uml::Model)]
-  [file (aModel.e_modelShortName() + '/encoding/json-schema/' + aModel.e_modelAcronym().toLower() + '.schema.json', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-schema/' + aModel.u_modelAcronym().toLower() + '.schema.json', overwrite, 'UTF-8')]
     {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "[aModel.name/]",
@@ -140,4 +139,5 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
 [/template]
 
 [template public jschVersion(aModel : uml::Model)]
-  [aModel.e_modelIdentication().eContents(uml::Property)->select(temp3 | temp3.name = 'majorVersion')->collect(temp4 | temp4.default) + '.' + aModel.e_modelIdentication().eContents(uml::Property)->select(temp5 | temp5.name = 'minorVersion')->collect(temp6 | temp6.default)/][/template]
+  [aModel.u_modelMajorVersion() + '.' + aModel.u_modelMinorVersion()/]
+[/template]

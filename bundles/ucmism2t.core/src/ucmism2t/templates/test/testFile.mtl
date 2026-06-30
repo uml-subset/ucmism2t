@@ -14,7 +14,6 @@
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::DateTimeService /]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 [import ucmism2t::templates::target::xsd::classXsd/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
@@ -24,10 +23,21 @@
     
     time: [aModel.getCurrentDateTime()/]
 
+	[aModel.eAllContents(uml::DataType)
+      ->select(d | d.name = 'xModelIdentification')
+      ->first()/] DD
+    u_packageInformation null [aModel.u_packageInformation() = null/]
     u_packageInformation [aModel.u_packageInformation()->size()/]
-    e_modelAcronym '[aModel.e_modelAcronym()/]'
+    u_packageInformation [aModel.u_packageInformation()/]
+    [let d1 : uml::DataType = aModel.eAllContents(uml::DataType)->select(d2 | d2.name = 'PointFormat')->first()]
+		  [d1.u_nearestPackageInformation()/] u_nearestPackageInformation PointFormat
+      [d1.u_packageInformationProperty('language')/] Property
+      [d1.u_packageInformationProperty('x')/] Property
+    [/let]
+    
     u_modelAcronym '[aModel.u_modelAcronym()/]'
-    e_modelShortName '[aModel.e_modelShortName()/]'
+[comment]     u_modelAcronym '[aModel.u_modelAcronym()/]'
+[/comment]    e_modelShortName '[aModel.u_modelShortName()/]'
     
     'test'.isPropertyTrue() ['test'.isPropertyTrue()/]
 

@@ -4,7 +4,6 @@
 [module representation('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
 
 [import ucmism2t::queries::elementQuery/]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::xsd::classXsd/]
 [import ucmism2t::templates::target::xsd::dataTypeXsd/]
 [import ucmism2t::templates::target::xsd::enumerationXsd/]

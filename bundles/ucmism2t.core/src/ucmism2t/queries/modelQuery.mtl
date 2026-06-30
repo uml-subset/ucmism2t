@@ -32,7 +32,6 @@ Related modules:
 
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 
 [**
  * Returns the main package for generation, determined by the

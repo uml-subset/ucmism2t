@@ -12,9 +12,9 @@
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::modelDocFile/]
 [import ucmism2t::templates::target::jsonld::modelJsonldFile/]
 [import ucmism2t::templates::target::jsonschema::modelJschFile/]
@@ -37,14 +37,14 @@ data type with detailed information.
 @main
 /]
 [template public processModel(aModel : uml::Model)]
-[comment]   [aModel.initProperties()/]
+  [aModel.initProperties()/]
   [aModel.writeConfigurationReport()/]
   [if ('diagnostic'.isPropertyTrue())]
     [aModel.writeDiagnostic()/]
   [/if]
   [aModel.writeModelProperties()/]
   [aModel.writeModelPropertiesPy()/]
-[/comment]  [if (aModel.name = 'Mapping')]
+  [if (aModel.name = 'Mapping')]
     [aModel.encodingMapping()/]
     [aModel.processModelTest()/]
   [else]
@@ -80,13 +80,13 @@ data type with detailed information.
     # Temporary properties file for Ant tasks with information extracted from the model and
     # the model properties file. 
     COPYRIGHT = ['COPYRIGHT'.getPropertyValue()/]
-    MODEL_ACRONYM = [aModel.e_modelAcronym()/]
-    MODEL_ACRONYM_LOWERCASE = [aModel.e_modelAcronym().toLower()/]
-    MODEL_MAJORVERSION = [aModel.e_modelMajorVersion()/]
-    MODEL_MINORVERSION = [aModel.e_modelMinorVersion()/]
-    MODEL_SHORTNAME = [aModel.e_modelShortName()/]
-    MODEL_SHORTNAME_LOWERCASE = [aModel.e_modelShortName().toLower()/]
-    MODEL_TITLE = [aModel.e_modelTitle()/]
+    MODEL_ACRONYM = [aModel.u_modelAcronym()/]
+    MODEL_ACRONYM_LOWERCASE = [aModel.u_modelAcronym().toLower()/]
+    MODEL_MAJORVERSION = [aModel.u_modelMajorVersion()/]
+    MODEL_MINORVERSION = [aModel.u_modelMinorVersion()/]
+    MODEL_SHORTNAME = [aModel.u_modelShortName()/]
+    MODEL_SHORTNAME_LOWERCASE = [aModel.u_modelShortName().toLower()/]
+    MODEL_TITLE = [aModel.u_modelTitle()/]
     MODEL_TOPPACKAGENAME = [aModel.name/]
     MAIN_PACKAGE_XMI_ID = [aModel.u_mainPackage().qualifiedName.replaceAll('::', '-')/]
     MAIN_PACKAGE_NAME = [aModel.u_mainPackage().name/]
@@ -97,11 +97,11 @@ data type with detailed information.
 [template public writeModelPropertiesPy(aModel : uml::Model)]
   [file ('_currentModelProperties.py', overwrite, 'UTF-8')]
     # Temporary properties file for Sphinx configuration
-    model_acronym = '[aModel.e_modelAcronym()/]'
-    model_uri = '[aModel.e_modelUri()/]'
-    model_major_version = '[aModel.e_modelMajorVersion()/]'
-    model_minor_version = '[aModel.e_modelMinorVersion()/]'
-    model_title = '[aModel.e_modelTitle()/]'
+    model_acronym = '[aModel.u_modelAcronym()/]'
+    model_uri = '[aModel.u_modelUri()/]'
+    model_major_version = '[aModel.u_modelMajorVersion()/]'
+    model_minor_version = '[aModel.u_modelMinorVersion()/]'
+    model_title = '[aModel.u_modelTitle()/]'
     repository_url = '['REPOSITORY_URL'.getPropertyValue()/]'
   [/file]
 [/template]

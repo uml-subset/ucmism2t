@@ -5,7 +5,6 @@
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 
 [comment for all classes with an outgoing (also inherited) association /]
 [template public vegaEdgeBundlingAssociationJsonFile(aModel : uml::Model)]

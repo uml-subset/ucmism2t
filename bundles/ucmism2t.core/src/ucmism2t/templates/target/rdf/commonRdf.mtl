@@ -11,7 +11,6 @@
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::eobjectQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 
 [template public Ottl_prefixes(x : uml::NamedElement)]
   PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -124,7 +123,7 @@ Converts a UML comment into an RDFS comment.
 /]
 [template public rdfs_comment(anNamedElement : uml::NamedElement)]
   [if (anNamedElement.u_commentBody().size()>0)]
-    rdfs:comment "[anNamedElement.u_commentBody().ttlEscape()/]"@[anNamedElement.u_model().e_modelLanguage()/];
+    rdfs:comment "[anNamedElement.u_commentBody().ttlEscape()/]"@[anNamedElement.u_modelLanguage()/];
   [/if]
 [/template]
 [comment] Acceleo 3.7 version

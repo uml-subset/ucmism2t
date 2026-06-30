@@ -11,7 +11,6 @@ Module contains queries with a UML element or named element as receiver.
 
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 
 [**
  * Returns the root model that owns the specified element,
@@ -315,7 +314,7 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
 [query public u_filePath(
   aNamedElement : uml::NamedElement,
   aTarget : String) : String =
-  let root : String = aNamedElement.u_model().e_modelShortName()
+  let root : String = aNamedElement.u_model().u_modelShortName()
     + '/' + aTarget + '/'
   in
   let path : String =
@@ -327,3 +326,419 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
     root + path
   endif
 /]
+
+[**
+ * Returns the nearest DataType named 'PackageInformation' found by
+ * walking up the package containment hierarchy from aNamedElement.
+ *
+ * Starting from the nearest owning package of aNamedElement, the query
+ * searches for a DataType named 'PackageInformation' in that package's
+ * direct contents. If none is found, it recurses upward through the
+ * package hierarchy. The model root is always searched before the
+ * recursion terminates — if no match is found at any level, null
+ * is returned.
+ *
+ * Termination is guaranteed because u_nearestPackage() called on a
+ * uml::Package returns its owning package (not itself), so the recursion
+ * always moves upward and stops when the uml::Model root is reached.
+ *
+ * @param aNamedElement - The UML named element from which to start the search.
+ * @return The nearest PackageInformation DataType, or null if none found.
+ */]
+[query public u_nearestPackageInformation(
+  aNamedElement : uml::NamedElement) : uml::DataType =
+  let nearestPackage : uml::Package =
+    aNamedElement.u_nearestPackage() in
+  let packageIdentification : uml::DataType =
+    nearestPackage.eContents(uml::DataType)
+      ->select(d | d.name = 'PackageInformation')
+      ->first() in
+  if packageIdentification <> null
+  then packageIdentification
+  else
+    if nearestPackage.oclIsKindOf(uml::Model)
+    then null
+    else nearestPackage.u_nearestPackageInformation()
+    endif
+  endif
+/]
+
+[**
+ * Returns the PackageInformation or ModelIdentification DataType relevant to aNamedElement,
+ * supporting both structured models and legacy models.
+ *
+ * Resolution order:
+ * (1) The nearest PackageInformation found by walking up the package
+ *     hierarchy from aNamedElement (via u_nearestPackageInformation).
+ * (2) If none is found, any ModelIdentification present anywhere in
+ *     the model — intended for legacy models that have a single
+ *     ModelIdentification not placed at a specific package level.
+ * (3) null if no ModelIdentification exists anywhere in the model.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the PackageInformation or ModelIdentification.
+ * @return The relevant ModelIdentification DataType, or null if none found.
+ */]
+[query public u_packageInformation(aNamedElement : uml::NamedElement) : uml::DataType =
+  let nearestPackageInformation : uml::DataType =
+    aNamedElement.u_nearestPackageInformation() in
+  let modelIdentification : uml::DataType =
+    aNamedElement.u_model().eAllContents(uml::DataType)
+      ->select(d | d.name = 'ModelIdentification')
+      ->first() in
+  if nearestPackageInformation <> null
+  then nearestPackageInformation
+  else modelIdentification
+  endif
+/]
+
+[**
+Returns the default value of a named property from the
+PackageInformation or ModelIdentification DataType relevant
+to aNamedElement, or an empty string if no ModelIdentification,
+no matching property, or no default value is found.
+Note: An explicit oclAsType(uml::Property) cast is required after
+->first() because AQL loses the concrete type when the let binding's
+else branch returns null.
+
+@param aNamedElement  - The UML named element for which to resolve
+                        the ModelIdentification property.
+@param aPropertyName  - The name of the property to retrieve
+                        (e.g. 'acronym', 'version', 'author').
+@return The default value string, or '' if not found.
+/]
+[query public u_packageInformationProperty(
+  aNamedElement : uml::NamedElement,
+  aPropertyName : String) : String =
+  let packageInformation : uml::DataType =
+    aNamedElement.u_packageInformation()
+  in
+  let property : uml::Property =
+    if packageInformation <> null
+    then packageInformation.eContents(uml::Property)
+           ->select(p | p.name = aPropertyName)
+           ->first()
+    else null
+    endif
+  in
+  if property <> null
+  then
+    let typedProperty : uml::Property =
+      property.oclAsType(uml::Property) in
+    if typedProperty.default <> null
+    then typedProperty.default
+    else ''
+    endif
+  else ''
+  endif
+/]
+
+[**
+ * Returns the model language for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_LANGUAGE config property,
+ * (2) 'language' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'en' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model language.
+ * @return The language string, or 'en' if not found.
+ */]
+[query public u_modelLanguage(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyLanguage : String =
+    'MODEL_LANGUAGE'.getPropertyValue()
+  in
+  let modelLanguage : String =
+    aNamedElement.u_packageInformationProperty('language')
+  in
+  if propertyLanguage <> ''
+  then propertyLanguage
+  else
+    if modelLanguage <> ''
+    then modelLanguage
+    else 'en'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model acronym for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_ACRONYM config property,
+ * (2) 'acronym' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) the model name,
+ * (4) 'UNKNOWN_MODEL' as final fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model acronym.
+ * @return The acronym string, or 'UNKNOWN_MODEL' if not found.
+ */]
+[query public u_modelAcronym(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyAcronym : String =
+    'MODEL_ACRONYM'.getPropertyValue()
+  in
+  let modelAcronym : String =
+    aNamedElement.u_packageInformationProperty('acronym')
+  in
+  if propertyAcronym <> ''
+  then propertyAcronym
+  else
+    if modelAcronym <> ''
+    then modelAcronym
+    else
+      if aNamedElement.u_model().name <> ''
+      then aNamedElement.u_model().name
+      else 'UNKNOWN_MODEL'
+      endif
+    endif
+  endif
+/]
+
+[**
+ * Returns the model major version for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_MAJOR_VERSION config property,
+ * (2) 'majorVersion' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model major version.
+ * @return The major version as string, or 'NOT_SET' if not found.
+ */]
+[query public u_modelMajorVersion(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyMajorVersion : String =
+    'MODEL_MAJOR_VERSION'.getPropertyValue()
+  in
+  let modelMajorVersion : String =
+    aNamedElement.u_packageInformationProperty('majorVersion')
+  in
+  if propertyMajorVersion <> ''
+  then propertyMajorVersion
+  else
+    if modelMajorVersion <> ''
+    then modelMajorVersion
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model minor version version for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_MINOR_VERSION config property,
+ * (2) 'minorVersion' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model minor version version.
+ * @return The minor version as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelMinorVersion(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyMinorVersion : String =
+    'MODEL_MINOR_VERSION'.getPropertyValue()
+  in
+  let modelMinorVersion : String =
+    aNamedElement.u_packageInformationProperty('minorVersion')
+  in
+  if propertyMinorVersion <> ''
+  then propertyMinorVersion
+  else
+    if modelMinorVersion <> ''
+    then modelMinorVersion
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model URI for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_URI config property,
+ * (2) 'uri' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model URI.
+ * @return The URI as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelUri(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyUri : String =
+    'MODEL_URI'.getPropertyValue()
+  in
+  let modelUri : String =
+    aNamedElement.u_packageInformationProperty('uri')
+  in
+  if propertyUri <> ''
+  then propertyUri
+  else
+    if modelUri <> ''
+    then modelUri
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model title for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_TITLE config property,
+ * (2) 'title' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model title.
+ * @return The title as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelTitle(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyTitle : String =
+    'MODEL_TITLE'.getPropertyValue()
+  in
+  let modelTitle : String =
+    aNamedElement.u_packageInformationProperty('title')
+  in
+  if propertyTitle <> ''
+  then propertyTitle
+  else
+    if modelTitle <> ''
+    then modelTitle
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model subtitle for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) MODEL_SUB_TITLE config property,
+ * (2) 'subtitle' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model subtitle.
+ * @return The subtitle as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelSubtitle(
+  aNamedElement : uml::NamedElement) : String =
+  let propertySubtitle : String =
+    'MODEL_SUB_TITLE'.getPropertyValue()
+  in
+  let modelSubtitle : String =
+    aNamedElement.u_packageInformationProperty('subtitle')
+  in
+  if propertySubtitle <> ''
+  then propertySubtitle
+  else
+    if modelSubtitle <> ''
+    then modelSubtitle
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model XMI namespace for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) XMI_NAMESPACE config property,
+ * (2) 'xmiNamespace' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model XMI namespace.
+ * @return The XMI namespace as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelXmiNamespace(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyXmiNamespace : String =
+    'XMI_NAMESPACE'.getPropertyValue()
+  in
+  let modelXmiNamespace : String =
+    aNamedElement.u_packageInformationProperty('xmiNamespace')
+  in
+  if propertyXmiNamespace <> ''
+  then propertyXmiNamespace
+  else
+    if modelXmiNamespace <> ''
+    then modelXmiNamespace
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model RDF namespace for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) RDF_NAMESPACE config property,
+ * (2) 'rdfNamespace' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model RDF namespace.
+ * @return The RDF namespace as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelRdfNamespace(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyRdfNamespace : String =
+    'RDF_NAMESPACE'.getPropertyValue()
+  in
+  let modelRdfNamespace : String =
+    aNamedElement.u_packageInformationProperty('rdfNamespace')
+  in
+  if propertyRdfNamespace <> ''
+  then propertyRdfNamespace
+  else
+    if modelRdfNamespace <> ''
+    then modelRdfNamespace
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[**
+ * Returns the model RDF preifx for aNamedElement. The value is determined
+ * in order of priority:
+ * (1) RDF_PREFIX config property,
+ * (2) 'rdfPrefix' property of the relevant PackageInformation or ModelIdentification DataType,
+ * (3) 'NOT_SET' as fallback.
+ *
+ * @param aNamedElement - The UML named element for which to resolve
+ *                        the model RDF namespace.
+ * @return The RDF preifx as string, or 'NOT_SET' if not found.
+ */]
+ 
+[query public u_modelRdfPrefix(
+  aNamedElement : uml::NamedElement) : String =
+  let propertyRdfPrefix : String =
+    'RDF_PREFIX'.getPropertyValue()
+  in
+  let modelRdfPrefix : String =
+    aNamedElement.u_packageInformationProperty('rdfPrefix')
+  in
+  if propertyRdfPrefix <> ''
+  then propertyRdfPrefix
+  else
+    if modelRdfPrefix <> ''
+    then modelRdfPrefix
+    else 'NOT_SET'
+    endif
+  endif
+/]
+
+[query public u_modelShortName(aNamedElement : uml::NamedElement) : String =
+  aNamedElement.u_modelAcronym()
+    + '_'
+    + aNamedElement.u_modelMajorVersion()
+    + '-'
+    + aNamedElement.u_modelMinorVersion()
+/] 

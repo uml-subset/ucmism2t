@@ -14,7 +14,6 @@
 [import ucmism2t::queries::stringQuery/]
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::puDiagram/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 
@@ -73,7 +72,7 @@
   title UML Diagram: Class [aClass.name/] in Context\n
   'title <size:20>UML Diagram: Class [aClass.name/] in Context\n
   [let url : String = '../' + aClass.u_path() + '.html']
-    [let label : String = aClass.u_model().e_modelTitle() + ' (' + aClass.u_model().e_modelAcronym() + ') ' + aClass.u_model().e_modelMajorVersion() + '.' + aClass.u_model().e_modelMinorVersion() + ' - ' + aClass.u_simpleQualifiedClassifierName()]
+    [let label : String = aClass.u_model().u_modelTitle() + ' (' + aClass.u_model().u_modelAcronym() + ') ' + aClass.u_model().u_modelMajorVersion() + '.' + aClass.u_model().u_modelMinorVersion() + ' - ' + aClass.u_simpleQualifiedClassifierName()]
       <style>
       title { FontSize: 20 }
       footer { hyperlinkUnderlineThickness 0 }
@@ -171,7 +170,7 @@
   title UML Diagram: [aDataType.eClass().name/] [aDataType.name/] in Context\n
   'title <size:20>UML Diagram: [aDataType.eClass().name/] [aDataType.name/] in Context\n
   [let url : String = '../' + aDataType.u_path() + '.html']
-    [let label : String = aDataType.u_model().e_modelTitle() + ' (' + aDataType.u_model().e_modelAcronym() + ') ' + aDataType.u_model().e_modelMajorVersion() + '.' + aDataType.u_model().e_modelMinorVersion() + ' - ' + aDataType.u_simpleQualifiedClassifierName()]
+    [let label : String = aDataType.u_model().u_modelTitle() + ' (' + aDataType.u_model().u_modelAcronym() + ') ' + aDataType.u_model().u_modelMajorVersion() + '.' + aDataType.u_model().u_modelMinorVersion() + ' - ' + aDataType.u_simpleQualifiedClassifierName()]
       <style>
       title { FontSize: 20 }
       footer { hyperlinkUnderlineThickness 0 }

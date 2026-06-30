@@ -7,7 +7,6 @@
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 

@@ -10,7 +10,6 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::jsonld::commonJsonld/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
@@ -36,7 +35,7 @@
 [**
 */]
 [template public dataTypeJsonldFile(aDataType : uml::DataType) post(self.trim())]
-  [file (aDataType.u_model().e_modelShortName() + '/encoding/json-ld/' + aDataType.name + '.jsonld', overwrite, 'UTF-8')]
+  [file (aDataType.u_model().u_modelShortName() + '/encoding/json-ld/' + aDataType.name + '.jsonld', overwrite, 'UTF-8')]
     [aDataType.dataTypeJsonldModular()/]
   [/file]
 [/template]

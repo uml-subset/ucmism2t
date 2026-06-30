@@ -15,7 +15,6 @@
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::doc::associationDoc/]
 [import ucmism2t::templates::target::doc::puDiagram/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
@@ -47,7 +46,7 @@
       .. index:: [aClass.name/]
       
       [if (aClass.u_isChildOfMainPackage())]
-        Fully qualified [aClass.eClass().name.toLower()/] name of the UML model [aClass.u_model().e_modelAcronym()/] [aClass.u_model().e_modelMajorVersion()/].[aClass.u_model().e_modelMinorVersion()/]: **[aClass.qualifiedName/]**
+        Fully qualified [aClass.eClass().name.toLower()/] name of the UML model [aClass.u_model().u_modelAcronym()/] [aClass.u_model().u_modelMajorVersion()/].[aClass.u_model().u_modelMinorVersion()/]: **[aClass.qualifiedName/]**
       [else]
         Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
       [/if]
@@ -196,7 +195,7 @@
             
                  .. The path of the encoding URIs is adjusted by the Javascript function changeUrl in custom.js.
         
-                 Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/[aClass.u_model().e_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
+                 Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/[aClass.u_model().u_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
             
                  .. literalinclude:: /xmi/[aClass.name/].xmi
                     :lines: 2-
@@ -211,7 +210,7 @@
             [aClass.classXsd()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().e_modelAcronym().toLower()/].xsd>`_)
+                   Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().u_modelAcronym().toLower()/].xsd>`_)
               
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
                       :language: xml
@@ -227,7 +226,7 @@
             [aClass.classJsch()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().e_modelAcronym().toLower()/].schema.json>`_)
+                   Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>`_)
           
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].schema.json 
                       :language: json
@@ -242,7 +241,7 @@
             [aClass.classOnto()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().e_modelAcronym().toLower()/].onto.ttl>`_)
+                   Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().u_modelAcronym().toLower()/].onto.ttl>`_)
               
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
                       :language: turtle
@@ -257,7 +256,7 @@
             [aClass.classJsonldModular()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().e_modelAcronym().toLower()/].jsonld>`_)
+                   Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>`_)
               
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].jsonld 
                       :language: JSON-LD
@@ -272,7 +271,7 @@
             [aClass.classShacl()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().e_modelAcronym().toLower()/].shacl.ttl>`_)
+                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
           
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shacl.ttl 
                       :language: turtle
@@ -287,7 +286,7 @@
             [aClass.classShex()/]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().e_modelAcronym().toLower()/].shexc>`_)
+                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
           
                    .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shexc 
                       :language: shexc

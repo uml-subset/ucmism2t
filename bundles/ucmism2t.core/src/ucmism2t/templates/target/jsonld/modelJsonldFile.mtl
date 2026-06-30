@@ -10,7 +10,6 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::query::oldModelQuery/]
 [import ucmism2t::templates::target::jsonld::classJsonld/]
 [import ucmism2t::templates::target::jsonld::commonJsonld/]
 [import ucmism2t::templates::target::jsonld::dataTypeJsonld/]
@@ -23,7 +22,7 @@
  * (this proved much more flexible than trying to generate the inline context directly).
 */]
 [template public generateJsonld(aModel : uml::Model)]
-  [file (aModel.e_modelShortName() + '/encoding/json-ld/' + aModel.e_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
     [let classes : Sequence(uml::Class) =
             aModel.eAllContents(uml::Class)
             ->select(aClass | aClass.u_isInAllowedPackage()),
