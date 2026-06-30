@@ -1,6 +1,6 @@
 <project name="step1_generate" default="generate">
     
-    <property file="${generated_folder}/_currentModel.properties"/>
+    <!-- <property file="${generated_folder}/_currentModel.properties"/> -->
 
     <condition property="isWindows">
         <os family="windows" />
@@ -21,7 +21,7 @@
     
     <target name="endmessage">
         <echo message="----------" />				
-        <echo message="Step 1 - generate completed. Files in: ${generated_folder}/${MODEL_SHORTNAME}" />
+        <echo message="Step 1 - generate completed. Files in: ${generated_folder}" />
     </target>
     
     <!-- TODO -->
