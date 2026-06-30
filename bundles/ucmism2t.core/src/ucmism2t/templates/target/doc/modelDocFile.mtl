@@ -93,12 +93,13 @@
  * Writes the model URL to a Javascript file
  * which is used by the generated documentation as logo link.
 */]
+[comment] NOT USED
 [template public modelUrlJsFile(aModel : uml::Model)]
   [file (aModel.u_filePath('doc') + '/_modelUrl.js', overwrite, 'UTF-8')]
     var modelUrl = '[aModel.e_modelUri()/]';
   [/file]
 [/template]
-
+[/comment]
 [comment NOT USED /]
 [template public addLinksInSpecificationOverview(aModel : uml::Model)]
   [file (aModel.u_filePath('doc').concat('/addLinksInSpecificationOverview.sed'), overwrite, 'UTF-8')]

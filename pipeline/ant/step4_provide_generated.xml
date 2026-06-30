@@ -19,6 +19,7 @@
 	<target name="build">
 		<echo message="--------------------" />				
 		<echo message="Step 4 - provide generated started ..." />
+		<copy file="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/rewrite.html" todir="${generated_folder}/${MODEL_SHORTNAME}/doc/_build" />
 		<delete dir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation" />
 		<copy todir="${generated_folder}/${MODEL_SHORTNAME}/field-level-documentation">
 			<fileset dir="${generated_folder}/${MODEL_SHORTNAME}/doc/_build">

@@ -252,7 +252,8 @@
             - Navigable 2
             - Class 2
             - Package 2
-    [for (anAssociation : uml::Association | aModel.eAllContents(uml::Association))]
+    [for (anAssociation : uml::Association | aModel.eAllContents(uml::Association)
+      ->select(a | a.ownedEnd->notEmpty()))]
             * - [if (anAssociation.ownedEnd->first().getOtherEnd().type.package.name = anAssociation.ownedEnd->first().type.package.name)]no[else]yes[/if]
               - :ref:`[anAssociation.ownedEnd->first().type.package.qualifiedName/]`
               - :ref:`[anAssociation.ownedEnd->first().type.qualifiedName/]`
@@ -300,7 +301,8 @@
             - Navigable 2
             - Class 2
             - Package 2
-    [for (anAssociation : uml::Association | aModel.eAllContents(uml::Association))]
+    [for (anAssociation : uml::Association | aModel.eAllContents(uml::Association)
+      ->select(a | a.ownedEnd->notEmpty()))]
       memberEnd: [anAssociation.memberEnd/]
       ownedEnd getOtherEnd: [anAssociation.ownedEnd->first().getOtherEnd()/]
       endType: [anAssociation.endType/]

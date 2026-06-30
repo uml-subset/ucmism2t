@@ -23,8 +23,10 @@
   [file ('test.txt', overwrite, 'UTF-8')]
     
     time: [aModel.getCurrentDateTime()/]
-        
+
+    u_packageInformation [aModel.u_packageInformation()->size()/]
     e_modelAcronym '[aModel.e_modelAcronym()/]'
+    u_modelAcronym '[aModel.u_modelAcronym()/]'
     e_modelShortName '[aModel.e_modelShortName()/]'
     
     'test'.isPropertyTrue() ['test'.isPropertyTrue()/]

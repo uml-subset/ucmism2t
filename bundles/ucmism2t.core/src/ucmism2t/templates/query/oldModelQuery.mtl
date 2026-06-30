@@ -16,6 +16,18 @@ Queries with prefix "u_" are written for Acceleo 4.
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
 
+[query public u_packageInformation(aNamedElement : uml::NamedElement) : uml::DataType
+  let packageInformation : OrderedSet(uml::DataType) =
+    aModel.eAllContents(uml::DataType)
+      ->select(d | d.name = 'ModelIdentification')
+    in
+    if packageInformation->notEmpty() then
+      packageInformation->first()
+    else
+      packageInformation
+    endif
+/]
+
 [**
 Returns the ModelIdentification data type from a model.
 This data type contains model metadata such as acronym, version,
@@ -43,6 +55,46 @@ Format: ACRONYM_MAJOR-MINOR.
 		+ aModel.e_modelMajorVersion()
 		+ '-'
 		+ aModel.e_modelMinorVersion()
+/]
+
+[**
+ * Returns the model acronym. The value is determined in order of
+ * priority: (1) MODEL_ACRONYM property, (2) acronym attribute of the
+ * ModelIdentification data type in the model, (3) model name as fallback.
+ *
+ * @param aModel A UML model
+ */]
+[query public u_modelAcronym(aModel : uml::Model) : String =
+  let fromProperties : String =
+    'MODEL_ACRONYM'.getPropertyValue()
+  in
+  let identificationTypes : OrderedSet(uml::DataType) =
+    aModel.eAllContents(uml::DataType)
+      ->select(d | d.name = 'ModelIdentification')
+  in
+  let acronymProperties : OrderedSet(uml::Property) =
+    if identificationTypes->notEmpty()
+    then
+      identificationTypes->first()
+        .eContents(uml::Property)
+        ->select(p | p.name = 'acronym')
+    else OrderedSet{}
+    endif
+  in
+  let fromModel : String =
+    if acronymProperties->notEmpty()
+    then acronymProperties->first().default
+    else null
+    endif
+  in
+  if fromProperties.size() > 0
+  then fromProperties
+  else
+    if not (fromModel = null)
+    then fromModel
+    else aModel.name
+    endif
+  endif
 /]
 
 [**
