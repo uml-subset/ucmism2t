@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ucmism2t::templates::target::xsd::modelXsdFile — Acceleo Documentation</title>
+    <title>ucmism2t::templates::indentation — Acceleo Documentation</title>
     <link rel="stylesheet" href="stylesheet.css"/>
 </head>
 <body>
@@ -61,7 +61,7 @@
             <li>
                 <a href="representation.html">representation</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="indentation.html">indentation</a>
             </li>
             <li>
@@ -118,7 +118,7 @@
             <li>
                 <a href="classXsd.html">classXsd</a>
             </li>
-            <li class="active">
+            <li>
                 <a href="modelXsdFile.html">modelXsdFile</a>
             </li>
             <li>
@@ -213,17 +213,17 @@
         <!-- ═══════════════════════════════════ Module header -->
         <h1 class="page-title">
             <span class="kind-badge kind-module">module</span>
-            ucmism2t::templates::target::xsd::modelXsdFile
+            ucmism2t::templates::indentation
         </h1>
 
 
-        <div class="description">All templates in the *Xsd.mtl modules generate XML Schema.</div>
+        <div class="description">The documentation of the module indentation.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
                 <code>http://www.eclipse.org/uml2/5.0.0/UML</code>, <code>http://www.eclipse.org/uml2/5.0.0/Types</code>, <code>http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard</code>
             </td></tr>
-            <tr><th>Source</th><td><code>ucmism2t/templates/target/xsd/modelXsdFile.mtl</code></td></tr>
+            <tr><th>Source</th><td><code>ucmism2t/templates/indentation.mtl</code></td></tr>
         </table>
 
         <!-- ═══════════════════════════════════ Template summary -->
@@ -235,22 +235,21 @@
             <tbody>
                 <tr>
                     <td>
-                        <a href="#processModelXsd">
-                            <code>processModelXsd(aModel)</code>
+                        <a href="#mainTemplate">
+                            <code>mainTemplate(aModel)</code>
                         </a>
-                        
+                        <span class="badge main">@main</span>
                         
                         
                     </td>
                     <td>
-                        Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.
-                        
+                        <span class="no-doc">—</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdHeader">
-                            <code>xsdHeader(aModel)</code>
+                        <a href="#level2a">
+                            <code>level2a(aModel)</code>
                         </a>
                         
                         
@@ -262,8 +261,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdVersion">
-                            <code>xsdVersion(aModel)</code>
+                        <a href="#level2b">
+                            <code>level2b(aModel)</code>
                         </a>
                         
                         
@@ -275,8 +274,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdFooter">
-                            <code>xsdFooter(aModel)</code>
+                        <a href="#level2b2">
+                            <code>level2b2(aModel)</code>
                         </a>
                         
                         
@@ -288,8 +287,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdGenerationMessage">
-                            <code>xsdGenerationMessage(aModel)</code>
+                        <a href="#level2c">
+                            <code>level2c(aModel)</code>
                         </a>
                         
                         
@@ -301,8 +300,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdModelIdentificationComment">
-                            <code>xsdModelIdentificationComment(aModel)</code>
+                        <a href="#level2d">
+                            <code>level2d(aModel)</code>
                         </a>
                         
                         
@@ -314,8 +313,60 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#xsdWrapper">
-                            <code>xsdWrapper(aModel)</code>
+                        <a href="#level2e">
+                            <code>level2e(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#level2f">
+                            <code>level2f(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#level2g">
+                            <code>level2g(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#level2h">
+                            <code>level2h(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#xsd_escapeXmlCharacters">
+                            <code>xsd_escapeXmlCharacters(anAttribute)</code>
                         </a>
                         
                         
@@ -332,26 +383,25 @@
 
         <!-- ═══════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
-        <div class="element-detail" id="processModelXsd">
+        <div class="element-detail" id="mainTemplate">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
+                <span class="badge main">@main</span>
                 
-                
-                processModelXsd
+                mainTemplate
             </h3>
 
             <div class="signature">
-                <code>[template public processModelXsd(aModel : uml::Model)]</code>
+                <code>[template public mainTemplate(aModel : uml::Model)]</code>
             </div>
 
 
-            <div class="description">Processes an UML class model complying to UCMIS. See: https://bitbucket.org/ddi-alliance/ucmis/ Creates a file for the model.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd>a model</dd>
+                <dd><span class="no-doc">No description.</span></dd>
             </dl>
 
 
@@ -362,95 +412,70 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
-                <a class="ref-badge ref-internal-query"
-                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
         </div>
 
         <div class="ref-section">
             <span class="ref-label">Templates</span>
                 <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdHeader">xsdHeader</a>
+                   href="indentation.html#level2a">level2a</a>
                 <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdWrapper">xsdWrapper</a>
+                   href="indentation.html#level2b">level2b</a>
                 <a class="ref-badge ref-internal-template"
-                   href="classXsd.html#classXsd">classXsd</a>
+                   href="indentation.html#level2b2">level2b2</a>
                 <a class="ref-badge ref-internal-template"
-                   href="enumerationXsd.html#enumerationXsd">enumerationXsd</a>
+                   href="indentation.html#level2c">level2c</a>
                 <a class="ref-badge ref-internal-template"
-                   href="dataTypeXsd.html#dataTypeXsd">dataTypeXsd</a>
+                   href="indentation.html#level2d">level2d</a>
                 <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdFooter">xsdFooter</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">AQL collection operations</span>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-select" target="_blank">select()</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">AQL services</span>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
-                    <span class="ref-badge ref-aql-service">not()</span>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#object-oclisof" target="_blank">oclIsTypeOf()</a>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-contains" target="_blank">contains()</a>
+                   href="indentation.html#level2e">level2e</a>
+                <a class="ref-badge ref-internal-template"
+                   href="indentation.html#level2f">level2f</a>
+                <a class="ref-badge ref-internal-template"
+                   href="indentation.html#level2g">level2g</a>
+                <a class="ref-badge ref-internal-template"
+                   href="indentation.html#level2h">level2h</a>
         </div>
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <a class="ref-badge ref-project-service"
-				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
-				</div>
+
+
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public processModelXsd(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + &#39;/encoding/xml-schema/&#39; + aModel.u_modelAcronym().toLower() + &#39;.xsd&#39;, overwrite, &#39;UTF-8&#39;)]
-    [aModel.xsdHeader()/]
-    [if (&#39;DDI-CDI&#39;.isPropertyTrue())]
-      [aModel.xsdWrapper()/]
-    [/if]
-    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)-&gt;sortedBy(c | c.name))]
-      [aClass.classXsd()/]
-    [/for]
-    [for (anEnumeration : uml::Enumeration | aModel.u_mainPackage().eAllContents(uml::Enumeration)-&gt;sortedBy(e | e.name))]
-      [anEnumeration.enumerationXsd()/]
-    [/for]
-    [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)
-      -&gt;sortedBy(d1 | d1.name)
-      -&gt;select(d2 | not d2.oclIsTypeOf(uml::Enumeration))
-      -&gt;select(d3 | not d3.qualifiedName.contains(&#39;XMLSchemaDataTypes&#39;)))]
-      [aDataType.dataTypeXsd()/]
-    [/for]
-    [aModel.xsdFooter()/]
+        <pre class="source-code"><code>[template public mainTemplate(aModel : uml::Model)]
+  [file (&#39;myFragment.xml&#39;, overwrite, &#39;UTF-8&#39;)]
+    &lt;level1&gt;
+      &lt;xs:annotation&gt;
+  [&#39;    &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+      &lt;/xs:annotation&gt;
+      [aModel.level2a()/]
+      [aModel.level2b()/]
+      [aModel.level2b2()/]
+      [aModel.level2c()/]
+      [aModel.level2d()/]
+      [aModel.level2e()/]
+      [aModel.level2f()/]
+      [aModel.level2g()/]
+      [aModel.level2h()/]
+    &lt;/level1&gt;
   [/file]
 [/template]</code></pre>
     </details>
         </div>
-        <div class="element-detail" id="xsdHeader">
+        <div class="element-detail" id="level2a">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                xsdHeader
+                level2a
             </h3>
 
             <div class="signature">
-                <code>[template public xsdHeader(aModel : uml::Model)]</code>
+                <code>[template public level2a(aModel : uml::Model)]</code>
             </div>
 
 
@@ -468,106 +493,39 @@
 
         <div class="ref-section">
             <span class="ref-label">Queries</span>
-                <a class="ref-badge ref-internal-query"
-                   href="modelQuery.html#u_mainPackage">u_mainPackage</a>
                 <a class="ref-badge ref-internal-query"
                    href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_commentBody">u_commentBody</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">Templates</span>
-                <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdGenerationMessage">xsdGenerationMessage</a>
-                <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdModelIdentificationComment">xsdModelIdentificationComment</a>
-                <a class="ref-badge ref-internal-template"
-                   href="modelXsdFile.html#xsdVersion">xsdVersion</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">AQL collection operations</span>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">AQL services</span>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
         </div>
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
-				</div>
+
+
+
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdHeader(aModel : uml::Model)]
-  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-  [aModel.xsdGenerationMessage()/]
-  [aModel.xsdModelIdentificationComment()/]
-  &lt;xs:schema xmlns=&quot;[&#39;XSD_NS&#39;.getPropertyValue()/]&quot;
-             xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
-             xmlns:vc=&quot;http://www.w3.org/2007/XMLSchema-versioning&quot;
-             targetNamespace=&quot;[&#39;XSD_NS&#39;.getPropertyValue()/]&quot;
-             elementFormDefault=&quot;qualified&quot;
-             attributeFormDefault=&quot;unqualified&quot;
-             version=&quot;[aModel.xsdVersion()/]&quot;
-             vc:minVersion=&quot;1.1&quot;&gt;
-    &lt;xs:import namespace=&quot;http://www.w3.org/XML/1998/namespace&quot;
-               schemaLocation=&quot;xml.xsd&quot;/&gt;
-    &lt;xs:group name=&quot;AllElementsDerivedFromClasses&quot;&gt;
-      &lt;xs:annotation&gt;
-        &lt;xs:documentation&gt;This group comprehends all elements which are based on classes in the UML model.&lt;/xs:documentation&gt;
-      &lt;/xs:annotation&gt;
-      &lt;xs:sequence&gt;
-        &lt;xs:choice minOccurs=&quot;1&quot; maxOccurs=&quot;unbounded&quot;&gt;
-          [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)-&gt;sortedBy(temp7 | temp7.name))]
-            &lt;xs:element ref=&quot;[aClass.name/]&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
-          [/for]
-        &lt;/xs:choice&gt;
-      &lt;/xs:sequence&gt;
-    &lt;/xs:group&gt;
-    &lt;xs:element name=&quot;[aModel.name/]&quot;
-                type=&quot;[aModel.name/]XsdType&quot;
-                xml:id=&quot;[aModel.name/]&quot;&gt;
-      &lt;xs:annotation&gt;
-[&#39;      &lt;xs:documentation&gt;&#39; + aModel.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
-      &lt;/xs:annotation&gt;
-    &lt;/xs:element&gt;
-    &lt;xs:complexType name=&quot;[aModel.name/]XsdType&quot;
-                    xml:id=&quot;[aModel.name/]XsdType&quot;&gt;
-      &lt;xs:annotation&gt;
-[&#39;      &lt;xs:documentation&gt;&#39; + aModel.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
-      &lt;/xs:annotation&gt;
-      &lt;xs:sequence&gt;
-        &lt;xs:group ref=&quot;AllElementsDerivedFromClasses&quot;
-                  minOccurs=&quot;1&quot;
-                  maxOccurs=&quot;1&quot;&gt;
-        &lt;/xs:group&gt;
-        &lt;xs:element ref=&quot;Wrapper&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;/&gt;
-      &lt;/xs:sequence&gt;
-    &lt;/xs:complexType&gt;
+        <pre class="source-code"><code>[template public level2a (aModel : uml::Model)]
+  &lt;level2a&gt;
+    &lt;xs:annotation&gt;
+[&#39;    &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2a&gt;
 [/template]</code></pre>
     </details>
         </div>
-        <div class="element-detail" id="xsdVersion">
+        <div class="element-detail" id="level2b">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                xsdVersion
+                level2b
             </h3>
 
             <div class="signature">
-                <code>[template public xsdVersion(aModel : uml::Model)]</code>
+                <code>[template public level2b(aModel : uml::Model)]</code>
             </div>
 
 
@@ -586,9 +544,7 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelMajorVersion">u_modelMajorVersion</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelMinorVersion">u_modelMinorVersion</a>
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
         </div>
 
 
@@ -600,85 +556,26 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdVersion(aModel : uml::Model) post(self.trim())]
-  [aModel.u_modelMajorVersion() + &#39;.&#39; + aModel.u_modelMinorVersion()/]
+        <pre class="source-code"><code>[template public level2b (aModel : uml::Model)]
+  &lt;level2b&gt;
+    &lt;xs:annotation&gt;
+  [&#39;    &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2b&gt;
 [/template]</code></pre>
     </details>
         </div>
-        <div class="element-detail" id="xsdFooter">
+        <div class="element-detail" id="level2b2">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                xsdFooter
+                level2b2
             </h3>
 
             <div class="signature">
-                <code>[template public xsdFooter(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-
-
-    <details class="source-dropdown">
-        <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdFooter(aModel : uml::Model)]
-  &lt;/xs:schema&gt;
-[/template]</code></pre>
-    </details>
-        </div>
-        <div class="element-detail" id="xsdGenerationMessage">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdGenerationMessage
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdGenerationMessage(aModel : uml::Model)]</code>
-            </div>
-
-
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-            </dl>
-
-
-
-    <details class="source-dropdown">
-        <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdGenerationMessage(aModel : uml::Model)]
-  &lt;!--
-     PLEASE DO NOT EDIT THIS CODE!
-     This code was generated by the Eclipse Acceleo module UCMIS M2T.
-     Target language is &#39;XML Schema&#39; (&#39;xsd&#39;) generated on the basis of the model &#39;[aModel.name/]&#39;.
-  --&gt;[/template]</code></pre>
-    </details>
-        </div>
-        <div class="element-detail" id="xsdModelIdentificationComment">
-            <h3>
-                <span class="kind-badge kind-template">template</span>
-                <span class="visibility public">public</span>
-                
-                
-                xsdModelIdentificationComment
-            </h3>
-
-            <div class="signature">
-                <code>[template public xsdModelIdentificationComment(aModel : uml::Model)]</code>
+                <code>[template public level2b2(aModel : uml::Model)]</code>
             </div>
 
 
@@ -697,15 +594,7 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelTitle">u_modelTitle</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelSubtitle">u_modelSubtitle</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelMajorVersion">u_modelMajorVersion</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelUri">u_modelUri</a>
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
         </div>
 
 
@@ -717,32 +606,26 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdModelIdentificationComment(aModel : uml::Model)]
-  &lt;!--
-  
-  XML Schema generated on the basis of the UML model [aModel.u_modelAcronym()/].
-  
-  Acronym:       [aModel.u_modelAcronym()/] 
-  Title:         [aModel.u_modelTitle()/]
-  Subtitle:      [aModel.u_modelSubtitle()/]
-  Major version: [aModel.u_modelMajorVersion()/]
-  Minor version: [aModel.u_modelMajorVersion()/]
-  URI:           [aModel.u_modelUri()/]
-  
-  --&gt;[/template]</code></pre>
+        <pre class="source-code"><code>[template public level2b2 (aModel : uml::Model)]
+  &lt;level2b2&gt;
+    &lt;xs:annotation&gt;
+[&#39;  &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2b2&gt;
+[/template]</code></pre>
     </details>
         </div>
-        <div class="element-detail" id="xsdWrapper">
+        <div class="element-detail" id="level2c">
             <h3>
                 <span class="kind-badge kind-template">template</span>
                 <span class="visibility public">public</span>
                 
                 
-                xsdWrapper
+                level2c
             </h3>
 
             <div class="signature">
-                <code>[template public xsdWrapper(aModel : uml::Model)]</code>
+                <code>[template public level2c(aModel : uml::Model)]</code>
             </div>
 
 
@@ -755,50 +638,313 @@
 
 
 
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public xsdWrapper(aModel : uml::Model)]
-    &lt;xs:element name=&quot;Wrapper&quot;
-                type=&quot;WrapperXsdType&quot;
-                xml:id=&quot;Wrapper&quot;&gt;
+        <pre class="source-code"><code>[template public level2c (aModel : uml::Model)]
+  &lt;level2c&gt;
+    &lt;xs:annotation&gt;
+[&#39;            &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2c&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="level2d">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                level2d
+            </h3>
+
+            <div class="signature">
+                <code>[template public level2d(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public level2d (aModel : uml::Model)]
+  &lt;level2d&gt;
+    &lt;xs:annotation&gt;
+  [&#39;      &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2d&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="level2e">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                level2e
+            </h3>
+
+            <div class="signature">
+                <code>[template public level2e(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public level2e (aModel : uml::Model)]
+  &lt;level2e&gt;
+    &lt;xs:annotation&gt;
+[&#39;        &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2e&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="level2f">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                level2f
+            </h3>
+
+            <div class="signature">
+                <code>[template public level2f(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public level2f (aModel : uml::Model)]
+  &lt;level2f&gt;
+    &lt;xs:annotation&gt;
+  [&#39;        &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/level2f&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="level2g">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                level2g
+            </h3>
+
+            <div class="signature">
+                <code>[template public level2g(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public level2g (aModel : uml::Model)]
+    &lt;level2g&gt;
       &lt;xs:annotation&gt;
-        &lt;xs:documentation&gt;Definition
-              ==========
-              Information structured according to the DDI-CDI model for a specific purpose or purposes within a system or community.&lt;/xs:documentation&gt;
+    [&#39;    &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
       &lt;/xs:annotation&gt;
-    &lt;/xs:element&gt;
-    &lt;xs:complexType name=&quot;WrapperXsdType&quot;
-                    xml:id=&quot;WrapperXsdType&quot;&gt;
+    &lt;/level2g&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="level2h">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                level2h
+            </h3>
+
+            <div class="signature">
+                <code>[template public level2h(aModel : uml::Model)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public level2h (aModel : uml::Model)]
+    &lt;level2h&gt;
       &lt;xs:annotation&gt;
-        &lt;xs:documentation&gt;Definition
-              ==========
-              Information structured according to the DDI-CDI model for a specific purpose or purposes within a system or community.&lt;/xs:documentation&gt;
+    [&#39;      &lt;xs:documentation&gt;&#39; + aModel.xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
       &lt;/xs:annotation&gt;
-      &lt;xs:sequence&gt;
-        &lt;xs:element name=&quot;identifier&quot;
-                    type=&quot;IdentifierXsdType&quot;
-                    minOccurs=&quot;0&quot;
-                    maxOccurs=&quot;1&quot;
-                    xml:id=&quot;Wrapper-identifier&quot;&gt;
-          &lt;xs:annotation&gt;
-            &lt;xs:documentation&gt;Identifier for objects requiring short- or long-lasting referencing and management.&lt;/xs:documentation&gt;
-          &lt;/xs:annotation&gt;
-        &lt;/xs:element&gt;
-        &lt;xs:element name=&quot;supportingInformation&quot;
-                    type=&quot;ReferenceXsdType&quot;
-                    minOccurs=&quot;0&quot;
-                    maxOccurs=&quot;unbounded&quot;
-                    xml:id=&quot;Wrapper-supportingInformation&quot;&gt;
-          &lt;xs:annotation&gt;
-            &lt;xs:documentation&gt;Information structured according to a non-DDI-CDI specification which is relevant to the understanding and/or processing of the content of Wrapper.&lt;/xs:documentation&gt;
-          &lt;/xs:annotation&gt;
-        &lt;/xs:element&gt;
-        &lt;xs:group ref=&quot;AllElementsDerivedFromClasses&quot;
-                  minOccurs=&quot;1&quot;
-                  maxOccurs=&quot;1&quot;&gt;
-        &lt;/xs:group&gt;
-      &lt;/xs:sequence&gt;
-    &lt;/xs:complexType&gt;[/template]</code></pre>
+    &lt;/level2h&gt;
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="xsd_escapeXmlCharacters">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                xsd_escapeXmlCharacters
+            </h3>
+
+            <div class="signature">
+                <code>[template public xsd_escapeXmlCharacters(anAttribute : uml::Element)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAttribute</code> <span class="param-type">: uml::Element</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public xsd_escapeXmlCharacters(anAttribute : uml::Element) post(self.trim())]
+  line 1
+  line 2
+  line 3
+[/template]</code></pre>
     </details>
         </div>
 
