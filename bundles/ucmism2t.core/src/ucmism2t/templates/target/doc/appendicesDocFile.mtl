@@ -170,23 +170,25 @@
     
     ['All Enumerations'.rst_header('=')/]
     
-    .. container:: table-responsive
-    
-       .. list-table::
-          :header-rows: 1
-          :class: table table-striped table-hover main-table
-          :name: datatable-enumerations-list
-    
-          * - Name
-            - Package Name
-            - Uses in Classes
-            - Uses in Datatypes
-    [for (anEnumeration : uml::Enumeration | aModel.u_allEnumerations())]
-            * - [anEnumeration.rst_classifierNameReference()/]
-              - :ref:`[anEnumeration.package.qualifiedName/]`
-              - [anEnumeration.u_dataTypeUseProperties()->select(temp3 | temp3.owner.oclIsTypeOf(uml::Class))->size()/]
-              - [anEnumeration.u_dataTypeUseProperties()->select(temp4 | temp4.owner.oclIsKindOf(uml::DataType))->size()/]
-    [/for]
+    [if (aModel.u_allEnumerations()->size()>0)]
+      .. container:: table-responsive
+      
+         .. list-table::
+            :header-rows: 1
+            :class: table table-striped table-hover main-table
+            :name: datatable-enumerations-list
+      
+            * - Name
+              - Package Name
+              - Uses in Classes
+              - Uses in Datatypes
+      [for (anEnumeration : uml::Enumeration | aModel.u_allEnumerations())]
+              * - [anEnumeration.rst_classifierNameReference()/]
+                - :ref:`[anEnumeration.package.qualifiedName/]`
+                - [anEnumeration.u_dataTypeUseProperties()->select(temp3 | temp3.owner.oclIsTypeOf(uml::Class))->size()/]
+                - [anEnumeration.u_dataTypeUseProperties()->select(temp4 | temp4.owner.oclIsKindOf(uml::DataType))->size()/]
+      [/for]
+    [/if]
   [/file]
 [/template]
 
@@ -260,7 +262,8 @@
               - [if (anAssociation.ownedEnd->first().isNavigable())]yes[/if]
               - [anAssociation.ownedEnd->first().aggregation/]
               - [anAssociation.ownedEnd->first().u_docMultiplicity()/]
-              - [if (anAssociation.ownedComment->asSequence()->collect(temp7 | temp7.body)->toString().trim().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.ownedComment->asSequence()->collect(temp6 | temp6.body)->toString().trim()/])`[else][anAssociation.u_shortAssociationName()/][/if]
+              - [if (anAssociation.u_commentBody().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.u_commentBody()/])`[else][anAssociation.u_shortAssociationName()/][/if]
+[comment]               - [if (anAssociation.ownedComment->asSequence()->collect(temp7 | temp7.body)->toString().trim().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.ownedComment->asSequence()->collect(temp6 | temp6.body)->toString().trim()/])`[else][anAssociation.u_shortAssociationName()/][/if][/comment]
               - [anAssociation.ownedEnd->first().getOtherEnd().u_docMultiplicity()/]
               - [anAssociation.ownedEnd->first().getOtherEnd().aggregation/]
               - [if (anAssociation.ownedEnd->first().getOtherEnd().isNavigable())]yes[/if]

@@ -32,11 +32,16 @@
     </target>
 
     <target name="generate_unix" if="isUnix">
+        <mkdir dir="${log_folder}" />
         <exec executable="${ucmism2t_dir}/pipeline/script/ucmism2t-wrapper.sh">
             <env key="LAUNCHER" value="${launcher}"/>
             <arg line="-input ${model_file_eclipse}" />
             <arg line="-output ${generated_folder}" />
             <arg line="-config ${generic_properties},${model_properties}" />
+            <!-- Split streams cleanly to both files and console logs -->
+            <redirector output="${log_folder}/step1_generate.log" 
+                        error="${log_folder}/step1_generate_error.log" 
+                        alwayslog="true" />
         </exec>
     </target>
 

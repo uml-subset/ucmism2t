@@ -145,7 +145,7 @@ Returns the qualified name of the specified element in the form
  * @param anElement - A UML element whose first comment body
  *                    is to be retrieved.
 /]
-[query public OKu_commentBody(
+[comment] [query public OKu_commentBody(
   anElement : uml::Element) : String =
   if anElement.ownedComment->notEmpty()
   then anElement.ownedComment->first().body.trim()
@@ -156,7 +156,7 @@ Returns the qualified name of the specified element in the form
     endif
   endif
 /]
-[**
+[/comment][**
 Returns the body of the first owned comment of the specified
 element if it exists, trimmed of leading and trailing spaces,
 or a warning message otherwise.
@@ -344,6 +344,8 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
  *
  * @param aNamedElement - The UML named element from which to start the search.
  * @return The nearest PackageInformation DataType, or null if none found.
+ * @see u_packageInformation - resolves PackageInformation with
+ *      fallback to ModelIdentification for legacy models.
  */]
 [query public u_nearestPackageInformation(
   aNamedElement : uml::NamedElement) : uml::DataType =
@@ -526,14 +528,14 @@ else branch returns null.
 /]
 
 [**
- * Returns the model minor version version for aNamedElement. The value is determined
+ * Returns the model minor version for aNamedElement. The value is determined
  * in order of priority:
  * (1) MODEL_MINOR_VERSION config property,
  * (2) 'minorVersion' property of the relevant PackageInformation or ModelIdentification DataType,
  * (3) 'NOT_SET' as fallback.
  *
  * @param aNamedElement - The UML named element for which to resolve
- *                        the model minor version version.
+ *                        the model minor version.
  * @return The minor version as string, or 'NOT_SET' if not found.
  */]
  
@@ -706,7 +708,7 @@ else branch returns null.
 /]
 
 [**
- * Returns the model RDF preifx for aNamedElement. The value is determined
+ * Returns the model RDF prefix for aNamedElement. The value is determined
  * in order of priority:
  * (1) RDF_PREFIX config property,
  * (2) 'rdfPrefix' property of the relevant PackageInformation or ModelIdentification DataType,
@@ -714,7 +716,7 @@ else branch returns null.
  *
  * @param aNamedElement - The UML named element for which to resolve
  *                        the model RDF namespace.
- * @return The RDF preifx as string, or 'NOT_SET' if not found.
+ * @return The RDF prefix as string, or 'NOT_SET' if not found.
  */]
  
 [query public u_modelRdfPrefix(

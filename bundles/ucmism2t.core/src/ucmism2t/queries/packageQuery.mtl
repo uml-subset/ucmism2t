@@ -1,7 +1,7 @@
 [comment encoding = UTF-8 /]
 
 [**
-Module contains queries with a UML pcakage as receiver.
+Module contains queries with a UML package as receiver.
 /]
 [module packageQuery(
 	'http://www.eclipse.org/uml2/5.0.0/UML',

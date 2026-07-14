@@ -350,7 +350,9 @@
       [else]
           - :ref:`[attributeClassifier.u_packageQualifiedName()/]<[attributeClassifier.qualifiedName/]>`
       [/if]
-        - [anAttribute.u_commentBody()->collect(c1 | c1.replaceAll('-', '\\-'))->collect(c2 | c2.replaceAll('\\s+', ' '))/]
+        -
+         [anAttribute.u_commentBody()/]
+[comment]         - [anAttribute.u_commentBody()->collect(c1 | c1.replaceAll('-', '\\-'))->collect(c2 | c2.replaceAll('\\s+', ' '))/][/comment]
         - [anAttribute.type.rst_refDataType()/] 
         - [anAttribute.u_docMultiplicity()/]
         - [anAttribute.default/]
@@ -376,15 +378,15 @@
 [template public rst_processAssociationInTable(a : uml::Association, indent : String)]
   [indent/]* - [a.memberEnd->last().u_docMultiplicity()/]
   [indent/]  - [a.u_shortAssociationName()/]
-  [indent/]  - :ref:`[a.memberEnd->first().type.package.name/]::[a.memberEnd->first().type.name/]<[a.memberEnd->first().type.qualifiedName/]>`
+  [indent/]  - :ref:`[a.memberEnd->first().type.oclAsType(uml::Classifier).u_simpleQualifiedClassifierName()/]<[a.memberEnd->first().type.qualifiedName/]>`
   [indent/]  - [a.memberEnd->first().u_docMultiplicity()/]
 [/template]
 
 [template public rst_simpleQualifiedClassNameReference(aClass : uml::Class)]
-  :ref:`[aClass.package.name/]::[aClass.name/]<[aClass.qualifiedName/]>`[/template]
+  :ref:`[aClass.u_simpleQualifiedClassifierName()/]<[aClass.qualifiedName/]>`[/template]
 
 [template public rst_simpleQualifiedClassifierNameReference(aClassifier : uml::Classifier)]
-  :ref:`[aClassifier.package.name/]::[aClassifier.name/]<[aClassifier.qualifiedName/]>`[/template]
+  :ref:`[aClassifier.u_simpleQualifiedClassifierName()/]<[aClassifier.qualifiedName/]>`[/template]
 
 [template public rst_classNameReference(aClass : uml::Class)]
   :ref:`[aClass.qualifiedName/]`[/template]

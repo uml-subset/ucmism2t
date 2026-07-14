@@ -2,7 +2,7 @@
 
 [**
 Module contains queries with a UML classifier as receiver,
-applicable to both calsses and data types.
+applicable to both classes and data types.
 /]
 [module classifierQuery(
 	'http://www.eclipse.org/uml2/5.0.0/UML',

@@ -352,7 +352,8 @@ AQL operations used:
 Returns an ordered set of all indirect superclasses of a class,
 i.e. the full superclass hierarchy excluding the direct parent.
 Delegates to u_allSuperClasses() and removes the direct parent.
-Note: Works only for single inheritance.
+Note: Works only for single inheritance. The tool is intended
+UCMIS models which use only single inheritance.
 
 @param aClass - A UML class whose indirect superclass hierarchy
                 (excluding direct parent) is to be retrieved.
@@ -525,6 +526,46 @@ AQL operations used:
     ->filter(uml::Class)
     ->asOrderedSet()
     ->sortedBy(c | c.name)
+/]
+
+[**
+ * Returns an ordered set of all associations in which aClass participates
+ * as a typed end, but only if every association end is typed by a UML Class.
+ *
+ * Outgoing associations are those where aClass is the source/owned end
+ * participant; incoming associations are the remaining associations
+ * retrieved via eInverse('type').
+ *
+ * Associations are sorted first by direction (outgoing before incoming)
+ * and then alphabetically by name within each group.
+ *
+ * Distinct Association objects between the same two classes are preserved.
+ * The final asOrderedSet() only collapses duplicate references to the same
+ * Association object, which can happen for self-associations when both
+ * ends are typed by aClass.
+ *
+ * @param aClass - The UML class whose associations are being collected.
+ * @return An ordered set of associations involving only UML classes.
+ */]
+[query public Tu_associations(aClass : uml::Class) : OrderedSet(uml::Association) =
+  let all : OrderedSet(uml::Association) =
+    aClass.eInverse('type')
+      ->filter(uml::Property)
+      ->select(p | p.association <> null)
+      ->collect(p | p.association)
+      ->asOrderedSet()
+      ->select(a |
+        a.ownedEnd->notEmpty()
+        and a.ownedEnd->forAll(e |
+          e.type <> null and e.type.oclIsKindOf(uml::Class)))
+  in
+    all
+      ->select(a | a.ownedEnd->exists(e | e.type = aClass))
+      ->sortedBy(a | if a.name <> null then a.name else '' endif)
+      ->union(
+        all
+          ->reject(a | a.ownedEnd->exists(e | e.type = aClass))
+          ->sortedBy(a | if a.name <> null then a.name else '' endif))
 /]
 
 [**
@@ -802,13 +843,14 @@ AQL operations used:
   aClass      : uml::Class) : OrderedSet(uml::Association) =
   let associations : OrderedSet(uml::Association) =
     aSuperClass.getAssociations()->asOrderedSet()
-      ->select(a |
-        a.u_ownedEndClass() <> aClass
-        and a.u_otherEndClass() <> aClass)
-      ->select(a |
-        aClass.u_allSuperClasses()->excludes(a.u_ownedEndClass())
-        or aClass.u_allSuperClasses()->excludes(a.u_otherEndClass()))
-      ->sortedBy(a | a.name)
+      ->select(a1 | a1.ownedEnd->notEmpty())
+      ->select(a2 |
+        a2.u_ownedEndClass() <> aClass
+        and a2.u_otherEndClass() <> aClass)
+      ->select(a3 |
+        aClass.u_allSuperClasses()->excludes(a3.u_ownedEndClass())
+        or aClass.u_allSuperClasses()->excludes(a3.u_otherEndClass()))
+      ->sortedBy(a4 | a4.name)
   in
     if associations->size() > 3 then
       associations->subOrderedSet(1, 3)

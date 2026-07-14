@@ -148,7 +148,8 @@
                    - Aggregation Kind
                    - Inherited from
         [for (c2 : uml::Class | aClass.u_allSuperClasses()->union(OrderedSet{aClass}))]
-          [for (anAssociation : uml::Association | c2.u_associations())]
+          [for (anAssociation : uml::Association | c2.u_associations()
+              ->select(a | a.ownedEnd->notEmpty()) )]
             [let source : uml::Property = anAssociation.ownedEnd->first()]
               [let target : uml::Property = anAssociation.ownedEnd->first().getOtherEnd()]
                 [if (c2 <> target.type.oclAsType(uml::Class))]
@@ -157,7 +158,8 @@
                            * - to
                 [/if]
                            - [anAssociation.name.replaceAll('_', ' ')/]
-                           - [anAssociation.u_commentBody()/]
+                           - 
+                            [anAssociation.u_commentBody()/]
                 [if (c2 <> target.type.oclAsType(uml::Class))]
                              - [source.u_docMultiplicity()/]
                              - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]

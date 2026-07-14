@@ -1,6 +1,10 @@
 [comment encoding = UTF-8 /]
 [**
-
+Module contains queries with ecore::EObject as receiver,
+used as an entry point for accessing global configuration
+values that are not tied to any specific UML element.
+Includes queries for RDF URI mapping tokens
+(uml-map-rdf property) and test package names.
 /]
 [module eobjectQuery(
 	'http://www.eclipse.org/uml2/5.0.0/UML',
@@ -32,7 +36,8 @@ tokens (the part before ">").
 [query public u_mappedUcmisItemsRdf(
 		anEObject : ecore::EObject) : Sequence(String) =
 	anEObject.u_mappedUcmisItemsRdfTokens()
-		->collect(s | s.tokenize('>')->at(1))
+	  ->select(s1 | s1.contains('>'))
+		->collect(s2 | s2.tokenize('>')->at(1))
 /]
 
 [**
@@ -44,7 +49,8 @@ tokens (the part after ">").
 [query public u_mappedUcmisItemsRdfTargets(
 		anEObject : ecore::EObject) : Sequence(String) =
 	anEObject.u_mappedUcmisItemsRdfTokens()
-		->collect(s | s.tokenize('>')->at(2))
+    ->select(s1 | s1.contains('>'))
+		->collect(s2 | s2.tokenize('>')->at(2))
 /]
 
 [**
