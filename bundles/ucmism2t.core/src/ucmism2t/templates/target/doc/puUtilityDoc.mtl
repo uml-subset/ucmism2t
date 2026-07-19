@@ -1,17 +1,39 @@
 [comment encoding = UTF-8 /]
-[**
 
+[**
+Module contains utility templates for generating PlantUML diagram
+code. These templates are shared between pu_classDiagram and
+pu_dataTypeDiagram and cover:
+  - Diagram options (skinparam settings)
+  - Hyperlink construction (pu_link, pu_attributeLink, pu_linkWithLabel)
+  - Classifier node definitions (pu_itemDefinition, pu_classifierNameWithLabel)
+  - Aggregation kind symbols (pu_aggregationKind)
+  - Data type notation stereotypes (pu_dataTypeNotation)
+  - Generation message header (pu_generationMessageDoc)
+  - Attribute type with hyperlink (pu_typeWithLink, pu_internalLinkType)
+  - Internal hyperlinks for named elements (pu_internalLink)
+  - Conditional qualified class name (e_conditionalQualifiedClassName)
+  - Whitespace removal utility (e_removeWhitespace)
 /]
 [module puUtilityDoc(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
 
+[**
+Emits PlantUML skinparam settings for class context diagrams.
+Controls aspect ratio, arrow thickness, minimum class width,
+legend and note background colors, class and package border colors.
+Called at the top of every generated @startuml block.
+
+@param anEObject - Any EObject; used only as a receiver for AQL
+                   dispatch. The parameter is not navigated.
+/]
 [template public pu_options(anEObject : ecore::EObject)]
   ' HD display aspect ratio 16:9
   ' hyperlinkColor and pathHoverColor do not seem to work with class diagrams
@@ -47,6 +69,14 @@
     BorderColor lightgrey
   }[/template]
 
+[**
+Alternative skinparam block using an explicit indentation string.
+Used in contexts where the caller controls the output indentation
+via the indent parameter rather than relying on Acceleo's automatic
+prefix-repetition mechanism.
+
+@param indent - Indentation string to prepend to each skinparam line.
+/]
 [template public pu_options2( indent : String )]
 [indent/]scale 0.9
 [indent/]skinparam {
@@ -66,75 +96,93 @@
 [indent/]hide empty members
 [/template]
 
+[**
+Generates a PlantUML hyperlink with a visible label.
+Produces the form: [[url label]]
+
+@param url   - The target URL string.
+@param label - The visible label text shown in the diagram.
+/]
 [template public pu_linkWithLabel(url : String, label : String) post(self.trim())]
   ['['/]['['/][url/] [label/]]][/template]
 
+[**
+Generates a PlantUML hyperlink with a tooltip.
+Produces the form: [[url{tooltip}]]
+Collapses multiple whitespace characters in the tooltip to a single
+space to avoid line-break artifacts in the PlantUML tooltip popup.
+
+@param url     - The target URL string.
+@param tooltip - The tooltip text shown on mouse hover.
+/]
 [template public pu_link(url : String, tooltip : String) post(self.trim())]
   ['['/]['['/][url/]{[tooltip.replaceAll('\\s+',' ')/]}]][/template]
 
-[template public V1pu_link(url : String, tooltip : String) post(self.trim())]
-  ['['/]['['/][url/]{[tooltip/]}]][/template]
+[**
+Generates a three-bracket PlantUML attribute hyperlink with tooltip.
+Produces the form: [[[url{tooltip}]]]
+Used for attribute type links within class body definitions, where
+three brackets are required to prevent PlantUML from interpreting
+the inner brackets as a class-level link.
 
-[template public pu_attributeLinkNew(url : String, tooltip : String) post(self.trim())]
+@param url     - The target URL string.
+@param tooltip - The tooltip text shown on mouse hover.
+/]
+[template public pu_attributeLink(url : String, tooltip : String) post(self.trim())]
   ['['/]['['/]['['/][url/]{[tooltip/]}]]][/template]
 
+[**
+Generates the internal diagram hyperlink for a named UML element.
+The link points to the element's HTML documentation page at
+its #diagram anchor, with a tooltip showing the element name
+and first sentence of its documentation.
+
+@param anNamedElement - A named UML element to link to.
+/]
 [template public pu_internalLink(anNamedElement : uml::NamedElement)]
   [('../' + anNamedElement.u_path() + '.html#diagram').pu_link(' <U+2022> ' + anNamedElement.name + ':\\n' + anNamedElement.u_onlyDefinition())/][/template]
 
+[**
+Generates the internal diagram hyperlink for an association.
+Produces an empty-URL hyperlink containing only the tooltip with
+the association name and its first-sentence documentation.
+
+@param anAssociation - A UML association to link.
+/]
 [template public pu_internalLink(anAssociation : uml::Association)]
   [''.pu_link(' <U+2022> ' + anAssociation.name + ':\\n' + anAssociation.u_onlyDefinition())/][/template]
 
+[**
+Generates a three-bracket attribute type hyperlink for use in class
+body attribute lines. Only emits the link when the type has a
+containing package (i.e. is not a primitive type at the model root).
+The link points to the type's #diagram anchor with a tooltip.
+
+@param aType - A UML type used as an attribute type.
+/]
 [template public pu_internalLinkType(aType : uml::Type)]
   [if (aType.ancestors()->notEmpty())]
     [('../' + aType.u_path() + '.html#diagram')
-    	.pu_attributeLinkNew(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+      .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
   [/if]
 [/template]
 
-[template public T2pu_attributeLink(url : String, tooltip : String) post(self.trim())]
-  ['['/]['['/]['['/]['../'.concat(url).concat('.html#diagram')/]{[tooltip/]}]]]
-[/template]
-[template public Tpu_attributeLink(url : String, tooltip : String)]
-  \
-    ['['/]['['/]['['/][url/]{[tooltip/]}]]]
-[/template]
-[template public pu_attributeLink(url : String, tooltip : String) post(self.trim())]
-  ['['/]['['/]['['/][url/]{[tooltip/]}]]]
-[/template]
-[template public OKpu_attributeLink(url : String, tooltip : String)]
-  \
-    ['['/]['['/]['['/][url/]{[tooltip/]}]]][/template]
+[**
+Generates an attribute type name with an optional hyperlink for use
+in class body attribute lines in the diagram. When the type has a
+containing package (i.e. is not a UML primitive type at the model
+root), the name is rendered in blue and followed by a three-bracket
+attribute hyperlink pointing to the type's diagram page.
+When the type is a primitive (no ancestors), only the plain name
+is emitted.
 
-[template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String) post(self.trim())]
-  [aClassifier.pu_classifierNameWithLabel(color, prefix)/] [('../' + aClassifier.u_path() + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][/template]
+The multi-line AQL expression inside the single block is
+wrapped purely for source readability; it produces a single unbroken
+output line, avoiding the Acceleo prefix-repetition issue that would
+arise if the call were split across multiple template lines.
 
-[template public T3pu_typeWithLink(aType : uml::Type) post(self.trim())]
-  [if (aType.ancestors()->isEmpty())]
-    [aType.name/]
-  [else]
-    <color:blue> [aType.name/] \[aType.u_path().pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
-  [/if]
-[/template]
-[template public T2pu_typeWithLink(aType : uml::Type) post(self.trim())]
-  [if (aType.ancestors()->isEmpty())]
-    [aType.name/]
-  [else]
-    <color:blue> [aType.name/] \
-    [aType.u_path().pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
-  [/if]
-[/template]
-
-[template public Tpu_typeWithLink(aType : uml::Type) post(self.trim())]
-  [if (aType.ancestors()->isEmpty())]
-    [aType.name/]
-  [else]
-    [let url : String = '../'.concat(aType.u_path()).concat('.html#diagram')]
-      [let tooltip : String = ' <U+2022> ' + aType.name + ':\n' + aType.u_onlyDefinition()]
-        <color:blue> [aType.name/] [url.pu_attributeLink(tooltip)/]
-      [/let]
-    [/let]
-  [/if]
-[/template]
+@param aType - A UML type used as an attribute type in a class body.
+/]
 [template public pu_typeWithLink(aType : uml::Type) post(self.trim())]
   [if (aType.ancestors()->isEmpty())]
     [aType.name/]
@@ -145,6 +193,28 @@
   [/if]
 [/template]
 
+[**
+Generates the PlantUML 'class ... as' line for a classifier with
+an inheritance-tree hyperlink. Rendered in the specified color and
+with the specified prefix before the classifier name. Used for
+super- and sub-classifier nodes in context diagrams.
+
+@param aClassifier - A UML classifier to render.
+@param color       - The font color string for the classifier name.
+@param prefix      - A prefix string prepended before the name,
+                     typically used for the package name annotation.
+/]
+[template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String) post(self.trim())]
+  [aClassifier.pu_classifierNameWithLabel(color, prefix)/] [('../' + aClassifier.u_path() + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][/template]
+
+[**
+Generates the PlantUML classifier name with package prefix
+if the classifier is from a different package than aPackage.
+Used for conditional short or qualified name display.
+
+@param aClassifier - A UML classifier.
+@param aPackage    - The reference package for qualification.
+/]
 [template public e_conditionalQualifiedClassName(aClassifier : uml::Classifier, aPackage : uml::Package) post(self.trim())]
   [if (aPackage = aClassifier.package)]
     [aClassifier.name/]
@@ -153,12 +223,38 @@
   [/if]
 [/template]
 
+[**
+Generates the PlantUML 'class qualifiedName as "label"' declaration
+for a classifier node. The label includes the optional prefix
+(typically package name annotation) followed by the classifier name
+in the given color. Appends the data type notation stereotype
+(<<enumeration>>, <<primitive>>, <<dataType>>) for DataType instances.
+
+@param aClassifier - A UML classifier to render.
+@param color       - The font color string for the classifier name.
+@param prefix      - A prefix string rendered before the name,
+                     typically '<size:10>PackageName::\\n'.
+/]
 [template public pu_classifierNameWithLabel(aClassifier : uml::Classifier, color : String, prefix : String) post(self.trim())]
   [aClassifier.qualifiedName/] as "[prefix/]<color:[color/]>[aClassifier.name/]"[if (aClassifier.oclIsKindOf(uml::DataType))] [aClassifier.oclAsType(uml::DataType).pu_dataTypeNotation()/][/if][/template]
 
+[**
+Generates the PlantUML 'package qualifiedName as "label"' declaration
+for a package node in grey color.
+
+@param aPackage - A UML package to render.
+/]
 [template public pu_packageNameWithLabel(aPackage : uml::Package) post(self.trim())]
   [aPackage.qualifiedName/] as "<color:lightgrey>[aPackage.name/]"[/template]
 
+[**
+Converts a UML AggregationKind value to its PlantUML symbol:
+  shared    -> o  (shared aggregation)
+  composite -> *  (composite aggregation)
+  none      -> (empty string, plain association)
+
+@param anAggregationKind - A UML AggregationKind value.
+/]
 [template public pu_aggregationKind(anAggregationKind : uml::AggregationKind) post(self.trim())]
   [if (anAggregationKind.toString() = 'shared')]
     o
@@ -167,6 +263,13 @@
   [/if]
 [/template]
 
+[**
+Emits the PlantUML generation message header as a block comment.
+Included at the top of every generated diagram file to discourage
+manual editing of the generated output.
+
+@param aNamedElement - The model element the diagram is generated for.
+/]
 [template public pu_generationMessageDoc(aNamedElement : uml::NamedElement)]
   /'
   PLEASE DO NOT EDIT THIS CODE!
@@ -176,15 +279,33 @@
   
 [/template]
 
+[**
+Returns the PlantUML stereotype notation for a DataType subtype:
+  uml::Enumeration  -> <<enumeration>>
+  uml::PrimitiveType -> <<primitive>>
+  uml::DataType      -> <<dataType>>
+The result is post-processed by e_removeWhitespace to remove
+Acceleo-generated indentation before appending to the class line.
+
+@param aDataType - A UML DataType instance.
+/]
 [template public pu_dataTypeNotation(aDataType : uml::DataType) post(self.e_removeWhitespace())]
   [if (aDataType.oclIsTypeOf(uml::Enumeration))]
-    	<<enumeration>>
+      <<enumeration>>
   [elseif (aDataType.oclIsTypeOf(uml::PrimitiveType))]
-    	<<primitive>>
+      <<primitive>>
   [elseif (aDataType.oclIsTypeOf(uml::DataType))]
-    	<<dataType>>
+      <<dataType>>
   [/if]
 [/template]
 
+[**
+Removes all whitespace characters from a string. Used as a
+post-processing step for pu_dataTypeNotation to strip the
+Acceleo indentation before the stereotype token is appended
+inline on a class declaration line.
+
+@param txt - The string from which whitespace is to be removed.
+/]
 [template public e_removeWhitespace(txt : String)]
   [txt.replaceAll('\\s+', '')/][/template]

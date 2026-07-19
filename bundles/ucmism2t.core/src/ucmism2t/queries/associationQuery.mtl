@@ -3,8 +3,14 @@
 [**
 Module contains queries with a UML association as receiver.
 This includes queries for navigating association ends (owned end,
-other end, source class, target class) and filtering associations
-for diagram generation purposes.
+other end, source class, target class), computing short association
+names, and testing whether an association belongs to a diagram
+subset.
+
+The association direction convention used throughout this module and
+the diagram templates is:
+  ownedEnd  = the source (subject) end, owned by the association
+  otherEnd  = the target (object) end, owned by the source class
 
 Note: Queries that find associations starting from a class
 are in classQuery, since their receiver is a UML class.
@@ -21,136 +27,47 @@ Related modules:
 	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
-[**
-Returns the source class of a binary association — the class that
-owns the navigable end via ownedAttribute. Uses memberEnd to ensure
-correct navigation regardless of association ownership pattern
-(directed, bidirectional, or non-navigable).
+[import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::services::PropertiesService /]
 
-@param anAssociation - A UML binary association whose source class
-                       is to be retrieved.
+[**
+Dead variants kept for reference.
+These were earlier exploratory implementations of u_ownedEndClass
+and u_otherEndClass. The active versions are below.
 /]
-[comment] [query public Xu_ownedEndClass(
+[comment]
+[query public Xu_ownedEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->reject(p | anAssociation.ownedEnd->includes(p))
     ->first()
     .type.oclAsType(uml::Class)
 /]
-[/comment]
-[**
-Returns the type of the first owned end of a binary directed
-association, cast to uml::Class. Intended for associations where
-exactly one end is owned by the association (i.e. the non-navigable
-end in a directed binary association). The caller must ensure the
-owned end's type is a uml::Class; otherwise oclAsType() will fail
-at runtime.
----
-AQL operations used:
-  anAssociation.ownedEnd        - EStructuralFeature on
-                                  uml::Association: the ordered set
-                                  of association ends owned by the
-                                  association itself (as opposed to
-                                  ends owned by the participant
-                                  classifiers).
-  ->first()                     - Returns the first element of the
-                                  ordered set as a single object.
-  .type                         - EStructuralFeature on
-                                  uml::TypedElement: the classifier
-                                  typing this association end.
-  .oclAsType(uml::Class)        - Casts the type to uml::Class.
-                                  Throws a runtime error if the type
-                                  is not a uml::Class instance.
 
-@param anAssociation - A UML association whose first owned end type
-                       is to be returned as a uml::Class.
-/]
-[comment] [query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class =
+[query public OKu_ownedEndClass(anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd->first().type.oclAsType(uml::Class)
 /]
-[/comment]
 
-[**
-Returns the target class of a binary association — the class at
-the end owned by the association itself (ownedEnd). Uses memberEnd
-to ensure correct navigation regardless of association ownership
-pattern (directed, bidirectional, or non-navigable).
-
-@param anAssociation - A UML binary association whose target class
-                       is to be retrieved.
-/]
-[comment] [query public Xu_otherEndClass(
+[query public Xu_otherEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->select(p | anAssociation.ownedEnd->includes(p))
     ->first()
     .type.oclAsType(uml::Class)
 /]
-[/comment]
-[**
-Returns the type of the non-owned end of a binary directed
-association, cast to uml::Class. Navigates from the first owned end
-to its opposite end via getOtherEnd(), then returns that end's type.
-Intended for binary associations only; behaviour is undefined for
-n-ary associations. The caller must ensure the other end's type is a
-uml::Class; otherwise oclAsType() will fail at runtime.
----
-AQL operations used:
-  anAssociation.ownedEnd        - EStructuralFeature on
-                                  uml::Association: the ordered set
-                                  of association ends owned by the
-                                  association itself.
-  ->first()                     - Returns the first element of the
-                                  ordered set as a single object
-                                  (a uml::Property).
-  .getOtherEnd()                - Java method on uml::Property:
-                                  returns the opposite end of a
-                                  binary association. Not an
-                                  EStructuralFeature; called with
-                                  explicit parentheses in AQL.
-  .type                         - EStructuralFeature on
-                                  uml::TypedElement: the classifier
-                                  typing this association end.
-  .oclAsType(uml::Class)        - Casts the type to uml::Class.
-                                  Throws a runtime error if the type
-                                  is not a uml::Class instance.
 
-@param anAssociation - A UML association whose non-owned end type
-                       is to be returned as a uml::Class.
-/]
-[comment] [query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class =
+[query public OKu_otherEndClass(anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd->first().getOtherEnd().type.oclAsType(uml::Class)
 /]
-[/comment]
-[**
-Returns the source class of a binary directed association.
-The source end is owned by the association itself (ownedEnd),
-and its type is the source class.
-Note: Intended for use with binary directed associations only.
-See: u_otherEndClass(uml::Association) - Returns the target class.
 
-@param anAssociation - A UML binary directed association whose
-                       source class is to be retrieved.
-/]
-[comment] [query public X2u_ownedEndClass(
+[query public X2u_ownedEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.ownedEnd
     ->first()
     .type.oclAsType(uml::Class)
 /]
-[/comment]
 
-[**
-Returns the target class of a binary directed association.
-The target end is owned by the source class via ownedAttribute
-(memberEnd minus ownedEnd), and its type is the target class.
-Note: Intended for use with binary directed associations only.
-See: u_ownedEndClass(uml::Association) - Returns the source class.
-
-@param anAssociation - A UML binary directed association whose
-                       target class is to be retrieved.
-/]
-[comment] [query public X2u_otherEndClass(
+[query public X2u_otherEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.memberEnd
     ->reject(p | anAssociation.ownedEnd->includes(p))
@@ -158,6 +75,7 @@ See: u_ownedEndClass(uml::Association) - Returns the source class.
     .type.oclAsType(uml::Class)
 /]
 [/comment]
+
 [**
 Returns the source (subject) end of a binary directed association.
 A binary directed association can be understood as a triple:
@@ -236,15 +154,45 @@ See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.
 /]
 
 [**
-Returns the short association name extracted from the long unique
-association name by taking the middle segment between the first
-and second underscore.
-Example: 'InstanceVariable_measures_Population' to 'measures'.
-Returns the full name if it contains no underscores.
+Returns true if the given association should be shown in a context
+diagram for the given class, according to the current subset
+configuration.
 
-@param anAssociation - A UML association.
+An association is included when any of the following holds:
+  (a) the property 'includeAllItems' is true, meaning no subset
+      filtering is active;
+  (b) the given class is the source (ownedEnd) of the association
+      and the target class name is in the configured class subset;
+  (c) the given class is the target (otherEnd) of the association
+      and the source class name is in the configured class subset.
+
+This query centralises the subset-filter condition that was
+previously duplicated verbatim in pu_classDiagram (for the focal
+class's own associations) and pu_superClass (for the superclass's
+inherited associations). Both call sites now delegate here.
+
+@param anAssociation - A UML binary directed association to test.
+@param aClass        - The focal class for which the diagram is
+                       being generated.
 /]
-[comment] [query public OKu_shortAssociationName(
+[query public u_isAssociationInSubset(
+  anAssociation : uml::Association,
+  aClass : uml::Class) : Boolean =
+  'includeAllItems'.isPropertyTrue()
+  or (aClass = anAssociation.u_ownedEndClass()
+      and aClass.u_subsetAllClasses()
+            ->includes(anAssociation.u_otherEndClass().name))
+  or (aClass <> anAssociation.u_ownedEndClass()
+      and aClass.u_subsetAllClasses()
+            ->includes(anAssociation.u_ownedEndClass().name))
+/]
+
+[**
+Dead variant of u_shortAssociationName kept for reference.
+The active version is below.
+/]
+[comment]
+[query public OKu_shortAssociationName(
   anAssociation : uml::Association) : String =
   if anAssociation.name.contains('_') then
     let nameAfterFirst : String =
@@ -256,6 +204,7 @@ Returns the full name if it contains no underscores.
   endif
 /]
 [/comment]
+
 [**
 Returns the predicate (middle segment) of the association name,
 which follows the subject-predicate-object naming convention:
@@ -290,4 +239,3 @@ Returns a warning string if the name does not conform:
     endif
   endif
 /]
-

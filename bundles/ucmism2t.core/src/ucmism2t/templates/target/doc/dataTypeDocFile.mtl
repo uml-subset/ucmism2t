@@ -43,7 +43,7 @@
 	    
 	    
 	    [file (aDataType.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-	      [aDataType.pu_dataTypeDiagram(0)/]
+	      [aDataType.pu_dataTypeDiagram()/]
 	    [/file]
 	    Diagram
 	    =======

@@ -35,7 +35,7 @@
 	    [anEnumeration.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
 	    
 	    [file (anEnumeration.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-	      [anEnumeration.pu_dataTypeDiagram(0)/]
+	      [anEnumeration.pu_dataTypeDiagram()/]
 	    [/file]
 	    Diagram
 	    =======

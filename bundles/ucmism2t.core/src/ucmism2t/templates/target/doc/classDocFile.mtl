@@ -55,7 +55,7 @@
       [aClass.u_commentBody().replaceAll('(=\\s)', '$1\r').rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
       
       [file (aClass.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-        [aClass.pu_classDiagram(0)/]
+        [aClass.pu_classDiagram()/]
       [/file]
       Diagram
       =======
