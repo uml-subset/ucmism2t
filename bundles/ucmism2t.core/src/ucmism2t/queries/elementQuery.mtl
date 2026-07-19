@@ -327,6 +327,22 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
   endif
 /]
 
+[query public u_profileFilePath(
+  aNamedElement : uml::NamedElement,
+  aTarget : String) : String =
+  let root : String = aNamedElement.u_model().u_modelShortName()
+    + '/' + aTarget + '/'
+  in
+  let path : String =
+    aNamedElement.qualifiedName.replaceAll('::', '/')
+  in
+  if aTarget = 'doc' then
+    root + path.replace(aNamedElement.u_model().name, '_rst')
+  else
+    root + path
+  endif
+/]
+
 [**
  * Returns the nearest DataType named 'PackageInformation' found by
  * walking up the package containment hierarchy from aNamedElement.

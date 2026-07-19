@@ -70,6 +70,9 @@
   ['['/]['['/][url/] [label/]]][/template]
 
 [template public pu_link(url : String, tooltip : String) post(self.trim())]
+  ['['/]['['/][url/]{[tooltip.replaceAll('\\s+',' ')/]}]][/template]
+
+[template public V1pu_link(url : String, tooltip : String) post(self.trim())]
   ['['/]['['/][url/]{[tooltip/]}]][/template]
 
 [template public pu_attributeLinkNew(url : String, tooltip : String) post(self.trim())]

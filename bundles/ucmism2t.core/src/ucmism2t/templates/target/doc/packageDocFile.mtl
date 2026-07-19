@@ -36,24 +36,40 @@ The documentation of the module packageDocFile.
   	    | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
   	    
   	    [aPackage.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
-  	    
+
   	    -----
-  	    
+
   	    .. toctree::
   	       :titlesonly:
-  	    
-  	    [for (childPackage : uml::Package | aPackage.u_childPackages()->select(p | 'includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(p.name)))]
-  	         [childPackage.name.concat('/index.rst')/]
-  	      [childPackage.processPackageDoc()/][/for]
-  	    [for (aClass : uml::Class | aPackage.u_childClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetAllClasses()->includes(c.name)))]
-  	         [aClass.name.concat('.rst')/]
-  	      [aClass.processClassDoc()/][/for]
-  	    [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(d | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d.name))->select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
-  	         [aDataType.name.concat('.rst')/]
-  	      [aDataType.processDataTypeDoc()/][/for]
-  	    [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()->select(e | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetEnumerations()->includes(e.name)))]
-  	         [anEnumeration.name.concat('.rst')/]
-  	      [anEnumeration.processEnumerationDoc()/][/for]
+
+  	    [if ( aPackage.eContainer(uml::Package).name = 'Profiles' and 'profiles'.isPropertyTrue())]
+          [for ( aClass | aPackage.u_childDependencySupplierClasses())]
+              [aClass.name.concat('.rst')/]
+            [file (aPackage.u_filePath('doc') + '/' + aClass.name + '.rst', overwrite, 'UTF-8')]
+              .. include:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/') + '.rst'/]
+                 :start-line: 5
+            [/file]
+          [/for]
+          [for ( aDataType | aPackage.u_childDependencySupplierDataTypes())]
+              [aDataType.name.concat('.rst')/]
+            [aDataType.processDataTypeDoc()/][/for]
+          [for ( anEnumeration | aPackage.u_childDependencySupplierEnumerations())]
+              [anEnumeration.name.concat('.rst')/]
+            [anEnumeration.processEnumerationDoc()/][/for]
+        [else]
+          [for (childPackage : uml::Package | aPackage.u_childPackages()->select(p | 'includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(p.name)))]
+               [childPackage.name.concat('/index.rst')/]
+            [childPackage.processPackageDoc()/][/for]
+          [for (aClass : uml::Class | aPackage.u_childClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetAllClasses()->includes(c.name)))]
+               [aClass.name.concat('.rst')/]
+            [aClass.processClassDoc()/][/for]
+          [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(d | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d.name))->select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
+               [aDataType.name.concat('.rst')/]
+            [aDataType.processDataTypeDoc()/][/for]
+          [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()->select(e | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetEnumerations()->includes(e.name)))]
+               [anEnumeration.name.concat('.rst')/]
+            [anEnumeration.processEnumerationDoc()/][/for]
+        [/if]
   	  [/file]
     [/if]
   [/if]

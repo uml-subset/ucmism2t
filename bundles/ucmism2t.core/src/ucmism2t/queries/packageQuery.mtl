@@ -87,3 +87,115 @@ specified package.
   aPackage : uml::Package) : Sequence(uml::Enumeration) =
   aPackage.eContents(uml::Enumeration)
 /]
+
+[**
+ * Returns the supplier classes of the child dependencies owned by aPackage.
+ *
+ * This query is intended for package-to-class dependencies in models
+ * where each relevant dependency has exactly one package client and
+ * exactly one relevant supplier class.
+ *
+ * The query first selects those Dependency elements directly contained
+ * in aPackage whose package client is aPackage itself. For each such
+ * dependency, it then retrieves the first supplier that is a UML Class.
+ *
+ * The collected classes are converted to an OrderedSet in order to
+ * remove duplicates while preserving collection ordering semantics.
+ * The resulting set is then sorted alphabetically by class name.
+ *
+ * A null-safe name guard is used in the sort key so that unnamed
+ * classes do not cause an error; they are sorted as if their name
+ * were the empty string.
+ *
+ * Note: The use of ->first() in both the client and supplier lookup
+ * is intentional and relies on the model convention that each relevant
+ * dependency has exactly one package client and one supplier class.
+ *
+ * @param aPackage - The UML package whose child dependency supplier
+ *                   classes are being collected.
+ * @return An ordered set of supplier classes, sorted by name.
+ */]
+[query public u_childDependencySupplierClasses(
+  aPackage : uml::Package) : OrderedSet(uml::Class) =
+  aPackage.eContents(uml::Dependency)
+    ->select(d1 | d1.client->filter(uml::Package)->first() = aPackage)
+    ->collect(d2 | d2.supplier->filter(uml::Class)->first())
+    ->asOrderedSet()
+    ->sortedBy(c | if c.name <> null then c.name else '' endif)
+/]
+[**
+ * Returns the supplier data types of the child dependencies owned by
+ * aPackage, excluding UML PrimitiveTypes and UML Enumerations.
+ *
+ * This query is intended for package-to-data-type dependencies where
+ * each relevant dependency has exactly one package client and one
+ * relevant supplier data type.
+ *
+ * The query first selects those Dependency elements directly contained
+ * in aPackage whose package client is aPackage itself. For each such
+ * dependency, it then retrieves the first supplier that is a UML DataType
+ * but not a UML PrimitiveType and not a UML Enumeration.
+ *
+ * The collected data types are converted to an OrderedSet in order to
+ * remove duplicates while preserving collection ordering semantics.
+ * The resulting set is then sorted alphabetically by data type name.
+ *
+ * A null-safe name guard is used in the sort key so that unnamed data
+ * types do not cause an error; they are sorted as if their name were
+ * the empty string.
+ *
+ * Note: The use of ->first() in both the client and supplier lookup
+ * is intentional and relies on the model convention that each relevant
+ * dependency has exactly one package client and one supplier data type.
+ *
+ * @param aPackage - The UML package whose child dependency supplier
+ *                   data types are being collected.
+ * @return An ordered set of supplier data types, sorted by name.
+ */]
+[query public u_childDependencySupplierDataTypes(
+  aPackage : uml::Package) : OrderedSet(uml::DataType) =
+  aPackage.eContents(uml::Dependency)
+    ->select(d1 | d1.client->filter(uml::Package)->first() = aPackage)
+    ->collect(d2 |
+      d2.supplier
+        ->filter(uml::DataType)
+        ->reject(t | t.oclIsKindOf(uml::PrimitiveType) or t.oclIsKindOf(uml::Enumeration))
+        ->first())
+    ->asOrderedSet()
+    ->sortedBy(d | if d.name <> null then d.name else '' endif)
+/]
+[**
+ * Returns the supplier enumerations of the child dependencies owned by aPackage.
+ *
+ * This query is intended for package-to-enumeration dependencies in models
+ * where each relevant dependency has exactly one package client and
+ * exactly one relevant supplier enumeration.
+ *
+ * The query first selects those Dependency elements directly contained
+ * in aPackage whose package client is aPackage itself. For each such
+ * dependency, it then retrieves the first supplier that is a UML Enumeration.
+ *
+ * The collected enumerations are converted to an OrderedSet in order to
+ * remove duplicates while preserving collection ordering semantics.
+ * The resulting set is then sorted alphabetically by enumeration name.
+ *
+ * A null-safe name guard is used in the sort key so that unnamed
+ * enumerations do not cause an error; they are sorted as if their name
+ * were the empty string.
+ *
+ * Note: The use of ->first() in both the client and supplier lookup
+ * is intentional and relies on the model convention that each relevant
+ * dependency has exactly one package client and one supplier enumeration.
+ *
+ * @param aPackage - The UML package whose child dependency supplier
+ *                   enumerations are being collected.
+ * @return An ordered set of supplier enumerations, sorted by name.
+ */]
+[query public u_childDependencySupplierEnumerations(
+  aPackage : uml::Package) : OrderedSet(uml::Enumeration) =
+  aPackage.eContents(uml::Dependency)
+    ->select(d1 | d1.client->filter(uml::Package)->first() = aPackage)
+    ->collect(d2 | d2.supplier->filter(uml::Enumeration)->first())
+    ->asOrderedSet()
+    ->sortedBy(e | if e.name <> null then e.name else '' endif)
+/]
