@@ -136,7 +136,7 @@
 	            .. tab-item:: Canonical XMI
 	               :class-content: encoding
 	      
-	               Fragment for the data type **[aDataType.name/]** (`entire model as XMI </encoding/xmi/[aDataType.u_model().u_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
+	               Fragment for the data type **[aDataType.name/]** (`entire model as XMI </encoding/xmi/['MODEL_FILE_NAME'.getPropertyValue().replace('_eclipse', '')/]>`_)
 	      
 	               .. literalinclude:: /xmi/[aDataType.name/].xmi
 	                  :lines: 2-

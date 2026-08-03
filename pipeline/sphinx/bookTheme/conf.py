@@ -14,7 +14,9 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../../generated'))
+# insert generated folder in path, default value if no key/environment variable is found
+sys.path.insert(0, os.getenv('generated_folder', '../../../generated'))
+#sys.path.insert(0, os.path.abspath('../../../generated'))
 # _currentModelProperties.py in folder generated
 import _currentModelProperties
 

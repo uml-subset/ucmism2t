@@ -45,11 +45,13 @@ The documentation of the module packageDocFile.
   	    [if ( aPackage.eContainer(uml::Package).name = 'Profiles' and 'profiles'.isPropertyTrue())]
           [for ( aClass | aPackage.u_childDependencySupplierClasses())]
               [aClass.name.concat('.rst')/]
-            [file (aPackage.u_filePath('doc') + '/' + aClass.name + '.rst', overwrite, 'UTF-8')]
-              .. include:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/') + '.rst'/]
-                 :start-line: 5
-            [/file]
-          [/for]
+            [aClass.processClassDoc('profiles')/][/for]
+[comment]
+              [aClass.qualifiedName
+                .replace(aClass.u_model().name, '')
+                .replaceAll('::', '/')
+                + '.rst'/]
+[/comment]
           [for ( aDataType | aPackage.u_childDependencySupplierDataTypes())]
               [aDataType.name.concat('.rst')/]
             [aDataType.processDataTypeDoc()/][/for]
@@ -62,7 +64,7 @@ The documentation of the module packageDocFile.
             [childPackage.processPackageDoc()/][/for]
           [for (aClass : uml::Class | aPackage.u_childClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetAllClasses()->includes(c.name)))]
                [aClass.name.concat('.rst')/]
-            [aClass.processClassDoc()/][/for]
+            [aClass.processClassDoc('universe')/][/for]
           [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(d | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d.name))->select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
                [aDataType.name.concat('.rst')/]
             [aDataType.processDataTypeDoc()/][/for]

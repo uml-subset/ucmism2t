@@ -119,7 +119,7 @@
 	               .. tab-item:: Canonical XMI
 	                  :class-content: encoding
 	      
-	                  Fragment for the enumeration **[anEnumeration.name/]**
+	                  Fragment for the enumeration **[anEnumeration.name/]** (`entire model as XMI </encoding/xmi/['MODEL_FILE_NAME'.getPropertyValue().replace('_eclipse', '')/]>`_)
 	      
 	                  .. literalinclude:: /xmi/[anEnumeration.name/].xmi 
 	                     :lines: 2-

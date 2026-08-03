@@ -9,6 +9,7 @@
 		<echo message="--------------------" />				
 		<echo message="Step 3 - sphinx started ..." />
 		<exec executable="sphinx-build">
+			<env key="generated_folder" value="${generated_folder}"/>
 			<env key="plantuml_jar" value="${plantuml_jar}"/>
 			<arg line="-b html" />
 			<arg line="-c ${ucmism2t_dir}/pipeline/sphinx/bookTheme" />

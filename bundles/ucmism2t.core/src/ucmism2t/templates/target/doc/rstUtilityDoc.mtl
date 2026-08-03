@@ -57,6 +57,7 @@ Indentation utilities:
 [import ucmism2t::queries::dataTypeQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::queries::stringQuery/]
 [import ucmism2t::queries::typeQuery/]
@@ -137,7 +138,7 @@ The diagram shows:
 
 All sections are subject to subset filtering via
 u_isAssociationInSubset (for associations) and
-u_subsetAllClasses (for class nodes).
+u_profileSubsetClasses (for class nodes) when 'profiles' is true.
 
 The diagram is @enduml-terminated and output as a complete
 standalone PlantUML file.
@@ -191,10 +192,10 @@ standalone PlantUML file.
         ->sortedBy(temp3 | temp3.name)]
     [if (directAssocClasses->select(c |
           'includeAllItems'.isPropertyTrue()
-          or c.u_subsetAllClasses()->includes(c.name))->notEmpty())]
+          or aClass.u_profileSubsetClasses()->includes(c))->notEmpty())]
       together {
       [for (contextClass : uml::Class | directAssocClasses)]
-        [if ('includeAllItems'.isPropertyTrue() or contextClass.u_subsetAllClasses()->includes(contextClass.name))]
+        [if ('includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(contextClass))]
           [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/]
         [/if]
       [/for]
@@ -230,7 +231,7 @@ standalone PlantUML file.
         - (aClass.u_associatedClasses() - aClass.superClass)
             ->sortedBy(temp10 | temp10.package.name)
             ->sortedBy(temp11 | temp11.name))]
-    [if ('includeAllItems'.isPropertyTrue() or contextClass.u_subsetAllClasses()->includes(contextClass.name))]
+    [if ('includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(contextClass))]
       [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/]
     [/if]
   [/for]
@@ -439,7 +440,7 @@ many associations.
                     own direct associations.
 /]
 [template public pu_superClass(aClass : uml::Class, mainClass : uml::Class)]
-  [for (aSuperClass : uml::Class | aClass.superClass->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(c.name)))]
+  [for (aSuperClass : uml::Class | aClass.superClass->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(c)))]
     ' Associations of superclass [aSuperClass.name/]
     [let maxInherited : Integer = 3]
       [let limitedAssocs : OrderedSet(uml::Association) = aSuperClass.u_limitedAssociations(aClass)]
@@ -508,12 +509,13 @@ and recurses upward.
 [**
 Renders subclass inheritance arrows recursively for a class context
 diagram. Each subclass is subject to subset filtering via
-u_subsetAllClasses. Recurses into each subclass's own subclasses.
+u_profileSubsetClasses when 'profiles' is true.
+Recurses into each subclass's own subclasses.
 
 @param aClass - The class whose subclasses are being rendered.
 /]
 [template public pu_subClasses(aClass : uml::Class)]
-  [for (subClass : uml::Class | aClass.u_subClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(c.name)))]
+  [for (subClass : uml::Class | aClass.u_subClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(c)))]
       [aClass.qualifiedName/] <|--['['/]['uml-diagram-inheritance-arrow-color'.getPropertyValue()/]]- [subClass.qualifiedName/] 
     [if (subClass.u_subClasses()->notEmpty())][subClass.pu_subClasses()/][/if]
   [/for]
@@ -755,11 +757,23 @@ tree dropdown. Each entry is rendered with appropriate CSS class
 (abstract or regular) and indented by the given indent string.
 Recurses into each child's own subtree.
 
+When 'profiles' is true, only subclasses/subtypes that are members
+of the dependency-defined profile subset are shown (checked by object
+identity via u_profileSubsetClasses for classes and
+u_profileSubsetDataTypes for data types). When 'includeAllItems' is
+true, all subclasses and subtypes are shown regardless of the subset.
+
 @param aClassifier - The classifier whose children are listed.
 @param indent      - The current indentation prefix string.
 /]
 [template public rst_subClasses(aClassifier : uml::Classifier, indent : String)]
-  [for (c : uml::Classifier | aClassifier.u_subClassesOrSubDataTypes())]
+  [for (c : uml::Classifier | aClassifier.u_subClassesOrSubDataTypes()
+      ->select(sub |
+        'includeAllItems'.isPropertyTrue()
+        or (sub.oclIsKindOf(uml::Class)
+            and aClassifier.u_profileSubsetClasses()->includes(sub.oclAsType(uml::Class)))
+        or (sub.oclIsKindOf(uml::DataType)
+            and aClassifier.u_profileSubsetDataTypes()->includes(sub.oclAsType(uml::DataType)))))]
        [if (c.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
     
        | [indent/]ᐊ── [c.rst_simpleQualifiedClassifierNameReference()/]

@@ -35,7 +35,7 @@
     <target name="extract_xmi_fragments">
         <xslt style="${ucmism2t_dir}/pipeline/xslt/ExtractClassifier.xslt"
               in="${model_file}"
-              out="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/xmi/dummy">
+              out="${generated_folder}/${MODEL_SHORTNAME}/doc/_rst/dummy">
             <param name="MAIN_PACKAGE_NAME" expression="${MAIN_PACKAGE_NAME}"/>
             <classpath>
                 <!-- path to saxon he jar file -->

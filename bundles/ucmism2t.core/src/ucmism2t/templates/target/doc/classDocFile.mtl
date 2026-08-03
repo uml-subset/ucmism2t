@@ -34,12 +34,14 @@
  * Filters for subset classes if includeAllItems is false and subset.class is set in subset.properties file.
  * @param aClass a class
 */]
-[template public processClassDoc(aClass : uml::Class)]
+[template public processClassDoc(aClass : uml::Class, folderType : String)]
   [comment] subset condition [/comment]
-  [if ('includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(aClass.name))]  
+  [if ('includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(aClass.name))]
     [file (aClass.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
       [aClass.rst_generationMessageDoc()/]
-      .. _[aClass.qualifiedName/]:
+      [if (folderType = 'universe')]
+        .. _[aClass.qualifiedName/]:
+      [/if]
       
       [aClass.rst_className().rst_header('*')/]
       
@@ -197,9 +199,9 @@
             
                  .. The path of the encoding URIs is adjusted by the Javascript function changeUrl in custom.js.
         
-                 Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/[aClass.u_model().u_modelAcronym().toLower()/]_canonical-unique-names.xmi>`_)
+                 Fragment for the class **[aClass.name/]** (`entire model as XMI </encoding/xmi/['MODEL_FILE_NAME'.getPropertyValue().replace('_eclipse', '')/]>`_)
             
-                 .. literalinclude:: /xmi/[aClass.name/].xmi
+                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].xmi
                     :lines: 2-
                     :language: xml
                     :linenos:

@@ -4,9 +4,9 @@
 Module contains queries with a UML package as receiver.
 /]
 [module packageQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::elementQuery/]
@@ -198,4 +198,95 @@ specified package.
     ->collect(d2 | d2.supplier->filter(uml::Enumeration)->first())
     ->asOrderedSet()
     ->sortedBy(e | if e.name <> null then e.name else '' endif)
+/]
+
+[**
+Returns the union of all dependency-defined subset classes across
+all active Profile sub-packages in the model. A Profile sub-package
+is any package directly owned by the package named 'Profiles', and
+is active when the property 'profiles' is true.
+
+For each such sub-package, the classes defined as suppliers of its
+child dependency relationships (via u_childDependencySupplierClasses)
+are collected and unioned into a single OrderedSet.
+
+This query is the primary entry point for dependency-based subset
+filtering in diagram and RST templates. It is used in place of the
+property-file-based u_subsetAllClasses when 'profiles' is true.
+
+The receiver is any UML element reachable from the model, used
+only to navigate to the model root via u_model().
+
+When 'profiles' is false or the model has no 'Profiles' package,
+an empty OrderedSet is returned, and subset filtering will show
+nothing (neither 'includeAllItems' nor 'profiles' being true
+represents a configuration error per design intent).
+
+@param anElement - Any UML NamedElement in the model; used as
+                   receiver to navigate to the model root.
+@return           The union of all dependency-defined subset classes
+                  across all active Profile sub-packages.
+/]
+[query public u_profileSubsetClasses(
+  anElement : uml::NamedElement) : OrderedSet(uml::Class) =
+  if not 'profiles'.isPropertyTrue()
+  then OrderedSet{}
+  else
+    let profilesPackage : uml::Package =
+      anElement.u_model().eContents(uml::Package)
+        ->select(p | p.name = 'Profiles')
+        ->first()
+    in
+    if profilesPackage = null
+    then OrderedSet{}
+    else
+      profilesPackage.eContents(uml::Package)
+        ->collect(subPkg | subPkg.u_childDependencySupplierClasses())
+        ->asOrderedSet()
+    endif
+  endif
+/]
+
+[**
+Returns the union of all dependency-defined subset data types across
+all active Profile sub-packages in the model. A Profile sub-package
+is any package directly owned by the package named 'Profiles', and
+is active when the property 'profiles' is true.
+
+For each such sub-package, the data types defined as suppliers of
+its child dependency relationships (via u_childDependencySupplierDataTypes)
+are collected and unioned into a single OrderedSet. UML PrimitiveTypes
+and Enumerations are excluded, consistent with the behaviour of
+u_childDependencySupplierDataTypes.
+
+This query complements u_profileSubsetClasses for templates that
+display data types in subset-filtered contexts (e.g. the inheritance
+tree in rst_subClasses, the data type diagram context).
+
+When 'profiles' is false or the model has no 'Profiles' package,
+an empty OrderedSet is returned.
+
+@param anElement - Any UML NamedElement in the model; used as
+                   receiver to navigate to the model root.
+@return           The union of all dependency-defined subset data
+                  types across all active Profile sub-packages.
+/]
+[query public u_profileSubsetDataTypes(
+  anElement : uml::NamedElement) : OrderedSet(uml::DataType) =
+  if not 'profiles'.isPropertyTrue()
+  then OrderedSet{}
+  else
+    let profilesPackage : uml::Package =
+      anElement.u_model().eContents(uml::Package)
+        ->select(p | p.name = 'Profiles')
+        ->first()
+    in
+    if profilesPackage = null
+    then OrderedSet{}
+    else
+      profilesPackage.eContents(uml::Package)
+        ->collect(subPkg | subPkg.u_childDependencySupplierDataTypes())
+        ->asOrderedSet()
+    endif
+  endif
 /]

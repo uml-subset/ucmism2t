@@ -51,6 +51,10 @@ import org.eclipse.uml2.uml.Model;
  *   - CLI launch (automatic): init(projectFolder, modelPath)
  *   - CLI launch (explicit):  init(projectFolder, modelPath,
  *                                  configPaths)
+ *
+ * In all three paths, the property MODEL_FILE_NAME is automatically
+ * set to the model file name (without path) and is available via
+ * 'MODEL_FILE_NAME'.getPropertyValue() in MTL templates.
  */
 public class PropertiesService {
 
@@ -61,6 +65,9 @@ public class PropertiesService {
 
     /** Source indicator for the model-specific properties file. */
     private static final String INDICATOR_MODEL = "M";
+
+    /** Source indicator for automatically derived properties. */
+    private static final String INDICATOR_AUTO = "auto";
 
     // -----------------------------------------------------------------
     // Internal storage
@@ -142,7 +149,7 @@ public class PropertiesService {
             });
         return sb.toString();
     }
-    
+
     // -----------------------------------------------------------------
     // Initialisation from MTL — Acceleo 4 IDE launch
     // -----------------------------------------------------------------
@@ -160,6 +167,8 @@ public class PropertiesService {
      * URI:
      *   model is at <projectFolder>/model/<modelName>.uml
      *   so projectFolder = modelPath.getParent().getParent()
+     *
+     * MODEL_FILE_NAME is set automatically inside init().
      *
      * @param aModel The UML model being generated
      */
@@ -189,6 +198,9 @@ public class PropertiesService {
      *
      * Sets alreadyInitialised = true so that the subsequent call to
      * initProperties(aModel) from m2tMaster.mtl is a no-op.
+     *
+     * Automatically sets MODEL_FILE_NAME to the model file name
+     * (without path) after loading all property files.
      *
      * @param projectFolder Absolute path to the project root
      * @param modelPath     Absolute path to the model file
@@ -225,6 +237,13 @@ public class PropertiesService {
         }
         loadFile(modelProps, INDICATOR_MODEL, false);
 
+        // 3. Automatically derived properties
+        propertyMap.put("MODEL_FILE_NAME",
+            new PropertyEntry(
+                modelFilename,
+                modelPath.toString(),
+                INDICATOR_AUTO));
+
         log("=== Initialisation complete — "
             + propertyMap.size() + " properties loaded ===");
     }
@@ -244,6 +263,9 @@ public class PropertiesService {
      *
      * The source indicators in the configuration report are:
      *   C1 for the first file, C2 for the second, etc.
+     *
+     * Automatically sets MODEL_FILE_NAME to the model file name
+     * (without path) after loading all property files.
      *
      * @param projectFolder Absolute path to the project root
      * @param modelPath     Absolute path to the model file
@@ -275,6 +297,13 @@ public class PropertiesService {
 
             loadFile(configPath, indicator, true);
         }
+
+        // Automatically derived properties
+        propertyMap.put("MODEL_FILE_NAME",
+            new PropertyEntry(
+                modelPath.getFileName().toString(),
+                modelPath.toString(),
+                INDICATOR_AUTO));
 
         log("=== Initialisation complete — "
             + propertyMap.size() + " properties loaded ===");
@@ -425,7 +454,7 @@ public class PropertiesService {
         PropertyEntry entry = propertyMap.get(key);
         return entry != null ? entry.value : "ERROR: " + key + " is undefined";
     }
-    
+
     /**
      * Returns true if the given property key has the value 'true'
      * (case-insensitive). Replaces the Acceleo 3.7 pattern:

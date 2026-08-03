@@ -22,12 +22,13 @@ Related modules:
   since association ends are properties in UML
 /]
 [module associationQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
 
 [**
@@ -158,33 +159,49 @@ Returns true if the given association should be shown in a context
 diagram for the given class, according to the current subset
 configuration.
 
-An association is included when any of the following holds:
+An association is included when either of the following holds:
   (a) the property 'includeAllItems' is true, meaning no subset
       filtering is active;
-  (b) the given class is the source (ownedEnd) of the association
-      and the target class name is in the configured class subset;
-  (c) the given class is the target (otherEnd) of the association
-      and the source class name is in the configured class subset.
+  (b) the property 'profiles' is true, and both the source and
+      target class of the association are members of the
+      dependency-defined profile subset (checked by object
+      identity via u_profileSubsetClasses).
 
-This query centralises the subset-filter condition that was
-previously duplicated verbatim in pu_classDiagram (for the focal
-class's own associations) and pu_superClass (for the superclass's
-inherited associations). Both call sites now delegate here.
+When 'profiles' is true, the subset is determined by the union
+of all dependency-defined supplier classes across all Profile
+sub-packages (packages directly owned by the 'Profiles' package),
+as returned by u_profileSubsetClasses. This replaces the earlier
+property-file-based u_subsetAllClasses mechanism; the two
+mechanisms are mutually exclusive.
+
+The check tests both ends regardless of direction: the focal class
+aClass is always assumed to be in the subset (it is the subject of
+the diagram), so the condition tests whether the *other* end class
+is also in the subset.
+
+Note: Both u_ownedEndClass() and u_otherEndClass() assume both
+association ends are typed by uml::Class. Associations targeting
+DataTypes are excluded upstream by u_associations().
+
+This query centralises the subset-filter condition used in:
+  - pu_classDiagram (focal class associations)
+  - pu_superClass (inherited superclass associations)
 
 @param anAssociation - A UML binary directed association to test.
 @param aClass        - The focal class for which the diagram is
-                       being generated.
+                       being generated; assumed to be in the subset.
 /]
 [query public u_isAssociationInSubset(
   anAssociation : uml::Association,
   aClass : uml::Class) : Boolean =
   'includeAllItems'.isPropertyTrue()
-  or (aClass = anAssociation.u_ownedEndClass()
-      and aClass.u_subsetAllClasses()
-            ->includes(anAssociation.u_otherEndClass().name))
-  or (aClass <> anAssociation.u_ownedEndClass()
-      and aClass.u_subsetAllClasses()
-            ->includes(anAssociation.u_ownedEndClass().name))
+  or (
+    'profiles'.isPropertyTrue()
+    and aClass.u_profileSubsetClasses()
+          ->includes(anAssociation.u_ownedEndClass())
+    and aClass.u_profileSubsetClasses()
+          ->includes(anAssociation.u_otherEndClass())
+  )
 /]
 
 [**

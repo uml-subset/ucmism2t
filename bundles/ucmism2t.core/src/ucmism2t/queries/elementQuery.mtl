@@ -301,6 +301,60 @@ child of the main package.
 /]
 
 [**
+ * Returns the output file path for the specified element, target
+ * format, and package context, using the model short name as the
+ * root segment.
+ *
+ * The path below the target segment depends on aPackage:
+ * - If aPackage is the model itself, the full qualified name of
+ *   aNamedElement is used, with '::' replaced by '/'.
+ * - Otherwise, the qualified name of aPackage is used as the parent
+ *   path and the simple name of aNamedElement is appended as the
+ *   final path segment.
+ *
+ * For the 'doc' target, the model name segment in the computed path
+ * is replaced with '_rst'.
+ *
+ * Examples:
+ * - target = 'xsd', aPackage = model
+ *   -> 'shortName/xsd/pkg/ClassName'
+ * - target = 'doc', aPackage = model
+ *   -> 'shortName/doc/_rst/pkg/ClassName'
+ * - target = 'xsd', aPackage = nested package
+ *   -> 'shortName/xsd/model/pkg/SubPkg/ClassName'
+ *
+ * Note: The path construction uses the standard AQL string services
+ * replaceAll() and replace(). Equality comparison uses '='. [web:712][web:731]
+ *
+ * @param aNamedElement - A UML named element.
+ * @param aTarget - The generation target format identifier
+ *                  (e.g. 'xsd', 'doc').
+ * @param aPackage - The package that determines whether the element
+ *                   path is computed from the element qualified name
+ *                   or from the package qualified name plus the
+ *                   element simple name.
+ * @return The output file path for the named element and target.
+ */]
+[query public u_filePath(
+  aNamedElement : uml::NamedElement,
+  aTarget : String,
+  aPackage : uml::Package) : String =
+  let root : String =
+    aNamedElement.u_model().u_modelShortName() + '/' + aTarget + '/'
+  in
+  let path : String =
+    if aPackage = aNamedElement.u_model()
+    then aNamedElement.qualifiedName.replaceAll('::', '/')
+    else aPackage.qualifiedName.replaceAll('::', '/') + '/' + aNamedElement.name
+    endif
+  in
+  if aTarget = 'doc'
+  then root + path.replace(aNamedElement.u_model().name, '_rst')
+  else root + path
+  endif
+/]
+
+[**
 Returns the output file path for the specified element and target
 format, using the model short name as the root segment.
 For the 'doc' target, the model name segment is replaced with '_rst'.
