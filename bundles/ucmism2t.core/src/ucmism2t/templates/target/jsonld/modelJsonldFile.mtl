@@ -3,12 +3,13 @@
 
 /]
 [module modelJsonldFile(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::jsonld::classJsonld/]
 [import ucmism2t::templates::target::jsonld::commonJsonld/]
@@ -22,18 +23,18 @@
  * (this proved much more flexible than trying to generate the inline context directly).
 */]
 [template public generateJsonld(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + (if 'profiles'.isPropertyTrue() then 'Universe/' else '' endif) + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
     [let classes : Sequence(uml::Class) =
             aModel.eAllContents(uml::Class)
             ->select(aClass | aClass.u_isInAllowedPackage()),
          datatypes : Sequence(uml::DataType) =
             aModel.eAllContents(uml::DataType)
-            ->select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems())
+            ->select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems() and d.name <> 'PackageInformation')
       ]
       {
         "@context": {
           "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
-       	  "xsd": "http://www.w3.org/2001/XMLSchema#",
+          "xsd": "http://www.w3.org/2001/XMLSchema#",
           "[aModel.name/]": "@included",
           [for (aClass : uml::Class | classes) separator(',\n    ')]
             "[aClass.name/]": {
@@ -56,4 +57,51 @@
       }
     [/let]
   [/file]
+[/template]
+
+[**
+Generates the whole-model JSON-LD context file for a profile
+sub-package. Only classes and data types in the profile subset
+are included. Written to:
+  <shortName>/encoding/json-ld/Profiles/<profileName>/<acronym>.jsonld
+
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public profileGenerateJsonld(aProfilePackage : uml::Package)]
+  [let aModel : uml::Model = aProfilePackage.u_model()]
+    [let subsetClasses : OrderedSet(uml::Class) =
+        aProfilePackage.u_childDependencySupplierClasses()]
+    [let subsetDataTypes : OrderedSet(uml::DataType) =
+        aProfilePackage.u_childDependencySupplierDataTypes()]
+      [file (aModel.u_modelShortName() + '/encoding/json-ld/Profiles/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+        {
+          "@context": {
+            "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+            "xsd": "http://www.w3.org/2001/XMLSchema#",
+            "[aModel.name/]": "@included",
+            [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name)) separator(',
+    ')]
+              "[aClass.name/]": {
+                "@id": "[aClass.iri()/]",
+                "@context": ['['/]
+                  [aClass.classJsonldSelfContainedProfile(aProfilePackage)/]
+                ]
+              }[/for]
+            [if (subsetDataTypes->select(d | d.isComplex() and d.isNotInMappedItems())->size() > 0)],[/if]
+            [for (aDataType : uml::DataType | subsetDataTypes->select(d | d.isComplex() and d.isNotInMappedItems() and d.name <> 'PackageInformation')->sortedBy(d | d.name)) separator(',
+    ')]
+              "[aDataType.name/]": {
+                "@id": "[aDataType.iri()/]",
+                "@context": ['['/]
+                  [aDataType.dataTypeJsonldSelfContained()/]
+                ]
+              }[/for]
+          },
+          "generatedBy": "[aModel.generationMessageJsonld()/]",
+          "basedOn": "based on UML model [aModel.qualifiedName/] profile [aProfilePackage.name/]"
+        }
+      [/file]
+    [/let]
+    [/let]
+  [/let]
 [/template]

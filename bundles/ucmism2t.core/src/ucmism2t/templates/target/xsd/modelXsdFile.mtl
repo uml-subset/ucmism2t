@@ -9,6 +9,7 @@ All templates in the *Xsd.mtl modules generate XML Schema.
 )/]
 
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::xsd::classXsd/]
@@ -23,7 +24,7 @@ All templates in the *Xsd.mtl modules generate XML Schema.
  * @param aModel a model
 */]
 [template public processModelXsd(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + (if 'profiles'.isPropertyTrue() then 'Universe/' else '' endif) + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
     [aModel.xsdHeader()/]
     [if ('DDI-CDI'.isPropertyTrue())]
       [aModel.xsdWrapper()/]
@@ -37,7 +38,8 @@ All templates in the *Xsd.mtl modules generate XML Schema.
     [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)
       ->sortedBy(d1 | d1.name)
       ->select(d2 | not d2.oclIsTypeOf(uml::Enumeration))
-      ->select(d3 | not d3.qualifiedName.contains('XMLSchemaDataTypes')))]
+      ->select(d3 | not d3.qualifiedName.contains('XMLSchemaDataTypes'))
+      ->select(d4 | d4.name <> 'PackageInformation'))]
       [aDataType.dataTypeXsd()/]
     [/for]
     [aModel.xsdFooter()/]
@@ -164,3 +166,67 @@ All templates in the *Xsd.mtl modules generate XML Schema.
         </xs:group>
       </xs:sequence>
     </xs:complexType>[/template]
+
+[**
+Generates the whole-model XML Schema file for a profile sub-package.
+Only classes, enumerations and data types in the profile subset are
+included. Written to:
+  <shortName>/encoding/xml-schema/Profiles/<profileName>/<acronym>.xsd
+
+The AllElementsDerivedFromClasses group references only subset classes.
+
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public profileProcessModelXsd(aProfilePackage : uml::Package)]
+  [let aModel : uml::Model = aProfilePackage.u_model()]
+    [let subsetClasses : OrderedSet(uml::Class) =
+        aProfilePackage.u_childDependencySupplierClasses()]
+    [let subsetDataTypes : OrderedSet(uml::DataType) =
+        aProfilePackage.u_childDependencySupplierDataTypes()]
+      [file (aModel.u_modelShortName() + '/encoding/xml-schema/Profiles/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+        [aModel.xsdGenerationMessage()/]
+        [aModel.xsdModelIdentificationComment()/]
+        <xs:schema xmlns="['XSD_NS'.getPropertyValue()/]"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+                   targetNamespace="['XSD_NS'.getPropertyValue()/]"
+                   elementFormDefault="qualified"
+                   attributeFormDefault="unqualified"
+                   version="[aModel.xsdVersion()/]"
+                   vc:minVersion="1.1">
+          <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+                     schemaLocation="xml.xsd"/>
+          <xs:group name="AllElementsDerivedFromClasses">
+            <xs:annotation>
+              <xs:documentation>Profile [aProfilePackage.name/]: all elements based on classes in the subset.</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:choice minOccurs="1" maxOccurs="unbounded">
+                [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name))]
+                  <xs:element ref="[aClass.name/]" minOccurs="0" maxOccurs="unbounded"/>
+                [/for]
+              </xs:choice>
+            </xs:sequence>
+          </xs:group>
+          [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name))]
+            [aClass.classProfileXsd(aProfilePackage)/]
+          [/for]
+          [for (anEnumeration : uml::Enumeration | subsetDataTypes
+              ->select(d | d.oclIsTypeOf(uml::Enumeration))
+              ->collect(d | d.oclAsType(uml::Enumeration))
+              ->sortedBy(e | e.name))]
+            [anEnumeration.enumerationXsd()/]
+          [/for]
+          [for (aDataType : uml::DataType | subsetDataTypes
+              ->sortedBy(d | d.name)
+              ->select(d | not d.oclIsTypeOf(uml::Enumeration))
+              ->select(d | not d.qualifiedName.contains('XMLSchemaDataTypes'))
+              ->select(d | d.name <> 'PackageInformation'))]
+            [aDataType.dataTypeXsd()/]
+          [/for]
+        </xs:schema>
+      [/file]
+    [/let]
+    [/let]
+  [/let]
+[/template]

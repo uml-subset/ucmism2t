@@ -3,21 +3,21 @@
 
 /]
 [module commonShex(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 [template public attributeShex(anAttribute : uml::Property)]
-  [anAttribute.iri()/]	[if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
+  [anAttribute.iri()/]  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
 
 [template public superClasses(aClass : uml::Class)]
   [let scs : Sequence(uml::Class) = aClass.superClass]
     [if (scs->notEmpty())]
-      	[scs->asSequence()->collect(sc | sc.iri().prefix('&').concat('Properties'))->sep(', ')/];
+        [scs->asSequence()->collect(sc | sc.iri().prefix('&').concat('Properties'))->sep(', ')/];
     [/if]
   [/let]
 [/template]
@@ -25,10 +25,25 @@
 [template public pac_superDataTypes(aDataType : uml::DataType)]
   [let scs : Sequence(uml::Classifier) = aDataType.general]
     [if (scs->notEmpty())]
-      	[scs->asSequence()->collect(sc | sc.iri().prefix('&').concat('Properties'))->sep(', ')/];
+        [scs->asSequence()->collect(sc | sc.iri().prefix('&').concat('Properties'))->sep(', ')/];
     [/if]
   [/let]
 [/template]
 
 [template public subClasses(aClass : uml::Class)]
   [let scs : OrderedSet(uml::Class) = aClass.u_subClasses()][if (scs->notEmpty())][scs->asSequence()->collect(sc | sc.iri().prefix('OR @').concat('Shape'))->sep(' ')/][/if][/let][/template]
+
+[**
+Emits superclass property references for a class in profile context.
+Only superclasses present in subsetClasses are included.
+
+@param aClass        - The UML class.
+@param subsetClasses - The set of classes in the active profile subset.
+/]
+[template public superClassesProfile(aClass : uml::Class, subsetClasses : OrderedSet(uml::Class))]
+  [let scs : Sequence(uml::Class) = aClass.superClass->select(sc | subsetClasses->includes(sc))]
+    [if (scs->notEmpty())]
+        [scs->asSequence()->collect(sc | sc.iri().prefix('&').concat('Properties'))->sep(', ')/];
+    [/if]
+  [/let]
+[/template]

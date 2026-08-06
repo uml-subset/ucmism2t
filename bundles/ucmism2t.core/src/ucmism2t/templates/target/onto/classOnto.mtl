@@ -3,12 +3,13 @@
 
 /]
 [module classOnto(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 [import ucmism2t::templates::target::onto::associationOnto/]
@@ -31,4 +32,40 @@
   [for (anAssociation : uml::Association | aClass.u_associations()->select(anAssociation | anAssociation.u_ownedEndClass() = aClass))]
     [anAssociation.associationOnto(aClass)/]
   [/for]
+[/template]
+
+[**
+Generates OWL/Turtle ontology triples for a class in the context of
+a profile sub-package. Only attributes in the profile
+(via u_isAttributeInProfile) and associations where both ends are
+in the profile subset are included. Superclass references are limited
+to subset superclasses.
+
+@param aClass          - The UML class to generate ontology for.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classProfileOnto(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    # class [aClass.name/]
+    # based on the UML class [aClass.qualifiedName/]
+    [aClass.iri()/]
+      a rdfs:Class, owl:Class, ucmis:Class;
+      rdfs:label "[aClass.name/]";
+      [aClass.rdfs_comment()/]
+      [aClass.superClassesProfile(subsetClasses)/]
+    .
+    
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+      [anAttribute.attributeOnto()/]
+    [/for]
+    
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        ->select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses->includes(a.u_ownedEndClass())
+          and subsetClasses->includes(a.u_otherEndClass())))]
+      [anAssociation.associationOnto(aClass)/]
+    [/for]
+  [/let]
 [/template]

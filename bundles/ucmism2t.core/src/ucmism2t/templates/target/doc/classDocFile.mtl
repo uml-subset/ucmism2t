@@ -260,10 +260,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: XML Schema
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('_xsd.txt'), overwrite, 'UTF-8')]
-            [aClass.classXsd()/]
+            [if (aProfilePackage = null)][aClass.classXsd()/][else][aClass.classProfileXsd(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().u_modelAcronym().toLower()/].xsd>`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire XML Schema </encoding/xml-schema/Universe/[aClass.u_model().u_modelAcronym().toLower()/].xsd>[else]profile XML Schema </encoding/xml-schema/Profiles/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].xsd>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if]_xsd.txt 
                       :language: xml
@@ -276,10 +276,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: JSON Schema
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.schema.json'), overwrite, 'UTF-8')]
-            [aClass.classJsch()/]
+            [if (aProfilePackage = null)][aClass.classJsch()/][else][aClass.classProfileJsch(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON Schema </encoding/json-schema/Universe/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>[else]profile JSON Schema </encoding/json-schema/Profiles/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>[/if]`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].schema.json 
                       :language: json
@@ -291,10 +291,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: Ontology (Turtle)
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.onto.ttl'), overwrite, 'UTF-8')]
-            [aClass.classOnto()/]
+            [if (aProfilePackage = null)][aClass.classOnto()/][else][aClass.classProfileOnto(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().u_modelAcronym().toLower()/].onto.ttl>`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]main ontology </encoding/ontology/[aClass.u_model().u_modelAcronym()/].onto.ttl>[else]profile ontology </encoding/ontology/Profiles/[aProfilePackage.name/]/[aProfilePackage.name/].onto.ttl>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].onto.ttl 
                       :language: turtle
@@ -306,10 +306,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: JSON-LD
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.jsonld'), overwrite, 'UTF-8')]
-            [aClass.classJsonldModular()/]
+            [if (aProfilePackage = null)][aClass.classJsonldModular()/][else][aClass.classJsonldModularProfile(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON-LD </encoding/json-ld/Universe/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>[else]profile JSON-LD </encoding/json-ld/Profiles/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].jsonld 
                       :language: JSON-LD
@@ -321,10 +321,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: SHACL
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.shacl.ttl'), overwrite, 'UTF-8')]
-            [aClass.classShacl()/]
+            [if (aProfilePackage = null)][aClass.classShacl()/][else][aClass.classProfileShacl(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
+                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[if (aProfilePackage = null)]Universe/[/if][aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shacl.ttl 
                       :language: turtle
@@ -336,10 +336,10 @@ When aProfilePackage is not null (profile context):
                 .. tab-item:: ShEx
                    :class-content: encoding
           [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.shexc'), overwrite, 'UTF-8')]
-            [aClass.classShex()/]
+            [if (aProfilePackage = null)][aClass.classShex()/][else][aClass.classProfileShex(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
+                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[if (aProfilePackage = null)]Universe/[/if][aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shexc 
                       :language: shexc

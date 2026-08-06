@@ -3,9 +3,9 @@
 
 /]
 [module classShacl(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::associationQuery/]
@@ -15,18 +15,19 @@
 [import ucmism2t::templates::target::rdf::commonRdf/]
 [import ucmism2t::templates::target::shacl::commonShacl/]
 [import ucmism2t::queries::configurationQuery/]
+[import ucmism2t::queries::packageQuery/]
 
 [template public classShacl(aClass : uml::Class)]
   # class [aClass.name/]
   # based on the UML class [aClass.qualifiedName/]
   [aClass.fragment()/] a sh:NodeShape;
       sh:targetClass [aClass.iri()/];
-  	sh:message "See ['RDF_NS'.getPropertyValue()/][aClass.name/]";
-  	sh:closed true;
-  	sh:ignoredProperties ( owl:sameAs );
+    sh:message "See ['RDF_NS'.getPropertyValue()/][aClass.name/]";
+    sh:closed true;
+    sh:ignoredProperties ( owl:sameAs );
       sh:property ['['/]
-  			sh:path rdf:type;
-  			sh:in ( [aClass.allSubClasses()/]);
+        sh:path rdf:type;
+        sh:in ( [aClass.allSubClasses()/]);
       ];
   [aClass.classPropertiesShacl()/]
   .
@@ -40,7 +41,7 @@
       [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
         [anAssociation.fragment()/] a sh:PropertyShape ;
             sh:path [anAssociation.iri()/];
-        	sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
+          sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
               [anAssociation.u_otherEndClass().allSubClasses()/]
             ) ]];
         [if (targetEnd.lower > 0)]
@@ -83,4 +84,107 @@
     [sc.classPropertiesShacl()/]
   [/for]
   
+[/template]
+
+[**
+Generates a SHACL NodeShape for a class in the context of a profile
+sub-package. Only attributes in the profile (via u_isAttributeInProfile)
+and associations where both ends are in the profile subset are included.
+Superclasses are only included when they are in the profile subset.
+
+@param aClass          - The UML class to generate SHACL for.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    # class [aClass.name/]
+    # based on the UML class [aClass.qualifiedName/]
+    [aClass.fragment()/] a sh:NodeShape;
+        sh:targetClass [aClass.iri()/];
+      sh:message "See ['RDF_NS'.getPropertyValue()/][aClass.name/]";
+      sh:closed true;
+      sh:ignoredProperties ( owl:sameAs );
+        sh:property ['['/]
+        sh:path rdf:type;
+        sh:in ( [aClass.allSubClasses()/]);
+        ];
+    [aClass.classPropertiesProfileShacl(aProfilePackage)/]
+    .
+    
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+      [anAttribute.attributeShape()/]
+    [/for]
+    
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        ->select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses->includes(a.u_ownedEndClass())
+          and subsetClasses->includes(a.u_otherEndClass())))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd->first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          [anAssociation.fragment()/] a sh:PropertyShape ;
+              sh:path [anAssociation.iri()/];
+            sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
+                [anAssociation.u_otherEndClass().allSubClasses()/]
+              ) ]];
+          [if (targetEnd.lower > 0)]
+                sh:minCount [targetEnd.lower/];
+          [/if]
+          [if (not targetEnd.upper.u_isUnlimited())]
+                sh:maxCount [targetEnd.upper/];
+          [/if]
+          .
+          [anAssociation.fragmentRev()/] a sh:PropertyShape ;
+              sh:path ['['/] sh:inversePath [anAssociation.iri()/] ];
+          [if (sourceEnd.lowerBound() > 0)]
+                sh:minCount [sourceEnd.lower/];
+          [/if]
+          [if (not sourceEnd.upper.u_isUnlimited())]
+                sh:maxCount [sourceEnd.upper/];
+          [/if]
+          .
+        [/let]
+      [/let]
+    [/for]
+  [/let]
+[/template]
+
+[**
+Generates the sh:property references for a class in profile context.
+Only includes attributes in the profile, associations where both ends
+are in the profile subset, and superclasses that are in the subset.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classPropertiesProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+      # attributes
+  [for (anAttribute : uml::Property | aClass.u_attributes()
+      ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+        sh:property [anAttribute.fragment()/];
+  [/for]
+      # associations from [aClass.name/]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      ->select(a | a.u_ownedEndClass() = aClass
+        and subsetClasses->includes(a.u_ownedEndClass())
+        and subsetClasses->includes(a.u_otherEndClass())))]
+        sh:property [anAssociation.fragment()/];
+  [/for]
+      # associations to [aClass.name/]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      ->select(a | a.u_otherEndClass() = aClass
+        and subsetClasses->includes(a.u_ownedEndClass())
+        and subsetClasses->includes(a.u_otherEndClass())))]
+        sh:property [anAssociation.fragmentRev()/];
+  [/for]
+  
+  [for (sc : uml::Class | aClass.superClass
+      ->select(s | subsetClasses->includes(s)))]
+        # ---- superclass: [sc.name/]
+    [sc.classPropertiesProfileShacl(aProfilePackage)/]
+  [/for]
+  [/let]
 [/template]

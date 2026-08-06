@@ -8,8 +8,10 @@
   'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::associationQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
 [import ucmism2t::templates::target::xsd::dataTypeXsd/]
 
@@ -104,3 +106,131 @@
     [/for]
   </xs:sequence>
 [/template]
+
+[**
+Generates XML Schema for a class in profile context.
+Superclass extension uses only the nearest superclass in the subset.
+Attribute and association filtering is handled by propertyProfileXsd.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [let superInSubset : uml::Class =
+      aClass.u_allSuperClasses()->select(sc | subsetClasses->includes(sc))->first()]
+    <xs:element name="[aClass.name/]"
+                type="[aClass.name/]XsdType"
+                xml:id="[aClass.name/]">
+      <!-- based on the UML class [aClass.qualifiedName/] -->
+      <xs:annotation>
+  ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:complexType name="[aClass.name/]XsdType"
+                    xml:id="[aClass.name/]XsdType">
+      <xs:annotation>
+  ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+      </xs:annotation>
+      [if (superInSubset <> null)]
+        <xs:complexContent>
+          <xs:extension base="[superInSubset.name/]XsdType">
+            [if (aClass.u_attributes()->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage))->notEmpty()
+                or aClass.u_associationEndPropertiesInSubset(aProfilePackage)->notEmpty())]
+              [aClass.propertyProfileXsd(aProfilePackage)/]
+            [/if]
+          </xs:extension>
+        </xs:complexContent>
+      [else]
+        [if (aClass.u_attributes()->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage))->notEmpty()
+            or aClass.u_associationEndPropertiesInSubset(aProfilePackage)->notEmpty())]
+          [aClass.propertyProfileXsd(aProfilePackage)/]
+        [/if]
+      [/if]
+    </xs:complexType>
+  [/let]
+  [/let]
+[/template]
+
+[**
+Generates XML Schema sequence elements for attributes and associations
+of a class in profile context.
+Attributes are filtered by u_isAttributeInProfile.
+Associations are filtered to those where both ends are in the subset.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public propertyProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]
+  <xs:sequence>
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+      <xs:element name="[anAttribute.name/]"
+                  type="[anAttribute.type.xsd_typeName()/]"
+                  minOccurs="[anAttribute.lower/]"
+                  maxOccurs="[anAttribute.xsd_upperCardinality()/]"
+                  xml:id="[aClass.name.concat('-').concat(anAttribute.name)/]">
+        <xs:annotation>
+    ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    [/for]
+    [for (aProperty : uml::Property | aClass.u_associationEndPropertiesInSubset(aProfilePackage))]
+      [let sourceClass : uml::Property = aProperty.association.ownedEnd->first()]
+        [let targetClass : uml::Property = sourceClass.getOtherEnd()]
+          <xs:element name="[aProperty.association.name/]"
+                      minOccurs="[targetClass.lower/]"
+                      maxOccurs="[targetClass.xsd_upperCardinality()/]"
+                      xml:id="[aProperty.association.name/]">
+            <xs:annotation>
+    ['    <xs:documentation>' + aProperty.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:restriction base="AssociationReferenceXsdType">
+                  <xs:sequence>
+                    <xs:element name="ddiReference"
+                                type="InternationalRegistrationDataIdentifierXsdType"
+                                minOccurs="0"
+                                maxOccurs="1"
+                                xml:id="[aProperty.association.name + '-ddiReference'/]"/>
+                    <xs:element name="validType"
+                                minOccurs="[sourceClass.lower/]"
+                                maxOccurs="[sourceClass.xsd_upperCardinality()/]"
+                                xml:id="[aProperty.association.name + '-validType'/]">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:NMTOKEN">
+                          [targetClass.type.xsd_referenceClass()/]
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:restriction>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        [/let]
+      [/let]
+    [/for]
+  </xs:sequence>
+[/template]
+
+[**
+Returns association-end properties of the class where both the
+owned-end class and the other-end class are in the profile subset.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[query public u_associationEndPropertiesInSubset(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(uml::Property) =
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  aClass.ownedAttribute
+    ->select(p | p.association <> null
+      and subsetClasses->includes(p.association.u_ownedEndClass())
+      and subsetClasses->includes(p.association.u_otherEndClass()))
+/]

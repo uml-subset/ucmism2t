@@ -3,12 +3,13 @@
 
 /]
 [module classJsonld(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
@@ -62,7 +63,7 @@
 [**
 */]
 [template public classJsonldFile(aClass : uml::Class)]
-  [file (aClass.u_model().u_modelShortName() + '/encoding/json-ld/' + aClass.name + '.jsonld', overwrite, 'UTF-8')]
+  [file ((if 'profiles'.isPropertyTrue() then aClass.u_filePath('json-ld').replace(aClass.u_model().name + '/', 'Universe/') else aClass.u_model().u_modelShortName() + '/encoding/json-ld/' + aClass.name endif).concat('.jsonld'), overwrite, 'UTF-8')]
     [aClass.classJsonldModular()/]
   [/file]
 [/template]
@@ -87,3 +88,109 @@
     "generatedBy": "[aClass.generationMessageJsonld()/]",
     "basedOn": "based on the UML data type [aClass.qualifiedName/]"
   }[/template]
+
+[**
+Generates the core of a type-scoped context for a class in profile
+context. Only attributes passing u_isAttributeInProfile and
+associations where both ends are in the profile subset are included.
+Reverse associations are also filtered to the subset.
+
+@param aClass          - The UML class.
+@param modular         - True for modular context output.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classJsonldCoreProfile(
+  aClass : uml::Class,
+  modular : Boolean,
+  aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [aClass.genAttributesProfile(modular, aClass, aProfilePackage)/]
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        ->select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses->includes(a.u_ownedEndClass())
+          and subsetClasses->includes(a.u_otherEndClass()))
+        ->sortedBy(a | a.shortName()))]
+      "[anAssociation.shortName()/]": {
+        "@id": "[anAssociation.iri()/]",
+        "@type": "@id"[if (modular)],[/if]
+      [if (modular)]
+          "@context": "[anAssociation.u_otherEndClass().name/].jsonld"
+      [/if]
+      },
+    [/for]
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        ->select(a | a.u_otherEndClass() = aClass
+          and subsetClasses->includes(a.u_ownedEndClass())
+          and subsetClasses->includes(a.u_otherEndClass()))
+        ->sortedBy(a | a.shortName())
+        ->sortedBy(a | a.u_ownedEndClass().name))]
+      "[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]": {
+        "@reverse": "[anAssociation.iri()/]",
+        "@type": "@id"[if (modular)],[/if]
+      [if (modular)]
+          "@context": "[anAssociation.u_ownedEndClass().name/].jsonld"
+      [/if]
+      },
+    [/for]
+    " comment ": "tag:json-should-support-trailing-commas"
+  [/let]
+[/template]
+
+[**
+Generates a complete self-contained type-scoped context for a class
+in profile context, as a sequence of contexts for a JSON array.
+Superclass contexts are only included when the superclass is in
+the profile subset.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classJsonldSelfContainedProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [if (aClass.superClass->notEmpty()
+        and aClass.superClass->asSequence()->first().isNotInMappedItems()
+        and subsetClasses->includes(aClass.superClass->asSequence()->first()))]
+      [aClass.superClass->asSequence()->first().classJsonldSelfContainedProfile(aProfilePackage)/],
+    [/if]
+    {
+      [aClass.classJsonldCoreProfile(false, aProfilePackage)/]
+    }
+  [/let]
+[/template]
+
+[**
+Generates a modular standalone JSON-LD context for a class in
+profile context. Referenced class contexts use profile-specific
+paths when the referenced class is in the profile subset.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classJsonldModularProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package)]
+  {
+    "@context": ['['/]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [if (aClass.superClass->notEmpty()
+        and aClass.superClass->asSequence()->first().isNotInMappedItems()
+        and subsetClasses->includes(aClass.superClass->asSequence()->first()))]
+          "[aClass.superClass->asSequence()->collect(temp2 | temp2.name)/].jsonld",
+    [/if]
+        {
+          "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+          "xsd": "http://www.w3.org/2001/XMLSchema#",
+    
+          [aClass.classJsonldCoreProfile(true, aProfilePackage)/]
+        }
+      ],
+      "generatedBy": "[aClass.generationMessageJsonld()/]",
+      "basedOn": "based on the UML data type [aClass.qualifiedName/]"
+    }
+  [/let]
+[/template]

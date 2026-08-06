@@ -3,12 +3,13 @@
 Module contains templates for JSON Schema.
 /]
 [module classJsch(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::jsonschema::commonJsch/]
@@ -156,5 +157,198 @@ Module contains templates for JSON Schema.
     s
   else
     s + aClass.superClass->first().requiredAssociations()
+  endif
+/]
+
+[**
+Generates JSON Schema for a class in profile context.
+Only attributes passing u_isAttributeInProfile and associations
+where both ends are in the profile subset are included.
+The target-<ClassName> refs only reference subset classes.
+
+@param aClass          - The UML class.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public classProfileJsch(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    "cls-[aClass.name/]": {
+      "description": "['RDF_NS'.getPropertyValue()/][aClass.name/]",
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "#/defs/at-context"
+        },
+        "@id": {
+          "type": "string",
+          "format": "iri-reference"
+        },
+        "@type": {
+          "const": "[aClass.name/]"
+        },
+        [aClass.genClassAttributesProfile(aProfilePackage)/]
+        [aClass.genAssociationsProfile(OrderedSet{}, aProfilePackage)/]
+        [aClass.genReverseAssociationsProfile(aProfilePackage)/]
+        "sameAs": {
+          "$ref": "#/defs/owl:sameAs"
+        }
+      },
+      "required": ['['/][aClass.requiredClassAttributesProfile(aProfilePackage)/][aClass.requiredAssociationsProfile(aProfilePackage)/]"@type"],
+      "additionalProperties": false
+    },
+    "target-[aClass.name/]": {
+      "description": "all subclasses of ['RDF_NS'.getPropertyValue()/][aClass.name/]",
+      "anyOf": ['['/]
+        { "$ref": "#/defs/cls-[aClass.name/]" },
+    [for (sc : uml::Class | aClass.u_subClasses()->select(s | subsetClasses->includes(s)))]
+          { "$ref": "#/defs/cls-[sc.name/]" },
+    [/for]
+        { "type": "string", "format": "iri-reference" }
+      ]
+    },
+  [/let]
+[/template]
+
+[template protected genClassAttributesProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) post(self.trim())]
+  [aClass.genAttributesProfile(aProfilePackage)/]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [if (aClass.superClass->notEmpty()
+      and subsetClasses->includes(aClass.superClass->first()))]
+    [aClass.superClass->first().genClassAttributesProfile(aProfilePackage)/]
+  [/if]
+  [/let]
+[/template]
+
+[template protected genAssociationsProfile(
+  aClass : uml::Class,
+  seen : OrderedSet(String),
+  aProfilePackage : uml::Package) post(self.trim())]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [let associations : OrderedSet(uml::Association) =
+      aClass.u_associations()
+        ->select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses->includes(a.u_ownedEndClass())
+          and subsetClasses->includes(a.u_otherEndClass()))]
+    [for (anAssociation : uml::Association | associations
+        ->select(a | seen->excludes(a.name)))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd->first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          "[anAssociation.shortName()/]": {
+            "description": "[anAssociation.name/]",
+            "$comment": "cardinality [targetEnd.lowerBound()/]..[targetEnd.upperBound()/]",
+          [if (targetEnd.upperBound() = 1)]
+               "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+          [else]
+              "anyOf": ['['/]
+                {
+                  "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/defs/target-[anAssociation.u_otherEndClass().name/]"
+                  }
+                }
+              ]
+          [/if]
+          },
+        [/let]
+      [/let]
+    [/for]
+    [if (aClass.superClass->notEmpty()
+        and subsetClasses->includes(aClass.superClass->first()))]
+      [aClass.superClass->asSequence()->first()
+        .genAssociationsProfile(
+          seen + associations->asSequence()->collect(a | a.shortName()),
+          aProfilePackage)/]
+    [/if]
+  [/let]
+  [/let]
+[/template]
+
+[template protected genReverseAssociationsProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) post(self.trim())]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      ->select(a | a.u_otherEndClass() = aClass
+        and subsetClasses->includes(a.u_ownedEndClass())
+        and subsetClasses->includes(a.u_otherEndClass())))]
+    [let sourceEnd : uml::Property = anAssociation.ownedEnd->first()]
+      "[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]": {
+        "description": "[anAssociation.name/]",
+        "$comment": "cardinality [sourceEnd.lowerBound()/]..[sourceEnd.upperBound()/]",
+      [if (sourceEnd.upperBound() = 1)]
+          "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+      [else]
+          "anyOf": ['['/]
+            {
+              "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/defs/target-[anAssociation.u_ownedEndClass().name/]"
+              }
+            }
+          ]
+      [/if]
+      },
+    [/let]
+  [/for]
+  [if (aClass.superClass->notEmpty()
+      and subsetClasses->includes(aClass.superClass->first()))]
+    [aClass.superClass->asSequence()->first()
+      .genReverseAssociationsProfile(aProfilePackage)/]
+  [/if]
+  [/let]
+[/template]
+
+[query public requiredClassAttributesProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : String =
+  let s : String =
+    aClass.u_attributes()
+      ->select(p | p.lower > 0
+        and p.u_isAttributeInProfile(aClass, aProfilePackage))
+      ->collect(p2 | '"' + p2.name + '", ')
+      ->toString()
+  in
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  if aClass.superClass->isEmpty()
+    or not subsetClasses->includes(aClass.superClass->first())
+  then s
+  else s + aClass.superClass->first()
+              .requiredClassAttributesProfile(aProfilePackage)
+  endif
+/]
+
+[query public requiredAssociationsProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : String =
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  let s : String =
+    aClass.u_associations()
+      ->select(a | a.u_ownedEndClass() = aClass
+        and subsetClasses->includes(a.u_ownedEndClass())
+        and subsetClasses->includes(a.u_otherEndClass())
+        and a.u_otherEnd().lower > 0)
+      ->collect(a3 | '"' + a3.shortName() + '", ')
+      ->toString()
+  in
+  if aClass.superClass->isEmpty()
+    or not subsetClasses->includes(aClass.superClass->first())
+  then s
+  else s + aClass.superClass->first()
+              .requiredAssociationsProfile(aProfilePackage)
   endif
 /]

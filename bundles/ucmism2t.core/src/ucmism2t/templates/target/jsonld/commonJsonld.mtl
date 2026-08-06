@@ -3,12 +3,13 @@
 
 /]
 [module commonJsonld(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::classifierQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
 [**
@@ -21,6 +22,43 @@
 */]
 [template public genAttributes(aClassifier : uml::Classifier, modular : Boolean)]
   [for (anAttribute : uml::Property | aClassifier.u_attributes())]
+    "[anAttribute.name/]": {
+      "@id": "[anAttribute.iri()/]",
+    [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
+        "@type": "@vocab",
+        "@context": {
+        [for (aLiteral : uml::EnumerationLiteral | anAttribute.type.oclAsType(uml::Enumeration).ownedLiteral) separator(',\n  ')]
+            "[aLiteral.name/]": "[aLiteral.iri()/]"[/for]
+        }
+    [elseif (anAttribute.type.isComplex())]
+        "@type": "@id"[if (modular)],[/if]
+      [if (modular)]
+          "@context": "[anAttribute.type.name/].jsonld"
+      [/if]
+    [else]
+        "@type": "[anAttribute.type.iri()/]"
+    [/if]
+    },
+  [/for]
+[/template]
+
+[**
+Generates context entries for the attributes of a classifier in
+profile context. Only attributes passing u_isAttributeInProfile
+for the given class and profile package are included.
+
+@param aClassifier     - The classifier whose attributes are rendered.
+@param modular         - True for modular (standalone) context output.
+@param aClass          - The class used for attribute profile filtering.
+@param aProfilePackage - The profile sub-package defining the subset.
+/]
+[template public genAttributesProfile(
+  aClassifier : uml::Classifier,
+  modular : Boolean,
+  aClass : uml::Class,
+  aProfilePackage : uml::Package)]
+  [for (anAttribute : uml::Property | aClassifier.u_attributes()
+      ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
     "[anAttribute.name/]": {
       "@id": "[anAttribute.iri()/]",
     [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
