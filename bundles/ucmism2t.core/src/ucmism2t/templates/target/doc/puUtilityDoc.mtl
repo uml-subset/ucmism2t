@@ -169,11 +169,10 @@ The link points to the type's #diagram anchor with a tooltip.
 
 [**
 Generates an attribute type name with an optional hyperlink for use
-in class body attribute lines in the diagram. When the type has a
-containing package (i.e. is not a UML primitive type at the model
-root), the name is rendered in blue and followed by a three-bracket
+in class body attribute lines in the diagram. When the type is not a UML
+primitive type, the name is rendered in blue and followed by a three-bracket
 attribute hyperlink pointing to the type's diagram page.
-When the type is a primitive (no ancestors), only the plain name
+When the type is a primitive, only the plain name
 is emitted.
 
 The multi-line AQL expression inside the single block is
@@ -184,7 +183,7 @@ arise if the call were split across multiple template lines.
 @param aType - A UML type used as an attribute type in a class body.
 /]
 [template public pu_typeWithLink(aType : uml::Type) post(self.trim())]
-  [if (aType.ancestors()->isEmpty())]
+  [if (aType.u_isUmlPrimitive())]
     [aType.name/]
   [else]
     <color:blue> [aType.name/] [

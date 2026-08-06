@@ -107,6 +107,7 @@ public class Main implements IApplication {
     private static final String ARG_INPUT  = "-input";
     private static final String ARG_OUTPUT = "-output";
     private static final String ARG_CONFIG = "-config";
+    private static final String ARG_LOG    = "-log";
 
     /**
      * Application entry point for Eclipse runtime.
@@ -198,6 +199,7 @@ public class Main implements IApplication {
             executeTransformation(
                 arguments.inputModel,
                 arguments.outputPath,
+                arguments.logPath,
                 configService);
 
             System.out.println();
@@ -288,12 +290,15 @@ public class Main implements IApplication {
      *
      * @param modelPathStr  Path to the model file
      * @param outputPath    Output directory path
+     * @param logPath       Path for the Acceleo log file, or null
+     *                      for default (acceleo.log in output dir)
      * @param configService Configuration service instance
      * @throws Exception If transformation fails
      */
     private void executeTransformation(
             String modelPathStr,
             String outputPath,
+            String logPath,
             PropertiesService configService) throws Exception {
 
         Path modelPath = Paths.get(modelPathStr);
@@ -306,6 +311,14 @@ public class Main implements IApplication {
         options.put(AcceleoUtil.LOG_URI_OPTION, "acceleo.log");
         options.put(AcceleoUtil.NEW_LINE_OPTION,
             System.lineSeparator());
+
+        // Resolve log file location:
+        // - if -log specifies an absolute path, use it directly
+        // - if -log specifies a relative path, resolve relative to
+        //   the output directory
+        // - if -log is not specified, default to acceleo.log in
+        //   the output directory (handled below after outputDirFile
+        //   is resolved)
 
         // Dedicated generation key for resource set lifecycle
         final Object generationKey = new Object();
@@ -474,9 +487,19 @@ public class Main implements IApplication {
         }
         final URI destinationURI =
             URI.createFileURI(absolutePath);
-        final URI logURI = AcceleoUtil.getlogURI(
-            destinationURI,
-            options.get(AcceleoUtil.LOG_URI_OPTION));
+        final URI logURI;
+        if (logPath != null) {
+            File logFile = new File(logPath);
+            if (!logFile.isAbsolute()) {
+                logFile = new File(outputDirFile, logPath);
+            }
+            logURI = URI.createFileURI(
+                logFile.getAbsolutePath());
+        } else {
+            logURI = AcceleoUtil.getlogURI(
+                destinationURI,
+                options.get(AcceleoUtil.LOG_URI_OPTION));
+        }
 
         System.out.println("Generating output files...");
 
@@ -547,6 +570,49 @@ public class Main implements IApplication {
                 + ", Warnings: "
                 + countBySeverity(diagnostic, Diagnostic.WARNING)
                 + ".");
+        }
+
+        // Write a summary line to the log file so it is never
+        // empty after a successful run. Acceleo only writes to it
+        // when there are lost files, leaving it empty on clean
+        // generations — which could be confusing to a user.
+        try {
+            File logFile = new File(logURI.toFileString());
+            java.nio.file.Files.createDirectories(
+                logFile.getParentFile().toPath());
+            int errorCount = generationResult != null
+                ? countBySeverity(
+                    generationResult.getDiagnostic(),
+                    Diagnostic.ERROR)
+                : 0;
+            int warningCount = generationResult != null
+                ? countBySeverity(
+                    generationResult.getDiagnostic(),
+                    Diagnostic.WARNING)
+                : 0;
+            String summary =
+                "ucmism2t generation completed"
+                + " \u2014 "
+                + java.time.LocalDateTime.now()
+                    .format(java.time.format.DateTimeFormatter
+                        .ofPattern("yyyy-MM-dd HH:mm:ss"))
+                + "\nModel   : " + modelPathStr
+                + "\nOutput  : " + outputPath
+                + "\nErrors  : " + errorCount
+                + "\nWarnings: " + warningCount
+                + "\n";
+            String existing = logFile.exists()
+                ? new String(java.nio.file.Files.readAllBytes(
+                    logFile.toPath()))
+                : "";
+            java.nio.file.Files.writeString(
+                logFile.toPath(),
+                summary
+                + (existing.isEmpty() ? "" : "\n" + existing));
+        } catch (IOException e) {
+            System.err.println(
+                "Warning: could not write to log file: "
+                + e.getMessage());
         }
     }
 
@@ -621,6 +687,16 @@ public class Main implements IApplication {
                     }
                     break;
 
+                case ARG_LOG:
+                    if (i + 1 < args.length) {
+                        arguments.logPath = args[++i];
+                    } else {
+                        System.err.println(
+                            "Missing value for " + ARG_LOG);
+                        return null;
+                    }
+                    break;
+
                 default:
                     System.err.println(
                         "Unknown argument: " + args[i]);
@@ -670,6 +746,14 @@ public class Main implements IApplication {
         System.out.println(
             "                     All specified files are"
             + " mandatory.");
+        System.out.println(
+            "  -log <path>        Path for the Acceleo log file.");
+        System.out.println(
+            "                     Absolute or relative to output"
+            + " directory.");
+        System.out.println(
+            "                     Default: acceleo.log in output"
+            + " directory.");
         System.out.println();
         System.out.println("Configuration (without -config):");
         System.out.println(
@@ -713,5 +797,6 @@ public class Main implements IApplication {
         String inputModel;
         String outputPath;
         List<String> configFiles = new ArrayList<>();
+        String logPath = null;
     }
 }

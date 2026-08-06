@@ -2,9 +2,9 @@
  * The documentation of the module aClassFile.
  */]
 [module classDocFile(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::associationQuery/]
@@ -13,6 +13,7 @@
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::doc::associationDoc/]
@@ -29,18 +30,42 @@
 
 [comment][import ucmism2t::templates::target::doc::attributeDoc /][/comment]
 [**
- * Processes a class. Writes a file.
- * Processes all classes if includeAllItems is true in the first properties file (run configuration).
- * Filters for subset classes if includeAllItems is false and subset.class is set in subset.properties file.
- * @param aClass a class
-*/]
-[template public processClassDoc(aClass : uml::Class, folderType : String)]
+Processes a class and writes all output files for it.
+
+When aProfilePackage is null (universe context):
+  - Uses u_filePath for file paths
+  - Emits the canonical RST anchor .. _<qualifiedName>:
+  - No attribute filtering (all attributes included)
+  - Association table shows all associations
+  - Diagram uses pu_classDiagram(null)
+
+When aProfilePackage is not null (profile context):
+  - Uses u_profileFilePath for file paths
+  - Emits the profile-specific anchor
+      .. _<profileName>-<qualifiedName>:
+  - Adds a "See also" reference to the universe file
+  - Attributes filtered by u_isAttributeInProfile
+  - Superclasses in attribute/association tables filtered
+    to those in the profile subset
+  - Association table shows only associations where both
+    ends are in the profile subset
+  - Diagram uses pu_classDiagram(aProfilePackage)
+
+@param aClass          - The UML class to process.
+@param folderType      - 'universe' to emit the canonical anchor,
+                         any other value to suppress it.
+@param aProfilePackage - The profile sub-package context, or null
+                         for universe generation.
+/]
+[template public processClassDoc(aClass : uml::Class, folderType : String, aProfilePackage : uml::Package)]
   [comment] subset condition [/comment]
-  [if ('includeAllItems'.isPropertyTrue() or aClass.u_subsetAllClasses()->includes(aClass.name))]
-    [file (aClass.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+  [if ('includeAllItems'.isPropertyTrue() or (aProfilePackage <> null and aProfilePackage.u_childDependencySupplierClasses()->includes(aClass)) or (aProfilePackage = null and aClass.u_subsetAllClasses()->includes(aClass.name)))]
+    [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.rst'), overwrite, 'UTF-8')]
       [aClass.rst_generationMessageDoc()/]
-      [if (folderType = 'universe')]
+      [if (folderType = 'universe' and aProfilePackage = null)]
         .. _[aClass.qualifiedName/]:
+      [elseif (aProfilePackage <> null)]
+        .. _[aProfilePackage.name/]-[aClass.qualifiedName/]:
       [/if]
       
       [aClass.rst_className().rst_header('*')/]
@@ -53,11 +78,28 @@
         Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
       [/if]
       [if (aClass.isAbstract)]   | Class is abstract.[/if]
+      [if (aProfilePackage <> null)]
+      
+        Profile: **[aProfilePackage.name/]** | See also: :ref:`[aClass.qualifiedName/]` (full universe documentation)
+      [/if]
       
       [aClass.u_commentBody().replaceAll('(=\\s)', '$1\r').rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
+      [if (aProfilePackage = null)]
+      [let profilePackages : OrderedSet(uml::Package) = aClass.u_profilePackagesForClass()]
+        [if (profilePackages->notEmpty())]
       
-      [file (aClass.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-        [aClass.pu_classDiagram()/]
+          Used in profiles
+          ================
+      
+      [for (profilePkg : uml::Package | profilePackages)]
+        * :ref:`[profilePkg.name/]-[aClass.qualifiedName/]` ([profilePkg.name/])
+      [/for]
+        [/if]
+      [/let]
+      [/if]
+      
+      [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.pu'), overwrite, 'UTF-8')]
+        [aClass.pu_classDiagram(aProfilePackage)/]
       [/file]
       Diagram
       =======
@@ -77,7 +119,7 @@
       
             [aClass.diagramModalPreCode()/]
       
-         .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].pu
+         .. uml:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].pu
       
       
          .. raw:: html
@@ -88,7 +130,9 @@
         [aClass.rst_classOrDataTypeInheritance()/]
       [/if]
       
-      [if (aClass.u_attributes()->notEmpty() or aClass.u_inheritedClassAttributes()->notEmpty())]
+      [let visibleAttrs : Sequence(uml::Property) = aClass.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage))]
+      [let visibleInheritedAttrs : Sequence(uml::Property) = aClass.u_allSuperClasses()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc.oclAsType(uml::Class)))->collect(sc | sc.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))->asSequence()]
+      [if (visibleAttrs->notEmpty() or visibleInheritedAttrs->notEmpty())]
         Attributes
         ==========
         
@@ -118,12 +162,14 @@
                    - Data Type
                    - Multiplicity
                    - Default value
-                 [for (p1 : uml::Property | aClass.u_attributes())]
+                 [for (p1 : uml::Property | aClass.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))]
                    [p1.rst_processAttributeInTable(aClass)/][/for]
-                 [for (c2 : uml::Classifier | aClass.u_allSuperClasses())]
-                   [for (p2 : uml::Property | c2.u_attributes())]
+                 [for (c2 : uml::Classifier | aClass.u_allSuperClasses()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc.oclAsType(uml::Class))))]
+                   [for (p2 : uml::Property | c2.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))]
                      [p2.rst_processAttributeInTable(aClass)/][/for][/for]
       [/if]
+      [/let]
+      [/let]
 
       [if (aClass.u_allSuperClasses()->union(OrderedSet{aClass})->collect(c | c.u_associations())->size() > 0)]
         Associations
@@ -149,9 +195,12 @@
                    - Multiplicity of other class
                    - Aggregation Kind
                    - Inherited from
-        [for (c2 : uml::Class | aClass.u_allSuperClasses()->union(OrderedSet{aClass}))]
+        [for (c2 : uml::Class | aClass.u_allSuperClasses()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc))->union(OrderedSet{aClass}))]
           [for (anAssociation : uml::Association | c2.u_associations()
-              ->select(a | a.ownedEnd->notEmpty()) )]
+              ->select(a | a.ownedEnd->notEmpty()
+                and (aProfilePackage = null
+                  or (aProfilePackage.u_childDependencySupplierClasses()->includes(a.u_ownedEndClass())
+                      and aProfilePackage.u_childDependencySupplierClasses()->includes(a.u_otherEndClass())))))]
             [let source : uml::Property = anAssociation.ownedEnd->first()]
               [let target : uml::Property = anAssociation.ownedEnd->first().getOtherEnd()]
                 [if (c2 <> target.type.oclAsType(uml::Class))]
@@ -165,13 +214,13 @@
                 [if (c2 <> target.type.oclAsType(uml::Class))]
                              - [source.u_docMultiplicity()/]
                              - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-                             - :ref:`[target.type.qualifiedName/]`
+                             - [if (aProfilePackage <> null)]:ref:`[aProfilePackage.name/]-[target.type.qualifiedName/]`[else]:ref:`[target.type.qualifiedName/]`[/if]
                              - [target.u_docMultiplicity()/]
                              - [target.aggregation.toString()/]
                 [else]
                              - [target.u_docMultiplicity()/]
                              - [if (aClass.package <> source.type.package)]:ref:`[source.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-                             - :ref:`[source.type.qualifiedName/]`
+                             - [if (aProfilePackage <> null)]:ref:`[aProfilePackage.name/]-[source.type.qualifiedName/]`[else]:ref:`[source.type.qualifiedName/]`[/if]
                              - [source.u_docMultiplicity()/]
                              - [source.aggregation.toString()/]
                 [/if]
@@ -210,13 +259,13 @@
         [if ('xsd'.isPropertyTrue())]
                 .. tab-item:: XML Schema
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('_xsd.txt'), overwrite, 'UTF-8')]
             [aClass.classXsd()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`entire XML Schema </encoding/xml-schema/[aClass.u_model().u_modelAcronym().toLower()/].xsd>`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if]_xsd.txt 
                       :language: xml
                       :linenos:
                       :emphasize-lines: 1
@@ -226,13 +275,13 @@
         [if ('jsonschema'.isPropertyTrue())]
                 .. tab-item:: JSON Schema
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('.schema.json'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.schema.json'), overwrite, 'UTF-8')]
             [aClass.classJsch()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`entire JSON Schema </encoding/json-schema/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].schema.json 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].schema.json 
                       :language: json
                       :linenos:
                       :emphasize-lines: 1
@@ -241,13 +290,13 @@
         [if ('onto'.isPropertyTrue())]
                 .. tab-item:: Ontology (Turtle)
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.onto.ttl'), overwrite, 'UTF-8')]
             [aClass.classOnto()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`main ontology </encoding/ontology/[aClass.u_model().u_modelAcronym().toLower()/].onto.ttl>`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].onto.ttl 
                       :language: turtle
                       :linenos:
                       :emphasize-lines: 3
@@ -256,13 +305,13 @@
         [if ('jsonld'.isPropertyTrue())]
                 .. tab-item:: JSON-LD
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('.jsonld'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.jsonld'), overwrite, 'UTF-8')]
             [aClass.classJsonldModular()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`entire JSON-LD </encoding/json-ld/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].jsonld 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].jsonld 
                       :language: JSON-LD
                       :linenos:
                       :emphasize-lines: 2
@@ -271,13 +320,13 @@
         [if ('shacl'.isPropertyTrue())]
                 .. tab-item:: SHACL
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('.shacl.ttl'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.shacl.ttl'), overwrite, 'UTF-8')]
             [aClass.classShacl()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shacl.ttl 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shacl.ttl 
                       :language: turtle
                       :linenos:
                       :emphasize-lines: 4
@@ -286,13 +335,13 @@
         [if ('shex'.isPropertyTrue())]
                 .. tab-item:: ShEx
                    :class-content: encoding
-          [file (aClass.u_filePath('doc').concat('.shexc'), overwrite, 'UTF-8')]
+          [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.shexc'), overwrite, 'UTF-8')]
             [aClass.classShex()/]
           [/file]
           
                    Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/].shexc 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shexc 
                       :language: shexc
                       :linenos:
                       :emphasize-lines: 3

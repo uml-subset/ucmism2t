@@ -143,10 +143,13 @@ u_profileSubsetClasses (for class nodes) when 'profiles' is true.
 The diagram is @enduml-terminated and output as a complete
 standalone PlantUML file.
 
-@param aClass - The UML class for which the context diagram
-                is generated.
+@param aClass        - The UML class for which the context diagram
+                        is generated.
+@param aSubsetPackage - The profile sub-package whose dependency
+                        relationships define the active subset, or
+                        null for universe (no profile filtering).
 /]
-[template public pu_classDiagram(aClass : uml::Class)]
+[template public pu_classDiagram(aClass : uml::Class, aSubsetPackage : uml::Package)]
   @startuml
   [aClass.pu_generationMessageDoc()/]
   !pragma ratio 0.5625
@@ -179,7 +182,8 @@ standalone PlantUML file.
   ' Core class of diagram
   [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_classifierNameWithLabel('black', '<size:10>' + aClass.package.name + ':\\n')/] ['uml-diagram-class-emphasis-color'.getPropertyValue()/] {
   [for (anAttribute : uml::Property | aClass.ownedAttribute->select(temp1 | temp1.association = null)
-    ->select(a | aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue()))]
+    ->select(a | (aSubsetPackage <> null and a.u_isAttributeInProfile(aClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue())))
+    ->sortedBy(a | a.name))]
       [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
   [/for]
   }
@@ -190,14 +194,12 @@ standalone PlantUML file.
       aClass.u_associatedClasses() - aClass.superClass
         ->sortedBy(temp2 | temp2.package.name)
         ->sortedBy(temp3 | temp3.name)]
-    [if (directAssocClasses->select(c |
-          'includeAllItems'.isPropertyTrue()
-          or aClass.u_profileSubsetClasses()->includes(c))->notEmpty())]
+    [if (directAssocClasses->select(c | (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(c)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue()))->notEmpty())]
       together {
       [for (contextClass : uml::Class | directAssocClasses)]
-        [if ('includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(contextClass))]
-          [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/]
-        [/if]
+        [let inSubset1 : Boolean = (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(contextClass)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())]
+          [if (inSubset1)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/][/if]
+        [/let]
       [/for]
       }
     [/if]
@@ -231,14 +233,14 @@ standalone PlantUML file.
         - (aClass.u_associatedClasses() - aClass.superClass)
             ->sortedBy(temp10 | temp10.package.name)
             ->sortedBy(temp11 | temp11.name))]
-    [if ('includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(contextClass))]
-      [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/]
-    [/if]
+    [let inSubset2 : Boolean = (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(contextClass)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())]
+      [if (inSubset2)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/][/if]
+    [/let]
   [/for]
   
   ' Associations of the focal class.
   [for (anAssociation : uml::Association | aClass.u_associations())]
-    [if (anAssociation.u_isAssociationInSubset(aClass))]
+    [if (anAssociation.u_isAssociationInSubset(aClass, aSubsetPackage))]
       [if (aClass <> anAssociation.ownedEnd->first().type)]
         [let srcClass : uml::Classifier = anAssociation.ownedEnd->first().type.oclAsType(uml::Classifier)]
           [let aggKind : String = anAssociation.ownedEnd->first().aggregation.pu_aggregationKind()]
@@ -261,11 +263,11 @@ standalone PlantUML file.
   
   [if (aClass.superClass->notEmpty())]
     ' Superclass hierarchy
-    [aClass.pu_superClass(aClass)/]
+    [aClass.pu_superClass(aClass, aSubsetPackage)/]
   [/if]
   [if (aClass.u_subClasses()->notEmpty())]
     ' Subclass hierarchy
-    [aClass.pu_subClasses()/]
+    [aClass.pu_subClasses(aSubsetPackage)/]
   [/if]
   
   ' Abstraction relationships
@@ -434,13 +436,14 @@ prevents diagrams from becoming unreadable when a superclass has
 many associations.
 
 @param aClass     - The class whose superclasses are being rendered.
-@param mainClass  - The original focal class at the root of the
-                    recursion, passed through unchanged to allow
-                    u_limitedAssociations to exclude the focal class's
-                    own direct associations.
+@param mainClass     - The original focal class at the root of the
+                        recursion, passed through unchanged to allow
+                        u_limitedAssociations to exclude the focal
+                        class's own direct associations.
+@param aSubsetPackage - The profile sub-package, or null for universe.
 /]
-[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class)]
-  [for (aSuperClass : uml::Class | aClass.superClass->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(c)))]
+[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class, aSubsetPackage : uml::Package)]
+  [for (aSuperClass : uml::Class | aClass.superClass->select(c | (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(c)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())))]
     ' Associations of superclass [aSuperClass.name/]
     [let maxInherited : Integer = 3]
       [let limitedAssocs : OrderedSet(uml::Association) = aSuperClass.u_limitedAssociations(aClass)]
@@ -450,7 +453,7 @@ many associations.
           [/if]
           [if (showCount > 0)]
             [for (anAssociation : uml::Association | limitedAssocs->subOrderedSet(1, showCount))]
-              [if (anAssociation.u_isAssociationInSubset(aSuperClass))]
+              [if (anAssociation.u_isAssociationInSubset(aSuperClass, aSubsetPackage))]
                 [if (aSuperClass <> anAssociation.ownedEnd->first().type)]
                   [let srcClass : uml::Classifier = anAssociation.ownedEnd->first().type.oclAsType(uml::Classifier)]
                     [let aggKind : String = anAssociation.ownedEnd->first().aggregation.pu_aggregationKind()]
@@ -476,13 +479,13 @@ many associations.
     [/let]
     
     [if (aSuperClass.isAbstract)]abstract [/if]class [aSuperClass.pu_elementWithLink('blue', '<size:10> \\n')/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
-    [for (anAttribute : uml::Property | aSuperClass.ownedAttribute->select(temp33 | temp33.association = null)->select(a | aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue()))]
+    [for (anAttribute : uml::Property | aSuperClass.ownedAttribute->select(temp33 | temp33.association = null)->select(a | (aSubsetPackage <> null and a.u_isAttributeInProfile(aSuperClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue())))->sortedBy(a | a.name))]
         [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
     [/for]
     }
     
     [aSuperClass.qualifiedName/] <|-['['/]#D2691E]- [aClass.qualifiedName/]
-    [aSuperClass.pu_superClass(mainClass)/]
+    [aSuperClass.pu_superClass(mainClass, aSubsetPackage)/]
   [/for]
 [/template]
 
@@ -512,12 +515,13 @@ diagram. Each subclass is subject to subset filtering via
 u_profileSubsetClasses when 'profiles' is true.
 Recurses into each subclass's own subclasses.
 
-@param aClass - The class whose subclasses are being rendered.
+@param aClass        - The class whose subclasses are being rendered.
+@param aSubsetPackage - The profile sub-package, or null for universe.
 /]
-[template public pu_subClasses(aClass : uml::Class)]
-  [for (subClass : uml::Class | aClass.u_subClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aClass.u_profileSubsetClasses()->includes(c)))]
+[template public pu_subClasses(aClass : uml::Class, aSubsetPackage : uml::Package)]
+  [for (subClass : uml::Class | aClass.u_subClasses()->select(c | (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(c)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())))]
       [aClass.qualifiedName/] <|--['['/]['uml-diagram-inheritance-arrow-color'.getPropertyValue()/]]- [subClass.qualifiedName/] 
-    [if (subClass.u_subClasses()->notEmpty())][subClass.pu_subClasses()/][/if]
+    [if (subClass.u_subClasses()->notEmpty())][subClass.pu_subClasses(aSubsetPackage)/][/if]
   [/for]
 [/template]
 

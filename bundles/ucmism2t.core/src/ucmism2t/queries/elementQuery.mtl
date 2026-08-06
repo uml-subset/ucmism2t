@@ -4,9 +4,9 @@
 Module contains queries with a UML element or named element as receiver.
 /]
 [module elementQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::modelQuery/]
@@ -335,6 +335,7 @@ child of the main package.
  *                   element simple name.
  * @return The output file path for the named element and target.
  */]
+[comment]
 [query public u_filePath(
   aNamedElement : uml::NamedElement,
   aTarget : String,
@@ -353,6 +354,7 @@ child of the main package.
   else root + path
   endif
 /]
+[/comment]
 
 [**
 Returns the output file path for the specified element and target
@@ -381,19 +383,37 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
   endif
 /]
 
+[**
+Returns the output file path for the specified element and target
+format when the element is being generated in the context of a
+profile sub-package. The path reflects the profile hierarchy:
+  doc    -> <shortName>/doc/_rst/Profiles/<profileName>/<elementName>
+  others -> <shortName>/encoding/<target>/Profiles/<profileName>/<elementName>
+
+This path is distinct from u_filePath which uses the element's own
+qualified name (universe path). The profile path places all profile
+files under Profiles/<profileName>/ regardless of where the element
+lives in the universe hierarchy.
+
+@param aNamedElement   - A UML named element being documented in
+                         the context of a profile.
+@param aTarget         - The generation target format identifier
+                         (e.g. 'xsd', 'doc', 'json-ld').
+@param aProfilePackage - The profile sub-package that defines the
+                         subset containing this element.
+/]
 [query public u_profileFilePath(
   aNamedElement : uml::NamedElement,
-  aTarget : String) : String =
-  let root : String = aNamedElement.u_model().u_modelShortName()
-    + '/' + aTarget + '/'
+  aTarget : String,
+  aProfilePackage : uml::Package) : String =
+  let shortName : String = aNamedElement.u_model().u_modelShortName()
   in
-  let path : String =
-    aNamedElement.qualifiedName.replaceAll('::', '/')
+  let profileSegment : String =
+    'Profiles/' + aProfilePackage.name + '/' + aNamedElement.name
   in
-  if aTarget = 'doc' then
-    root + path.replace(aNamedElement.u_model().name, '_rst')
-  else
-    root + path
+  if aTarget = 'doc'
+  then shortName + '/' + aTarget + '/_rst/' + profileSegment
+  else shortName + '/encoding/' + aTarget + '/' + profileSegment
   endif
 /]
 

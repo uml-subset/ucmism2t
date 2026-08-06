@@ -3,9 +3,9 @@
 The documentation of the module packageDocFile.
 /]
 [module packageDocFile(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::configurationQuery/]
@@ -27,25 +27,26 @@ The documentation of the module packageDocFile.
   [if ('includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(aPackage.name))]
     [if (aPackage.u_testPackages()->size()=0
       or (aPackage.u_testPackages()->size()>0 and aPackage.u_testPackages()->includes(aPackage.name)))]
-  	  [file (aPackage.u_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
-  	    [aPackage.rst_generationMessageDoc()/]
-  	    .. _[aPackage.qualifiedName/]:
-  	    
-  	    [aPackage.name.rst_header('*')/]
-  	    
-  	    | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
-  	    
-  	    [aPackage.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
+      [file (aPackage.u_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
+        [aPackage.rst_generationMessageDoc()/]
+        .. _[aPackage.qualifiedName/]:
+        
+        [aPackage.name.rst_header('*')/]
+        
+        | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
+        
+        [aPackage.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
 
-  	    -----
+        -----
 
-  	    .. toctree::
-  	       :titlesonly:
+        .. toctree::
+           :titlesonly:
 
-  	    [if ( aPackage.eContainer(uml::Package).name = 'Profiles' and 'profiles'.isPropertyTrue())]
+        [if ( aPackage.eContainer(uml::Package).name = 'Profiles' and 'profiles'.isPropertyTrue())]
+          [aPackage.validateProfilePackage()/]
           [for ( aClass | aPackage.u_childDependencySupplierClasses())]
-              [aClass.name.concat('.rst')/]
-            [aClass.processClassDoc('profiles')/][/for]
+               [aClass.name.concat('.rst')/]
+            [aClass.processClassDoc('profiles', aPackage)/][/for]
 [comment]
               [aClass.qualifiedName
                 .replace(aClass.u_model().name, '')
@@ -53,10 +54,10 @@ The documentation of the module packageDocFile.
                 + '.rst'/]
 [/comment]
           [for ( aDataType | aPackage.u_childDependencySupplierDataTypes())]
-              [aDataType.name.concat('.rst')/]
+               [aDataType.name.concat('.rst')/]
             [aDataType.processDataTypeDoc()/][/for]
           [for ( anEnumeration | aPackage.u_childDependencySupplierEnumerations())]
-              [anEnumeration.name.concat('.rst')/]
+               [anEnumeration.name.concat('.rst')/]
             [anEnumeration.processEnumerationDoc()/][/for]
         [else]
           [for (childPackage : uml::Package | aPackage.u_childPackages()->select(p | 'includeAllItems'.isPropertyTrue() or aPackage.u_model().u_subsetPackages()->includes(p.name)))]
@@ -64,15 +65,50 @@ The documentation of the module packageDocFile.
             [childPackage.processPackageDoc()/][/for]
           [for (aClass : uml::Class | aPackage.u_childClasses()->select(c | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetAllClasses()->includes(c.name)))]
                [aClass.name.concat('.rst')/]
-            [aClass.processClassDoc('universe')/][/for]
-          [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()->select(d | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d.name))->select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
+            [aClass.processClassDoc('universe', null)/][/for]
+          [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()
+              ->select(d1 | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetDataTypes()->includes(d1.name))
+              ->select(d2 | not d2.name.endsWith('PackageInformation'))
+              ->select(d3 | not d3.oclIsTypeOf(uml::Enumeration)))]
                [aDataType.name.concat('.rst')/]
             [aDataType.processDataTypeDoc()/][/for]
           [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()->select(e | 'includeAllItems'.isPropertyTrue() or aPackage.u_subsetEnumerations()->includes(e.name)))]
                [anEnumeration.name.concat('.rst')/]
             [anEnumeration.processEnumerationDoc()/][/for]
         [/if]
-  	  [/file]
+      [/file]
     [/if]
   [/if]
+[/template]
+
+[**
+Validates all @selected-attributes annotations in the given profile
+sub-package. For each dependency-supplier class in the package,
+calls u_validateSelectedAttributes to check that every listed
+attribute name exists on the class. Warnings for unknown names are
+written to stdout with the [PROFILE VALIDATION] prefix.
+
+Called once per profile package from processPackageDoc, before
+the class generation loop, so validation messages appear before
+the generated files for that package.
+
+@param aPackage - A profile sub-package (directly owned by the
+                  package named 'Profiles') whose dependency
+                  relationships define the subset.
+/]
+[**
+Validates all @selected-attributes annotations in the given profile
+sub-package. For each dependency-supplier class, checks whether
+every listed attribute name exists on the class. Writes a warning
+to stdout for each unknown name via logWarning.
+
+@param aPackage - A profile sub-package whose @selected-attributes
+                  annotations are to be validated.
+/]
+[template public validateProfilePackage(aPackage : uml::Package)]
+  [for (aClass : uml::Class | aPackage.u_childDependencySupplierClasses())]
+    [for (unknownName : String | aClass.u_unknownSelectedAttributes(aPackage))]
+      [aClass.logWarning('[Profile Validation] WARNING: ' + 'Profile "' + aPackage.name + '": class "' + aClass.name + '" has no attribute named "' + unknownName + '" — check @selected-attributes annotation')/]
+    [/for]
+  [/for]
 [/template]

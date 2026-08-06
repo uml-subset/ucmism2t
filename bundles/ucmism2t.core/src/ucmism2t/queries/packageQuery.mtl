@@ -290,3 +290,179 @@ an empty OrderedSet is returned.
     endif
   endif
 /]
+
+
+[**
+Returns the sequence of selected attribute names for the given class
+within the given profile package, as defined by the @selected-attributes
+annotation on the dependency relationship from the profile package to
+the class.
+
+The annotation appears in the body of an ownedComment on the dependency
+element, on a line of the form:
+  @selected-attributes: attr1, attr2, attr3
+
+Multiple annotations may appear in the comment body on separate lines;
+only the @selected-attributes line is processed here.
+
+When the annotation is present, only the listed attribute names should
+be included in profile-specific documentation and encodings. When the
+annotation is absent (the dependency exists but has no such annotation),
+an empty sequence is returned — callers must interpret an empty result
+as meaning all attributes are included (no restriction).
+
+Attribute names are literal UML property name values as they appear in
+the model, including any CURIE prefix (e.g. 'schema:identifier',
+'prov:wasDerivedFrom') used by convention for attributes from external
+namespaces.
+
+@param aClass          - The UML class whose selected attributes are
+                         to be retrieved.
+@param aProfilePackage - The profile sub-package that defines the
+                         subset.
+@return A Sequence of selected attribute name strings, or an empty
+        Sequence if no @selected-attributes annotation is present.
+/]
+[query public u_selectedAttributes(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(String) =
+  let dep : uml::Dependency =
+    aProfilePackage.eContents(uml::Dependency)
+      ->select(d |
+        d.client->filter(uml::Package)->first() = aProfilePackage
+        and d.supplier->includes(aClass))
+      ->first()
+  in
+  if dep = null
+  then Sequence{}
+  else
+    let annotatedComment : uml::Comment =
+      dep.ownedComment
+        ->select(c | c.body <> null
+          and c.body.contains('@selected-attributes'))
+        ->first()
+    in
+    if annotatedComment = null
+    then Sequence{}
+    else
+      let line : String =
+        annotatedComment.body
+          .tokenize('\n')
+          ->select(l | l.contains('@selected-attributes'))
+          ->first()
+      in
+      if line = null or line = ''
+      then Sequence{}
+      else
+        line.substring(line.index(':') + 1)
+          .substituteAll(' ', '')
+          .tokenize(',')
+      endif
+    endif
+  endif
+/]
+
+[**
+Returns true if the given attribute should be included in profile
+documentation and encodings for the given class in the given profile
+package.
+
+An attribute is included when either:
+  (a) no @selected-attributes annotation is defined for this class
+      in this profile (u_selectedAttributes returns an empty sequence),
+      meaning all attributes are implicitly included; or
+  (b) a @selected-attributes annotation is present and the attribute
+      name appears in the annotated list.
+
+This query centralises the attribute-inclusion test so that the
+[if] conditions in processClassDoc remain readable.
+
+@param aProperty       - The UML property (attribute) to test.
+@param aClass          - The class owning the attribute.
+@param aProfilePackage - The profile sub-package context.
+@return true if the attribute should be included in the profile output.
+/]
+[query public u_isAttributeInProfile(
+  aProperty : uml::Property,
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Boolean =
+  let selected : Sequence(String) =
+    aClass.u_selectedAttributes(aProfilePackage)
+  in
+  selected->isEmpty()
+  or selected->includes(aProperty.name)
+/]
+
+
+[**
+Validates the @selected-attributes annotation for the given class
+in the given profile package. For each attribute name listed in the
+annotation, checks whether a property with that name actually exists
+on the class. If not, writes a warning to stdout via
+PropertiesService.logWarning with the [PROFILE VALIDATION] prefix.
+
+Always returns true so it can be used as a side-effecting guard in
+a [let] or [if] context without affecting control flow.
+
+Intended to be called once per class per profile package during
+generation, from a dedicated validation template in packageDocFile.
+This keeps the side effect in a controlled, single-call context
+rather than inside a query that may be evaluated multiple times.
+
+@param aClass          - The UML class whose selected attributes
+                         are to be validated.
+@param aProfilePackage - The profile sub-package whose
+                         @selected-attributes annotation is checked.
+@return Always true; side effect is writing warnings to stdout.
+/]
+[**
+Returns the sequence of attribute names listed in the
+@selected-attributes annotation for the given class in the given
+profile package that do not match any actual ownedAttribute name
+on the class.
+
+An empty sequence means all listed names are valid.
+A non-empty sequence contains the unknown names that should be
+reported as warnings.
+
+Used by validateProfilePackage to identify annotation errors
+before calling logWarning for each unknown name.
+
+@param aClass          - The UML class to validate.
+@param aProfilePackage - The profile sub-package context.
+@return Sequence of unknown attribute name strings.
+/]
+[query public u_unknownSelectedAttributes(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(String) =
+  let selected : Sequence(String) =
+    aClass.u_selectedAttributes(aProfilePackage)
+  in
+  let allNames : Sequence(String) =
+    aClass.ownedAttribute.name->asSequence()
+  in
+  selected->select(attrName | not allNames->includes(attrName))
+/]
+
+
+[**
+Returns all profile sub-packages (packages directly owned by the
+package named 'Profiles') whose dependency-defined subset includes
+the given class.
+
+Used in the universe class documentation to generate back-references
+to all profile-specific pages for the class.
+
+@param aClass - The UML class to find profile packages for.
+@return OrderedSet of profile sub-packages containing the class,
+        sorted by package name.
+/]
+[query public u_profilePackagesForClass(
+  aClass : uml::Class) : OrderedSet(uml::Package) =
+  aClass.u_model().eAllContents(uml::Package)
+    ->select(p | p.eContainer(uml::Package) <> null
+      and p.eContainer(uml::Package).name = 'Profiles'
+      and p.u_childDependencySupplierClasses()->includes(aClass))
+    ->sortedBy(p | p.name)
+    ->asOrderedSet()
+/]

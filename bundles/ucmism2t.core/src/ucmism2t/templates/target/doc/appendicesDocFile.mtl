@@ -147,7 +147,7 @@
             - Uses in Datatypes
             - Own Attributes
             - Inherited Attributes
-    [for (aDataType : uml::DataType | aModel.u_allDataTypes())]
+    [for (aDataType : uml::DataType | aModel.u_allDataTypes()->select(d2 | not d2.name.endsWith('PackageInformation')))]
             * - [aDataType.rst_classifierNameReference()/]
               - :ref:`[aDataType.package.qualifiedName/]`
               - [aDataType.eClass().name/]
