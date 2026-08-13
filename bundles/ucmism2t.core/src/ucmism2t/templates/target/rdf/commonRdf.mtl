@@ -182,7 +182,79 @@ Converts a UML comment into an RDFS comment.
 [template public ttlEscape(txt : String)]
   [txt.replaceAll('\\\\', '\\\\\\\\').replaceAll('\\n', '\\\\n').replaceAll('"', '\\\\"')/][/template]
 
-[query public shortName(anAssociation : uml::Association) : String = if anAssociation.name.tokenize('_')->size() < 3 then anAssociation.name else if 'DDI-CDI'.isPropertyTrue() and 'ddi-cdi_ambiguous_assoc_names'.getPropertyValue().substituteAll(' ', '').tokenize(',')->asSet()->count(anAssociation.name.tokenize('_')->at(2)) = 0 then anAssociation.name.tokenize('_')->at(2) else anAssociation.name.tokenize('_')->at(2).concat('_').concat(anAssociation.name.tokenize('_')->at(3)) endif endif/]
+[**
+ * Returns a short name for an association.
+ *
+ * Association names are expected to use underscore-separated segments.
+ * If the association name contains fewer than three segments, the
+ * complete association name is returned unchanged.
+ *
+ * Otherwise, the third segment is used as the short name. When the
+ * DDI-CDI configuration property is enabled, the configured list of
+ * ambiguous association names is consulted:
+ *
+ * - If the third segment is not configured as ambiguous, the third
+ *   segment alone is returned.
+ * - If the third segment is configured as ambiguous, the third and
+ *   fourth segments are concatenated with an underscore and returned.
+ *
+ * The configuration property 'ddi-cdi_ambiguous_assoc_names' is expected
+ * to contain a comma-separated list. Spaces are removed before the list
+ * is tokenized.
+ *
+ * The query intentionally uses the custom services isPropertyTrue() and
+ * getPropertyValue() to read the DDI-CDI configuration.
+ *
+ * Examples:
+ * - 'hasPart'       -> 'hasPart'
+ * - 'A_B_C'         -> 'C'
+ * - 'A_B_C_D'       -> 'C' when 'C' is not ambiguous
+ * - 'A_B_C_D'       -> 'C_D' when 'C' is ambiguous
+ *
+ * @param anAssociation - The UML association whose short name is needed.
+ * @return The calculated short name of the association.
+ */]
+[query public shortName(
+  anAssociation : uml::Association) : String =
+  let associationName : String =
+    anAssociation.name
+  in
+  let associationTokens : Sequence(String) =
+    associationName.tokenize('_')
+  in
+  if associationTokens->size() < 3
+  then
+    associationName
+  else
+    let thirdToken : String =
+      associationTokens->at(2)
+    in
+    if 'DDI-CDI'.isPropertyTrue()
+    then
+      let ambiguousNames : OrderedSet(String) =
+        'ddi-cdi_ambiguous_assoc_names'
+          .getPropertyValue()
+          .substituteAll(' ', '')
+          .tokenize(',')
+          ->asOrderedSet()
+      in
+      if ambiguousNames->count(thirdToken) = 0
+      then
+        thirdToken
+      else
+        thirdToken
+          .concat('_')
+          .concat(associationTokens->at(3))
+      endif
+    else
+      thirdToken
+        .concat('_')
+        .concat(associationTokens->at(3))
+    endif
+  endif
+/]
+
+[query public OKshortName(anAssociation : uml::Association) : String = if anAssociation.name.tokenize('_')->size() < 3 then anAssociation.name else if 'DDI-CDI'.isPropertyTrue() and 'ddi-cdi_ambiguous_assoc_names'.getPropertyValue().substituteAll(' ', '').tokenize(',')->asSet()->count(anAssociation.name.tokenize('_')->at(2)) = 0 then anAssociation.name.tokenize('_')->at(2) else anAssociation.name.tokenize('_')->at(2).concat('_').concat(anAssociation.name.tokenize('_')->at(3)) endif endif/]
 
 [query public isComplex(aType : uml::Type) : Boolean = not aType.oclIsTypeOf(uml::Enumeration) and not aType.oclIsTypeOf(uml::PrimitiveType)/]
 

@@ -32,8 +32,9 @@
             ->select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems() and d.name <> 'PackageInformation')
       ]
       {
-        "@context": {
-          "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+        "@context": { XX1 [aModel.name/]
+          "[aModel.u_modelRdfPrefix()/]": "[aModel.u_modelRdfNamespace()/]",
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
           "xsd": "http://www.w3.org/2001/XMLSchema#",
           "[aModel.name/]": "@included",
           [for (aClass : uml::Class | classes) separator(',\n    ')]
@@ -75,8 +76,9 @@ are included. Written to:
         aProfilePackage.u_childDependencySupplierDataTypes()]
       [file (aModel.u_modelShortName() + '/encoding/json-ld/Profiles/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
         {
-          "@context": {
-            "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+          "@context": { XX2 [aProfilePackage.name/]
+            "[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
             "xsd": "http://www.w3.org/2001/XMLSchema#",
             "[aModel.name/]": "@included",
             [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name)) separator(',

@@ -785,7 +785,7 @@ else branch returns null.
     'RDF_NAMESPACE'.getPropertyValue()
   in
   let modelRdfNamespace : String =
-    aNamedElement.u_packageInformationProperty('rdfNamespace')
+    aNamedElement.u_packageInformationProperty('rdfNamespaceUri')
   in
   if propertyRdfNamespace <> ''
   then propertyRdfNamespace
@@ -815,7 +815,7 @@ else branch returns null.
     'RDF_PREFIX'.getPropertyValue()
   in
   let modelRdfPrefix : String =
-    aNamedElement.u_packageInformationProperty('rdfPrefix')
+    aNamedElement.u_packageInformationProperty('rdfNamespacePrefix')
   in
   if propertyRdfPrefix <> ''
   then propertyRdfPrefix

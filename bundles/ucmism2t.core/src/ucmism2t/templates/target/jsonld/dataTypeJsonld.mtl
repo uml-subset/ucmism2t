@@ -51,7 +51,8 @@
         "[aDataType.general->asSequence()->collect(temp3 | temp3.name)/].jsonld",
   [/if]
       {
-        "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+        "[aDataType.u_modelRdfPrefix()/]": "[aDataType.u_modelRdfNamespace()/]",
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
         "xsd": "http://www.w3.org/2001/XMLSchema#",
   
         [aDataType.dataTypeJsonldCore(true)/] 

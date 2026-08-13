@@ -79,7 +79,8 @@
         "[aClass.superClass->asSequence()->collect(temp2 | temp2.name)/].jsonld",
   [/if]
       {
-        "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+        "[aClass.u_modelRdfPrefix()/]": "[aClass.u_modelRdfNamespace()/]",
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
         "xsd": "http://www.w3.org/2001/XMLSchema#",
   
         [aClass.classJsonldCore(true)/]
@@ -183,7 +184,8 @@ paths when the referenced class is in the profile subset.
           "[aClass.superClass->asSequence()->collect(temp2 | temp2.name)/].jsonld",
     [/if]
         {
-          "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",
+          "[aClass.u_modelRdfPrefix()/]": "[aClass.u_modelRdfNamespace()/]",
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
           "xsd": "http://www.w3.org/2001/XMLSchema#",
     
           [aClass.classJsonldCoreProfile(true, aProfilePackage)/]
