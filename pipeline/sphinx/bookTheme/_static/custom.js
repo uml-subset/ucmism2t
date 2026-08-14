@@ -491,15 +491,24 @@ $(document).ready(function() {
 			pc.setAttribute('style', 'display: none;')
 		}
 	}
-*/	var datatable_packages_list = $('table#datatable-packages-list').DataTable({
-		columnDefs: [
-			{ targets: '_all', className: 'dt-head-center' },
-			{ targets: [2, 3, 4], className: 'dt-body-right' },
-			{ targets: [1], searchPanes: { show: true } },
-		],
-		order: [[1, 'asc'], [0, 'asc']],
-	});
-	hideForFewRows(datatable_packages_list, 'section#all-packages');
+  */  var datatable_packages_list = $('table#datatable-packages-list').DataTable({
+      columnDefs: [
+        { targets: '_all', className: 'dt-head-center' },
+        { targets: [2, 3, 4], className: 'dt-body-right' },
+        { targets: [1], searchPanes: { show: true } },
+      ],
+      order: [[1, 'asc'], [0, 'asc']],
+    });
+    hideForFewRows(datatable_packages_list, 'section#all-packages');
+    var datatable_classes_by_profiles = $('table#datatable-classes-by-profiles').DataTable({
+      columnDefs: [
+        { targets: '_all', className: 'dt-head-center' },
+        { targets: [2, 3, 4, 5, 6, 7, 8, 9], className: 'dt-body-center' },
+/*        { targets: [1], searchPanes: { show: true } },
+*/      ],
+      order: [[0, 'asc'], [1, 'asc']],
+    });
+    hideForFewRows(datatable_classes_by_profiles, 'section#classes-by-profiles-table');
 	/*	if (datatable_packages_list.rows().count() <= searchPanesRowsLimit) {
 			var pc = document.querySelector('section.all-packages-list div.dtsp-panesContainer');
 			if (pc !== null) {

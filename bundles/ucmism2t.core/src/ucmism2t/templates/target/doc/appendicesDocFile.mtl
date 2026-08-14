@@ -9,6 +9,7 @@
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::propertyQuery/]
+[import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::doc::inheritanceTreeDiagramDocFile/]
 [import ucmism2t::templates::target::doc::inheritanceTreeVegaDiagramDocFile/]
 [import ucmism2t::templates::target::doc::associatedClassesVegaDiagramDocFile/]
@@ -39,7 +40,10 @@
   [aModel.allAssociationsList()/]
   [aModel.allDataTypesList()/]
   [aModel.allEnumerationsList()/]
-  [aModel.allPackagesList()/]
+  [if ('profiles'.isPropertyTrue())]  
+    [aModel.allPackagesList()/]
+  [/if]
+  [aModel.classesByProfiles()/]
   [aModel.exploratoryDiagramsIndex()/]
   [aModel.modelItemListsIndex()/][/template]
 
@@ -72,6 +76,7 @@
        AllDataTypesList.rst
        AllEnumerationsList.rst
        AllPackagesList.rst
+       [if ('profiles'.isPropertyTrue())]ClassesByProfilesTable.rst[/if]
     
   [/file]
 [/template]
@@ -331,5 +336,45 @@
               - :ref:`[anAssociation.ownedEnd->first().getOtherEnd().type.qualifiedName/]`
               - [anAssociation.ownedEnd->first().getOtherEnd().type.package.name/]
     [/for]
+  [/file]
+[/template]
+
+[**
+ * The documentation of the template allClassesList.
+ * @param aClass
+*/]
+[template public classesByProfiles(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ModelItemLists/ClassesByProfilesTable.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. classesByProfilesTable:
+    
+    ['Classes by Profiles Table'.rst_header('=')/]
+
+    [let profilePackages : Sequence(uml::Package) =
+      aModel.eAllContents(uml::Package)->select(p | p.name = 'Profiles')->first()
+        .eContents(uml::Package)->sortedBy(p | p.name)]
+      
+      .. container:: table-responsive
+      
+         .. list-table::
+            :header-rows: 1
+            :class: table table-striped table-hover main-table
+            :name: datatable-classes-by-profiles
+      
+            * - Package
+              - Class
+              [for (aPackage : uml::Package | profilePackages)]
+                - [aPackage.name/]
+              [/for]
+      [for (aClass : uml::Class | aModel.eAllContents(uml::Package)->select(p | p.name = 'Universe')->first()
+        .eAllContents(uml::Class)->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name))]
+              * - [aClass.package.name/]
+                - [aClass.name/]
+                [for (aPackage : uml::Package | profilePackages)]
+                  - [if (aClass.u_isInProfile(aPackage))]✔[/if]
+                [/for]
+      [/for]
+    [/let]
   [/file]
 [/template]

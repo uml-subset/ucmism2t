@@ -1010,8 +1010,15 @@ to keep diagrams manageable.
     aSuperClass.u_limitedAssociations2(aClass)
   in
   if limited->size() > 3
-  then limited->subOrderedSet(1, 3)
+  then limited->subOrderedSet(1, 3) 
   else limited
   endif
 /]
 [/comment]
+
+[query public u_isInProfile(
+  aClass : uml::Class, aPackage : uml::Package) : Boolean =
+  if (aPackage.eContents(uml::Dependency)->collect(d | d.supplier)->includes(aClass)) then true
+  else false
+  endif
+/]
