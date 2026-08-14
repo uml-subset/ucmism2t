@@ -24,7 +24,7 @@ All templates in the *Xsd.mtl modules generate XML Schema.
  * @param aModel a model
 */]
 [template public processModelXsd(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + (if 'profiles'.isPropertyTrue() then 'Universe/' else '' endif) + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + (if 'profiles'.isPropertyTrue() then 'universe_package'.getRequiredPropertyValue() + '/' else '' endif) + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
     [aModel.xsdHeader()/]
     [if ('DDI-CDI'.isPropertyTrue())]
       [aModel.xsdWrapper()/]
@@ -171,7 +171,7 @@ All templates in the *Xsd.mtl modules generate XML Schema.
 Generates the whole-model XML Schema file for a profile sub-package.
 Only classes, enumerations and data types in the profile subset are
 included. Written to:
-  <shortName>/encoding/xml-schema/Profiles/<profileName>/<acronym>.xsd
+  <shortName>/encoding/xml-schema/<profiles_package>/<profileName>/<acronym>.xsd
 
 The AllElementsDerivedFromClasses group references only subset classes.
 
@@ -183,7 +183,7 @@ The AllElementsDerivedFromClasses group references only subset classes.
         aProfilePackage.u_childDependencySupplierClasses()]
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/xml-schema/Profiles/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
         [aModel.xsdGenerationMessage()/]
         [aModel.xsdModelIdentificationComment()/]
         <xs:schema xmlns="['XSD_NS'.getPropertyValue()/]"

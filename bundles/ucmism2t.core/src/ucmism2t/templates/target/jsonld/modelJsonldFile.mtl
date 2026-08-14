@@ -23,7 +23,7 @@
  * (this proved much more flexible than trying to generate the inline context directly).
 */]
 [template public generateJsonld(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + (if 'profiles'.isPropertyTrue() then 'Universe/' else '' endif) + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + (if 'profiles'.isPropertyTrue() then 'universe_package'.getRequiredPropertyValue() + '/' else '' endif) + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
     [let classes : Sequence(uml::Class) =
             aModel.eAllContents(uml::Class)
             ->select(aClass | aClass.u_isInAllowedPackage()),
@@ -64,7 +64,7 @@
 Generates the whole-model JSON-LD context file for a profile
 sub-package. Only classes and data types in the profile subset
 are included. Written to:
-  <shortName>/encoding/json-ld/Profiles/<profileName>/<acronym>.jsonld
+  <shortName>/encoding/json-ld/<profiles_package>/<profileName>/<acronym>.jsonld
 
 @param aProfilePackage - The profile sub-package defining the subset.
 /]
@@ -74,7 +74,7 @@ are included. Written to:
         aProfilePackage.u_childDependencySupplierClasses()]
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/json-ld/Profiles/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/json-ld/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
         {
           "@context": { XX2 [aProfilePackage.name/]
             "[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",

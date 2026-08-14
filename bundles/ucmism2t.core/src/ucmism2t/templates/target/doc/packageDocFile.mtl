@@ -48,7 +48,7 @@ The documentation of the module packageDocFile.
         .. toctree::
            :titlesonly:
 
-        [if ( aPackage.eContainer(uml::Package).name = 'Profiles' and 'profiles'.isPropertyTrue())]
+        [if ( aPackage.eContainer(uml::Package).name = 'profiles_package'.getRequiredPropertyValue() and 'profiles'.isPropertyTrue())]
           [aPackage.validateProfilePackage()/]
           [for ( aClass | aPackage.u_childDependencySupplierClasses())]
               [aClass.name.concat('.rst')/]
@@ -117,8 +117,8 @@ the class generation loop, so validation messages appear before
 the generated files for that package.
 
 @param aPackage - A profile sub-package (directly owned by the
-                  package named 'Profiles') whose dependency
-                  relationships define the subset.
+                  package named per the 'profiles_package' property)
+                  whose dependency relationships define the subset.
 /]
 [**
 Validates all @selected-attributes annotations in the given profile

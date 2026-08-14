@@ -63,7 +63,7 @@
 [**
 */]
 [template public classJsonldFile(aClass : uml::Class)]
-  [file ((if 'profiles'.isPropertyTrue() then aClass.u_filePath('json-ld').replace(aClass.u_model().name + '/', 'Universe/') else aClass.u_model().u_modelShortName() + '/encoding/json-ld/' + aClass.name endif).concat('.jsonld'), overwrite, 'UTF-8')]
+  [file ((if 'profiles'.isPropertyTrue() then aClass.u_filePath('json-ld').replace(aClass.u_model().name + '/', 'universe_package'.getRequiredPropertyValue() + '/') else aClass.u_model().u_modelShortName() + '/encoding/json-ld/' + aClass.name endif).concat('.jsonld'), overwrite, 'UTF-8')]
     [aClass.classJsonldModular()/]
   [/file]
 [/template]

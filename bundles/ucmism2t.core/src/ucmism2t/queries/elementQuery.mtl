@@ -387,13 +387,14 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
 Returns the output file path for the specified element and target
 format when the element is being generated in the context of a
 profile sub-package. The path reflects the profile hierarchy:
-  doc    -> <shortName>/doc/_rst/Profiles/<profileName>/<elementName>
-  others -> <shortName>/encoding/<target>/Profiles/<profileName>/<elementName>
+  doc    -> <shortName>/doc/_rst/<profiles_package>/<profileName>/<elementName>
+  others -> <shortName>/encoding/<target>/<profiles_package>/<profileName>/<elementName>
 
 This path is distinct from u_filePath which uses the element's own
 qualified name (universe path). The profile path places all profile
-files under Profiles/<profileName>/ regardless of where the element
-lives in the universe hierarchy.
+files under <profiles_package>/<profileName>/ regardless of where the
+element lives in the universe hierarchy. The <profiles_package>
+segment is read from the 'profiles_package' property.
 
 @param aNamedElement   - A UML named element being documented in
                          the context of a profile.
@@ -409,7 +410,7 @@ lives in the universe hierarchy.
   let shortName : String = aNamedElement.u_model().u_modelShortName()
   in
   let profileSegment : String =
-    'Profiles/' + aProfilePackage.name + '/' + aNamedElement.name
+    'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aNamedElement.name
   in
   if aTarget = 'doc'
   then shortName + '/' + aTarget + '/_rst/' + profileSegment

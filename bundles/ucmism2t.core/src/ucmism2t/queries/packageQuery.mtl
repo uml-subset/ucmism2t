@@ -203,7 +203,8 @@ specified package.
 [**
 Returns the union of all dependency-defined subset classes across
 all active Profile sub-packages in the model. A Profile sub-package
-is any package directly owned by the package named 'Profiles', and
+is any package directly owned by the package named per the
+'profiles_package' property, and
 is active when the property 'profiles' is true.
 
 For each such sub-package, the classes defined as suppliers of its
@@ -217,7 +218,8 @@ property-file-based u_subsetAllClasses when 'profiles' is true.
 The receiver is any UML element reachable from the model, used
 only to navigate to the model root via u_model().
 
-When 'profiles' is false or the model has no 'Profiles' package,
+When 'profiles' is false or the model has no package matching the
+'profiles_package' property,
 an empty OrderedSet is returned, and subset filtering will show
 nothing (neither 'includeAllItems' nor 'profiles' being true
 represents a configuration error per design intent).
@@ -234,7 +236,7 @@ represents a configuration error per design intent).
   else
     let profilesPackage : uml::Package =
       anElement.u_model().eContents(uml::Package)
-        ->select(p | p.name = 'Profiles')
+        ->select(p | p.name = 'profiles_package'.getRequiredPropertyValue())
         ->first()
     in
     if profilesPackage = null
@@ -250,7 +252,8 @@ represents a configuration error per design intent).
 [**
 Returns the union of all dependency-defined subset data types across
 all active Profile sub-packages in the model. A Profile sub-package
-is any package directly owned by the package named 'Profiles', and
+is any package directly owned by the package named per the
+'profiles_package' property, and
 is active when the property 'profiles' is true.
 
 For each such sub-package, the data types defined as suppliers of
@@ -263,7 +266,8 @@ This query complements u_profileSubsetClasses for templates that
 display data types in subset-filtered contexts (e.g. the inheritance
 tree in rst_subClasses, the data type diagram context).
 
-When 'profiles' is false or the model has no 'Profiles' package,
+When 'profiles' is false or the model has no package matching the
+'profiles_package' property,
 an empty OrderedSet is returned.
 
 @param anElement - Any UML NamedElement in the model; used as
@@ -278,7 +282,7 @@ an empty OrderedSet is returned.
   else
     let profilesPackage : uml::Package =
       anElement.u_model().eContents(uml::Package)
-        ->select(p | p.name = 'Profiles')
+        ->select(p | p.name = 'profiles_package'.getRequiredPropertyValue())
         ->first()
     in
     if profilesPackage = null
@@ -447,7 +451,8 @@ before calling logWarning for each unknown name.
 
 [**
 Returns all profile sub-packages (packages directly owned by the
-package named 'Profiles') whose dependency-defined subset includes
+package named per the 'profiles_package' property) whose
+dependency-defined subset includes
 the given class.
 
 Used in the universe class documentation to generate back-references
@@ -461,7 +466,7 @@ to all profile-specific pages for the class.
   aClass : uml::Class) : OrderedSet(uml::Package) =
   aClass.u_model().eAllContents(uml::Package)
     ->select(p | p.eContainer(uml::Package) <> null
-      and p.eContainer(uml::Package).name = 'Profiles'
+      and p.eContainer(uml::Package).name = 'profiles_package'.getRequiredPropertyValue()
       and p.u_childDependencySupplierClasses()->includes(aClass))
     ->sortedBy(p | p.name)
     ->asOrderedSet()

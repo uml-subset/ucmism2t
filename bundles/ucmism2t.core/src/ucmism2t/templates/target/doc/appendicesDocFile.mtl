@@ -352,7 +352,7 @@
     ['Classes by Profiles Table'.rst_header('=')/]
 
     [let profilePackages : Sequence(uml::Package) =
-      aModel.eAllContents(uml::Package)->select(p | p.name = 'Profiles')->first()
+      aModel.eAllContents(uml::Package)->select(p | p.name = 'profiles_package'.getRequiredPropertyValue())->first()
         .eContents(uml::Package)->sortedBy(p | p.name)]
       
       .. container:: table-responsive
@@ -367,7 +367,7 @@
               [for (aPackage : uml::Package | profilePackages)]
                 - [aPackage.name/]
               [/for]
-      [for (aClass : uml::Class | aModel.eAllContents(uml::Package)->select(p | p.name = 'Universe')->first()
+      [for (aClass : uml::Class | aModel.eAllContents(uml::Package)->select(p | p.name = 'universe_package'.getRequiredPropertyValue())->first()
         .eAllContents(uml::Class)->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name))]
               * - [aClass.package.name/]
                 - [aClass.name/]
