@@ -1016,7 +1016,37 @@ to keep diagrams manageable.
 /]
 [/comment]
 
+[**
+ * Returns whether aClass is a supplier of a dependency contained
+ * directly in aPackage.
+ *
+ * The query examines the dependencies in the direct contents of
+ * aPackage, collects their supplier elements, and checks whether
+ * aClass is included among those suppliers.
+ *
+ * Only dependencies directly contained by aPackage are considered.
+ * Dependencies contained in nested packages are not included unless
+ * this query is invoked separately for those packages.
+ *
+ * The comparison is performed using the UML model element itself,
+ * not the class name. Therefore, two classes with the same name are
+ * distinguished correctly when they are different UML objects.
+ *
+ * @param aClass   - The UML class whose profile membership is checked.
+ * @param aPackage - The UML package whose directly contained
+ *                   dependencies are examined.
+ * @return true if aClass is a supplier of at least one dependency
+ *         directly contained in aPackage; otherwise false.
+ */]
 [query public u_isInProfile(
+  aClass : uml::Class,
+  aPackage : uml::Package) : Boolean =
+  aPackage.eContents(uml::Dependency)
+    ->collect(d | d.supplier)
+    ->includes(aClass)
+/]
+
+[query public OKu_isInProfile(
   aClass : uml::Class, aPackage : uml::Package) : Boolean =
   if (aPackage.eContents(uml::Dependency)->collect(d | d.supplier)->includes(aClass)) then true
   else false
