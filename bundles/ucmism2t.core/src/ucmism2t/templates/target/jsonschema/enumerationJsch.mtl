@@ -17,7 +17,7 @@ Module contains templates for JSON Schema.
 */]
 [template public enumerationJsch(anEnumeration : uml::Enumeration) post(self.trim())]
   "enum-[anEnumeration.name/]": {
-    "description": "['RDF_NS'.getPropertyValue()/][anEnumeration.name/]",
+    "description": "['RDF_NAMESPACE'.getPropertyValue()/][anEnumeration.name/]",
     "enum": ['['/]
   [for (aLiteral : uml::EnumerationLiteral | anEnumeration.oclAsType(uml::Enumeration).ownedLiteral) separator(',')]
         "[aLiteral.name/]"

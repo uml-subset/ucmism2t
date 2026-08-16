@@ -35,7 +35,7 @@
 [**
 */]
 [template public dataTypeJsonldFile(aDataType : uml::DataType) post(self.trim())]
-  [file ((if 'profiles'.isPropertyTrue() then aDataType.u_filePath('json-ld').replace(aDataType.u_model().name + '/', 'universe_package'.getRequiredPropertyValue() + '/') else aDataType.u_model().u_modelShortName() + '/encoding/json-ld/' + aDataType.name endif).concat('.jsonld'), overwrite, 'UTF-8')]
+  [file (aDataType.u_jsonldElementFilePath(), overwrite, 'UTF-8')]
     [aDataType.dataTypeJsonldModular()/]
   [/file]
 [/template]
@@ -52,7 +52,7 @@
   [/if]
       {
         "[aDataType.u_modelRdfPrefix()/]": "[aDataType.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
         "xsd": "http://www.w3.org/2001/XMLSchema#",
   
         [aDataType.dataTypeJsonldCore(true)/] 

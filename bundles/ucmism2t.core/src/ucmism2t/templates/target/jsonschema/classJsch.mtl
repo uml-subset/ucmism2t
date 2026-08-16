@@ -21,7 +21,7 @@ Module contains templates for JSON Schema.
 */]
 [template public classJsch(aClass : uml::Class) post(self.trim())]
   "cls-[aClass.name/]": {
-    "description": "['RDF_NS'.getPropertyValue()/][aClass.name/]",
+    "description": "['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
     "type": "object",
     "properties": {
       "@context": {
@@ -45,7 +45,7 @@ Module contains templates for JSON Schema.
     "additionalProperties": false
   },
   "target-[aClass.name/]": {
-    "description": "all subclasses of ['RDF_NS'.getPropertyValue()/][aClass.name/]",
+    "description": "all subclasses of ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
     "anyOf": ['['/]
       { "$ref": "#/defs/cls-[aClass.name/]" },
   [for (sc : uml::Class | aClass.u_subClasses())]
@@ -173,7 +173,7 @@ The target-<ClassName> refs only reference subset classes.
   [let subsetClasses : OrderedSet(uml::Class) =
       aProfilePackage.u_childDependencySupplierClasses()]
     "cls-[aClass.name/]": {
-      "description": "['RDF_NS'.getPropertyValue()/][aClass.name/]",
+      "description": "['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
       "type": "object",
       "properties": {
         "@context": {
@@ -197,7 +197,7 @@ The target-<ClassName> refs only reference subset classes.
       "additionalProperties": false
     },
     "target-[aClass.name/]": {
-      "description": "all subclasses of ['RDF_NS'.getPropertyValue()/][aClass.name/]",
+      "description": "all subclasses of ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
       "anyOf": ['['/]
         { "$ref": "#/defs/cls-[aClass.name/]" },
     [for (sc : uml::Class | aClass.u_subClasses()->select(s | subsetClasses->includes(s)))]

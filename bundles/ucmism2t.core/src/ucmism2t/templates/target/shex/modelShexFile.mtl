@@ -25,10 +25,10 @@
  * @param aModel a model
 */]
 [template public processModelShex(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/shex/' + (if 'profiles'.isPropertyTrue() then 'universe_package'.getRequiredPropertyValue() + '/' else '' endif) + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/shex/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
     [aModel.u_model().ttl_prefixes()/]
     
-    start = @['RDF_NS'.getPropertyValue()/]:WideDataSetShape
+    start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
     
     [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
       [aClass.classShex()/]
@@ -56,7 +56,7 @@ Written to:
       [file (aModel.u_modelShortName() + '/encoding/shex/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
         [aModel.u_model().ttl_prefixes()/]
         
-        start = @['RDF_NS'.getPropertyValue()/]:WideDataSetShape
+        start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
         
         [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name))]
           [aClass.classProfileShex(aProfilePackage)/]

@@ -16,7 +16,7 @@ Module contains templates for JSON Schema.
 */]
 [template public dataTypeJsch(aDataType : uml::DataType) post(self.trim())]
   "dt-[aDataType.name/]": {
-    "description": "['RDF_NS'.getPropertyValue()/][aDataType.name/]",
+    "description": "['RDF_NAMESPACE'.getPropertyValue()/][aDataType.name/]",
     "type": ['['/]"object"],
     "properties": {
       [aDataType.genAttributes()/]

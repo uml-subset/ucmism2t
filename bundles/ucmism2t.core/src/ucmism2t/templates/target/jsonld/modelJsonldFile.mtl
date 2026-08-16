@@ -23,7 +23,7 @@
  * (this proved much more flexible than trying to generate the inline context directly).
 */]
 [template public generateJsonld(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + (if 'profiles'.isPropertyTrue() then 'universe_package'.getRequiredPropertyValue() + '/' else '' endif) + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-ld/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
     [let classes : Sequence(uml::Class) =
             aModel.eAllContents(uml::Class)
             ->select(aClass | aClass.u_isInAllowedPackage()),
@@ -32,9 +32,9 @@
             ->select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems() and d.name <> 'PackageInformation')
       ]
       {
-        "@context": { XX1 [aModel.name/]
+        "@context": {
           "[aModel.u_modelRdfPrefix()/]": "[aModel.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
           "xsd": "http://www.w3.org/2001/XMLSchema#",
           "[aModel.name/]": "@included",
           [for (aClass : uml::Class | classes) separator(',\n    ')]
@@ -78,7 +78,7 @@ are included. Written to:
         {
           "@context": { XX2 [aProfilePackage.name/]
             "[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
             "xsd": "http://www.w3.org/2001/XMLSchema#",
             "[aModel.name/]": "@included",
             [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name)) separator(',

@@ -359,8 +359,12 @@ child of the main package.
 [**
 Returns the output file path for the specified element and target
 format, using the model short name as the root segment.
-For the 'doc' target, the model name segment is replaced with '_rst'.
-Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
+For the 'doc' target, the model name segment is replaced with '_rst',
+and no 'encoding/' segment is inserted (docs live directly under
+'doc/_rst/'). For every other target, the path is nested under
+'encoding/<target>/', matching the convention used by every other
+generator (and by u_profileFilePath's non-doc branch).
+Example: 'xsd' → 'shortName/encoding/xsd/pkg/ClassName'
          'doc' → 'shortName/doc/_rst/pkg/ClassName'
 
 @param aNamedElement - A UML named element.
@@ -370,8 +374,11 @@ Example: 'xsd' → 'shortName/xsd/pkg/ClassName'
 [query public u_filePath(
   aNamedElement : uml::NamedElement,
   aTarget : String) : String =
-  let root : String = aNamedElement.u_model().u_modelShortName()
-    + '/' + aTarget + '/'
+  let root : String =
+    if aTarget = 'doc'
+    then aNamedElement.u_model().u_modelShortName() + '/' + aTarget + '/'
+    else aNamedElement.u_model().u_modelShortName() + '/encoding/' + aTarget + '/'
+    endif
   in
   let path : String =
     aNamedElement.qualifiedName.replaceAll('::', '/')
@@ -835,3 +842,129 @@ else branch returns null.
     + '-'
     + aNamedElement.u_modelMinorVersion()
 /] 
+
+[**
+Returns the universe-package output path segment (the resolved
+'universe_package' property value plus a trailing '/'), or the
+empty string when it does not apply.
+
+The segment only applies when BOTH conditions hold:
+  (1) the 'profiles' property is true, and
+  (2) 'universe_package' is actually set (non-empty).
+
+This guards against models that set 'profiles=true' but don't use
+the Universe/Profiles package structure at all (e.g. a standalone
+single-namespace model such as DDI-CDI) — for such models this
+returns '' rather than surfacing an 'ERROR: universe_package is
+undefined' marker inside a generated file path. For models that do
+use the Universe/Profiles structure, behaviour is unchanged: the
+segment is only emitted once 'universe_package' is confirmed set,
+so a genuine misconfiguration (profiles=true, Universe/Profiles
+structure intended, but the property simply forgotten) still
+surfaces via getRequiredPropertyValue() at the point the segment IS
+emitted — it just no longer breaks unrelated models that never
+needed the property in the first place.
+
+@param anEObject - Only used as entry point.
+@return The universe path segment including trailing '/', or ''.
+/]
+[query public u_universePathSegment(anEObject : ecore::EObject) : String =
+  if 'profiles'.isPropertyTrue() and 'universe_package'.getPropertyValue() <> ''
+  then 'universe_package'.getRequiredPropertyValue() + '/'
+  else ''
+  endif
+/]
+
+[**
+Returns the model's Universe package element (the package directly
+owned by the model whose name matches the 'universe_package'
+property), or null when the universe-package segment does not apply.
+
+Same dual-condition guard as u_universePathSegment: only resolves to
+a non-null result when 'profiles' is true AND 'universe_package' is
+actually set. Otherwise returns null so callers can degrade to an
+empty result rather than navigating from a property lookup that
+never matches any real package (or, in the pre-guard behaviour,
+crashing on required-property navigation).
+
+@param aModel - The model to search for the Universe package.
+@return The Universe package, or null if not applicable/not found.
+/]
+[query public u_universePackage(aModel : uml::Model) : uml::Package =
+  if 'profiles'.isPropertyTrue() and 'universe_package'.getPropertyValue() <> ''
+  then aModel.eAllContents(uml::Package)
+         ->select(p | p.name = 'universe_package'.getRequiredPropertyValue())
+         ->first()
+  else null
+  endif
+/]
+
+[**
+Returns the model's Profiles package element (the package directly
+owned by the model whose name matches the 'profiles_package'
+property), or null when the profiles-package segment does not apply.
+
+Same dual-condition guard as u_universePackage: only resolves to a
+non-null result when 'profiles' is true AND 'profiles_package' is
+actually set.
+
+@param aModel - The model to search for the Profiles package.
+@return The Profiles package, or null if not applicable/not found.
+/]
+[query public u_profilesPackage(aModel : uml::Model) : uml::Package =
+  if 'profiles'.isPropertyTrue() and 'profiles_package'.getPropertyValue() <> ''
+  then aModel.eAllContents(uml::Package)
+         ->select(p | p.name = 'profiles_package'.getRequiredPropertyValue())
+         ->first()
+  else null
+  endif
+/]
+
+[**
+Returns the output file path (including '.jsonld' extension) for a
+class or data type's per-element modular JSON-LD file.
+
+For non-profiles models, produces a flat path:
+  <shortName>/encoding/json-ld/<ElementName>.jsonld
+
+For profiles-enabled models, nests the file under its qualifiedName-
+derived package hierarchy, with the universe wrapper segment from
+u_universePathSegment() taking the place of BOTH:
+  (1) the leading model-name segment — every qualifiedName starts
+      with it, so it's always redundant, and
+  (2) the immediately-following top-level Universe-package segment,
+      when 'universe_package' is set — since u_universePathSegment()
+      already represents that same package by name.
+
+Both segments are stripped by deletion rather than a find-and-replace
+against u_universePathSegment()'s value, because that value is NOT
+guaranteed to differ from either segment's text — e.g. a model whose
+own name is identical to its top-level Universe package's name (as
+in CDIF) would make such a replace a silent no-op, leaving the
+redundant segment in place and producing a duplicated path segment
+(e.g. '.../CDIFUniverse/CDIFUniverse/SKOS/Concept.jsonld'). Deleting
+the segments outright is correct regardless of any such coincidence.
+
+@param aNamedElement - The class or data type element.
+@return The '.jsonld'-suffixed output file path.
+/]
+[query public u_jsonldElementFilePath(aNamedElement : uml::NamedElement) : String =
+  if 'profiles'.isPropertyTrue()
+  then
+    let withoutModelSegment : String =
+      aNamedElement.qualifiedName.replace(aNamedElement.u_model().name + '::', '')
+    in
+    let withoutUniverseSegment : String =
+      if aNamedElement.u_universePathSegment() <> ''
+      then withoutModelSegment.replace('universe_package'.getRequiredPropertyValue() + '::', '')
+      else withoutModelSegment
+      endif
+    in
+    aNamedElement.u_model().u_modelShortName() + '/encoding/json-ld/'
+      + aNamedElement.u_universePathSegment()
+      + withoutUniverseSegment.replaceAll('::', '/')
+      + '.jsonld'
+  else
+    aNamedElement.u_model().u_modelShortName() + '/encoding/json-ld/' + aNamedElement.name + '.jsonld'
+  endif
+/]

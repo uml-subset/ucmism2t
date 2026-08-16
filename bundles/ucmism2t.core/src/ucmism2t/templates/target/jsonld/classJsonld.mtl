@@ -63,7 +63,7 @@
 [**
 */]
 [template public classJsonldFile(aClass : uml::Class)]
-  [file ((if 'profiles'.isPropertyTrue() then aClass.u_filePath('json-ld').replace(aClass.u_model().name + '/', 'universe_package'.getRequiredPropertyValue() + '/') else aClass.u_model().u_modelShortName() + '/encoding/json-ld/' + aClass.name endif).concat('.jsonld'), overwrite, 'UTF-8')]
+  [file (aClass.u_jsonldElementFilePath(), overwrite, 'UTF-8')]
     [aClass.classJsonldModular()/]
   [/file]
 [/template]
@@ -80,7 +80,7 @@
   [/if]
       {
         "[aClass.u_modelRdfPrefix()/]": "[aClass.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
         "xsd": "http://www.w3.org/2001/XMLSchema#",
   
         [aClass.classJsonldCore(true)/]
@@ -185,7 +185,7 @@ paths when the referenced class is in the profile subset.
     [/if]
         {
           "[aClass.u_modelRdfPrefix()/]": "[aClass.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NS'.getPropertyValue()/]",[/comment]
+[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
           "xsd": "http://www.w3.org/2001/XMLSchema#",
     
           [aClass.classJsonldCoreProfile(true, aProfilePackage)/]

@@ -22,7 +22,7 @@
   # based on the UML class [aClass.qualifiedName/]
   [aClass.fragment()/] a sh:NodeShape;
       sh:targetClass [aClass.iri()/];
-    sh:message "See ['RDF_NS'.getPropertyValue()/][aClass.name/]";
+    sh:message "See ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]";
     sh:closed true;
     sh:ignoredProperties ( owl:sameAs );
       sh:property ['['/]
@@ -102,7 +102,7 @@ Superclasses are only included when they are in the profile subset.
     # based on the UML class [aClass.qualifiedName/]
     [aClass.fragment()/] a sh:NodeShape;
         sh:targetClass [aClass.iri()/];
-      sh:message "See ['RDF_NS'.getPropertyValue()/][aClass.name/]";
+      sh:message "See ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]";
       sh:closed true;
       sh:ignoredProperties ( owl:sameAs );
         sh:property ['['/]

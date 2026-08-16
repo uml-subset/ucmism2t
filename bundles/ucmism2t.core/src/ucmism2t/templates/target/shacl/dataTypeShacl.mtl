@@ -22,7 +22,7 @@
         sh:in ( [for (aLiteral : uml::EnumerationLiteral | aDataType.oclAsType(uml::Enumeration).ownedLiteral)][aLiteral.iri()/] [/for] );
   [else]
         sh:targetClass [aDataType.iri()/];
-    	sh:message "See ['RDF_NS'.getPropertyValue()/][aDataType.name/]";
+    	sh:message "See ['RDF_NAMESPACE'.getPropertyValue()/][aDataType.name/]";
     	sh:closed true;
     	sh:ignoredProperties ( owl:sameAs );
         sh:property ['['/]

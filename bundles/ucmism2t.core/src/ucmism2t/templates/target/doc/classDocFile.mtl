@@ -263,7 +263,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classXsd()/][else][aClass.classProfileXsd(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire XML Schema </encoding/xml-schema/['universe_package'.getRequiredPropertyValue()/]/[aClass.u_model().u_modelAcronym().toLower()/].xsd>[else]profile XML Schema </encoding/xml-schema/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].xsd>[/if]`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire XML Schema </encoding/xml-schema/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].xsd>[else]profile XML Schema </encoding/xml-schema/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].xsd>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if]_xsd.txt 
                       :language: xml
@@ -279,7 +279,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classJsch()/][else][aClass.classProfileJsch(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON Schema </encoding/json-schema/['universe_package'.getRequiredPropertyValue()/]/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>[else]profile JSON Schema </encoding/json-schema/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>[/if]`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON Schema </encoding/json-schema/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].schema.json>[else]profile JSON Schema </encoding/json-schema/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].schema.json>[/if]`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].schema.json 
                       :language: json
@@ -309,7 +309,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classJsonldModular()/][else][aClass.classJsonldModularProfile(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON-LD </encoding/json-ld/['universe_package'.getRequiredPropertyValue()/]/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>[else]profile JSON-LD </encoding/json-ld/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>[/if]`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON-LD </encoding/json-ld/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].jsonld>[else]profile JSON-LD </encoding/json-ld/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].jsonld>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].jsonld 
                       :language: JSON-LD
@@ -324,7 +324,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classShacl()/][else][aClass.classProfileShacl(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[if (aProfilePackage = null)]['universe_package'.getRequiredPropertyValue()/]/[/if][aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
+                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language </encoding/shacl/[if (aProfilePackage = null)][aClass.u_universePathSegment()/][/if][aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl>`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shacl.ttl 
                       :language: turtle
@@ -339,7 +339,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classShex()/][else][aClass.classProfileShex(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[if (aProfilePackage = null)]['universe_package'.getRequiredPropertyValue()/]/[/if][aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
+                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions </encoding/shex/[if (aProfilePackage = null)][aClass.u_universePathSegment()/][/if][aClass.u_model().u_modelAcronym().toLower()/].shexc>`_)
           
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].shexc 
                       :language: shexc

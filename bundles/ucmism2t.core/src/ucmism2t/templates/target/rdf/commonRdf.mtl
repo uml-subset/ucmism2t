@@ -3,9 +3,9 @@
 
 /]
 [module commonRdf(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::elementQuery/]
@@ -37,7 +37,7 @@
   PREFIX xsd:   <http://www.w3.org/2001/XMLSchema#>
   PREFIX dc:    <http://purl.org/dc/elements/1.1/>
   PREFIX skos:  <http://www.w3.org/2004/02/skos/core#>
-  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:   <['RDF_NS'.getPropertyValue()/]>
+  PREFIX ['RDF_PREFIX'.getPropertyValue()/]:   <['RDF_NAMESPACE'.getPropertyValue()/]>
   PREFIX ucmis: <http://ddialliance.org/Specification/UCMIS/1.0/RDF/>
 [/template]
 
@@ -49,16 +49,25 @@
  * Current version uses short id
  * Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and
  * iri2.
+ *
+ * The namespace prefix is resolved per-element via cdiAdHoc(txt, x),
+ * which uses x.u_modelRdfPrefix() (RDF_PREFIX override, falling back
+ * to the nearest PackageInformation) rather than a single flat
+ * property — this keeps class/property identity correctly
+ * namespace-qualified per package in multi-namespace models, while
+ * remaining a single uniform namespace for models that only use the
+ * RDF_PREFIX/RDF_NAMESPACE override or a single top-level
+ * PackageInformation.
 */]
-[template public iri(x : uml::NamedElement) post(self.cdiAdHoc())]
+[template public iri(x : uml::NamedElement) post(self.cdiAdHoc(x))]
   [if (x.ancestors()->notEmpty())]
     [if (x.oclIsTypeOf(uml::Property))]
-      		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+          [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
     [else]
-      	    [x.name/]
+            [x.name/]
     [/if]
   [else]
-    	[x.builtinIri()/]
+      [x.builtinIri()/]
   [/if]
 [/template]
 
@@ -83,12 +92,12 @@
 [template public fragment(x : uml::NamedElement) post(self.noWhitespace())]
   <#[if (x.ancestors()->notEmpty())]
       [if (x.oclIsTypeOf(uml::Property))]
-        		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+            [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
       [else]
-        	    [x.name/]
+              [x.name/]
       [/if]
     [else]
-      	[x.builtinIri()/]
+        [x.builtinIri()/]
     [/if]
   >[/template]
 
@@ -98,12 +107,12 @@
 [template public fragmentRev(x : uml::NamedElement) post(self.noWhitespace())]
   <#rev_[if (x.ancestors()->notEmpty())]
           [if (x.oclIsTypeOf(uml::Property))]
-            		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+                [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
           [else]
-            	    [x.name/]
+                  [x.name/]
           [/if]
         [else]
-          	[x.builtinIri()/]
+            [x.builtinIri()/]
         [/if]
   >[/template]
 
@@ -149,13 +158,22 @@ Converts a UML comment into an RDFS comment.
  * Ultimately, what it does should be generically supported by using UML traces,
  * then it must be removed and its uses replaced with iriEscape.
  * JW: Is it specific to CDI or to UCMIS?
+ *
+ * @param txt - The escaped local name text produced by the calling
+ *              template's body (via post-processing).
+ * @param x   - The originating element, used to resolve the correct
+ *              namespace prefix per-package via u_modelRdfPrefix
+ *              when txt is not a mapped built-in item. Mapped items
+ *              (e.g. String -> xsd:string) already carry their own
+ *              target prefix from the uml-map-rdf property and don't
+ *              use x's namespace at all.
 */]
-[template public cdiAdHoc(txt : String) post(self.noWhitespace())]
+[template public cdiAdHoc(txt : String, x : uml::NamedElement) post(self.noWhitespace())]
   [let iri : String = txt.iriEscape()]
     [if (txt.u_mappedUcmisItemsRdf()->indexOf(iri) = 0)]
-      		['RDF_PREFIX'.getPropertyValue()/]:[iri/]
+          [x.u_modelRdfPrefix()/]:[iri/]
     [else]
-      		[txt.u_mappedUcmisItemsRdfTargets()->at(txt.u_mappedUcmisItemsRdf()->indexOf(iri))/]
+          [txt.u_mappedUcmisItemsRdfTargets()->at(txt.u_mappedUcmisItemsRdf()->indexOf(iri))/]
     [/if]
   [/let]
 [/template]
@@ -260,5 +278,5 @@ Converts a UML comment into an RDFS comment.
 
 [comment JW: Is it specific to CDI or to UCMIS? /]
 [query public isNotInMappedItems(aClassifier : uml::Classifier) : Boolean =
-	aClassifier.u_mappedUcmisItemsRdf()->indexOf(aClassifier.name) = 0
+  aClassifier.u_mappedUcmisItemsRdf()->indexOf(aClassifier.name) = 0
 /]

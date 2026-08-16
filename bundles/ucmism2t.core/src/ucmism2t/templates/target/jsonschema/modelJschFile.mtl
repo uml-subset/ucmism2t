@@ -23,7 +23,7 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
  * @param aModel a model
 */]
 [template public generateJsonSchema(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/json-schema/' + (if 'profiles'.isPropertyTrue() then 'universe_package'.getRequiredPropertyValue() + '/' else '' endif) + aModel.u_modelAcronym().toLower() + '.schema.json', overwrite, 'UTF-8')]
+  [file (aModel.u_modelShortName() + '/encoding/json-schema/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.schema.json', overwrite, 'UTF-8')]
     {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "title": "[aModel.name/]",
@@ -140,7 +140,7 @@ All templates in the *Jsch.mtl modules generate JSON Schema.
   [/file]
 [/template]
 
-[template public jschVersion(aModel : uml::Model)]
+[template public jschVersion(aModel : uml::Model) post(self.trim())]
   [aModel.u_modelMajorVersion() + '.' + aModel.u_modelMinorVersion()/]
 [/template]
 

@@ -40,10 +40,10 @@
   [aModel.allAssociationsList()/]
   [aModel.allDataTypesList()/]
   [aModel.allEnumerationsList()/]
+  [aModel.allPackagesList()/]
   [if ('profiles'.isPropertyTrue())]  
-    [aModel.allPackagesList()/]
+    [aModel.classesByProfiles()/]
   [/if]
-  [aModel.classesByProfiles()/]
   [aModel.exploratoryDiagramsIndex()/]
   [aModel.modelItemListsIndex()/][/template]
 
@@ -352,8 +352,8 @@
     ['Classes by Profiles Table'.rst_header('=')/]
 
     [let profilePackages : Sequence(uml::Package) =
-      aModel.eAllContents(uml::Package)->select(p | p.name = 'profiles_package'.getRequiredPropertyValue())->first()
-        .eContents(uml::Package)->sortedBy(p | p.name)]
+      let up : uml::Package = aModel.u_profilesPackage() in
+      if up <> null then up.eContents(uml::Package)->sortedBy(p | p.name) else Sequence{} endif]
       
       .. container:: table-responsive
       
@@ -367,8 +367,9 @@
               [for (aPackage : uml::Package | profilePackages)]
                 - [aPackage.name/]
               [/for]
-      [for (aClass : uml::Class | aModel.eAllContents(uml::Package)->select(p | p.name = 'universe_package'.getRequiredPropertyValue())->first()
-        .eAllContents(uml::Class)->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name))]
+      [for (aClass : uml::Class |
+        let uni : uml::Package = aModel.u_universePackage() in
+        if uni <> null then uni.eAllContents(uml::Class)->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name) else Sequence{} endif)]
               * - [aClass.package.name/]
                 - [aClass.name/]
                 [for (aPackage : uml::Package | profilePackages)]
