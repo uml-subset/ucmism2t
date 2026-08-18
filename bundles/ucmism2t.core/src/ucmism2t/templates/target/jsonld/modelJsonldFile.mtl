@@ -76,7 +76,7 @@ are included. Written to:
         aProfilePackage.u_childDependencySupplierDataTypes()]
       [file (aModel.u_modelShortName() + '/encoding/json-ld/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
         {
-          "@context": { XX2 [aProfilePackage.name/]
+          "@context": {
             "[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",
 [comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
             "xsd": "http://www.w3.org/2001/XMLSchema#",
