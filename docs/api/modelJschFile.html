@@ -260,6 +260,20 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#profileGenerateJsonSchema">
+                            <code>profileGenerateJsonSchema(aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the whole-model JSON Schema file for a profile sub-package. Only classes, enumerations and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/json-schema/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.schema.json
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -298,6 +312,8 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePathSegment">u_universePathSegment</a>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
                 <a class="ref-badge ref-internal-query"
@@ -348,7 +364,7 @@
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public generateJsonSchema(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + &#39;/encoding/json-schema/&#39; + aModel.u_modelAcronym().toLower() + &#39;.schema.json&#39;, overwrite, &#39;UTF-8&#39;)]
+  [file (aModel.u_modelShortName() + &#39;/encoding/json-schema/&#39; + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + &#39;.schema.json&#39;, overwrite, &#39;UTF-8&#39;)]
     {
       &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
       &quot;title&quot;: &quot;[aModel.name/]&quot;,
@@ -359,7 +375,7 @@
       &quot;then&quot;: { &quot;anyOf&quot;: [&#39;[&#39;/]
         { &quot;$ref&quot;: &quot;#/defs/root-object&quot; },
         { &quot;$ref&quot;: &quot;#/defs/root-graph&quot; }
-      ]},
+      [&#39;]&#39;/]},
       &quot;else&quot;: { &quot;$ref&quot;: &quot;#/defs/root-array&quot; },
     
       &quot;defs&quot;: {
@@ -388,7 +404,7 @@
     [for (anEnumeration : uml::Enumeration | aModel.u_mainPackage().eAllContents(uml::Enumeration)-&gt;sortedBy(temp2 | temp2.name))]
           [anEnumeration.enumerationJsch()/]
     [/for]
-    [for (aDataType : uml::DataType | aModel.eAllContents(uml::DataType)-&gt;select(aDataType | aDataType.isComplex() and aDataType.u_isInAllowedPackage() and aDataType.isNotInMappedItems()))]
+    [for (aDataType : uml::DataType | aModel.eAllContents(uml::DataType)-&gt;select(aDataType | aDataType.isComplex() and aDataType.u_isInAllowedPackage() and aDataType.isNotInMappedItems() and aDataType.name &lt;&gt; &#39;PackageInformation&#39;))]
           [aDataType.dataTypeJsch()/]
     [/for]
         &quot;xsd:string&quot;: {
@@ -509,8 +525,198 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public jschVersion(aModel : uml::Model)]
+        <pre class="source-code"><code>[template public jschVersion(aModel : uml::Model) post(self.trim())]
   [aModel.u_modelMajorVersion() + &#39;.&#39; + aModel.u_modelMinorVersion()/]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="profileGenerateJsonSchema">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                profileGenerateJsonSchema
+            </h3>
+
+            <div class="signature">
+                <code>[template public profileGenerateJsonSchema(aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the whole-model JSON Schema file for a profile sub-package. Only classes, enumerations and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/json-schema/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.schema.json</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierDataTypes">u_childDependencySupplierDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isComplex">isComplex</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="modelJschFile.html#jschVersion">jschVersion</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#arrayClassSchemasProfile">arrayClassSchemasProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#classProfileJsch">classProfileJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="enumerationJsch.html#enumerationJsch">enumerationJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsch.html#dataTypeJsch">dataTypeJsch</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclisof" target="_blank">oclIsTypeOf()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public profileGenerateJsonSchema(aProfilePackage : uml::Package)]
+  [let aModel : uml::Model = aProfilePackage.u_model()]
+    [let subsetClasses : OrderedSet(uml::Class) =
+        aProfilePackage.u_childDependencySupplierClasses()]
+    [let subsetDataTypes : OrderedSet(uml::DataType) =
+        aProfilePackage.u_childDependencySupplierDataTypes()]
+      [file (aModel.u_modelShortName() + &#39;/encoding/json-schema/&#39; + &#39;profiles_package&#39;.getRequiredPropertyValue() + &#39;/&#39; + aProfilePackage.name + &#39;/&#39; + aModel.u_modelAcronym().toLower() + &#39;.schema.json&#39;, overwrite, &#39;UTF-8&#39;)]
+        {
+          &quot;$schema&quot;: &quot;https://json-schema.org/draft/2020-12/schema&quot;,
+          &quot;title&quot;: &quot;[aModel.name/] - [aProfilePackage.name/]&quot;,
+          &quot;description&quot;: &quot;This code was generated by the Eclipse Acceleo module UCMIS M2T.&quot;,
+          &quot;version&quot;: &quot;[aModel.jschVersion()/]&quot;,
+        
+          &quot;if&quot;: { &quot;type&quot;: &quot;object&quot; },
+          &quot;then&quot;: { &quot;anyOf&quot;: [&#39;[&#39;/]
+            { &quot;$ref&quot;: &quot;#/defs/root-object&quot; },
+            { &quot;$ref&quot;: &quot;#/defs/root-graph&quot; }
+          ]},
+          &quot;else&quot;: { &quot;$ref&quot;: &quot;#/defs/root-array&quot; },
+        
+          &quot;defs&quot;: {
+            &quot;root-object&quot;: {
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;required&quot;: [&#39;[&#39;/]&quot;@type&quot;],
+              &quot;anyOf&quot;: [&#39;[&#39;/]
+                [aProfilePackage.arrayClassSchemasProfile()/]
+                false
+              ]
+            },
+            &quot;root-array&quot;: {
+              &quot;type&quot;: &quot;array&quot;,
+              &quot;items&quot;: { &quot;$ref&quot;: &quot;#/defs/root-object&quot; }
+            },
+            &quot;root-graph&quot;: {
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;required&quot;: [&#39;[&#39;/]&quot;[aModel.name/]&quot;],
+              &quot;properties&quot;: {
+                &quot;[aModel.name/]&quot;: { &quot;$ref&quot;: &quot;#/defs/root-array&quot; }
+              }
+            },
+        [for (aClass : uml::Class | subsetClasses-&gt;sortedBy(c | c.name))]
+              [aClass.classProfileJsch(aProfilePackage)/]
+        [/for]
+        [for (anEnumeration : uml::Enumeration | subsetDataTypes
+            -&gt;select(d | d.oclIsTypeOf(uml::Enumeration))
+            -&gt;collect(d | d.oclAsType(uml::Enumeration))
+            -&gt;sortedBy(e | e.name))]
+              [anEnumeration.enumerationJsch()/]
+        [/for]
+        [for (aDataType : uml::DataType | subsetDataTypes
+            -&gt;select(d | d.isComplex() and d.isNotInMappedItems()
+              and d.name &lt;&gt; &#39;PackageInformation&#39;)
+            -&gt;sortedBy(d | d.name))]
+              [aDataType.dataTypeJsch()/]
+        [/for]
+            &quot;xsd:string&quot;: { &quot;type&quot;: &quot;string&quot; },
+            &quot;xsd:boolean&quot;: { &quot;type&quot;: &quot;boolean&quot; },
+            &quot;xsd:integer&quot;: { &quot;type&quot;: &quot;integer&quot; },
+            &quot;xsd:double&quot;: { &quot;type&quot;: &quot;number&quot; },
+            &quot;xsd:nonNegativeInteger&quot;: { &quot;type&quot;: &quot;integer&quot;, &quot;minumum&quot;: 0 },
+            &quot;xsd:anyURI&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;uri-reference&quot; },
+            &quot;xsd:date&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;date&quot; },
+            &quot;xsd:language&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;pattern&quot;: &quot;^a-zA-Z]+(-[&#39;[&#39;/]a-zA-Z]+)*$&quot; },
+            &quot;rdf:langString&quot;: {
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;properties&quot;: {
+                &quot;@value&quot;: { &quot;type&quot;: &quot;string&quot; },
+                &quot;@type&quot;: { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; }
+              },
+              &quot;required&quot;: [&#39;[&#39;/]&quot;@value&quot;, &quot;@type&quot;]
+            },
+            &quot;owl:sameAs&quot;: {
+              &quot;anyOf&quot;: [&#39;[&#39;/]
+                { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; },
+                { &quot;type&quot;: &quot;object&quot; }
+              ]
+            },
+            &quot;at-context&quot;: {
+              &quot;anyOf&quot;: [&#39;[&#39;/]
+                { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; },
+                {
+                  &quot;type&quot;: &quot;array&quot;,
+                  &quot;items&quot;: {
+                    &quot;anyOf&quot;: [&#39;[&#39;/]
+                      { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; },
+                      { &quot;type&quot;: &quot;object&quot; }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      [/file]
+    [/let]
+    [/let]
+  [/let]
 [/template]</code></pre>
     </details>
         </div>

@@ -217,6 +217,7 @@
         </h1>
 
 
+        <div class="description">Module contains queries with ecore::EObject as receiver, used as an entry point for accessing global configuration values that are not tied to any specific UML element. Includes queries for RDF URI mapping tokens (uml-map-rdf property) and test package names.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
@@ -392,11 +393,15 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-collect" target="_blank">collect()</a>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-at" target="_blank">at()</a>
         </div>
 
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-contains" target="_blank">contains()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
         </div>
@@ -410,7 +415,8 @@
         <pre class="source-code"><code>[query public u_mappedUcmisItemsRdf(
 		anEObject : ecore::EObject) : Sequence(String) =
 	anEObject.u_mappedUcmisItemsRdfTokens()
-		-&gt;collect(s | s.tokenize(&#39;&gt;&#39;)-&gt;at(1))
+	  -&gt;select(s1 | s1.contains(&#39;&gt;&#39;))
+		-&gt;collect(s2 | s2.tokenize(&#39;&gt;&#39;)-&gt;at(1))
 /]</code></pre>
     </details>
         </div>
@@ -457,11 +463,15 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-collect" target="_blank">collect()</a>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-at" target="_blank">at()</a>
         </div>
 
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-contains" target="_blank">contains()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
         </div>
@@ -475,7 +485,8 @@
         <pre class="source-code"><code>[query public u_mappedUcmisItemsRdfTargets(
 		anEObject : ecore::EObject) : Sequence(String) =
 	anEObject.u_mappedUcmisItemsRdfTokens()
-		-&gt;collect(s | s.tokenize(&#39;&gt;&#39;)-&gt;at(2))
+    -&gt;select(s1 | s1.contains(&#39;&gt;&#39;))
+		-&gt;collect(s2 | s2.tokenize(&#39;&gt;&#39;)-&gt;at(2))
 /]</code></pre>
     </details>
         </div>

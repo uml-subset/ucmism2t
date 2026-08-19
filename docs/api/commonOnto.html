@@ -271,6 +271,20 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#superClassesProfile">
+                            <code>superClassesProfile(aClass, subsetClasses)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Emits rdfs:subClassOf triples for a class in profile context. Only superclasses present in subsetClasses are included.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -396,7 +410,7 @@
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public superClasses(aClass : uml::Class)]
   [let scs : Sequence(uml::Class) = aClass.superClass]
-	  [if (scs-&gt;notEmpty())]rdfs:subClassOf [scs-&gt;collect(sc | sc.iri())-&gt;sep(&#39;, &#39;)/];[/if]
+    [if (scs-&gt;notEmpty())]rdfs:subClassOf [scs-&gt;collect(sc | sc.iri())-&gt;sep(&#39;, &#39;)/];[/if]
   [/let]
 [/template]</code></pre>
     </details>
@@ -453,7 +467,71 @@
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public pac_superDataTypes(aDataType : uml::DataType)]
   [let scs : Sequence(uml::Classifier) = aDataType.general]
-  	[if (scs-&gt;notEmpty())]rdfs:subClassOf [scs-&gt;collect(sc | sc.iri())-&gt;sep(&#39;, &#39;)/];[/if]
+    [if (scs-&gt;notEmpty())]rdfs:subClassOf [scs-&gt;collect(sc | sc.iri())-&gt;sep(&#39;, &#39;)/];[/if]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="superClassesProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                superClassesProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public superClassesProfile(aClass : uml::Class, subsetClasses : OrderedSet(uml::Class))]</code>
+            </div>
+
+
+            <div class="description">Emits rdfs:subClassOf triples for a class in profile context. Only superclasses present in subsetClasses are included.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>subsetClasses</code> <span class="param-type">: OrderedSet(uml::Class)</span></dt>
+                <dd>- The set of classes in the active profile subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sep" target="_blank">sep()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public superClassesProfile(aClass : uml::Class, subsetClasses : OrderedSet(uml::Class))]
+  [let scs : Sequence(uml::Class) = aClass.superClass-&gt;select(sc | subsetClasses-&gt;includes(sc))]
+    [if (scs-&gt;notEmpty())]rdfs:subClassOf [scs-&gt;collect(sc | sc.iri())-&gt;sep(&#39;, &#39;)/];[/if]
   [/let]
 [/template]</code></pre>
     </details>

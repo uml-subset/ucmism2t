@@ -338,7 +338,7 @@
         sh:in ( [for (aLiteral : uml::EnumerationLiteral | aDataType.oclAsType(uml::Enumeration).ownedLiteral)][aLiteral.iri()/] [/for] );
   [else]
         sh:targetClass [aDataType.iri()/];
-    	sh:message &quot;See [&#39;RDF_NS&#39;.getPropertyValue()/][aDataType.name/]&quot;;
+    	sh:message &quot;See [&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aDataType.name/]&quot;;
     	sh:closed true;
     	sh:ignoredProperties ( owl:sameAs );
         sh:property [&#39;[&#39;/]

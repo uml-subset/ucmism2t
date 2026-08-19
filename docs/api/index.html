@@ -108,7 +108,7 @@
                     <td class="count">0</td>
                     <td class="count">4</td>
                     <td>
-                            <span class="no-doc">—</span>
+                            Module contains queries with ecore::EObject as receiver, used as an entry point for accessing global configuration values that are not tied to any specific UML element. Includes queries for RDF URI mapping tokens (uml-map-rdf property) and test package names.
                     </td>
                 </tr>
                 <tr>
@@ -117,9 +117,9 @@
                         <br/><span class="source-path"><code>ucmism2t/queries/packageQuery.mtl</code></span>
                     </td>
                     <td class="count">0</td>
-                    <td class="count">6</td>
+                    <td class="count">15</td>
                     <td>
-                            Module contains queries with a UML pcakage as receiver.
+                            Module contains queries with a UML package as receiver.
                     </td>
                 </tr>
                 <tr>
@@ -150,7 +150,7 @@
                         <br/><span class="source-path"><code>ucmism2t/queries/classQuery.mtl</code></span>
                     </td>
                     <td class="count">0</td>
-                    <td class="count">28</td>
+                    <td class="count">31</td>
                     <td>
                             Module contains queries with a UML class as receiver. This includes queries for navigating the class hierarchy (superclasses, subclasses), finding associations, inherited attributes, and class classification.  Note: Queries applicable to both classes and data types are in classifierQuery, since both are subtypes of Classifier.  Related modules: - dataTypeQuery: queries with a UML data type as receiver - classifierQuery: queries with a UML classifier as receiver, applicable to both classes and data types - associationQuery: queries with a UML association as receiver - propertyQuery: queries with a UML property as receiver
                     </td>
@@ -172,9 +172,9 @@
                         <br/><span class="source-path"><code>ucmism2t/queries/associationQuery.mtl</code></span>
                     </td>
                     <td class="count">0</td>
-                    <td class="count">5</td>
+                    <td class="count">6</td>
                     <td>
-                            Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class) and filtering associations for diagram generation purposes.  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML
+                            Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class), computing short association names, and testing whether an association belongs to a diagram subset.  The association direction convention used throughout this module and the diagram templates is: ownedEnd  = the source (subject) end, owned by the association otherEnd  = the target (object) end, owned by the source class  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML
                     </td>
                 </tr>
                 <tr>
@@ -194,7 +194,7 @@
                         <br/><span class="source-path"><code>ucmism2t/queries/elementQuery.mtl</code></span>
                     </td>
                     <td class="count">0</td>
-                    <td class="count">28</td>
+                    <td class="count">32</td>
                     <td>
                             Module contains queries with a UML element or named element as receiver.
                     </td>
@@ -207,7 +207,7 @@
                     <td class="count">0</td>
                     <td class="count">4</td>
                     <td>
-                            Module contains queries with a UML classifier as receiver, applicable to both calsses and data types.
+                            Module contains queries with a UML classifier as receiver, applicable to both classes and data types.
                     </td>
                 </tr>
                 <tr>
@@ -270,8 +270,8 @@
                         <a href="testFile.html">ucmism2t::templates::test::testFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/test/testFile.mtl</code></span>
                     </td>
-                    <td class="count">4</td>
-                    <td class="count">3</td>
+                    <td class="count">1</td>
+                    <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
                     </td>
@@ -281,7 +281,7 @@
                         <a href="classJsonld.html">ucmism2t::templates::target::jsonld::classJsonld</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonld/classJsonld.mtl</code></span>
                     </td>
-                    <td class="count">4</td>
+                    <td class="count">7</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -292,7 +292,7 @@
                         <a href="commonJsonld.html">ucmism2t::templates::target::jsonld::commonJsonld</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonld/commonJsonld.mtl</code></span>
                     </td>
-                    <td class="count">2</td>
+                    <td class="count">3</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -314,7 +314,7 @@
                         <a href="modelJsonldFile.html">ucmism2t::templates::target::jsonld::modelJsonldFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonld/modelJsonldFile.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -325,7 +325,7 @@
                         <a href="modelShexFile.html">ucmism2t::templates::target::shex::modelShexFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/shex/modelShexFile.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -358,7 +358,7 @@
                         <a href="classShex.html">ucmism2t::templates::target::shex::classShex</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/shex/classShex.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -369,7 +369,7 @@
                         <a href="commonShex.html">ucmism2t::templates::target::shex::commonShex</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/shex/commonShex.mtl</code></span>
                     </td>
-                    <td class="count">4</td>
+                    <td class="count">5</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -380,7 +380,7 @@
                         <a href="commonOnto.html">ucmism2t::templates::target::onto::commonOnto</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/onto/commonOnto.mtl</code></span>
                     </td>
-                    <td class="count">3</td>
+                    <td class="count">4</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -413,7 +413,7 @@
                         <a href="processModelOnto.html">ucmism2t::templates::target::onto::processModelOnto</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/onto/processModelOnto.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -435,7 +435,7 @@
                         <a href="classOnto.html">ucmism2t::templates::target::onto::classOnto</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/onto/classOnto.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -457,8 +457,8 @@
                         <a href="classXsd.html">ucmism2t::templates::target::xsd::classXsd</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/xsd/classXsd.mtl</code></span>
                     </td>
-                    <td class="count">2</td>
-                    <td class="count">0</td>
+                    <td class="count">4</td>
+                    <td class="count">1</td>
                     <td>
                             <span class="no-doc">—</span>
                     </td>
@@ -468,7 +468,7 @@
                         <a href="modelXsdFile.html">ucmism2t::templates::target::xsd::modelXsdFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/xsd/modelXsdFile.mtl</code></span>
                     </td>
-                    <td class="count">7</td>
+                    <td class="count">8</td>
                     <td class="count">0</td>
                     <td>
                             All templates in the *Xsd.mtl modules generate XML Schema.
@@ -502,7 +502,7 @@
                         <br/><span class="source-path"><code>ucmism2t/templates/target/rdf/commonRdf.mtl</code></span>
                     </td>
                     <td class="count">10</td>
-                    <td class="count">5</td>
+                    <td class="count">6</td>
                     <td>
                             <span class="no-doc">—</span>
                     </td>
@@ -534,10 +534,10 @@
                         <a href="puUtilityDoc.html">ucmism2t::templates::target::doc::puUtilityDoc</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/doc/puUtilityDoc.mtl</code></span>
                     </td>
-                    <td class="count">24</td>
+                    <td class="count">17</td>
                     <td class="count">0</td>
                     <td>
-                            <span class="no-doc">—</span>
+                            Module contains utility templates for generating PlantUML diagram code. These templates are shared between pu_classDiagram and pu_dataTypeDiagram and cover: - Diagram options (skinparam settings) - Hyperlink construction (pu_link, pu_attributeLink, pu_linkWithLabel) - Classifier node definitions (pu_itemDefinition, pu_classifierNameWithLabel) - Aggregation kind symbols (pu_aggregationKind) - Data type notation stereotypes (pu_dataTypeNotation) - Generation message header (pu_generationMessageDoc) - Attribute type with hyperlink (pu_typeWithLink, pu_internalLinkType) - Internal hyperlinks for named elements (pu_internalLink) - Conditional qualified class name (e_conditionalQualifiedClassName) - Whitespace removal utility (e_removeWhitespace)
                     </td>
                 </tr>
                 <tr>
@@ -545,7 +545,7 @@
                         <a href="appendicesDocFile.html">ucmism2t::templates::target::doc::appendicesDocFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/doc/appendicesDocFile.mtl</code></span>
                     </td>
-                    <td class="count">9</td>
+                    <td class="count">10</td>
                     <td class="count">0</td>
                     <td>
                             The documentation of the module indices.
@@ -581,7 +581,7 @@
                     <td class="count">24</td>
                     <td class="count">1</td>
                     <td>
-                            The documentation of the module utility.
+                            Module contains utility templates for generating reStructuredText (RST) documentation and PlantUML context diagrams from UML models.  PlantUML diagram templates: pu_classDiagram     - Context diagram for a UML class, showing associated classes, super/sub classes, associations, and abstraction relationships. pu_dataTypeDiagram  - Context diagram for a UML data type, showing classes and data types that use the type, the dotted usage connection, and the inheritance hierarchy. pu_superClass       - Helper: renders superclass nodes and their limited inherited associations for pu_classDiagram. pu_subClasses       - Helper: renders subclass inheritance arrows recursively for pu_classDiagram. pu_superDataType    - Helper: renders supertype inheritance for pu_dataTypeDiagram. pu_subDataTypes     - Helper: renders subtype inheritance for pu_dataTypeDiagram.  RST documentation templates: rst_mainIndexHead            - Index page header and toctree. rst_generationMessageDoc     - Generation message comment. rst_header                   - Section header underline. rst_classOrDataTypeInheritance - Collapsible inheritance tree. rst_subClasses               - Recursive subclass list. rst_processAttributeInTable  - Table row for a class attribute. rst_processAssociationInTable - Table row for an association. rst_refDataType              - RST :ref: link for a type. rst_simpleQualifiedClassNameReference     - :ref: for a class. rst_simpleQualifiedClassifierNameReference - :ref: for a classifier. rst_classNameReference       - :ref: for a class by qualified name. rst_classifierNameReference  - :ref: for a classifier by qualified name. rst_className                - Class name with italic for abstract. rst_addClassReferencesToDocumentation - Injects :ref: links into documentation strings. abstractionType              - UML abstraction stereotype label.  HTML diagram modal templates: diagramModalPreCode   - Opening tags for the SVG diagram modal. diagramModalPostCode  - Closing tags and modal controls.  Indentation utilities: e_indent  - Post-processor: prefixes every non-empty line with a fixed number of spaces (used for RST include blocks). e_indent2 - Post-processor: inserts indentation after each newline.
                     </td>
                 </tr>
                 <tr>
@@ -677,7 +677,7 @@
                         <a href="packageDocFile.html">ucmism2t::templates::target::doc::packageDocFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/doc/packageDocFile.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             The documentation of the module packageDocFile.
@@ -688,7 +688,7 @@
                         <a href="classShacl.html">ucmism2t::templates::target::shacl::classShacl</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/shacl/classShacl.mtl</code></span>
                     </td>
-                    <td class="count">2</td>
+                    <td class="count">4</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -710,7 +710,7 @@
                         <a href="modelShaclFile.html">ucmism2t::templates::target::shacl::modelShaclFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/shacl/modelShaclFile.mtl</code></span>
                     </td>
-                    <td class="count">1</td>
+                    <td class="count">2</td>
                     <td class="count">0</td>
                     <td>
                             <span class="no-doc">—</span>
@@ -754,7 +754,7 @@
                         <a href="commonJsch.html">ucmism2t::templates::target::jsonschema::commonJsch</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonschema/commonJsch.mtl</code></span>
                     </td>
-                    <td class="count">3</td>
+                    <td class="count">5</td>
                     <td class="count">1</td>
                     <td>
                             Module contains templates for JSON Schema.
@@ -765,7 +765,7 @@
                         <a href="modelJschFile.html">ucmism2t::templates::target::jsonschema::modelJschFile</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonschema/modelJschFile.mtl</code></span>
                     </td>
-                    <td class="count">2</td>
+                    <td class="count">3</td>
                     <td class="count">0</td>
                     <td>
                             All templates in the *Jsch.mtl modules generate JSON Schema.
@@ -776,8 +776,8 @@
                         <a href="classJsch.html">ucmism2t::templates::target::jsonschema::classJsch</a>
                         <br/><span class="source-path"><code>ucmism2t/templates/target/jsonschema/classJsch.mtl</code></span>
                     </td>
+                    <td class="count">8</td>
                     <td class="count">4</td>
-                    <td class="count">2</td>
                     <td>
                             Module contains templates for JSON Schema.
                     </td>

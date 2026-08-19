@@ -217,7 +217,7 @@
         </h1>
 
 
-        <div class="description">Module contains queries with a UML pcakage as receiver.</div>
+        <div class="description">Module contains queries with a UML package as receiver.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
@@ -304,6 +304,114 @@
                     </td>
                     <td>
                         Returns a sequence of enumerations directly contained in the specified package.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childDependencySupplierClasses">
+                            <code>u_childDependencySupplierClasses(aPackage) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the supplier classes of the child dependencies owned by aPackage.  This query is intended for package-to-class dependencies in models where each relevant dependency has exactly one package client and exactly one relevant supplier class.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML Class.  The collected classes are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by class name.  A null-safe name guard is used in the sort key so that unnamed classes do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier class.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childDependencySupplierDataTypes">
+                            <code>u_childDependencySupplierDataTypes(aPackage) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the supplier data types of the child dependencies owned by aPackage, excluding UML PrimitiveTypes and UML Enumerations.  This query is intended for package-to-data-type dependencies where each relevant dependency has exactly one package client and one relevant supplier data type.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML DataType but not a UML PrimitiveType and not a UML Enumeration.  The collected data types are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by data type name.  A null-safe name guard is used in the sort key so that unnamed data types do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier data type.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_childDependencySupplierEnumerations">
+                            <code>u_childDependencySupplierEnumerations(aPackage) : OrderedSet(uml::Enumeration)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the supplier enumerations of the child dependencies owned by aPackage.  This query is intended for package-to-enumeration dependencies in models where each relevant dependency has exactly one package client and exactly one relevant supplier enumeration.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML Enumeration.  The collected enumerations are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by enumeration name.  A null-safe name guard is used in the sort key so that unnamed enumerations do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier enumeration.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_profileSubsetClasses">
+                            <code>u_profileSubsetClasses(anElement) : OrderedSet(uml::Class)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the union of all dependency-defined subset classes across all active Profile sub-packages in the model. A Profile sub-package is any package directly owned by the package named per the &#39;profiles_package&#39; property, and is active when the property &#39;profiles&#39; is true.  For each such sub-package, the classes defined as suppliers of its child dependency relationships (via u_childDependencySupplierClasses) are collected and unioned into a single OrderedSet.  This query is the primary entry point for dependency-based subset filtering in diagram and RST templates. It is used in place of the property-file-based u_subsetAllClasses when &#39;profiles&#39; is true.  The receiver is any UML element reachable from the model, used only to navigate to the model root via u_model().  When &#39;profiles&#39; is false or the model has no package matching the &#39;profiles_package&#39; property, an empty OrderedSet is returned, and subset filtering will show nothing (neither &#39;includeAllItems&#39; nor &#39;profiles&#39; being true represents a configuration error per design intent).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_profileSubsetDataTypes">
+                            <code>u_profileSubsetDataTypes(anElement) : OrderedSet(uml::DataType)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the union of all dependency-defined subset data types across all active Profile sub-packages in the model. A Profile sub-package is any package directly owned by the package named per the &#39;profiles_package&#39; property, and is active when the property &#39;profiles&#39; is true.  For each such sub-package, the data types defined as suppliers of its child dependency relationships (via u_childDependencySupplierDataTypes) are collected and unioned into a single OrderedSet. UML PrimitiveTypes and Enumerations are excluded, consistent with the behaviour of u_childDependencySupplierDataTypes.  This query complements u_profileSubsetClasses for templates that display data types in subset-filtered contexts (e.g. the inheritance tree in rst_subClasses, the data type diagram context).  When &#39;profiles&#39; is false or the model has no package matching the &#39;profiles_package&#39; property, an empty OrderedSet is returned.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_selectedAttributes">
+                            <code>u_selectedAttributes(aClass, aProfilePackage) : Sequence(String)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the sequence of selected attribute names for the given class within the given profile package, as defined by the @selected-attributes annotation on the dependency relationship from the profile package to the class.  The annotation appears in the body of an ownedComment on the dependency element, on a line of the form: @selected-attributes: attr1, attr2, attr3  Multiple annotations may appear in the comment body on separate lines; only the @selected-attributes line is processed here.  When the annotation is present, only the listed attribute names should be included in profile-specific documentation and encodings. When the annotation is absent (the dependency exists but has no such annotation), an empty sequence is returned — callers must interpret an empty result as meaning all attributes are included (no restriction).  Attribute names are literal UML property name values as they appear in the model, including any CURIE prefix (e.g. &#39;schema:identifier&#39;, &#39;prov:wasDerivedFrom&#39;) used by convention for attributes from external namespaces.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isAttributeInProfile">
+                            <code>u_isAttributeInProfile(aProperty, aClass, aProfilePackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the given attribute should be included in profile documentation and encodings for the given class in the given profile package.  An attribute is included when either: (a) no @selected-attributes annotation is defined for this class in this profile (u_selectedAttributes returns an empty sequence), meaning all attributes are implicitly included; or (b) a @selected-attributes annotation is present and the attribute name appears in the annotated list.  This query centralises the attribute-inclusion test so that the [if] conditions in processClassDoc remain readable.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_unknownSelectedAttributes">
+                            <code>u_unknownSelectedAttributes(aClass, aProfilePackage) : Sequence(String)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the sequence of attribute names listed in the @selected-attributes annotation for the given class in the given profile package that do not match any actual ownedAttribute name on the class.  An empty sequence means all listed names are valid. A non-empty sequence contains the unknown names that should be reported as warnings.  Used by validateProfilePackage to identify annotation errors before calling logWarning for each unknown name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_profilePackagesForClass">
+                            <code>u_profilePackagesForClass(aClass) : OrderedSet(uml::Package)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns all profile sub-packages (packages directly owned by the package named per the &#39;profiles_package&#39; property) whose dependency-defined subset includes the given class.  Used in the universe class documentation to generate back-references to all profile-specific pages for the class.
                         
                     </td>
                 </tr>
@@ -668,6 +776,752 @@
         <pre class="source-code"><code>[query public u_childrenEnumerations(
   aPackage : uml::Package) : Sequence(uml::Enumeration) =
   aPackage.eContents(uml::Enumeration)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childDependencySupplierClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childDependencySupplierClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childDependencySupplierClasses(aPackage : uml::Package) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the supplier classes of the child dependencies owned by aPackage.  This query is intended for package-to-class dependencies in models where each relevant dependency has exactly one package client and exactly one relevant supplier class.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML Class.  The collected classes are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by class name.  A null-safe name guard is used in the sort key so that unnamed classes do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The UML package whose child dependency supplier classes are being collected.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                 — An ordered set of supplier classes, sorted by name.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childDependencySupplierClasses(
+  aPackage : uml::Package) : OrderedSet(uml::Class) =
+  aPackage.eContents(uml::Dependency)
+    -&gt;select(d1 | d1.client-&gt;filter(uml::Package)-&gt;first() = aPackage)
+    -&gt;collect(d2 | d2.supplier-&gt;filter(uml::Class)-&gt;first())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(c | if c.name &lt;&gt; null then c.name else &#39;&#39; endif)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childDependencySupplierDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childDependencySupplierDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childDependencySupplierDataTypes(aPackage : uml::Package) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the supplier data types of the child dependencies owned by aPackage, excluding UML PrimitiveTypes and UML Enumerations.  This query is intended for package-to-data-type dependencies where each relevant dependency has exactly one package client and one relevant supplier data type.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML DataType but not a UML PrimitiveType and not a UML Enumeration.  The collected data types are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by data type name.  A null-safe name guard is used in the sort key so that unnamed data types do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier data type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The UML package whose child dependency supplier data types are being collected.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                 — An ordered set of supplier data types, sorted by name.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childDependencySupplierDataTypes(
+  aPackage : uml::Package) : OrderedSet(uml::DataType) =
+  aPackage.eContents(uml::Dependency)
+    -&gt;select(d1 | d1.client-&gt;filter(uml::Package)-&gt;first() = aPackage)
+    -&gt;collect(d2 |
+      d2.supplier
+        -&gt;filter(uml::DataType)
+        -&gt;reject(t | t.oclIsKindOf(uml::PrimitiveType) or t.oclIsKindOf(uml::Enumeration))
+        -&gt;first())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(d | if d.name &lt;&gt; null then d.name else &#39;&#39; endif)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_childDependencySupplierEnumerations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_childDependencySupplierEnumerations
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_childDependencySupplierEnumerations(aPackage : uml::Package) : OrderedSet(uml::Enumeration) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the supplier enumerations of the child dependencies owned by aPackage.  This query is intended for package-to-enumeration dependencies in models where each relevant dependency has exactly one package client and exactly one relevant supplier enumeration.  The query first selects those Dependency elements directly contained in aPackage whose package client is aPackage itself. For each such dependency, it then retrieves the first supplier that is a UML Enumeration.  The collected enumerations are converted to an OrderedSet in order to remove duplicates while preserving collection ordering semantics. The resulting set is then sorted alphabetically by enumeration name.  A null-safe name guard is used in the sort key so that unnamed enumerations do not cause an error; they are sorted as if their name were the empty string.  Note: The use of -&gt;first() in both the client and supplier lookup is intentional and relies on the model convention that each relevant dependency has exactly one package client and one supplier enumeration.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The UML package whose child dependency supplier enumerations are being collected.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Enumeration)</code>
+                 — An ordered set of supplier enumerations, sorted by name.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_childDependencySupplierEnumerations(
+  aPackage : uml::Package) : OrderedSet(uml::Enumeration) =
+  aPackage.eContents(uml::Dependency)
+    -&gt;select(d1 | d1.client-&gt;filter(uml::Package)-&gt;first() = aPackage)
+    -&gt;collect(d2 | d2.supplier-&gt;filter(uml::Enumeration)-&gt;first())
+    -&gt;asOrderedSet()
+    -&gt;sortedBy(e | if e.name &lt;&gt; null then e.name else &#39;&#39; endif)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_profileSubsetClasses">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_profileSubsetClasses
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_profileSubsetClasses(anElement : uml::NamedElement) : OrderedSet(uml::Class) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the union of all dependency-defined subset classes across all active Profile sub-packages in the model. A Profile sub-package is any package directly owned by the package named per the &#39;profiles_package&#39; property, and is active when the property &#39;profiles&#39; is true.  For each such sub-package, the classes defined as suppliers of its child dependency relationships (via u_childDependencySupplierClasses) are collected and unioned into a single OrderedSet.  This query is the primary entry point for dependency-based subset filtering in diagram and RST templates. It is used in place of the property-file-based u_subsetAllClasses when &#39;profiles&#39; is true.  The receiver is any UML element reachable from the model, used only to navigate to the model root via u_model().  When &#39;profiles&#39; is false or the model has no package matching the &#39;profiles_package&#39; property, an empty OrderedSet is returned, and subset filtering will show nothing (neither &#39;includeAllItems&#39; nor &#39;profiles&#39; being true represents a configuration error per design intent).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- Any UML NamedElement in the model; used as receiver to navigate to the model root.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Class)</code>
+                 — The union of all dependency-defined subset classes across all active Profile sub-packages.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_profileSubsetClasses(
+  anElement : uml::NamedElement) : OrderedSet(uml::Class) =
+  if not &#39;profiles&#39;.isPropertyTrue()
+  then OrderedSet{}
+  else
+    let profilesPackage : uml::Package =
+      anElement.u_model().eContents(uml::Package)
+        -&gt;select(p | p.name = &#39;profiles_package&#39;.getRequiredPropertyValue())
+        -&gt;first()
+    in
+    if profilesPackage = null
+    then OrderedSet{}
+    else
+      profilesPackage.eContents(uml::Package)
+        -&gt;collect(subPkg | subPkg.u_childDependencySupplierClasses())
+        -&gt;asOrderedSet()
+    endif
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_profileSubsetDataTypes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_profileSubsetDataTypes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_profileSubsetDataTypes(anElement : uml::NamedElement) : OrderedSet(uml::DataType) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the union of all dependency-defined subset data types across all active Profile sub-packages in the model. A Profile sub-package is any package directly owned by the package named per the &#39;profiles_package&#39; property, and is active when the property &#39;profiles&#39; is true.  For each such sub-package, the data types defined as suppliers of its child dependency relationships (via u_childDependencySupplierDataTypes) are collected and unioned into a single OrderedSet. UML PrimitiveTypes and Enumerations are excluded, consistent with the behaviour of u_childDependencySupplierDataTypes.  This query complements u_profileSubsetClasses for templates that display data types in subset-filtered contexts (e.g. the inheritance tree in rst_subClasses, the data type diagram context).  When &#39;profiles&#39; is false or the model has no package matching the &#39;profiles_package&#39; property, an empty OrderedSet is returned.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- Any UML NamedElement in the model; used as receiver to navigate to the model root.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::DataType)</code>
+                 — The union of all dependency-defined subset data types across all active Profile sub-packages.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierDataTypes">u_childDependencySupplierDataTypes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_profileSubsetDataTypes(
+  anElement : uml::NamedElement) : OrderedSet(uml::DataType) =
+  if not &#39;profiles&#39;.isPropertyTrue()
+  then OrderedSet{}
+  else
+    let profilesPackage : uml::Package =
+      anElement.u_model().eContents(uml::Package)
+        -&gt;select(p | p.name = &#39;profiles_package&#39;.getRequiredPropertyValue())
+        -&gt;first()
+    in
+    if profilesPackage = null
+    then OrderedSet{}
+    else
+      profilesPackage.eContents(uml::Package)
+        -&gt;collect(subPkg | subPkg.u_childDependencySupplierDataTypes())
+        -&gt;asOrderedSet()
+    endif
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_selectedAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_selectedAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_selectedAttributes(aClass : uml::Class, aProfilePackage : uml::Package) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the sequence of selected attribute names for the given class within the given profile package, as defined by the @selected-attributes annotation on the dependency relationship from the profile package to the class.  The annotation appears in the body of an ownedComment on the dependency element, on a line of the form: @selected-attributes: attr1, attr2, attr3  Multiple annotations may appear in the comment body on separate lines; only the @selected-attributes line is processed here.  When the annotation is present, only the listed attribute names should be included in profile-specific documentation and encodings. When the annotation is absent (the dependency exists but has no such annotation), an empty sequence is returned — callers must interpret an empty result as meaning all attributes are included (no restriction).  Attribute names are literal UML property name values as they appear in the model, including any CURIE prefix (e.g. &#39;schema:identifier&#39;, &#39;prov:wasDerivedFrom&#39;) used by convention for attributes from external namespaces.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class whose selected attributes are to be retrieved.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package that defines the subset.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(String)</code>
+                 — A Sequence of selected attribute name strings, or an empty Sequence if no @selected-attributes annotation is present.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-contains" target="_blank">contains()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substituteall" target="_blank">substituteAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substring" target="_blank">substring()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-index" target="_blank">index()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_selectedAttributes(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(String) =
+  let dep : uml::Dependency =
+    aProfilePackage.eContents(uml::Dependency)
+      -&gt;select(d |
+        d.client-&gt;filter(uml::Package)-&gt;first() = aProfilePackage
+        and d.supplier-&gt;includes(aClass))
+      -&gt;first()
+  in
+  if dep = null
+  then Sequence{}
+  else
+    let annotatedComment : uml::Comment =
+      dep.ownedComment
+        -&gt;select(c | c.body &lt;&gt; null
+          and c.body.contains(&#39;@selected-attributes&#39;))
+        -&gt;first()
+    in
+    if annotatedComment = null
+    then Sequence{}
+    else
+      let line : String =
+        annotatedComment.body
+          .tokenize(&#39;\n&#39;)
+          -&gt;select(l | l.contains(&#39;@selected-attributes&#39;))
+          -&gt;first()
+      in
+      if line = null or line = &#39;&#39;
+      then Sequence{}
+      else
+        line.substring(line.index(&#39;:&#39;) + 1)
+          .substituteAll(&#39; &#39;, &#39;&#39;)
+          .tokenize(&#39;,&#39;)
+      endif
+    endif
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isAttributeInProfile">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isAttributeInProfile
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isAttributeInProfile(aProperty : uml::Property, aClass : uml::Class, aProfilePackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the given attribute should be included in profile documentation and encodings for the given class in the given profile package.  An attribute is included when either: (a) no @selected-attributes annotation is defined for this class in this profile (u_selectedAttributes returns an empty sequence), meaning all attributes are implicitly included; or (b) a @selected-attributes annotation is present and the attribute name appears in the annotated list.  This query centralises the attribute-inclusion test so that the [if] conditions in processClassDoc remain readable.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProperty</code> <span class="param-type">: uml::Property</span></dt>
+                <dd>- The UML property (attribute) to test.</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The class owning the attribute.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package context.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                 — true if the attribute should be included in the profile output.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_selectedAttributes">u_selectedAttributes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isAttributeInProfile(
+  aProperty : uml::Property,
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Boolean =
+  let selected : Sequence(String) =
+    aClass.u_selectedAttributes(aProfilePackage)
+  in
+  selected-&gt;isEmpty()
+  or selected-&gt;includes(aProperty.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_unknownSelectedAttributes">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_unknownSelectedAttributes
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_unknownSelectedAttributes(aClass : uml::Class, aProfilePackage : uml::Package) : Sequence(String) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the sequence of attribute names listed in the @selected-attributes annotation for the given class in the given profile package that do not match any actual ownedAttribute name on the class.  An empty sequence means all listed names are valid. A non-empty sequence contains the unknown names that should be reported as warnings.  Used by validateProfilePackage to identify annotation errors before calling logWarning for each unknown name.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class to validate.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package context.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(String)</code>
+                 — Sequence of unknown attribute name strings.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_selectedAttributes">u_selectedAttributes</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_unknownSelectedAttributes(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(String) =
+  let selected : Sequence(String) =
+    aClass.u_selectedAttributes(aProfilePackage)
+  in
+  let allNames : Sequence(String) =
+    aClass.ownedAttribute.name-&gt;asSequence()
+  in
+  selected-&gt;select(attrName | not allNames-&gt;includes(attrName))
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_profilePackagesForClass">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_profilePackagesForClass
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_profilePackagesForClass(aClass : uml::Class) : OrderedSet(uml::Package) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns all profile sub-packages (packages directly owned by the package named per the &#39;profiles_package&#39; property) whose dependency-defined subset includes the given class.  Used in the universe class documentation to generate back-references to all profile-specific pages for the class.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class to find profile packages for.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Package)</code>
+                 — OrderedSet of profile sub-packages containing the class, sorted by package name.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtainer" target="_blank">eContainer()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_profilePackagesForClass(
+  aClass : uml::Class) : OrderedSet(uml::Package) =
+  aClass.u_model().eAllContents(uml::Package)
+    -&gt;select(p | p.eContainer(uml::Package) &lt;&gt; null
+      and p.eContainer(uml::Package).name = &#39;profiles_package&#39;.getRequiredPropertyValue()
+      and p.u_childDependencySupplierClasses()-&gt;includes(aClass))
+    -&gt;sortedBy(p | p.name)
+    -&gt;asOrderedSet()
 /]</code></pre>
     </details>
         </div>

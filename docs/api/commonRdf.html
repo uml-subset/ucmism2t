@@ -269,7 +269,7 @@
                         
                     </td>
                     <td>
-                        Compute the IRI for a given element. NB: I was not able to retrieve the xmi:uuid, so I rebuild an IRI here. This may need to be adapted. TODO: maybe this should be a query rather than a template? (no need to post-process... Current version uses short id Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and iri2.
+                        Compute the IRI for a given element. NB: I was not able to retrieve the xmi:uuid, so I rebuild an IRI here. This may need to be adapted. TODO: maybe this should be a query rather than a template? (no need to post-process... Current version uses short id Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and iri2.  The namespace prefix is resolved per-element via cdiAdHoc(txt, x), which uses x.u_modelRdfPrefix() (RDF_PREFIX override, falling back to the nearest PackageInformation) rather than a single flat property — this keeps class/property identity correctly namespace-qualified per package in multi-namespace models, while remaining a single uniform namespace for models that only use the RDF_PREFIX/RDF_NAMESPACE override or a single top-level PackageInformation.
                         
                     </td>
                 </tr>
@@ -345,7 +345,7 @@
                 <tr>
                     <td>
                         <a href="#cdiAdHoc">
-                            <code>cdiAdHoc(txt)</code>
+                            <code>cdiAdHoc(txt, x)</code>
                         </a>
                         
                         
@@ -406,6 +406,18 @@
                     <td>
                         <a href="#shortName">
                             <code>shortName(anAssociation) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns a short name for an association.  Association names are expected to use underscore-separated segments. If the association name contains fewer than three segments, the complete association name is returned unchanged.  Otherwise, the third segment is used as the short name. When the DDI-CDI configuration property is enabled, the configured list of ambiguous association names is consulted:  - If the third segment is not configured as ambiguous, the third segment alone is returned. - If the third segment is configured as ambiguous, the third and fourth segments are concatenated with an underscore and returned.  The configuration property &#39;ddi-cdi_ambiguous_assoc_names&#39; is expected to contain a comma-separated list. Spaces are removed before the list is tokenized.  The query intentionally uses the custom services isPropertyTrue() and getPropertyValue() to read the DDI-CDI configuration.  Examples: - &#39;hasPart&#39;       -&gt; &#39;hasPart&#39; - &#39;A_B_C&#39;         -&gt; &#39;C&#39; - &#39;A_B_C_D&#39;       -&gt; &#39;C&#39; when &#39;C&#39; is not ambiguous - &#39;A_B_C_D&#39;       -&gt; &#39;C_D&#39; when &#39;C&#39; is ambiguous
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#OKshortName">
+                            <code>OKshortName(anAssociation) : String</code>
                         </a>
                         
                     </td>
@@ -540,7 +552,7 @@
   PREFIX xsd:   &lt;http://www.w3.org/2001/XMLSchema#&gt;
   PREFIX dc:    &lt;http://purl.org/dc/elements/1.1/&gt;
   PREFIX skos:  &lt;http://www.w3.org/2004/02/skos/core#&gt;
-  PREFIX [&#39;RDF_PREFIX&#39;.getPropertyValue()/]:   &lt;[&#39;RDF_NS&#39;.getPropertyValue()/]&gt;
+  PREFIX [&#39;RDF_PREFIX&#39;.getPropertyValue()/]:   &lt;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&gt;
   PREFIX ucmis: &lt;http://ddialliance.org/Specification/UCMIS/1.0/RDF/&gt;
 [/template]</code></pre>
     </details>
@@ -559,7 +571,7 @@
             </div>
 
 
-            <div class="description">Compute the IRI for a given element. NB: I was not able to retrieve the xmi:uuid, so I rebuild an IRI here. This may need to be adapted. TODO: maybe this should be a query rather than a template? (no need to post-process... Current version uses short id Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and iri2.</div>
+            <div class="description">Compute the IRI for a given element. NB: I was not able to retrieve the xmi:uuid, so I rebuild an IRI here. This may need to be adapted. TODO: maybe this should be a query rather than a template? (no need to post-process... Current version uses short id Previous versions are iri1 (the xmi:id, not xmi:uuid which does not seem to be retrievable) and iri2.  The namespace prefix is resolved per-element via cdiAdHoc(txt, x), which uses x.u_modelRdfPrefix() (RDF_PREFIX override, falling back to the nearest PackageInformation) rather than a single flat property — this keeps class/property identity correctly namespace-qualified per package in multi-namespace models, while remaining a single uniform namespace for models that only use the RDF_PREFIX/RDF_NAMESPACE override or a single top-level PackageInformation.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
@@ -605,15 +617,15 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public iri(x : uml::NamedElement) post(self.cdiAdHoc())]
+        <pre class="source-code"><code>[template public iri(x : uml::NamedElement) post(self.cdiAdHoc(x))]
   [if (x.ancestors()-&gt;notEmpty())]
     [if (x.oclIsTypeOf(uml::Property))]
-      		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+          [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
     [else]
-      	    [x.name/]
+            [x.name/]
     [/if]
   [else]
-    	[x.builtinIri()/]
+      [x.builtinIri()/]
   [/if]
 [/template]</code></pre>
     </details>
@@ -681,12 +693,12 @@
         <pre class="source-code"><code>[template public fragment(x : uml::NamedElement) post(self.noWhitespace())]
   &lt;#[if (x.ancestors()-&gt;notEmpty())]
       [if (x.oclIsTypeOf(uml::Property))]
-        		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+            [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
       [else]
-        	    [x.name/]
+              [x.name/]
       [/if]
     [else]
-      	[x.builtinIri()/]
+        [x.builtinIri()/]
     [/if]
   &gt;[/template]</code></pre>
     </details>
@@ -754,12 +766,12 @@
         <pre class="source-code"><code>[template public fragmentRev(x : uml::NamedElement) post(self.noWhitespace())]
   &lt;#rev_[if (x.ancestors()-&gt;notEmpty())]
           [if (x.oclIsTypeOf(uml::Property))]
-            		[x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+                [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
           [else]
-            	    [x.name/]
+                  [x.name/]
           [/if]
         [else]
-          	[x.builtinIri()/]
+            [x.builtinIri()/]
         [/if]
   &gt;[/template]</code></pre>
     </details>
@@ -931,7 +943,7 @@
             </h3>
 
             <div class="signature">
-                <code>[template public cdiAdHoc(txt : String)]</code>
+                <code>[template public cdiAdHoc(txt : String, x : uml::NamedElement)]</code>
             </div>
 
 
@@ -940,7 +952,9 @@
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>txt</code> <span class="param-type">: String</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The escaped local name text produced by the calling template&#39;s body (via post-processing).</dd>
+                <dt><code>x</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- The originating element, used to resolve the correct namespace prefix per-package via u_modelRdfPrefix when txt is not a mapped built-in item. Mapped items (e.g. String -&gt; xsd:string) already carry their own target prefix from the uml-map-rdf property and don&#39;t use x&#39;s namespace at all.</dd>
             </dl>
 
 
@@ -952,6 +966,8 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="eobjectQuery.html#u_mappedUcmisItemsRdf">u_mappedUcmisItemsRdf</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
                 <a class="ref-badge ref-internal-query"
                    href="eobjectQuery.html#u_mappedUcmisItemsRdfTargets">u_mappedUcmisItemsRdfTargets</a>
         </div>
@@ -973,20 +989,16 @@
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
-				</div>
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public cdiAdHoc(txt : String) post(self.noWhitespace())]
+        <pre class="source-code"><code>[template public cdiAdHoc(txt : String, x : uml::NamedElement) post(self.noWhitespace())]
   [let iri : String = txt.iriEscape()]
     [if (txt.u_mappedUcmisItemsRdf()-&gt;indexOf(iri) = 0)]
-      		[&#39;RDF_PREFIX&#39;.getPropertyValue()/]:[iri/]
+          [x.u_modelRdfPrefix()/]:[iri/]
     [else]
-      		[txt.u_mappedUcmisItemsRdfTargets()-&gt;at(txt.u_mappedUcmisItemsRdf()-&gt;indexOf(iri))/]
+          [txt.u_mappedUcmisItemsRdfTargets()-&gt;at(txt.u_mappedUcmisItemsRdf()-&gt;indexOf(iri))/]
     [/if]
   [/let]
 [/template]</code></pre>
@@ -1163,6 +1175,114 @@
             </div>
 
 
+            <div class="description">Returns a short name for an association.  Association names are expected to use underscore-separated segments. If the association name contains fewer than three segments, the complete association name is returned unchanged.  Otherwise, the third segment is used as the short name. When the DDI-CDI configuration property is enabled, the configured list of ambiguous association names is consulted:  - If the third segment is not configured as ambiguous, the third segment alone is returned. - If the third segment is configured as ambiguous, the third and fourth segments are concatenated with an underscore and returned.  The configuration property &#39;ddi-cdi_ambiguous_assoc_names&#39; is expected to contain a comma-separated list. Spaces are removed before the list is tokenized.  The query intentionally uses the custom services isPropertyTrue() and getPropertyValue() to read the DDI-CDI configuration.  Examples: - &#39;hasPart&#39;       -&gt; &#39;hasPart&#39; - &#39;A_B_C&#39;         -&gt; &#39;C&#39; - &#39;A_B_C_D&#39;       -&gt; &#39;C&#39; when &#39;C&#39; is not ambiguous - &#39;A_B_C_D&#39;       -&gt; &#39;C_D&#39; when &#39;C&#39; is ambiguous</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>- The UML association whose short name is needed.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                 — The calculated short name of the association.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-at" target="_blank">at()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-count" target="_blank">count()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tokenize" target="_blank">tokenize()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-substituteall" target="_blank">substituteAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public shortName(
+  anAssociation : uml::Association) : String =
+  let associationName : String =
+    anAssociation.name
+  in
+  let associationTokens : Sequence(String) =
+    associationName.tokenize(&#39;_&#39;)
+  in
+  if associationTokens-&gt;size() &lt; 3
+  then
+    associationName
+  else
+    let thirdToken : String =
+      associationTokens-&gt;at(2)
+    in
+    if &#39;DDI-CDI&#39;.isPropertyTrue()
+    then
+      let ambiguousNames : OrderedSet(String) =
+        &#39;ddi-cdi_ambiguous_assoc_names&#39;
+          .getPropertyValue()
+          .substituteAll(&#39; &#39;, &#39;&#39;)
+          .tokenize(&#39;,&#39;)
+          -&gt;asOrderedSet()
+      in
+      if ambiguousNames-&gt;count(thirdToken) = 0
+      then
+        thirdToken
+      else
+        thirdToken
+          .concat(&#39;_&#39;)
+          .concat(associationTokens-&gt;at(3))
+      endif
+    else
+      thirdToken
+        .concat(&#39;_&#39;)
+        .concat(associationTokens-&gt;at(3))
+    endif
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="OKshortName">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                OKshortName
+            </h3>
+
+            <div class="signature">
+                <code>[query public OKshortName(anAssociation : uml::Association) : String = ...]</code>
+            </div>
+
+
 
             <h4>Parameters</h4>
             <dl class="param-list">
@@ -1218,7 +1338,7 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[query public shortName(anAssociation : uml::Association) : String = if anAssociation.name.tokenize(&#39;_&#39;)-&gt;size() &lt; 3 then anAssociation.name else if &#39;DDI-CDI&#39;.isPropertyTrue() and &#39;ddi-cdi_ambiguous_assoc_names&#39;.getPropertyValue().substituteAll(&#39; &#39;, &#39;&#39;).tokenize(&#39;,&#39;)-&gt;asSet()-&gt;count(anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2)) = 0 then anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2) else anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2).concat(&#39;_&#39;).concat(anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(3)) endif endif/]</code></pre>
+        <pre class="source-code"><code>[query public OKshortName(anAssociation : uml::Association) : String = if anAssociation.name.tokenize(&#39;_&#39;)-&gt;size() &lt; 3 then anAssociation.name else if &#39;DDI-CDI&#39;.isPropertyTrue() and &#39;ddi-cdi_ambiguous_assoc_names&#39;.getPropertyValue().substituteAll(&#39; &#39;, &#39;&#39;).tokenize(&#39;,&#39;)-&gt;asSet()-&gt;count(anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2)) = 0 then anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2) else anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(2).concat(&#39;_&#39;).concat(anAssociation.name.tokenize(&#39;_&#39;)-&gt;at(3)) endif endif/]</code></pre>
     </details>
         </div>
         <div class="element-detail" id="isComplex">
@@ -1322,7 +1442,7 @@
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[query public isNotInMappedItems(aClassifier : uml::Classifier) : Boolean =
-	aClassifier.u_mappedUcmisItemsRdf()-&gt;indexOf(aClassifier.name) = 0
+  aClassifier.u_mappedUcmisItemsRdf()-&gt;indexOf(aClassifier.name) = 0
 /]</code></pre>
     </details>
         </div>

@@ -296,18 +296,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#OKu_commentBody">
-                            <code>OKu_commentBody(anElement) : String</code>
-                        </a>
-                        
-                    </td>
-                    <td>
-                        Returns the body of the first owned comment of the specified element if it exists, trimmed of leading and trailing spaces, or a warning message if the element has no comment and the &#39;WARNING_MISSING_DOCUMENTATION&#39; property is set to true, or an empty string otherwise.
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <a href="#u_shortDocumentation">
                             <code>u_shortDocumentation(anElement) : String</code>
                         </a>
@@ -398,7 +386,19 @@
                         
                     </td>
                     <td>
-                        Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;. Example: &#39;xsd&#39; → &#39;shortName/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;
+                        Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;, and no &#39;encoding/&#39; segment is inserted (docs live directly under &#39;doc/_rst/&#39;). For every other target, the path is nested under &#39;encoding/&lt;target&gt;/&#39;, matching the convention used by every other generator (and by u_profileFilePath&#39;s non-doc branch). Example: &#39;xsd&#39; → &#39;shortName/encoding/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_profileFilePath">
+                            <code>u_profileFilePath(aNamedElement, aTarget, aProfilePackage) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the output file path for the specified element and target format when the element is being generated in the context of a profile sub-package. The path reflects the profile hierarchy: doc    -&gt; &lt;shortName&gt;/doc/_rst/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;elementName&gt; others -&gt; &lt;shortName&gt;/encoding/&lt;target&gt;/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;elementName&gt;  This path is distinct from u_filePath which uses the element&#39;s own qualified name (universe path). The profile path places all profile files under &lt;profiles_package&gt;/&lt;profileName&gt;/ regardless of where the element lives in the universe hierarchy. The &lt;profiles_package&gt; segment is read from the &#39;profiles_package&#39; property.
                         
                     </td>
                 </tr>
@@ -482,7 +482,7 @@
                         
                     </td>
                     <td>
-                        Returns the model minor version version for aNamedElement. The value is determined in order of priority: (1) MODEL_MINOR_VERSION config property, (2) &#39;minorVersion&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.
+                        Returns the model minor version for aNamedElement. The value is determined in order of priority: (1) MODEL_MINOR_VERSION config property, (2) &#39;minorVersion&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.
                         
                     </td>
                 </tr>
@@ -554,7 +554,7 @@
                         
                     </td>
                     <td>
-                        Returns the model RDF preifx for aNamedElement. The value is determined in order of priority: (1) RDF_PREFIX config property, (2) &#39;rdfPrefix&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.
+                        Returns the model RDF prefix for aNamedElement. The value is determined in order of priority: (1) RDF_PREFIX config property, (2) &#39;rdfPrefix&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.
                         
                     </td>
                 </tr>
@@ -567,6 +567,54 @@
                     </td>
                     <td>
                         <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_universePathSegment">
+                            <code>u_universePathSegment(anEObject) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the universe-package output path segment (the resolved &#39;universe_package&#39; property value plus a trailing &#39;/&#39;), or the empty string when it does not apply.  The segment only applies when BOTH conditions hold: (1) the &#39;profiles&#39; property is true, and (2) &#39;universe_package&#39; is actually set (non-empty).  This guards against models that set &#39;profiles=true&#39; but don&#39;t use the Universe/Profiles package structure at all (e.g. a standalone single-namespace model such as DDI-CDI) — for such models this returns &#39;&#39; rather than surfacing an &#39;ERROR: universe_package is undefined&#39; marker inside a generated file path. For models that do use the Universe/Profiles structure, behaviour is unchanged: the segment is only emitted once &#39;universe_package&#39; is confirmed set, so a genuine misconfiguration (profiles=true, Universe/Profiles structure intended, but the property simply forgotten) still surfaces via getRequiredPropertyValue() at the point the segment IS emitted — it just no longer breaks unrelated models that never needed the property in the first place.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_universePackage">
+                            <code>u_universePackage(aModel) : uml::Package</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model&#39;s Universe package element (the package directly owned by the model whose name matches the &#39;universe_package&#39; property), or null when the universe-package segment does not apply.  Same dual-condition guard as u_universePathSegment: only resolves to a non-null result when &#39;profiles&#39; is true AND &#39;universe_package&#39; is actually set. Otherwise returns null so callers can degrade to an empty result rather than navigating from a property lookup that never matches any real package (or, in the pre-guard behaviour, crashing on required-property navigation).
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_profilesPackage">
+                            <code>u_profilesPackage(aModel) : uml::Package</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the model&#39;s Profiles package element (the package directly owned by the model whose name matches the &#39;profiles_package&#39; property), or null when the profiles-package segment does not apply.  Same dual-condition guard as u_universePackage: only resolves to a non-null result when &#39;profiles&#39; is true AND &#39;profiles_package&#39; is actually set.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_jsonldElementFilePath">
+                            <code>u_jsonldElementFilePath(aNamedElement) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns the output file path (including &#39;.jsonld&#39; extension) for a class or data type&#39;s per-element modular JSON-LD file.  For non-profiles models, produces a flat path: &lt;shortName&gt;/encoding/json-ld/&lt;ElementName&gt;.jsonld  For profiles-enabled models, nests the file under its qualifiedName- derived package hierarchy, with the universe wrapper segment from u_universePathSegment() taking the place of BOTH: (1) the leading model-name segment — every qualifiedName starts with it, so it&#39;s always redundant, and (2) the immediately-following top-level Universe-package segment, when &#39;universe_package&#39; is set — since u_universePathSegment() already represents that same package by name.  Both segments are stripped by deletion rather than a find-and-replace against u_universePathSegment()&#39;s value, because that value is NOT guaranteed to differ from either segment&#39;s text — e.g. a model whose own name is identical to its top-level Universe package&#39;s name (as in CDIF) would make such a replace a silent no-op, leaving the redundant segment in place and producing a duplicated path segment (e.g. &#39;.../CDIFUniverse/CDIFUniverse/SKOS/Concept.jsonld&#39;). Deleting the segments outright is correct regardless of any such coincidence.
+                        
                     </td>
                 </tr>
             </tbody>
@@ -887,77 +935,6 @@
   else
     if &#39;WARNING_MISSING_DOCUMENTATION&#39;.isPropertyTrue()
     then &#39;WARNING: element has no documentation!&#39;
-    else &#39;&#39;
-    endif
-  endif
-/]</code></pre>
-    </details>
-        </div>
-        <div class="element-detail" id="OKu_commentBody">
-            <h3>
-                <span class="kind-badge kind-query">query</span>
-                <span class="visibility public">public</span>
-                OKu_commentBody
-            </h3>
-
-            <div class="signature">
-                <code>[query public OKu_commentBody(anElement : uml::Element) : String = ...]</code>
-            </div>
-
-
-            <div class="description">Returns the body of the first owned comment of the specified element if it exists, trimmed of leading and trailing spaces, or a warning message if the element has no comment and the &#39;WARNING_MISSING_DOCUMENTATION&#39; property is set to true, or an empty string otherwise.</div>
-
-            <h4>Parameters</h4>
-            <dl class="param-list">
-                <dt><code>anElement</code> <span class="param-type">: uml::Element</span></dt>
-                <dd>- A UML element whose first comment body is to be retrieved.</dd>
-            </dl>
-
-            <h4>Returns</h4>
-            <p>
-                <code>String</code>
-                
-            </p>
-
-
-
-    <div class="cross-refs">
-        <h4>References</h4>
-
-
-
-        <div class="ref-section">
-            <span class="ref-label">AQL collection operations</span>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#string-first" target="_blank">first()</a>
-        </div>
-
-        <div class="ref-section">
-            <span class="ref-label">AQL services</span>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
-        </div>
-
-
-
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <a class="ref-badge ref-project-service"
-				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
-				</div>
-        
-    </div>
-    <details class="source-dropdown">
-        <summary>Show source</summary>
-        <pre class="source-code"><code>[query public OKu_commentBody(
-  anElement : uml::Element) : String =
-  if anElement.ownedComment-&gt;notEmpty()
-  then anElement.ownedComment-&gt;first().body.trim()
-  else
-    if &#39;WARNING_MISSING_DOCUMENTATION&#39;.isPropertyTrue()
-    then &#39;WARNING: ELEMENT HAS NO DOCUMENTATION!&#39;
     else &#39;&#39;
     endif
   endif
@@ -1465,7 +1442,7 @@
             </div>
 
 
-            <div class="description">Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;. Example: &#39;xsd&#39; → &#39;shortName/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;</div>
+            <div class="description">Returns the output file path for the specified element and target format, using the model short name as the root segment. For the &#39;doc&#39; target, the model name segment is replaced with &#39;_rst&#39;, and no &#39;encoding/&#39; segment is inserted (docs live directly under &#39;doc/_rst/&#39;). For every other target, the path is nested under &#39;encoding/&lt;target&gt;/&#39;, matching the convention used by every other generator (and by u_profileFilePath&#39;s non-doc branch). Example: &#39;xsd&#39; → &#39;shortName/encoding/xsd/pkg/ClassName&#39; &#39;doc&#39; → &#39;shortName/doc/_rst/pkg/ClassName&#39;</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
@@ -1513,8 +1490,11 @@
         <pre class="source-code"><code>[query public u_filePath(
   aNamedElement : uml::NamedElement,
   aTarget : String) : String =
-  let root : String = aNamedElement.u_model().u_modelShortName()
-    + &#39;/&#39; + aTarget + &#39;/&#39;
+  let root : String =
+    if aTarget = &#39;doc&#39;
+    then aNamedElement.u_model().u_modelShortName() + &#39;/&#39; + aTarget + &#39;/&#39;
+    else aNamedElement.u_model().u_modelShortName() + &#39;/encoding/&#39; + aTarget + &#39;/&#39;
+    endif
   in
   let path : String =
     aNamedElement.qualifiedName.replaceAll(&#39;::&#39;, &#39;/&#39;)
@@ -1523,6 +1503,78 @@
     root + path.replace(aNamedElement.u_model().name, &#39;_rst&#39;)
   else
     root + path
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_profileFilePath">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_profileFilePath
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_profileFilePath(aNamedElement : uml::NamedElement, aTarget : String, aProfilePackage : uml::Package) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the output file path for the specified element and target format when the element is being generated in the context of a profile sub-package. The path reflects the profile hierarchy: doc    -&gt; &lt;shortName&gt;/doc/_rst/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;elementName&gt; others -&gt; &lt;shortName&gt;/encoding/&lt;target&gt;/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;elementName&gt;  This path is distinct from u_filePath which uses the element&#39;s own qualified name (universe path). The profile path places all profile files under &lt;profiles_package&gt;/&lt;profileName&gt;/ regardless of where the element lives in the universe hierarchy. The &lt;profiles_package&gt; segment is read from the &#39;profiles_package&#39; property.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- A UML named element being documented in the context of a profile.</dd>
+                <dt><code>aTarget</code> <span class="param-type">: String</span></dt>
+                <dd>- The generation target format identifier (e.g. &#39;xsd&#39;, &#39;doc&#39;, &#39;json-ld&#39;).</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package that defines the subset containing this element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+        </div>
+
+
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_profileFilePath(
+  aNamedElement : uml::NamedElement,
+  aTarget : String,
+  aProfilePackage : uml::Package) : String =
+  let shortName : String = aNamedElement.u_model().u_modelShortName()
+  in
+  let profileSegment : String =
+    &#39;profiles_package&#39;.getRequiredPropertyValue() + &#39;/&#39; + aProfilePackage.name + &#39;/&#39; + aNamedElement.name
+  in
+  if aTarget = &#39;doc&#39;
+  then shortName + &#39;/&#39; + aTarget + &#39;/_rst/&#39; + profileSegment
+  else shortName + &#39;/encoding/&#39; + aTarget + &#39;/&#39; + profileSegment
   endif
 /]</code></pre>
     </details>
@@ -1553,6 +1605,7 @@
                  — The nearest PackageInformation DataType, or null if none found.
             </p>
 
+            <p class="see-also"><strong>See also:</strong> <code>u_packageInformation - resolves PackageInformation with fallback to ModelIdentification for legacy models.</code></p>
 
 
     <div class="cross-refs">
@@ -1996,12 +2049,12 @@
             </div>
 
 
-            <div class="description">Returns the model minor version version for aNamedElement. The value is determined in order of priority: (1) MODEL_MINOR_VERSION config property, (2) &#39;minorVersion&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.</div>
+            <div class="description">Returns the model minor version for aNamedElement. The value is determined in order of priority: (1) MODEL_MINOR_VERSION config property, (2) &#39;minorVersion&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
-                <dd>- The UML named element for which to resolve the model minor version version.</dd>
+                <dd>- The UML named element for which to resolve the model minor version.</dd>
             </dl>
 
             <h4>Returns</h4>
@@ -2385,7 +2438,7 @@
     &#39;RDF_NAMESPACE&#39;.getPropertyValue()
   in
   let modelRdfNamespace : String =
-    aNamedElement.u_packageInformationProperty(&#39;rdfNamespace&#39;)
+    aNamedElement.u_packageInformationProperty(&#39;rdfNamespaceUri&#39;)
   in
   if propertyRdfNamespace &lt;&gt; &#39;&#39;
   then propertyRdfNamespace
@@ -2410,7 +2463,7 @@
             </div>
 
 
-            <div class="description">Returns the model RDF preifx for aNamedElement. The value is determined in order of priority: (1) RDF_PREFIX config property, (2) &#39;rdfPrefix&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.</div>
+            <div class="description">Returns the model RDF prefix for aNamedElement. The value is determined in order of priority: (1) RDF_PREFIX config property, (2) &#39;rdfPrefix&#39; property of the relevant PackageInformation or ModelIdentification DataType, (3) &#39;NOT_SET&#39; as fallback.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
@@ -2421,7 +2474,7 @@
             <h4>Returns</h4>
             <p>
                 <code>String</code>
-                 — The RDF preifx as string, or &#39;NOT_SET&#39; if not found.
+                 — The RDF prefix as string, or &#39;NOT_SET&#39; if not found.
             </p>
 
 
@@ -2454,7 +2507,7 @@
     &#39;RDF_PREFIX&#39;.getPropertyValue()
   in
   let modelRdfPrefix : String =
-    aNamedElement.u_packageInformationProperty(&#39;rdfPrefix&#39;)
+    aNamedElement.u_packageInformationProperty(&#39;rdfNamespacePrefix&#39;)
   in
   if propertyRdfPrefix &lt;&gt; &#39;&#39;
   then propertyRdfPrefix
@@ -2522,6 +2575,293 @@
     + aNamedElement.u_modelMajorVersion()
     + &#39;-&#39;
     + aNamedElement.u_modelMinorVersion()
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_universePathSegment">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_universePathSegment
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_universePathSegment(anEObject : ecore::EObject) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the universe-package output path segment (the resolved &#39;universe_package&#39; property value plus a trailing &#39;/&#39;), or the empty string when it does not apply.  The segment only applies when BOTH conditions hold: (1) the &#39;profiles&#39; property is true, and (2) &#39;universe_package&#39; is actually set (non-empty).  This guards against models that set &#39;profiles=true&#39; but don&#39;t use the Universe/Profiles package structure at all (e.g. a standalone single-namespace model such as DDI-CDI) — for such models this returns &#39;&#39; rather than surfacing an &#39;ERROR: universe_package is undefined&#39; marker inside a generated file path. For models that do use the Universe/Profiles structure, behaviour is unchanged: the segment is only emitted once &#39;universe_package&#39; is confirmed set, so a genuine misconfiguration (profiles=true, Universe/Profiles structure intended, but the property simply forgotten) still surfaces via getRequiredPropertyValue() at the point the segment IS emitted — it just no longer breaks unrelated models that never needed the property in the first place.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anEObject</code> <span class="param-type">: ecore::EObject</span></dt>
+                <dd>- Only used as entry point.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                 — The universe path segment including trailing &#39;/&#39;, or &#39;&#39;.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_universePathSegment(anEObject : ecore::EObject) : String =
+  if &#39;profiles&#39;.isPropertyTrue() and &#39;universe_package&#39;.getPropertyValue() &lt;&gt; &#39;&#39;
+  then &#39;universe_package&#39;.getRequiredPropertyValue() + &#39;/&#39;
+  else &#39;&#39;
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_universePackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_universePackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_universePackage(aModel : uml::Model) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model&#39;s Universe package element (the package directly owned by the model whose name matches the &#39;universe_package&#39; property), or null when the universe-package segment does not apply.  Same dual-condition guard as u_universePathSegment: only resolves to a non-null result when &#39;profiles&#39; is true AND &#39;universe_package&#39; is actually set. Otherwise returns null so callers can degrade to an empty result rather than navigating from a property lookup that never matches any real package (or, in the pre-guard behaviour, crashing on required-property navigation).</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- The model to search for the Universe package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Package</code>
+                 — The Universe package, or null if not applicable/not found.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_universePackage(aModel : uml::Model) : uml::Package =
+  if &#39;profiles&#39;.isPropertyTrue() and &#39;universe_package&#39;.getPropertyValue() &lt;&gt; &#39;&#39;
+  then aModel.eAllContents(uml::Package)
+         -&gt;select(p | p.name = &#39;universe_package&#39;.getRequiredPropertyValue())
+         -&gt;first()
+  else null
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_profilesPackage">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_profilesPackage
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_profilesPackage(aModel : uml::Model) : uml::Package = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the model&#39;s Profiles package element (the package directly owned by the model whose name matches the &#39;profiles_package&#39; property), or null when the profiles-package segment does not apply.  Same dual-condition guard as u_universePackage: only resolves to a non-null result when &#39;profiles&#39; is true AND &#39;profiles_package&#39; is actually set.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd>- The model to search for the Profiles package.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>uml::Package</code>
+                 — The Profiles package, or null if not applicable/not found.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_profilesPackage(aModel : uml::Model) : uml::Package =
+  if &#39;profiles&#39;.isPropertyTrue() and &#39;profiles_package&#39;.getPropertyValue() &lt;&gt; &#39;&#39;
+  then aModel.eAllContents(uml::Package)
+         -&gt;select(p | p.name = &#39;profiles_package&#39;.getRequiredPropertyValue())
+         -&gt;first()
+  else null
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_jsonldElementFilePath">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_jsonldElementFilePath
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_jsonldElementFilePath(aNamedElement : uml::NamedElement) : String = ...]</code>
+            </div>
+
+
+            <div class="description">Returns the output file path (including &#39;.jsonld&#39; extension) for a class or data type&#39;s per-element modular JSON-LD file.  For non-profiles models, produces a flat path: &lt;shortName&gt;/encoding/json-ld/&lt;ElementName&gt;.jsonld  For profiles-enabled models, nests the file under its qualifiedName- derived package hierarchy, with the universe wrapper segment from u_universePathSegment() taking the place of BOTH: (1) the leading model-name segment — every qualifiedName starts with it, so it&#39;s always redundant, and (2) the immediately-following top-level Universe-package segment, when &#39;universe_package&#39; is set — since u_universePathSegment() already represents that same package by name.  Both segments are stripped by deletion rather than a find-and-replace against u_universePathSegment()&#39;s value, because that value is NOT guaranteed to differ from either segment&#39;s text — e.g. a model whose own name is identical to its top-level Universe package&#39;s name (as in CDIF) would make such a replace a silent no-op, leaving the redundant segment in place and producing a duplicated path segment (e.g. &#39;.../CDIFUniverse/CDIFUniverse/SKOS/Concept.jsonld&#39;). Deleting the segments outright is correct regardless of any such coincidence.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
+                <dd>- The class or data type element.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                 — The &#39;.jsonld&#39;-suffixed output file path.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePathSegment">u_universePathSegment</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+        </div>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replace" target="_blank">replace()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_jsonldElementFilePath(aNamedElement : uml::NamedElement) : String =
+  if &#39;profiles&#39;.isPropertyTrue()
+  then
+    let withoutModelSegment : String =
+      aNamedElement.qualifiedName.replace(aNamedElement.u_model().name + &#39;::&#39;, &#39;&#39;)
+    in
+    let withoutUniverseSegment : String =
+      if aNamedElement.u_universePathSegment() &lt;&gt; &#39;&#39;
+      then withoutModelSegment.replace(&#39;universe_package&#39;.getRequiredPropertyValue() + &#39;::&#39;, &#39;&#39;)
+      else withoutModelSegment
+      endif
+    in
+    aNamedElement.u_model().u_modelShortName() + &#39;/encoding/json-ld/&#39;
+      + aNamedElement.u_universePathSegment()
+      + withoutUniverseSegment.replaceAll(&#39;::&#39;, &#39;/&#39;)
+      + &#39;.jsonld&#39;
+  else
+    aNamedElement.u_model().u_modelShortName() + &#39;/encoding/json-ld/&#39; + aNamedElement.name + &#39;.jsonld&#39;
+  endif
 /]</code></pre>
     </details>
         </div>

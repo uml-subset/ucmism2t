@@ -258,6 +258,34 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classProfileShacl">
+                            <code>classProfileShacl(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates a SHACL NodeShape for a class in the context of a profile sub-package. Only attributes in the profile (via u_isAttributeInProfile) and associations where both ends are in the profile subset are included. Superclasses are only included when they are in the profile subset.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#classPropertiesProfileShacl">
+                            <code>classPropertiesProfileShacl(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the sh:property references for a class in profile context. Only includes attributes in the profile, associations where both ends are in the profile subset, and superclasses that are in the subset.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -351,12 +379,12 @@
   # based on the UML class [aClass.qualifiedName/]
   [aClass.fragment()/] a sh:NodeShape;
       sh:targetClass [aClass.iri()/];
-  	sh:message &quot;See [&#39;RDF_NS&#39;.getPropertyValue()/][aClass.name/]&quot;;
-  	sh:closed true;
-  	sh:ignoredProperties ( owl:sameAs );
+    sh:message &quot;See [&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;;
+    sh:closed true;
+    sh:ignoredProperties ( owl:sameAs );
       sh:property [&#39;[&#39;/]
-  			sh:path rdf:type;
-  			sh:in ( [aClass.allSubClasses()/]);
+        sh:path rdf:type;
+        sh:in ( [aClass.allSubClasses()/]);
       ];
   [aClass.classPropertiesShacl()/]
   .
@@ -370,7 +398,7 @@
       [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
         [anAssociation.fragment()/] a sh:PropertyShape ;
             sh:path [anAssociation.iri()/];
-        	sh:node [&#39;[&#39;/] sh:property [&#39;[&#39;/] sh:path rdf:type; sh:minCount 1; sh:in (
+          sh:node [&#39;[&#39;/] sh:property [&#39;[&#39;/] sh:path rdf:type; sh:minCount 1; sh:in (
               [anAssociation.u_otherEndClass().allSubClasses()/]
             ) ]];
         [if (targetEnd.lower &gt; 0)]
@@ -475,6 +503,259 @@
     [sc.classPropertiesShacl()/]
   [/for]
   
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classProfileShacl">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classProfileShacl
+            </h3>
+
+            <div class="signature">
+                <code>[template public classProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates a SHACL NodeShape for a class in the context of a profile sub-package. Only attributes in the profile (via u_isAttributeInProfile) and associations where both ends are in the profile subset are included. Superclasses are only included when they are in the profile subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class to generate SHACL for.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="propertyQuery.html#u_isUnlimited">u_isUnlimited</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#fragment">fragment</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonShacl.html#allSubClasses">allSubClasses</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShacl.html#classPropertiesProfileShacl">classPropertiesProfileShacl</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonShacl.html#attributeShape">attributeShape</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#fragmentRev">fragmentRev</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    # class [aClass.name/]
+    # based on the UML class [aClass.qualifiedName/]
+    [aClass.fragment()/] a sh:NodeShape;
+        sh:targetClass [aClass.iri()/];
+      sh:message &quot;See [&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;;
+      sh:closed true;
+      sh:ignoredProperties ( owl:sameAs );
+        sh:property [&#39;[&#39;/]
+        sh:path rdf:type;
+        sh:in ( [aClass.allSubClasses()/]);
+        ];
+    [aClass.classPropertiesProfileShacl(aProfilePackage)/]
+    .
+    
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        -&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+      [anAttribute.attributeShape()/]
+    [/for]
+    
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        -&gt;select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses-&gt;includes(a.u_ownedEndClass())
+          and subsetClasses-&gt;includes(a.u_otherEndClass())))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          [anAssociation.fragment()/] a sh:PropertyShape ;
+              sh:path [anAssociation.iri()/];
+            sh:node [&#39;[&#39;/] sh:property [&#39;[&#39;/] sh:path rdf:type; sh:minCount 1; sh:in (
+                [anAssociation.u_otherEndClass().allSubClasses()/]
+              ) ]];
+          [if (targetEnd.lower &gt; 0)]
+                sh:minCount [targetEnd.lower/];
+          [/if]
+          [if (not targetEnd.upper.u_isUnlimited())]
+                sh:maxCount [targetEnd.upper/];
+          [/if]
+          .
+          [anAssociation.fragmentRev()/] a sh:PropertyShape ;
+              sh:path [&#39;[&#39;/] sh:inversePath [anAssociation.iri()/] ];
+          [if (sourceEnd.lowerBound() &gt; 0)]
+                sh:minCount [sourceEnd.lower/];
+          [/if]
+          [if (not sourceEnd.upper.u_isUnlimited())]
+                sh:maxCount [sourceEnd.upper/];
+          [/if]
+          .
+        [/let]
+      [/let]
+    [/for]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classPropertiesProfileShacl">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classPropertiesProfileShacl
+            </h3>
+
+            <div class="signature">
+                <code>[template public classPropertiesProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the sh:property references for a class in profile context. Only includes attributes in the profile, associations where both ends are in the profile subset, and superclasses that are in the subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#fragment">fragment</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#fragmentRev">fragmentRev</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShacl.html#classPropertiesProfileShacl">classPropertiesProfileShacl</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classPropertiesProfileShacl(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+      # attributes
+  [for (anAttribute : uml::Property | aClass.u_attributes()
+      -&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+        sh:property [anAttribute.fragment()/];
+  [/for]
+      # associations from [aClass.name/]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      -&gt;select(a | a.u_ownedEndClass() = aClass
+        and subsetClasses-&gt;includes(a.u_ownedEndClass())
+        and subsetClasses-&gt;includes(a.u_otherEndClass())))]
+        sh:property [anAssociation.fragment()/];
+  [/for]
+      # associations to [aClass.name/]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      -&gt;select(a | a.u_otherEndClass() = aClass
+        and subsetClasses-&gt;includes(a.u_ownedEndClass())
+        and subsetClasses-&gt;includes(a.u_otherEndClass())))]
+        sh:property [anAssociation.fragmentRev()/];
+  [/for]
+  
+  [for (sc : uml::Class | aClass.superClass
+      -&gt;select(s | subsetClasses-&gt;includes(s)))]
+        # ---- superclass: [sc.name/]
+    [sc.classPropertiesProfileShacl(aProfilePackage)/]
+  [/for]
+  [/let]
 [/template]</code></pre>
     </details>
         </div>

@@ -236,14 +236,14 @@
                 <tr>
                     <td>
                         <a href="#processClassDoc">
-                            <code>processClassDoc(aClass)</code>
+                            <code>processClassDoc(aClass, folderType, aProfilePackage)</code>
                         </a>
                         
                         
                         
                     </td>
                     <td>
-                        Processes a class. Writes a file. Processes all classes if includeAllItems is true in the first properties file (run configuration). Filters for subset classes if includeAllItems is false and subset.class is set in subset.properties file.
+                        Processes a class and writes all output files for it.  When aProfilePackage is null (universe context): - Uses u_filePath for file paths - Emits the canonical RST anchor .. _&lt;qualifiedName&gt;: - No attribute filtering (all attributes included) - Association table shows all associations - Diagram uses pu_classDiagram(null)  When aProfilePackage is not null (profile context): - Uses u_profileFilePath for file paths - Emits the profile-specific anchor .. _&lt;profileName&gt;-&lt;qualifiedName&gt;: - Adds a &quot;See also&quot; reference to the universe file - Attributes filtered by u_isAttributeInProfile - Superclasses in attribute/association tables filtered to those in the profile subset - Association table shows only associations where both ends are in the profile subset - Diagram uses pu_classDiagram(aProfilePackage)
                         
                     </td>
                 </tr>
@@ -277,16 +277,20 @@
             </h3>
 
             <div class="signature">
-                <code>[template public processClassDoc(aClass : uml::Class)]</code>
+                <code>[template public processClassDoc(aClass : uml::Class, folderType : String, aProfilePackage : uml::Package)]</code>
             </div>
 
 
-            <div class="description">Processes a class. Writes a file. Processes all classes if includeAllItems is true in the first properties file (run configuration). Filters for subset classes if includeAllItems is false and subset.class is set in subset.properties file.</div>
+            <div class="description">Processes a class and writes all output files for it.  When aProfilePackage is null (universe context): - Uses u_filePath for file paths - Emits the canonical RST anchor .. _&lt;qualifiedName&gt;: - No attribute filtering (all attributes included) - Association table shows all associations - Diagram uses pu_classDiagram(null)  When aProfilePackage is not null (profile context): - Uses u_profileFilePath for file paths - Emits the profile-specific anchor .. _&lt;profileName&gt;-&lt;qualifiedName&gt;: - Adds a &quot;See also&quot; reference to the universe file - Attributes filtered by u_isAttributeInProfile - Superclasses in attribute/association tables filtered to those in the profile subset - Association table shows only associations where both ends are in the profile subset - Diagram uses pu_classDiagram(aProfilePackage)</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>a class</dd>
+                <dd>- The UML class to process.</dd>
+                <dt><code>folderType</code> <span class="param-type">: String</span></dt>
+                <dd>- &#39;universe&#39; to emit the canonical anchor, any other value to suppress it.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package context, or null for universe generation.</dd>
             </dl>
 
 
@@ -297,9 +301,13 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
                    href="configurationQuery.html#u_subsetAllClasses">u_subsetAllClasses</a>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_profileFilePath">u_profileFilePath</a>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_isChildOfMainPackage">u_isChildOfMainPackage</a>
                 <a class="ref-badge ref-internal-query"
@@ -317,17 +325,25 @@
                 <a class="ref-badge ref-internal-query"
                    href="modelQuery.html#u_allClasses">u_allClasses</a>
                 <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_profilePackagesForClass">u_profilePackagesForClass</a>
+                <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
                 <a class="ref-badge ref-internal-query"
                    href="classifierQuery.html#u_subClassesOrSubDataTypes">u_subClassesOrSubDataTypes</a>
                 <a class="ref-badge ref-internal-query"
                    href="classifierQuery.html#u_attributes">u_attributes</a>
                 <a class="ref-badge ref-internal-query"
-                   href="classQuery.html#u_inheritedClassAttributes">u_inheritedClassAttributes</a>
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_associations">u_associations</a>
                 <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
                    href="propertyQuery.html#u_docMultiplicity">u_docMultiplicity</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePathSegment">u_universePathSegment</a>
         </div>
 
         <div class="ref-section">
@@ -353,15 +369,27 @@
                 <a class="ref-badge ref-internal-template"
                    href="classXsd.html#classXsd">classXsd</a>
                 <a class="ref-badge ref-internal-template"
+                   href="classXsd.html#classProfileXsd">classProfileXsd</a>
+                <a class="ref-badge ref-internal-template"
                    href="classJsch.html#classJsch">classJsch</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#classProfileJsch">classProfileJsch</a>
                 <a class="ref-badge ref-internal-template"
                    href="classOnto.html#classOnto">classOnto</a>
                 <a class="ref-badge ref-internal-template"
+                   href="classOnto.html#classProfileOnto">classProfileOnto</a>
+                <a class="ref-badge ref-internal-template"
                    href="classJsonld.html#classJsonldModular">classJsonldModular</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldModularProfile">classJsonldModularProfile</a>
                 <a class="ref-badge ref-internal-template"
                    href="classShacl.html#classShacl">classShacl</a>
                 <a class="ref-badge ref-internal-template"
+                   href="classShacl.html#classProfileShacl">classProfileShacl</a>
+                <a class="ref-badge ref-internal-template"
                    href="classShex.html#classShex">classShex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShex.html#classProfileShex">classProfileShex</a>
         </div>
 
         <div class="ref-section">
@@ -371,9 +399,13 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
                     <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-union" target="_blank">union()</a>
                     <a class="ref-badge ref-aql-collection"
@@ -383,6 +415,7 @@
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
                     <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-concat" target="_blank">concat()</a>
                     <a class="ref-badge ref-aql-service"
@@ -406,17 +439,23 @@
 				            <a class="ref-badge ref-project-service"
 				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
 				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
 				</div>
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public processClassDoc(aClass : uml::Class)]
+        <pre class="source-code"><code>[template public processClassDoc(aClass : uml::Class, folderType : String, aProfilePackage : uml::Package)]
   [comment] subset condition [/comment]
-  [if (&#39;includeAllItems&#39;.isPropertyTrue() or aClass.u_subsetAllClasses()-&gt;includes(aClass.name))]  
-    [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.rst&#39;), overwrite, &#39;UTF-8&#39;)]
+  [if (&#39;includeAllItems&#39;.isPropertyTrue() or (aProfilePackage &lt;&gt; null and aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(aClass)) or (aProfilePackage = null and aClass.u_subsetAllClasses()-&gt;includes(aClass.name)))]
+    [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.rst&#39;), overwrite, &#39;UTF-8&#39;)]
       [aClass.rst_generationMessageDoc()/]
-      .. _[aClass.qualifiedName/]:
+      [if (folderType = &#39;universe&#39; and aProfilePackage = null)]
+        .. _[aClass.qualifiedName/]:
+      [elseif (aProfilePackage &lt;&gt; null)]
+        .. _[aProfilePackage.name/]-[aClass.qualifiedName/]:
+      [/if]
       
       [aClass.rst_className().rst_header(&#39;*&#39;)/]
       
@@ -428,11 +467,28 @@
         Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
       [/if]
       [if (aClass.isAbstract)]   | Class is abstract.[/if]
+      [if (aProfilePackage &lt;&gt; null)]
+      
+        Profile: **[aProfilePackage.name/]** | See also: :ref:`[aClass.qualifiedName/]` (full universe documentation)
+      [/if]
       
       [aClass.u_commentBody().replaceAll(&#39;(=\\s)&#39;, &#39;$1\r&#39;).rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
+      [if (aProfilePackage = null)]
+      [let profilePackages : OrderedSet(uml::Package) = aClass.u_profilePackagesForClass()]
+        [if (profilePackages-&gt;notEmpty())]
       
-      [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.pu&#39;), overwrite, &#39;UTF-8&#39;)]
-        [aClass.pu_classDiagram(0)/]
+          Used in profiles
+          ================
+      
+      [for (profilePkg : uml::Package | profilePackages)]
+        * :ref:`[profilePkg.name/]-[aClass.qualifiedName/]` ([profilePkg.name/])
+      [/for]
+        [/if]
+      [/let]
+      [/if]
+      
+      [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.pu&#39;), overwrite, &#39;UTF-8&#39;)]
+        [aClass.pu_classDiagram(aProfilePackage)/]
       [/file]
       Diagram
       =======
@@ -452,7 +508,7 @@
       
             [aClass.diagramModalPreCode()/]
       
-         .. uml:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].pu
+         .. uml:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].pu
       
       
          .. raw:: html
@@ -463,7 +519,9 @@
         [aClass.rst_classOrDataTypeInheritance()/]
       [/if]
       
-      [if (aClass.u_attributes()-&gt;notEmpty() or aClass.u_inheritedClassAttributes()-&gt;notEmpty())]
+      [let visibleAttrs : Sequence(uml::Property) = aClass.u_attributes()-&gt;select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage))]
+      [let visibleInheritedAttrs : Sequence(uml::Property) = aClass.u_allSuperClasses()-&gt;select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(sc.oclAsType(uml::Class)))-&gt;collect(sc | sc.u_attributes()-&gt;select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))-&gt;asSequence()]
+      [if (visibleAttrs-&gt;notEmpty() or visibleInheritedAttrs-&gt;notEmpty())]
         Attributes
         ==========
         
@@ -493,12 +551,14 @@
                    - Data Type
                    - Multiplicity
                    - Default value
-                 [for (p1 : uml::Property | aClass.u_attributes())]
+                 [for (p1 : uml::Property | aClass.u_attributes()-&gt;select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))]
                    [p1.rst_processAttributeInTable(aClass)/][/for]
-                 [for (c2 : uml::Classifier | aClass.u_allSuperClasses())]
-                   [for (p2 : uml::Property | c2.u_attributes())]
+                 [for (c2 : uml::Classifier | aClass.u_allSuperClasses()-&gt;select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(sc.oclAsType(uml::Class))))]
+                   [for (p2 : uml::Property | c2.u_attributes()-&gt;select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))]
                      [p2.rst_processAttributeInTable(aClass)/][/for][/for]
       [/if]
+      [/let]
+      [/let]
 
       [if (aClass.u_allSuperClasses()-&gt;union(OrderedSet{aClass})-&gt;collect(c | c.u_associations())-&gt;size() &gt; 0)]
         Associations
@@ -524,8 +584,12 @@
                    - Multiplicity of other class
                    - Aggregation Kind
                    - Inherited from
-        [for (c2 : uml::Class | aClass.u_allSuperClasses()-&gt;union(OrderedSet{aClass}))]
-          [for (anAssociation : uml::Association | c2.u_associations())]
+        [for (c2 : uml::Class | aClass.u_allSuperClasses()-&gt;select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(sc))-&gt;union(OrderedSet{aClass}))]
+          [for (anAssociation : uml::Association | c2.u_associations()
+              -&gt;select(a | a.ownedEnd-&gt;notEmpty()
+                and (aProfilePackage = null
+                  or (aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(a.u_ownedEndClass())
+                      and aProfilePackage.u_childDependencySupplierClasses()-&gt;includes(a.u_otherEndClass())))))]
             [let source : uml::Property = anAssociation.ownedEnd-&gt;first()]
               [let target : uml::Property = anAssociation.ownedEnd-&gt;first().getOtherEnd()]
                 [if (c2 &lt;&gt; target.type.oclAsType(uml::Class))]
@@ -534,17 +598,18 @@
                            * - to
                 [/if]
                            - [anAssociation.name.replaceAll(&#39;_&#39;, &#39; &#39;)/]
-                           - [anAssociation.u_commentBody()/]
+                           - 
+                            [anAssociation.u_commentBody()/]
                 [if (c2 &lt;&gt; target.type.oclAsType(uml::Class))]
                              - [source.u_docMultiplicity()/]
                              - [if (aClass.package &lt;&gt; target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-                             - :ref:`[target.type.qualifiedName/]`
+                             - [if (aProfilePackage &lt;&gt; null)]:ref:`[aProfilePackage.name/]-[target.type.qualifiedName/]`[else]:ref:`[target.type.qualifiedName/]`[/if]
                              - [target.u_docMultiplicity()/]
                              - [target.aggregation.toString()/]
                 [else]
                              - [target.u_docMultiplicity()/]
                              - [if (aClass.package &lt;&gt; source.type.package)]:ref:`[source.type.package.qualifiedName/]`[else]\- *own package* \-[/if]
-                             - :ref:`[source.type.qualifiedName/]`
+                             - [if (aProfilePackage &lt;&gt; null)]:ref:`[aProfilePackage.name/]-[source.type.qualifiedName/]`[else]:ref:`[source.type.qualifiedName/]`[/if]
                              - [source.u_docMultiplicity()/]
                              - [source.aggregation.toString()/]
                 [/if]
@@ -572,9 +637,9 @@
             
                  .. The path of the encoding URIs is adjusted by the Javascript function changeUrl in custom.js.
         
-                 Fragment for the class **[aClass.name/]** (`entire model as XMI &lt;/encoding/xmi/[aClass.u_model().u_modelAcronym().toLower()/]_canonical-unique-names.xmi&gt;`_)
+                 Fragment for the class **[aClass.name/]** (`entire model as XMI &lt;/encoding/xmi/[&#39;MODEL_FILE_NAME&#39;.getPropertyValue().replace(&#39;_eclipse&#39;, &#39;&#39;)/]&gt;`_)
             
-                 .. literalinclude:: /xmi/[aClass.name/].xmi
+                 .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].xmi
                     :lines: 2-
                     :language: xml
                     :linenos:
@@ -583,13 +648,13 @@
         [if (&#39;xsd&#39;.isPropertyTrue())]
                 .. tab-item:: XML Schema
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;_xsd.txt&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classXsd()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;_xsd.txt&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classXsd()/][else][aClass.classProfileXsd(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire XML Schema &lt;/encoding/xml-schema/[aClass.u_model().u_modelAcronym().toLower()/].xsd&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire XML Schema &lt;/encoding/xml-schema/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].xsd&gt;[else]profile XML Schema &lt;/encoding/xml-schema/[&#39;profiles_package&#39;.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].xsd&gt;[/if]`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/]_xsd.txt 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if]_xsd.txt 
                       :language: xml
                       :linenos:
                       :emphasize-lines: 1
@@ -599,13 +664,13 @@
         [if (&#39;jsonschema&#39;.isPropertyTrue())]
                 .. tab-item:: JSON Schema
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.schema.json&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classJsch()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.schema.json&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classJsch()/][else][aClass.classProfileJsch(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON Schema &lt;/encoding/json-schema/[aClass.u_model().u_modelAcronym().toLower()/].schema.json&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON Schema &lt;/encoding/json-schema/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].schema.json&gt;[else]profile JSON Schema &lt;/encoding/json-schema/[&#39;profiles_package&#39;.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].schema.json&gt;[/if]`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].schema.json 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].schema.json 
                       :language: json
                       :linenos:
                       :emphasize-lines: 1
@@ -614,13 +679,13 @@
         [if (&#39;onto&#39;.isPropertyTrue())]
                 .. tab-item:: Ontology (Turtle)
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.onto.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classOnto()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.onto.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classOnto()/][else][aClass.classProfileOnto(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`main ontology &lt;/encoding/ontology/[aClass.u_model().u_modelAcronym().toLower()/].onto.ttl&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]main ontology &lt;/encoding/ontology/[aClass.u_model().u_modelAcronym()/].onto.ttl&gt;[else]profile ontology &lt;/encoding/ontology/[&#39;profiles_package&#39;.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aProfilePackage.name/].onto.ttl&gt;[/if]`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].onto.ttl 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].onto.ttl 
                       :language: turtle
                       :linenos:
                       :emphasize-lines: 3
@@ -629,13 +694,13 @@
         [if (&#39;jsonld&#39;.isPropertyTrue())]
                 .. tab-item:: JSON-LD
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.jsonld&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classJsonldModular()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.jsonld&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classJsonldModular()/][else][aClass.classJsonldModularProfile(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire JSON-LD &lt;/encoding/json-ld/[aClass.u_model().u_modelAcronym().toLower()/].jsonld&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]entire JSON-LD &lt;/encoding/json-ld/[aClass.u_universePathSegment()/][aClass.u_model().u_modelAcronym().toLower()/].jsonld&gt;[else]profile JSON-LD &lt;/encoding/json-ld/[&#39;profiles_package&#39;.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aClass.u_model().u_modelAcronym().toLower()/].jsonld&gt;[/if]`_)
               
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].jsonld 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].jsonld 
                       :language: JSON-LD
                       :linenos:
                       :emphasize-lines: 2
@@ -644,13 +709,13 @@
         [if (&#39;shacl&#39;.isPropertyTrue())]
                 .. tab-item:: SHACL
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.shacl.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classShacl()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.shacl.ttl&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classShacl()/][else][aClass.classProfileShacl(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language &lt;/encoding/shacl/[aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`entire SHACL - Shapes Constraint Language &lt;/encoding/shacl/[if (aProfilePackage = null)][aClass.u_universePathSegment()/][/if][aClass.u_model().u_modelAcronym().toLower()/].shacl.ttl&gt;`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].shacl.ttl 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].shacl.ttl 
                       :language: turtle
                       :linenos:
                       :emphasize-lines: 4
@@ -659,13 +724,13 @@
         [if (&#39;shex&#39;.isPropertyTrue())]
                 .. tab-item:: ShEx
                    :class-content: encoding
-          [file (aClass.u_filePath(&#39;doc&#39;).concat(&#39;.shexc&#39;), overwrite, &#39;UTF-8&#39;)]
-            [aClass.classShex()/]
+          [file ((if aProfilePackage = null then aClass.u_filePath(&#39;doc&#39;) else aClass.u_profileFilePath(&#39;doc&#39;, aProfilePackage) endif).concat(&#39;.shexc&#39;), overwrite, &#39;UTF-8&#39;)]
+            [if (aProfilePackage = null)][aClass.classShex()/][else][aClass.classProfileShex(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions &lt;/encoding/shex/[aClass.u_model().u_modelAcronym().toLower()/].shexc&gt;`_)
+                   Fragment for the class **[aClass.name/]** (`entire ShEx - Shape Expressions &lt;/encoding/shex/[if (aProfilePackage = null)][aClass.u_universePathSegment()/][/if][aClass.u_model().u_modelAcronym().toLower()/].shexc&gt;`_)
           
-                   .. literalinclude:: [aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/].shexc 
+                   .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, &#39;&#39;).replaceAll(&#39;::&#39;, &#39;/&#39;)/][else][aClass.name/][/if].shexc 
                       :language: shexc
                       :linenos:
                       :emphasize-lines: 3

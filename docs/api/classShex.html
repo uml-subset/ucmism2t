@@ -245,6 +245,20 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classProfileShex">
+                            <code>classProfileShex(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates a ShEx shape for a class in the context of a profile sub-package. Only attributes in the profile (via u_isAttributeInProfile) and associations where both ends are in the profile subset are included. Superclass references are limited to those in the profile subset.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -312,20 +326,125 @@
   # class [aClass.name/]
   # based on the UML class [aClass.qualifiedName/]
   [aClass.iri()/]Shape CLOSED {
-  	a [&#39;[&#39;/][aClass.iri()/]];
+    a [&#39;[&#39;/][aClass.iri()/]];
   [if (aClass.u_isSuperClass())]
-    	$[aClass.iri()/]Properties (
+      $[aClass.iri()/]Properties (
   [/if]
   [for (anAttribute : uml::Property | aClass.u_attributes())]
-    	[anAttribute.attributeShex()/]
+      [anAttribute.attributeShex()/]
   [/for]
   [for (anAssociation : uml::Association | aClass.u_associations())]
-    	[anAssociation.associationShex(aClass)/]
+      [anAssociation.associationShex(aClass)/]
   [/for]
-  	[aClass.superClasses()/][if (aClass.u_isSuperClass())]
-                             	);
+    [aClass.superClasses()/][if (aClass.u_isSuperClass())]
+                              );
                            [/if]
   }
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classProfileShex">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classProfileShex
+            </h3>
+
+            <div class="signature">
+                <code>[template public classProfileShex(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates a ShEx shape for a class in the context of a profile sub-package. Only attributes in the profile (via u_isAttributeInProfile) and associations where both ends are in the profile subset are included. Superclass references are limited to those in the profile subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class to generate ShEx for.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_isSuperClass">u_isSuperClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonShex.html#attributeShex">attributeShex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="associationShex.html#associationShex">associationShex</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonOnto.html#superClassesProfile">superClassesProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classProfileShex(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    # class [aClass.name/]
+    # based on the UML class [aClass.qualifiedName/]
+    [aClass.iri()/]Shape CLOSED {
+      a [&#39;[&#39;/][aClass.iri()/]];
+    [if (aClass.u_isSuperClass())]
+        $[aClass.iri()/]Properties (
+    [/if]
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        -&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+        [anAttribute.attributeShex()/]
+    [/for]
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        -&gt;select(a | subsetClasses-&gt;includes(a.u_ownedEndClass())
+          and subsetClasses-&gt;includes(a.u_otherEndClass())))]
+        [anAssociation.associationShex(aClass)/]
+    [/for]
+      [aClass.superClassesProfile(subsetClasses)/][if (aClass.u_isSuperClass())]
+                                                    );
+                           [/if]
+    }
+  [/let]
 [/template]</code></pre>
     </details>
         </div>

@@ -246,6 +246,20 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#profileGenerateJsonld">
+                            <code>profileGenerateJsonld(aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the whole-model JSON-LD context file for a profile sub-package. Only classes and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/json-ld/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.jsonld
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -285,6 +299,8 @@
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelShortName">u_modelShortName</a>
                 <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePathSegment">u_universePathSegment</a>
+                <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_isInAllowedPackage">u_isInAllowedPackage</a>
@@ -292,6 +308,10 @@
                    href="commonRdf.html#isComplex">isComplex</a>
                 <a class="ref-badge ref-internal-query"
                    href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfNamespace">u_modelRdfNamespace</a>
         </div>
 
         <div class="ref-section">
@@ -329,27 +349,24 @@
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
-				</div>
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public generateJsonld(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + &#39;/encoding/json-ld/&#39; + aModel.u_modelAcronym().toLower() + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
+  [file (aModel.u_modelShortName() + &#39;/encoding/json-ld/&#39; + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
     [let classes : Sequence(uml::Class) =
             aModel.eAllContents(uml::Class)
             -&gt;select(aClass | aClass.u_isInAllowedPackage()),
          datatypes : Sequence(uml::DataType) =
             aModel.eAllContents(uml::DataType)
-            -&gt;select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems())
+            -&gt;select(d | d.isComplex() and d.u_isInAllowedPackage() and d.isNotInMappedItems() and d.name &lt;&gt; &#39;PackageInformation&#39;)
       ]
       {
         &quot;@context&quot;: {
-          &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/]&quot;,
-       	  &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+          &quot;[aModel.u_modelRdfPrefix()/]&quot;: &quot;[aModel.u_modelRdfNamespace()/]&quot;,
+[comment]         &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&quot;,[/comment]
+          &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
           &quot;[aModel.name/]&quot;: &quot;@included&quot;,
           [for (aClass : uml::Class | classes) separator(&#39;,\n    &#39;)]
             &quot;[aClass.name/]&quot;: {
@@ -372,6 +389,135 @@
       }
     [/let]
   [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="profileGenerateJsonld">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                profileGenerateJsonld
+            </h3>
+
+            <div class="signature">
+                <code>[template public profileGenerateJsonld(aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the whole-model JSON-LD context file for a profile sub-package. Only classes and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/json-ld/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.jsonld</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierDataTypes">u_childDependencySupplierDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfNamespace">u_modelRdfNamespace</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isComplex">isComplex</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldSelfContainedProfile">classJsonldSelfContainedProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeJsonld.html#dataTypeJsonldSelfContained">dataTypeJsonldSelfContained</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsonld.html#generationMessageJsonld">generationMessageJsonld</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public profileGenerateJsonld(aProfilePackage : uml::Package)]
+  [let aModel : uml::Model = aProfilePackage.u_model()]
+    [let subsetClasses : OrderedSet(uml::Class) =
+        aProfilePackage.u_childDependencySupplierClasses()]
+    [let subsetDataTypes : OrderedSet(uml::DataType) =
+        aProfilePackage.u_childDependencySupplierDataTypes()]
+      [file (aModel.u_modelShortName() + &#39;/encoding/json-ld/&#39; + &#39;profiles_package&#39;.getRequiredPropertyValue() + &#39;/&#39; + aProfilePackage.name + &#39;/&#39; + aModel.u_modelAcronym().toLower() + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
+        {
+          &quot;@context&quot;: {
+            &quot;[aProfilePackage.u_modelRdfPrefix()/]&quot;: &quot;[aProfilePackage.u_modelRdfNamespace()/]&quot;,
+[comment]         &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&quot;,[/comment]
+            &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+            &quot;[aModel.name/]&quot;: &quot;@included&quot;,
+            [for (aClass : uml::Class | subsetClasses-&gt;sortedBy(c | c.name)) separator(&#39;,
+    &#39;)]
+              &quot;[aClass.name/]&quot;: {
+                &quot;@id&quot;: &quot;[aClass.iri()/]&quot;,
+                &quot;@context&quot;: [&#39;[&#39;/]
+                  [aClass.classJsonldSelfContainedProfile(aProfilePackage)/]
+                ]
+              }[/for]
+            [if (subsetDataTypes-&gt;select(d | d.isComplex() and d.isNotInMappedItems())-&gt;size() &gt; 0)],[/if]
+            [for (aDataType : uml::DataType | subsetDataTypes-&gt;select(d | d.isComplex() and d.isNotInMappedItems() and d.name &lt;&gt; &#39;PackageInformation&#39;)-&gt;sortedBy(d | d.name)) separator(&#39;,
+    &#39;)]
+              &quot;[aDataType.name/]&quot;: {
+                &quot;@id&quot;: &quot;[aDataType.iri()/]&quot;,
+                &quot;@context&quot;: [&#39;[&#39;/]
+                  [aDataType.dataTypeJsonldSelfContained()/]
+                ]
+              }[/for]
+          },
+          &quot;generatedBy&quot;: &quot;[aModel.generationMessageJsonld()/]&quot;,
+          &quot;basedOn&quot;: &quot;based on UML model [aModel.qualifiedName/] profile [aProfilePackage.name/]&quot;
+        }
+      [/file]
+    [/let]
+    [/let]
+  [/let]
 [/template]</code></pre>
     </details>
         </div>

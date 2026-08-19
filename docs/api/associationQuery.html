@@ -217,7 +217,7 @@
         </h1>
 
 
-        <div class="description">Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class) and filtering associations for diagram generation purposes.  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML</div>
+        <div class="description">Module contains queries with a UML association as receiver. This includes queries for navigating association ends (owned end, other end, source class, target class), computing short association names, and testing whether an association belongs to a diagram subset.  The association direction convention used throughout this module and the diagram templates is: ownedEnd  = the source (subject) end, owned by the association otherEnd  = the target (object) end, owned by the source class  Note: Queries that find associations starting from a class are in classQuery, since their receiver is a UML class.  Related modules: - classQuery: queries with a UML class as receiver, including queries that find associations of a class - propertyQuery: queries with a UML property as receiver, since association ends are properties in UML</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
@@ -280,6 +280,18 @@
                     </td>
                     <td>
                         Returns the target (object) class of a binary directed association. A binary directed association can be understood as a triple: subject -- predicate (association name) --&gt; object The target class is the object — the class to which the association points. Delegates to u_otherEnd() for end navigation and casts its type to uml::Class. Note: Intended for use with binary directed associations only. See: u_ownedEndClass(uml::Association) - Returns the source (subject) class.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isAssociationInSubset">
+                            <code>u_isAssociationInSubset(anAssociation, aClass, aSubsetPackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns true if the given association should be shown in a context diagram for the given class, according to the current subset configuration.  An association is included when any of the following holds: (a) the property &#39;includeAllItems&#39; is true, meaning no subset filtering is active; (b) aSubsetPackage is not null (a profile subset is active) and both the source and target class of the association are members of that package&#39;s dependency-defined supplier classes, checked by object identity via u_childDependencySupplierClasses; (c) aSubsetPackage is null and the property-file-based subset applies: the other end class name is in u_subsetAllClasses relative to the focal class aClass.  The focal class aClass is always assumed to be in the subset (it is the subject of the diagram), so only the other end needs to be tested in the property-file case.  Note: Both u_ownedEndClass() and u_otherEndClass() assume both association ends are typed by uml::Class. Associations targeting DataTypes are excluded upstream by u_associations().  This query centralises the subset-filter condition used in: - pu_classDiagram (focal class associations) - pu_superClass (inherited superclass associations)
                         
                     </td>
                 </tr>
@@ -523,6 +535,97 @@
         <pre class="source-code"><code>[query public u_otherEndClass(
   anAssociation : uml::Association) : uml::Class =
   anAssociation.u_otherEnd().type.oclAsType(uml::Class)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isAssociationInSubset">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isAssociationInSubset
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isAssociationInSubset(anAssociation : uml::Association, aClass : uml::Class, aSubsetPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns true if the given association should be shown in a context diagram for the given class, according to the current subset configuration.  An association is included when any of the following holds: (a) the property &#39;includeAllItems&#39; is true, meaning no subset filtering is active; (b) aSubsetPackage is not null (a profile subset is active) and both the source and target class of the association are members of that package&#39;s dependency-defined supplier classes, checked by object identity via u_childDependencySupplierClasses; (c) aSubsetPackage is null and the property-file-based subset applies: the other end class name is in u_subsetAllClasses relative to the focal class aClass.  The focal class aClass is always assumed to be in the subset (it is the subject of the diagram), so only the other end needs to be tested in the property-file case.  Note: Both u_ownedEndClass() and u_otherEndClass() assume both association ends are typed by uml::Class. Associations targeting DataTypes are excluded upstream by u_associations().  This query centralises the subset-filter condition used in: - pu_classDiagram (focal class associations) - pu_superClass (inherited superclass associations)</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>anAssociation</code> <span class="param-type">: uml::Association</span></dt>
+                <dd>- A UML binary directed association to test.</dd>
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The focal class for which the diagram is being generated; assumed to be in the subset.</dd>
+                <dt><code>aSubsetPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package whose dependency relationships define the active subset, or null when using property-file-based filtering.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="configurationQuery.html#u_subsetAllClasses">u_subsetAllClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isAssociationInSubset(
+  anAssociation : uml::Association,
+  aClass : uml::Class,
+  aSubsetPackage : uml::Package) : Boolean =
+  (aSubsetPackage &lt;&gt; null
+    and aSubsetPackage.u_childDependencySupplierClasses()
+          -&gt;includes(anAssociation.u_ownedEndClass())
+    and aSubsetPackage.u_childDependencySupplierClasses()
+          -&gt;includes(anAssociation.u_otherEndClass()))
+  or (aSubsetPackage = null
+      and (&#39;includeAllItems&#39;.isPropertyTrue()
+        or (aClass = anAssociation.u_ownedEndClass()
+            and aClass.u_subsetAllClasses()
+                  -&gt;includes(anAssociation.u_otherEndClass().name))
+        or (aClass &lt;&gt; anAssociation.u_ownedEndClass()
+            and aClass.u_subsetAllClasses()
+                  -&gt;includes(anAssociation.u_ownedEndClass().name))))
 /]</code></pre>
     </details>
         </div>

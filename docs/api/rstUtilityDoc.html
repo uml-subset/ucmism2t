@@ -217,7 +217,7 @@
         </h1>
 
 
-        <div class="description">The documentation of the module utility.</div>
+        <div class="description">Module contains utility templates for generating reStructuredText (RST) documentation and PlantUML context diagrams from UML models.  PlantUML diagram templates: pu_classDiagram     - Context diagram for a UML class, showing associated classes, super/sub classes, associations, and abstraction relationships. pu_dataTypeDiagram  - Context diagram for a UML data type, showing classes and data types that use the type, the dotted usage connection, and the inheritance hierarchy. pu_superClass       - Helper: renders superclass nodes and their limited inherited associations for pu_classDiagram. pu_subClasses       - Helper: renders subclass inheritance arrows recursively for pu_classDiagram. pu_superDataType    - Helper: renders supertype inheritance for pu_dataTypeDiagram. pu_subDataTypes     - Helper: renders subtype inheritance for pu_dataTypeDiagram.  RST documentation templates: rst_mainIndexHead            - Index page header and toctree. rst_generationMessageDoc     - Generation message comment. rst_header                   - Section header underline. rst_classOrDataTypeInheritance - Collapsible inheritance tree. rst_subClasses               - Recursive subclass list. rst_processAttributeInTable  - Table row for a class attribute. rst_processAssociationInTable - Table row for an association. rst_refDataType              - RST :ref: link for a type. rst_simpleQualifiedClassNameReference     - :ref: for a class. rst_simpleQualifiedClassifierNameReference - :ref: for a classifier. rst_classNameReference       - :ref: for a class by qualified name. rst_classifierNameReference  - :ref: for a classifier by qualified name. rst_className                - Class name with italic for abstract. rst_addClassReferencesToDocumentation - Injects :ref: links into documentation strings. abstractionType              - UML abstraction stereotype label.  HTML diagram modal templates: diagramModalPreCode   - Opening tags for the SVG diagram modal. diagramModalPostCode  - Closing tags and modal controls.  Indentation utilities: e_indent  - Post-processor: prefixes every non-empty line with a fixed number of spaces (used for RST include blocks). e_indent2 - Post-processor: inserts indentation after each newline.</div>
 
         <table class="meta-table">
             <tr><th>Metamodels</th><td>
@@ -243,7 +243,7 @@
                         
                     </td>
                     <td>
-                        The documentation of the template mainIndexHead.
+                        Generates the main index page header for the RST field-level documentation, including the model comment body and the root toctree directive.
                         
                     </td>
                 </tr>
@@ -257,7 +257,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates the RST generation message comment, embedded at the top of each generated RST file.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -270,35 +271,35 @@
                         
                     </td>
                     <td>
-                        Generates a reStructuredText section header.
+                        Generates a reStructuredText section header by repeating the headerCharacter below the section title string.
                         
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <a href="#pu_classDiagram">
-                            <code>pu_classDiagram(aClass, indentAmount)</code>
+                            <code>pu_classDiagram(aClass, aSubsetPackage)</code>
                         </a>
                         
                         
                         
                     </td>
                     <td>
-                        Generates a diagram in Plantuml.
+                        Generates a PlantUML context diagram for a UML class.  The diagram shows: - The focal class (highlighted) with its own attributes - Associated classes grouped into three sections: (a) direct associated classes that are not superclasses, grouped in a &#39;together&#39; block for Graphviz layout (b) abstraction supplier classes in a &#39;together&#39; block (c) remaining context classes - Association arrows for the focal class - Superclass hierarchy (via pu_superClass) with limited inherited associations (max 3 per superclass) - Subclass hierarchy (via pu_subClasses) - Abstraction relationships when includeAllItems is true  All sections are subject to subset filtering via u_isAssociationInSubset (for associations) and u_profileSubsetClasses (for class nodes) when &#39;profiles&#39; is true.  The diagram is @enduml-terminated and output as a complete standalone PlantUML file.
                         
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <a href="#pu_dataTypeDiagram">
-                            <code>pu_dataTypeDiagram(aDataType, indentAmount)</code>
+                            <code>pu_dataTypeDiagram(aDataType)</code>
                         </a>
                         
                         
                         
                     </td>
                     <td>
-                        Generates a diagram in Plantuml.
+                        Generates a PlantUML context diagram for a UML data type.  The diagram shows: - The focal data type (highlighted) with its own attributes - Classes and data types that use this type as an attribute type, grouped by package, with dotted usage connections - Supertype inheritance hierarchy (via pu_superDataType) - Subtype inheritance hierarchy (via pu_subDataTypes) - Abstraction relationships  Attribute inclusion and usage connections are subject to subset filtering via u_subsetDataTypeAttributes.
                         
                     </td>
                 </tr>
@@ -312,20 +313,22 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Returns the PlantUML stereotype label for a UML abstraction, derived from the abstraction&#39;s name: contains &#39;derivesFrom&#39; -&gt; &lt;&lt;Derive&gt;&gt; contains &#39;refines&#39;     -&gt; &lt;&lt;Refine&gt;&gt; contains &#39;tracesTo&#39;    -&gt; &lt;&lt;Trace&gt;&gt;
+                        
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <a href="#pu_superClass">
-                            <code>pu_superClass(aClass, mainClass)</code>
+                            <code>pu_superClass(aClass, mainClass, aSubsetPackage)</code>
                         </a>
                         
                         
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Renders the superclass hierarchy for the focal class in a context diagram. For each direct superclass (subject to subset filtering):  1. Emits a note if the superclass has more than maxInherited associations, stating how many are shown. 2. Iterates up to maxInherited inherited associations of the superclass (via u_limitedAssociations), rendering each as a PlantUML association arrow using u_isAssociationInSubset for subset filtering and u_commentBody for the tooltip. 3. Renders the superclass node with its attributes. 4. Emits the generalization arrow. 5. Recurses upward via pu_superClass.  The maximum number of inherited associations shown per superclass is controlled by the let binding &#39;maxInherited&#39;. This local cap prevents diagrams from becoming unreadable when a superclass has many associations.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -338,20 +341,22 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Renders supertype inheritance for a data type context diagram. For each direct supertype, emits usage connections (dotted lines) for the supertype&#39;s limited-use properties, the inheritance arrow, and recurses upward.
+                        
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <a href="#pu_subClasses">
-                            <code>pu_subClasses(aClass)</code>
+                            <code>pu_subClasses(aClass, aSubsetPackage)</code>
                         </a>
                         
                         
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Renders subclass inheritance arrows recursively for a class context diagram. Each subclass is subject to subset filtering via u_profileSubsetClasses when &#39;profiles&#39; is true. Recurses into each subclass&#39;s own subclasses.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -364,7 +369,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Renders subtype inheritance arrows recursively for a data type context diagram. Recurses into each subtype&#39;s own subtypes.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -377,7 +383,7 @@
                         
                     </td>
                     <td>
-                        Generates a table row for a class attribute.
+                        Generates a table row in RST list-table format for a single class or data type attribute. The row is subject to subset filtering. Columns: attribute name, owning classifier reference, description, type reference, multiplicity, and default value.
                         
                     </td>
                 </tr>
@@ -391,7 +397,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a RST :ref: link for a UML type. UML primitive types (Boolean, Integer, Real, String) are rendered as plain text; all other types are rendered as a :ref: cross-reference.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -404,7 +411,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a table row in RST list-table format for a single UML association. Columns: target multiplicity, association predicate (short name), source class reference with qualified name, source multiplicity.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -417,7 +425,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a RST :ref: cross-reference for a class, using the simple qualified classifier name as the visible label and the fully qualified name as the reference target.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -430,7 +439,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a RST :ref: cross-reference for a classifier, using the simple qualified classifier name as the visible label and the fully qualified name as the reference target.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -443,7 +453,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a RST :ref: cross-reference for a class using only the fully qualified name (no visible label override).
+                        
                     </td>
                 </tr>
                 <tr>
@@ -456,7 +467,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates a RST :ref: cross-reference for a classifier using only the fully qualified name (no visible label override).
+                        
                     </td>
                 </tr>
                 <tr>
@@ -469,7 +481,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Renders a class name in RST, wrapping it in italic emphasis markers when the class is abstract.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -482,7 +495,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Post-processing template that prefixes every non-empty line of a multi-line string with a fixed number of spaces. Used to produce RST-indented include blocks when a generated diagram is embedded in an RST file.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -495,7 +509,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Post-processing template that inserts a fixed indentation string after every newline character in a string. Complementary to e_indent for use within a string value rather than on block boundaries.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -508,7 +523,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates the RST inheritance tree section for a classifier, rendered as a collapsible dropdown. The tree shows all superclass ancestors from the root downward to the focal class, followed by all direct and indirect subclasses.  When the classifier has superclasses, the root ancestor appears first without indentation and each subsequent ancestor is indented by 4 em-spaces per level, with the focal class shown in :focus:. When the classifier has no superclasses but does have subclasses, only the focal class and its subtree are shown.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -521,7 +537,7 @@
                         
                     </td>
                     <td>
-                        Creates a list of subclasses in restructuredText.
+                        Generates a recursive RST subclass/subtype list for the inheritance tree dropdown. Each entry is rendered with appropriate CSS class (abstract or regular) and indented by the given indent string. Recurses into each child&#39;s own subtree.  When &#39;profiles&#39; is true, only subclasses/subtypes that are members of the dependency-defined profile subset are shown (checked by object identity via u_profileSubsetClasses for classes and u_profileSubsetDataTypes for data types). When &#39;includeAllItems&#39; is true, all subclasses and subtypes are shown regardless of the subset.
                         
                     </td>
                 </tr>
@@ -535,7 +551,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates the opening HTML markup for the SVG diagram modal container. The modal allows the diagram to be enlarged and pan/zoomed in the browser. Must be paired with diagramModalPostCode.
+                        
                     </td>
                 </tr>
                 <tr>
@@ -548,7 +565,8 @@
                         
                     </td>
                     <td>
-                        <span class="no-doc">—</span>
+                        Generates the closing HTML markup for the SVG diagram modal, including the modal overlay, pan/zoom controls, and download buttons for PNG and SVG export.
+                        
                     </td>
                 </tr>
             </tbody>
@@ -569,7 +587,7 @@
                         
                     </td>
                     <td>
-                        Adds a class reference in restructeredText code.
+                        Injects RST :ref: cross-references into a documentation string for every class in aClassSequence whose name appears as a word boundary followed by punctuation in the string. Recurses through the sequence one class at a time.
                         
                     </td>
                 </tr>
@@ -592,12 +610,12 @@
             </div>
 
 
-            <div class="description">The documentation of the template mainIndexHead.</div>
+            <div class="description">Generates the main index page header for the RST field-level documentation, including the model comment body and the root toctree directive.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML model being documented.</dd>
             </dl>
 
 
@@ -657,11 +675,12 @@
             </div>
 
 
+            <div class="description">Generates the RST generation message comment, embedded at the top of each generated RST file.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aNamedElement</code> <span class="param-type">: uml::NamedElement</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The named element the file is generated for.</dd>
             </dl>
 
 
@@ -705,14 +724,14 @@
             </div>
 
 
-            <div class="description">Generates a reStructuredText section header.</div>
+            <div class="description">Generates a reStructuredText section header by repeating the headerCharacter below the section title string.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aString</code> <span class="param-type">: String</span></dt>
-                <dd>A section title.</dd>
+                <dd>- The section title.</dd>
                 <dt><code>headerCharacter</code> <span class="param-type">: String</span></dt>
-                <dd>A character for the section header type.</dd>
+                <dd>- The underline character (=, -, ~, etc.).</dd>
             </dl>
 
 
@@ -755,18 +774,18 @@
             </h3>
 
             <div class="signature">
-                <code>[template public pu_classDiagram(aClass : uml::Class, indentAmount : Integer)]</code>
+                <code>[template public pu_classDiagram(aClass : uml::Class, aSubsetPackage : uml::Package)]</code>
             </div>
 
 
-            <div class="description">Generates a diagram in Plantuml.</div>
+            <div class="description">Generates a PlantUML context diagram for a UML class.  The diagram shows: - The focal class (highlighted) with its own attributes - Associated classes grouped into three sections: (a) direct associated classes that are not superclasses, grouped in a &#39;together&#39; block for Graphviz layout (b) abstraction supplier classes in a &#39;together&#39; block (c) remaining context classes - Association arrows for the focal class - Superclass hierarchy (via pu_superClass) with limited inherited associations (max 3 per superclass) - Subclass hierarchy (via pu_subClasses) - Abstraction relationships when includeAllItems is true  All sections are subject to subset filtering via u_isAssociationInSubset (for associations) and u_profileSubsetClasses (for class nodes) when &#39;profiles&#39; is true.  The diagram is @enduml-terminated and output as a complete standalone PlantUML file.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>Class object.</dd>
-                <dt><code>indentAmount</code> <span class="param-type">: Integer</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML class for which the context diagram is generated.</dd>
+                <dt><code>aSubsetPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package whose dependency relationships define the active subset, or null for universe (no profile filtering).</dd>
             </dl>
 
 
@@ -795,17 +814,23 @@
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_allSubClasses">u_allSubClasses</a>
                 <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
                    href="configurationQuery.html#u_subsetClassAttributes">u_subsetClassAttributes</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_associatedClasses">u_associatedClasses</a>
                 <a class="ref-badge ref-internal-query"
-                   href="configurationQuery.html#u_subsetAllClasses">u_subsetAllClasses</a>
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_contextClasses">u_contextClasses</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_associations">u_associations</a>
                 <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_isAssociationInSubset">u_isAssociationInSubset</a>
+                <a class="ref-badge ref-internal-query"
                    href="associationQuery.html#u_shortAssociationName">u_shortAssociationName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_subClasses">u_subClasses</a>
                 <a class="ref-badge ref-internal-query"
@@ -845,17 +870,17 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-select" target="_blank">select()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-includes" target="_blank">includes()</a>
                     <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-collect" target="_blank">collect()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#string-first" target="_blank">first()</a>
         </div>
@@ -863,13 +888,11 @@
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
                     <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
-                    <span class="ref-badge ref-aql-service">and()</span>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
         </div>
 
 
@@ -885,16 +908,20 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public pu_classDiagram(aClass : uml::Class, indentAmount : Integer) post(self.e_indent(indentAmount))]
+        <pre class="source-code"><code>[template public pu_classDiagram(aClass : uml::Class, aSubsetPackage : uml::Package)]
   @startuml
   [aClass.pu_generationMessageDoc()/]
   !pragma ratio 0.5625
   [aClass.pu_options()/]
   
   title UML Diagram: Class [aClass.name/] in Context\n
-  &#39;title &lt;size:20&gt;UML Diagram: Class [aClass.name/] in Context\n
   [let url : String = &#39;../&#39; + aClass.u_path() + &#39;.html&#39;]
-    [let label : String = aClass.u_model().u_modelTitle() + &#39; (&#39; + aClass.u_model().u_modelAcronym() + &#39;) &#39; + aClass.u_model().u_modelMajorVersion() + &#39;.&#39; + aClass.u_model().u_modelMinorVersion() + &#39; - &#39; + aClass.u_simpleQualifiedClassifierName()]
+    [let label : String =
+        aClass.u_model().u_modelTitle()
+        + &#39; (&#39; + aClass.u_model().u_modelAcronym() + &#39;) &#39;
+        + aClass.u_model().u_modelMajorVersion()
+        + &#39;.&#39; + aClass.u_model().u_modelMinorVersion()
+        + &#39; - &#39; + aClass.u_simpleQualifiedClassifierName()]
       &lt;style&gt;
       title { FontSize: 20 }
       footer { hyperlinkUnderlineThickness 0 }
@@ -904,7 +931,6 @@
     [/let]
   [/let]
   
-  
   [if (aClass.u_allSuperClasses()-&gt;notEmpty() or aClass.u_allSubClasses()-&gt;notEmpty())]
     legend top left
     **Hint**
@@ -913,58 +939,97 @@
   [/if]
   
   &#39; Core class of diagram
-  [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_classifierNameWithLabel(&#39;black&#39;, &#39;&lt;size:10&gt;&#39; + aClass.package.name + &#39;::\\n&#39;)/] [&#39;uml-diagram-class-emphasis-color&#39;.getPropertyValue()/] {
+  [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_classifierNameWithLabel(&#39;black&#39;, &#39;&lt;size:10&gt;&#39; + aClass.package.name + &#39;:\\n&#39;)/] [&#39;uml-diagram-class-emphasis-color&#39;.getPropertyValue()/] {
   [for (anAttribute : uml::Property | aClass.ownedAttribute-&gt;select(temp1 | temp1.association = null)
-    -&gt;select(a | aClass.name.u_subsetClassAttributes()-&gt;includes(a.name) or &#39;includeAllItems&#39;.isPropertyTrue()))]
+    -&gt;select(a | (aSubsetPackage &lt;&gt; null and a.u_isAttributeInProfile(aClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()-&gt;includes(a.name) or &#39;includeAllItems&#39;.isPropertyTrue())))
+    -&gt;sortedBy(a | a.name))]
       [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
   [/for]
   }
   
-  &#39; Class definitions for associated classes without superclass (might have also an association)
-  &#39; This would be too many constraints for Graphviz. 
-  together {
-  [for (contextClass : uml::Class | aClass.u_associatedClasses() - aClass.superClass-&gt;sortedBy(temp2 | temp2.package.name)-&gt;sortedBy(temp3 | temp3.name))]
-    [if (&#39;includeAllItems&#39;.isPropertyTrue() or contextClass.u_subsetAllClasses()-&gt;includes(contextClass.name))]
-      [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;::\\n&#39;)/]
+  &#39; Associated classes without superclass.
+  &#39; Placed in a &#39;together&#39; block to reduce Graphviz layout constraints.
+  [let directAssocClasses : OrderedSet(uml::Class) =
+      aClass.u_associatedClasses() - aClass.superClass
+        -&gt;sortedBy(temp2 | temp2.package.name)
+        -&gt;sortedBy(temp3 | temp3.name)]
+    [if (directAssocClasses-&gt;select(c | (aSubsetPackage &lt;&gt; null and aSubsetPackage.u_childDependencySupplierClasses()-&gt;includes(c)) or (aSubsetPackage = null and &#39;includeAllItems&#39;.isPropertyTrue()))-&gt;notEmpty())]
+      together {
+      [for (contextClass : uml::Class | directAssocClasses)]
+        [let inSubset1 : Boolean = (aSubsetPackage &lt;&gt; null and aSubsetPackage.u_childDependencySupplierClasses()-&gt;includes(contextClass)) or (aSubsetPackage = null and &#39;includeAllItems&#39;.isPropertyTrue())]
+          [if (inSubset1)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;:\\n&#39;)/][/if]
+        [/let]
+      [/for]
+      }
     [/if]
-  [/for]
-  }
+  [/let]
   
-  &#39; Class definitions for suppliers of abstractions
-  together {
-  [for (contextClass : uml::Class | aClass.eInverse(uml::Abstraction)-&gt;asSequence()-&gt;collect(temp4 | temp4.supplier)-&gt;collect(temp5 | temp5.oclAsType(uml::Class))-&gt;sortedBy(temp6 | temp6.package.name)-&gt;sortedBy(temp7 | temp7.name)-&gt;select(contextClass | &#39;includeAllItems&#39;.isPropertyTrue()))]
-    [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;::\\n&#39;)/]
-  [/for]
-  }
-  
-  &#39; Rest of class definitions, without associated classes of core class and abstraction supplier classes
-  [for (contextClass : uml::Class | aClass.u_contextClasses() - aClass.eInverse(uml::Abstraction)-&gt;asSequence()-&gt;collect(temp8 | temp8.supplier)-&gt;collect(temp9 | temp9.oclAsType(uml::Class))-&gt;asOrderedSet() - (aClass.u_associatedClasses() - aClass.superClass)-&gt;sortedBy(temp10 | temp10.package.name)-&gt;sortedBy(temp11 | temp11.name))]
-    [if (&#39;includeAllItems&#39;.isPropertyTrue() or contextClass.u_subsetAllClasses()-&gt;includes(contextClass.name))]
-      [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;::\\n&#39;)/]
+  &#39; Abstraction supplier classes.
+  [let abstractionSuppliers : OrderedSet(uml::Class) =
+      aClass.eInverse(uml::Abstraction)-&gt;asSequence()
+        -&gt;collect(temp4 | temp4.supplier)
+        -&gt;collect(temp5 | temp5.oclAsType(uml::Class))
+        -&gt;sortedBy(temp6 | temp6.package.name)
+        -&gt;sortedBy(temp7 | temp7.name)
+        -&gt;select(c | &#39;includeAllItems&#39;.isPropertyTrue())
+        -&gt;asOrderedSet()]
+    [if (abstractionSuppliers-&gt;notEmpty())]
+      together {
+      [for (contextClass : uml::Class | abstractionSuppliers)]
+        [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;:\\n&#39;)/]
+      [/for]
+      }
     [/if]
+  [/let]
+  
+  &#39; Remaining context classes (excluding direct associated and abstraction suppliers).
+  [for (contextClass : uml::Class |
+      aClass.u_contextClasses()
+        - aClass.eInverse(uml::Abstraction)-&gt;asSequence()
+            -&gt;collect(temp8 | temp8.supplier)
+            -&gt;collect(temp9 | temp9.oclAsType(uml::Class))
+            -&gt;asOrderedSet()
+        - (aClass.u_associatedClasses() - aClass.superClass)
+            -&gt;sortedBy(temp10 | temp10.package.name)
+            -&gt;sortedBy(temp11 | temp11.name))]
+    [let inSubset2 : Boolean = (aSubsetPackage &lt;&gt; null and aSubsetPackage.u_childDependencySupplierClasses()-&gt;includes(contextClass)) or (aSubsetPackage = null and &#39;includeAllItems&#39;.isPropertyTrue())]
+      [if (inSubset2)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&#39; + contextClass.package.name + &#39;:\\n&#39;)/][/if]
+    [/let]
   [/for]
   
-  
-  
-  &#39; Associations
+  &#39; Associations of the focal class.
   [for (anAssociation : uml::Association | aClass.u_associations())]
-    [if (&#39;includeAllItems&#39;.isPropertyTrue() or aClass = anAssociation.ownedEnd-&gt;first().type and anAssociation.u_subsetAllClasses()-&gt;includes(anAssociation.ownedEnd-&gt;first().getOtherEnd().type.name) or aClass &lt;&gt; anAssociation.ownedEnd-&gt;first().type and anAssociation.u_subsetAllClasses()-&gt;includes(anAssociation.ownedEnd-&gt;first().type.name))]
+    [if (anAssociation.u_isAssociationInSubset(aClass, aSubsetPackage))]
       [if (aClass &lt;&gt; anAssociation.ownedEnd-&gt;first().type)]
-        [aClass.qualifiedName/] &lt;-[&#39;[&#39;/]#grey]-[anAssociation.ownedEnd-&gt;first().aggregation.pu_aggregationKind()/] [anAssociation.ownedEnd-&gt;first().type.oclAsType(uml::Classifier).qualifiedName/] [&#39;#&#39;.pu_link(&#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp12 | temp12.body)-&gt;collect(temp13 | temp13.trim()))/] : [anAssociation.u_shortAssociationName()/]
+        [let srcClass : uml::Classifier = anAssociation.ownedEnd-&gt;first().type.oclAsType(uml::Classifier)]
+          [let aggKind : String = anAssociation.ownedEnd-&gt;first().aggregation.pu_aggregationKind()]
+            [let tooltip : String = &#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.u_commentBody()]
+              [aClass.qualifiedName/] &lt;-[&#39;[&#39;/]#grey]-[aggKind/] [srcClass.qualifiedName/] [&#39;#&#39;.pu_link(tooltip)/] : [anAssociation.u_shortAssociationName()/]
+            [/let]
+          [/let]
+        [/let]
       [else]
-        [aClass.qualifiedName/] [anAssociation.ownedEnd-&gt;first().getOtherEnd().aggregation.pu_aggregationKind()/]-[&#39;[&#39;/]#grey]-&gt; [anAssociation.ownedEnd-&gt;first().getOtherEnd().type.oclAsType(uml::Classifier).qualifiedName/] [&#39;#&#39;.pu_link(&#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp14 | temp14.body)-&gt;collect(temp15 | temp15.trim()))/] : [anAssociation.u_shortAssociationName()/]
+        [let tgtClass : uml::Classifier = anAssociation.ownedEnd-&gt;first().getOtherEnd().type.oclAsType(uml::Classifier)]
+          [let aggKind : String = anAssociation.ownedEnd-&gt;first().getOtherEnd().aggregation.pu_aggregationKind()]
+            [let tooltip : String = &#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.u_commentBody()]
+              [aClass.qualifiedName/] [aggKind/]-[&#39;[&#39;/]#grey]-&gt; [tgtClass.qualifiedName/] [&#39;#&#39;.pu_link(tooltip)/] : [anAssociation.u_shortAssociationName()/]
+            [/let]
+          [/let]
+        [/let]
       [/if]
     [/if]
   [/for]
   
   [if (aClass.superClass-&gt;notEmpty())]
-    &#39; Super classes
-    [aClass.pu_superClass(aClass)/][/if]
+    &#39; Superclass hierarchy
+    [aClass.pu_superClass(aClass, aSubsetPackage)/]
+  [/if]
   [if (aClass.u_subClasses()-&gt;notEmpty())]
-    &#39; Sub classes
-    [aClass.pu_subClasses()/][/if]
+    &#39; Subclass hierarchy
+    [aClass.pu_subClasses(aSubsetPackage)/]
+  [/if]
   
-  &#39; Abstractions
+  &#39; Abstraction relationships
   [if (&#39;includeAllItems&#39;.isPropertyTrue() and aClass.u_model().u_allAbstractionClients()-&gt;includes(aClass))]
     [for (anAbstraction : uml::Abstraction | aClass.eInverse(uml::Abstraction))]
         [aClass.qualifiedName/] .....&gt; [anAbstraction.supplier-&gt;asSequence()-&gt;collect(temp16 | temp16.oclAsType(uml::Classifier))-&gt;collect(temp17 | temp17.qualifiedName)/] : [anAbstraction.abstractionType()/] 
@@ -988,18 +1053,16 @@
             </h3>
 
             <div class="signature">
-                <code>[template public pu_dataTypeDiagram(aDataType : uml::DataType, indentAmount : Integer)]</code>
+                <code>[template public pu_dataTypeDiagram(aDataType : uml::DataType)]</code>
             </div>
 
 
-            <div class="description">Generates a diagram in Plantuml.</div>
+            <div class="description">Generates a PlantUML context diagram for a UML data type.  The diagram shows: - The focal data type (highlighted) with its own attributes - Classes and data types that use this type as an attribute type, grouped by package, with dotted usage connections - Supertype inheritance hierarchy (via pu_superDataType) - Subtype inheritance hierarchy (via pu_subDataTypes) - Abstraction relationships  Attribute inclusion and usage connections are subject to subset filtering via u_subsetDataTypeAttributes.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
-                <dt><code>indentAmount</code> <span class="param-type">: Integer</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML data type for which the diagram is generated.</dd>
             </dl>
 
 
@@ -1102,16 +1165,20 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public pu_dataTypeDiagram(aDataType : uml::DataType, indentAmount : Integer) post(self.e_indent(indentAmount))]
+        <pre class="source-code"><code>[template public pu_dataTypeDiagram(aDataType : uml::DataType)]
   @startuml
   [aDataType.pu_generationMessageDoc()/]
   left to right direction
   [aDataType.pu_options()/]
   
   title UML Diagram: [aDataType.eClass().name/] [aDataType.name/] in Context\n
-  &#39;title &lt;size:20&gt;UML Diagram: [aDataType.eClass().name/] [aDataType.name/] in Context\n
   [let url : String = &#39;../&#39; + aDataType.u_path() + &#39;.html&#39;]
-    [let label : String = aDataType.u_model().u_modelTitle() + &#39; (&#39; + aDataType.u_model().u_modelAcronym() + &#39;) &#39; + aDataType.u_model().u_modelMajorVersion() + &#39;.&#39; + aDataType.u_model().u_modelMinorVersion() + &#39; - &#39; + aDataType.u_simpleQualifiedClassifierName()]
+    [let label : String =
+        aDataType.u_model().u_modelTitle()
+        + &#39; (&#39; + aDataType.u_model().u_modelAcronym() + &#39;) &#39;
+        + aDataType.u_model().u_modelMajorVersion()
+        + &#39;.&#39; + aDataType.u_model().u_modelMinorVersion()
+        + &#39; - &#39; + aDataType.u_simpleQualifiedClassifierName()]
       &lt;style&gt;
       title { FontSize: 20 }
       footer { hyperlinkUnderlineThickness 0 }
@@ -1153,7 +1220,7 @@
   &#39; Data type definitions in other packages
   [for (aPackage : uml::Package | aDataType.u_contextPackages())]
     [for (contextClassifier : uml::Classifier | aDataType.u_contextClassesOrDataTypes()-&gt;select(temp24 | temp24.package = aPackage))]
-        [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&lt;color:grey&gt;&#39; + contextClassifier.package.name + &#39;::\\n&#39;)/] {
+        [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt;&lt;color:grey&gt;&#39; + contextClassifier.package.name + &#39;:\\n&#39;)/] {
       [for (anAttribute : uml::Property | contextClassifier.attribute-&gt;select(temp23 | temp23.association = null))]
         [if (&#39;includeAllItems&#39;.isPropertyTrue() or contextClassifier.name.u_subsetDataTypeAttributes()-&gt;includes(anAttribute.name))]
             [anAttribute.name/] : [if (aDataType = anAttribute.type)][anAttribute.type.name/][else][anAttribute.type.pu_typeWithLink()/][/if]
@@ -1163,7 +1230,7 @@
     [/for]
   [/for]
   
-  &#39; Use of data type
+  &#39; Usage connections (dotted lines, non-formal UML)
   together {
   [for (anAttribute : uml::Property | aDataType.u_dataTypeUseProperties())]
     [if (&#39;includeAllItems&#39;.isPropertyTrue() or aDataType.name.u_subsetDataTypeAttributes()-&gt;includes(anAttribute.name))]
@@ -1173,13 +1240,15 @@
   }
   
   [if (aDataType.general-&gt;notEmpty())]
-    &#39; Super classes
-    [aDataType.pu_superDataType()/][/if]
+    &#39; Supertype hierarchy
+    [aDataType.pu_superDataType()/]
+  [/if]
   [if (aDataType.u_subDataTypes()-&gt;notEmpty())]
-    &#39; Sub classes
-    [aDataType.pu_subDataTypes()/][/if]
+    &#39; Subtype hierarchy
+    [aDataType.pu_subDataTypes()/]
+  [/if]
   
-  &#39; Abstractions
+  &#39; Abstraction relationships
   together {
   [if (aDataType.u_model().u_allAbstractionClients()-&gt;includes(aDataType))]
     [for (anAbstraction : uml::Abstraction | aDataType.eInverse(uml::Abstraction))]
@@ -1209,11 +1278,12 @@
             </div>
 
 
+            <div class="description">Returns the PlantUML stereotype label for a UML abstraction, derived from the abstraction&#39;s name: contains &#39;derivesFrom&#39; -&gt; &lt;&lt;Derive&gt;&gt; contains &#39;refines&#39;     -&gt; &lt;&lt;Refine&gt;&gt; contains &#39;tracesTo&#39;    -&gt; &lt;&lt;Trace&gt;&gt;</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>anAbstraction</code> <span class="param-type">: uml::Abstraction</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML Abstraction relationship.</dd>
             </dl>
 
 
@@ -1257,17 +1327,20 @@
             </h3>
 
             <div class="signature">
-                <code>[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class)]</code>
+                <code>[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class, aSubsetPackage : uml::Package)]</code>
             </div>
 
 
+            <div class="description">Renders the superclass hierarchy for the focal class in a context diagram. For each direct superclass (subject to subset filtering):  1. Emits a note if the superclass has more than maxInherited associations, stating how many are shown. 2. Iterates up to maxInherited inherited associations of the superclass (via u_limitedAssociations), rendering each as a PlantUML association arrow using u_isAssociationInSubset for subset filtering and u_commentBody for the tooltip. 3. Renders the superclass node with its attributes. 4. Emits the generalization arrow. 5. Recurses upward via pu_superClass.  The maximum number of inherited associations shown per superclass is controlled by the let binding &#39;maxInherited&#39;. This local cap prevents diagrams from becoming unreadable when a superclass has many associations.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The class whose superclasses are being rendered.</dd>
                 <dt><code>mainClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The original focal class at the root of the recursion, passed through unchanged to allow u_limitedAssociations to exclude the focal class&#39;s own direct associations.</dd>
+                <dt><code>aSubsetPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package, or null for universe.</dd>
             </dl>
 
 
@@ -1278,21 +1351,19 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="configurationQuery.html#u_subsetAllClasses">u_subsetAllClasses</a>
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_limitedAssociations">u_limitedAssociations</a>
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_associations">u_associations</a>
                 <a class="ref-badge ref-internal-query"
-                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
-                <a class="ref-badge ref-internal-query"
-                   href="classQuery.html#u_allIndirectSuperClasses">u_allIndirectSuperClasses</a>
-                <a class="ref-badge ref-internal-query"
-                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
-                <a class="ref-badge ref-internal-query"
-                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                   href="associationQuery.html#u_isAssociationInSubset">u_isAssociationInSubset</a>
                 <a class="ref-badge ref-internal-query"
                    href="associationQuery.html#u_shortAssociationName">u_shortAssociationName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
                 <a class="ref-badge ref-internal-query"
                    href="configurationQuery.html#u_subsetClassAttributes">u_subsetClassAttributes</a>
         </div>
@@ -1320,11 +1391,11 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#string-size" target="_blank">size()</a>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-subordered set" target="_blank">subOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#string-first" target="_blank">first()</a>
                     <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
         </div>
 
         <div class="ref-section">
@@ -1333,8 +1404,6 @@
                     <span class="ref-badge ref-aql-service">and()</span>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
         </div>
 
 
@@ -1350,44 +1419,50 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class)]
-  [for (aSuperClass : uml::Class | aClass.superClass-&gt;select(c | &#39;includeAllItems&#39;.isPropertyTrue() or aClass.u_subsetAllClasses()-&gt;includes(c.name)))]
-    &#39; Associations of Super classes
-    [let max : Integer = if aSuperClass.u_limitedAssociations(aClass)-&gt;size() &gt; 3 then 3 else aSuperClass.u_limitedAssociations(aClass)-&gt;size() endif]
-      &#39; max [max/]
-      [if (aSuperClass.u_limitedAssociations(aClass)-&gt;size() &gt; 3)]
-        note left of [aSuperClass.qualifiedName/] : Class has [aSuperClass.u_associations()-&gt;size()/] associations.\nOnly 3 are shown here.
-      [/if]
-      [if (max &gt; 0)]
-        &#39; firstAncestor:	[aClass.u_allSuperClasses()/]
-        &#39; secondAncestor:	[aClass.u_allIndirectSuperClasses()/]
-        
-        
-        
-        [for (anAssociation : uml::Association | aSuperClass.u_limitedAssociations(aClass))]
-          &#39; aClass:			[aClass.name/]
-          &#39; aSuperClass:		[aSuperClass.name/]
-          &#39; u_ownedEndClass:	[anAssociation.u_ownedEndClass().name/]
-          &#39; u_otherEndClass:	[anAssociation.u_otherEndClass().name/]
-          [if (&#39;includeAllItems&#39;.isPropertyTrue() or aSuperClass = anAssociation.ownedEnd-&gt;first().type and anAssociation.u_subsetAllClasses()-&gt;includes(anAssociation.ownedEnd-&gt;first().getOtherEnd().type.name) or aSuperClass &lt;&gt; anAssociation.ownedEnd-&gt;first().type and anAssociation.u_subsetAllClasses()-&gt;includes(anAssociation.ownedEnd-&gt;first().type.name))]
-            [if (aSuperClass &lt;&gt; anAssociation.ownedEnd-&gt;first().type)]
-              [aSuperClass.qualifiedName/] &lt;-[&#39;[&#39;/]#grey][anAssociation.ownedEnd-&gt;first().aggregation.pu_aggregationKind()/] [anAssociation.ownedEnd-&gt;first().type.oclAsType(uml::Classifier).qualifiedName/] [&#39;#&#39;.pu_link(&#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp29 | temp29.body)-&gt;collect(temp30 | temp30.trim()))/] : &lt;U+2003&gt;[anAssociation.u_shortAssociationName()/]
-            [else]
-              [aSuperClass.qualifiedName/] [anAssociation.ownedEnd-&gt;first().getOtherEnd().aggregation.pu_aggregationKind()/]-[&#39;[&#39;/]#grey]&gt; [anAssociation.ownedEnd-&gt;first().getOtherEnd().type.oclAsType(uml::Classifier).qualifiedName/] [&#39;#&#39;.pu_link(&#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp31 | temp31.body)-&gt;collect(temp32 | temp32.trim()))/] : &lt;U+2003&gt;[anAssociation.u_shortAssociationName()/]
-            [/if]
+        <pre class="source-code"><code>[template public pu_superClass(aClass : uml::Class, mainClass : uml::Class, aSubsetPackage : uml::Package)]
+  [for (aSuperClass : uml::Class | aClass.superClass-&gt;select(c | (aSubsetPackage &lt;&gt; null and aSubsetPackage.u_childDependencySupplierClasses()-&gt;includes(c)) or (aSubsetPackage = null and &#39;includeAllItems&#39;.isPropertyTrue())))]
+    &#39; Associations of superclass [aSuperClass.name/]
+    [let maxInherited : Integer = 3]
+      [let limitedAssocs : OrderedSet(uml::Association) = aSuperClass.u_limitedAssociations(aClass)]
+        [let showCount : Integer = if limitedAssocs-&gt;size() &gt; maxInherited then maxInherited else limitedAssocs-&gt;size() endif]
+          [if (limitedAssocs-&gt;size() &gt; maxInherited)]
+            note left of [aSuperClass.qualifiedName/] : Class has [aSuperClass.u_associations()-&gt;size()/] associations.\nOnly [maxInherited/] are shown here.
           [/if]
-        [/for]
-      [/if]
+          [if (showCount &gt; 0)]
+            [for (anAssociation : uml::Association | limitedAssocs-&gt;subOrderedSet(1, showCount))]
+              [if (anAssociation.u_isAssociationInSubset(aSuperClass, aSubsetPackage))]
+                [if (aSuperClass &lt;&gt; anAssociation.ownedEnd-&gt;first().type)]
+                  [let srcClass : uml::Classifier = anAssociation.ownedEnd-&gt;first().type.oclAsType(uml::Classifier)]
+                    [let aggKind : String = anAssociation.ownedEnd-&gt;first().aggregation.pu_aggregationKind()]
+                      [let tooltip : String = &#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.u_commentBody()]
+                        [aSuperClass.qualifiedName/] &lt;-[&#39;[&#39;/]#grey][aggKind/] [srcClass.qualifiedName/] [&#39;#&#39;.pu_link(tooltip)/] : &lt;U+2003&gt;[anAssociation.u_shortAssociationName()/]
+                      [/let]
+                    [/let]
+                  [/let]
+                [else]
+                  [let tgtClass : uml::Classifier = anAssociation.ownedEnd-&gt;first().getOtherEnd().type.oclAsType(uml::Classifier)]
+                    [let aggKind : String = anAssociation.ownedEnd-&gt;first().getOtherEnd().aggregation.pu_aggregationKind()]
+                      [let tooltip : String = &#39; &lt;U+2022&gt; &#39; + anAssociation.u_shortAssociationName() + &#39;:\\n&#39; + anAssociation.u_commentBody()]
+                        [aSuperClass.qualifiedName/] [aggKind/]-[&#39;[&#39;/]#grey]&gt; [tgtClass.qualifiedName/] [&#39;#&#39;.pu_link(tooltip)/] : &lt;U+2003&gt;[anAssociation.u_shortAssociationName()/]
+                      [/let]
+                    [/let]
+                  [/let]
+                [/if]
+              [/if]
+            [/for]
+          [/if]
+        [/let]
+      [/let]
     [/let]
     
     [if (aSuperClass.isAbstract)]abstract [/if]class [aSuperClass.pu_elementWithLink(&#39;blue&#39;, &#39;&lt;size:10&gt; \\n&#39;)/] [&#39;uml-diagram-package-default-color&#39;.getPropertyValue()/] {
-    [for (anAttribute : uml::Property | aSuperClass.ownedAttribute-&gt;select(temp33 | temp33.association = null)-&gt;select(a | aClass.name.u_subsetClassAttributes()-&gt;includes(a.name) or &#39;includeAllItems&#39;.isPropertyTrue()))]
+    [for (anAttribute : uml::Property | aSuperClass.ownedAttribute-&gt;select(temp33 | temp33.association = null)-&gt;select(a | (aSubsetPackage &lt;&gt; null and a.u_isAttributeInProfile(aSuperClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()-&gt;includes(a.name) or &#39;includeAllItems&#39;.isPropertyTrue())))-&gt;sortedBy(a | a.name))]
         [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
     [/for]
     }
     
     [aSuperClass.qualifiedName/] &lt;|-[&#39;[&#39;/]#D2691E]- [aClass.qualifiedName/]
-    [aSuperClass.pu_superClass(mainClass)/]
+    [aSuperClass.pu_superClass(mainClass, aSubsetPackage)/]
   [/for]
 [/template]</code></pre>
     </details>
@@ -1406,11 +1481,12 @@
             </div>
 
 
+            <div class="description">Renders supertype inheritance for a data type context diagram. For each direct supertype, emits usage connections (dotted lines) for the supertype&#39;s limited-use properties, the inheritance arrow, and recurses upward.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The data type whose supertypes are being rendered.</dd>
             </dl>
 
 
@@ -1452,14 +1528,10 @@
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public pu_superDataType(aDataType : uml::DataType)]
   [for (aSuperDataType : uml::DataType | aDataType.general-&gt;asSequence()-&gt;collect(temp34 | temp34.oclAsType(uml::DataType)))]
-    &#39; Use of super data types
-    
+    &#39; Supertype usage connections for [aSuperDataType.name/]
     [for (anAttribute : uml::Property | aSuperDataType.u_limitedDataTypeUseProperties())]
       [aSuperDataType.qualifiedName/] --up-- [anAttribute.owner.oclAsType(uml::Classifier).qualifiedName/]::[anAttribute.name/] #grey;line.dotted;
     [/for]
-    
-    
-    
     
     [aSuperDataType.qualifiedName/] &lt;|--r-- [aDataType.qualifiedName/] #D2691E
     [aSuperDataType.pu_superDataType()/]
@@ -1477,15 +1549,18 @@
             </h3>
 
             <div class="signature">
-                <code>[template public pu_subClasses(aClass : uml::Class)]</code>
+                <code>[template public pu_subClasses(aClass : uml::Class, aSubsetPackage : uml::Package)]</code>
             </div>
 
 
+            <div class="description">Renders subclass inheritance arrows recursively for a class context diagram. Each subclass is subject to subset filtering via u_profileSubsetClasses when &#39;profiles&#39; is true. Recurses into each subclass&#39;s own subclasses.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The class whose subclasses are being rendered.</dd>
+                <dt><code>aSubsetPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package, or null for universe.</dd>
             </dl>
 
 
@@ -1498,7 +1573,7 @@
                 <a class="ref-badge ref-internal-query"
                    href="classQuery.html#u_subClasses">u_subClasses</a>
                 <a class="ref-badge ref-internal-query"
-                   href="configurationQuery.html#u_subsetAllClasses">u_subsetAllClasses</a>
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
         </div>
 
         <div class="ref-section">
@@ -1520,6 +1595,7 @@
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
                     <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
         </div>
 
 
@@ -1534,10 +1610,11 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[template public pu_subClasses(aClass : uml::Class)]
-  [for (subClass : uml::Class | aClass.u_subClasses()-&gt;select(c | &#39;includeAllItems&#39;.isPropertyTrue() or aClass.u_subsetAllClasses()-&gt;includes(c.name)))]
+        <pre class="source-code"><code>[template public pu_subClasses(aClass : uml::Class, aSubsetPackage : uml::Package)]
+  [for (subClass : uml::Class | aClass.u_subClasses()-&gt;select(c | (aSubsetPackage &lt;&gt; null and aSubsetPackage.u_childDependencySupplierClasses()-&gt;includes(c)) or (aSubsetPackage = null and &#39;includeAllItems&#39;.isPropertyTrue())))]
       [aClass.qualifiedName/] &lt;|--[&#39;[&#39;/][&#39;uml-diagram-inheritance-arrow-color&#39;.getPropertyValue()/]]- [subClass.qualifiedName/] 
-    [if (subClass.u_subClasses()-&gt;notEmpty())][subClass.pu_subClasses()/][/if][/for]
+    [if (subClass.u_subClasses()-&gt;notEmpty())][subClass.pu_subClasses(aSubsetPackage)/][/if]
+  [/for]
 [/template]</code></pre>
     </details>
         </div>
@@ -1555,11 +1632,12 @@
             </div>
 
 
+            <div class="description">Renders subtype inheritance arrows recursively for a data type context diagram. Recurses into each subtype&#39;s own subtypes.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aDataType</code> <span class="param-type">: uml::DataType</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The data type whose subtypes are being rendered.</dd>
             </dl>
 
 
@@ -1599,7 +1677,8 @@
         <pre class="source-code"><code>[template public pu_subDataTypes(aDataType : uml::DataType)]
   [for (subDataType : uml::DataType | aDataType.u_subDataTypes())]
       [aDataType.qualifiedName/] &lt;|-r-- [subDataType.qualifiedName/] [&#39;uml-diagram-inheritance-arrow-color&#39;.getPropertyValue()/] 
-    [if (subDataType.u_subDataTypes()-&gt;notEmpty())][subDataType.pu_subDataTypes()/][/if][/for]
+    [if (subDataType.u_subDataTypes()-&gt;notEmpty())][subDataType.pu_subDataTypes()/][/if]
+  [/for]
 [/template]</code></pre>
     </details>
         </div>
@@ -1617,14 +1696,14 @@
             </div>
 
 
-            <div class="description">Generates a table row for a class attribute.</div>
+            <div class="description">Generates a table row in RST list-table format for a single class or data type attribute. The row is subject to subset filtering. Columns: attribute name, owning classifier reference, description, type reference, multiplicity, and default value.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>anAttribute</code> <span class="param-type">: uml::Property</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML property (attribute) to render.</dd>
                 <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The classifier owning the attribute&#39;s diagram.</dd>
             </dl>
 
 
@@ -1658,8 +1737,6 @@
             <span class="ref-label">AQL collection operations</span>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-includes" target="_blank">includes()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
         </div>
 
         <div class="ref-section">
@@ -1671,8 +1748,6 @@
                        href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#eobject-eclass" target="_blank">eClass()</a>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
         </div>
 
 
@@ -1698,7 +1773,8 @@
       [else]
           - :ref:`[attributeClassifier.u_packageQualifiedName()/]&lt;[attributeClassifier.qualifiedName/]&gt;`
       [/if]
-        - [anAttribute.u_commentBody()-&gt;collect(c1 | c1.replaceAll(&#39;-&#39;, &#39;\\-&#39;))-&gt;collect(c2 | c2.replaceAll(&#39;\\s+&#39;, &#39; &#39;))/]
+        -
+         [anAttribute.u_commentBody()/]
         - [anAttribute.type.rst_refDataType()/] 
         - [anAttribute.u_docMultiplicity()/]
         - [anAttribute.default/]
@@ -1721,11 +1797,12 @@
             </div>
 
 
+            <div class="description">Generates a RST :ref: link for a UML type. UML primitive types (Boolean, Integer, Real, String) are rendered as plain text; all other types are rendered as a :ref: cross-reference.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aType</code> <span class="param-type">: uml::Type</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML type to reference.</dd>
             </dl>
 
 
@@ -1771,13 +1848,14 @@
             </div>
 
 
+            <div class="description">Generates a table row in RST list-table format for a single UML association. Columns: target multiplicity, association predicate (short name), source class reference with qualified name, source multiplicity.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>a</code> <span class="param-type">: uml::Association</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML association to render.</dd>
                 <dt><code>indent</code> <span class="param-type">: String</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- Indentation string to prepend to each RST list item.</dd>
             </dl>
 
 
@@ -1791,6 +1869,8 @@
                    href="propertyQuery.html#u_docMultiplicity">u_docMultiplicity</a>
                 <a class="ref-badge ref-internal-query"
                    href="associationQuery.html#u_shortAssociationName">u_shortAssociationName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_simpleQualifiedClassifierName">u_simpleQualifiedClassifierName</a>
         </div>
 
 
@@ -1802,6 +1882,11 @@
                        href="aql-reference.html#string-first" target="_blank">first()</a>
         </div>
 
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
 
 
 
@@ -1812,7 +1897,7 @@
         <pre class="source-code"><code>[template public rst_processAssociationInTable(a : uml::Association, indent : String)]
   [indent/]* - [a.memberEnd-&gt;last().u_docMultiplicity()/]
   [indent/]  - [a.u_shortAssociationName()/]
-  [indent/]  - :ref:`[a.memberEnd-&gt;first().type.package.name/]::[a.memberEnd-&gt;first().type.name/]&lt;[a.memberEnd-&gt;first().type.qualifiedName/]&gt;`
+  [indent/]  - :ref:`[a.memberEnd-&gt;first().type.oclAsType(uml::Classifier).u_simpleQualifiedClassifierName()/]&lt;[a.memberEnd-&gt;first().type.qualifiedName/]&gt;`
   [indent/]  - [a.memberEnd-&gt;first().u_docMultiplicity()/]
 [/template]</code></pre>
     </details>
@@ -1831,19 +1916,36 @@
             </div>
 
 
+            <div class="description">Generates a RST :ref: cross-reference for a class, using the simple qualified classifier name as the visible label and the fully qualified name as the reference target.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML class to cross-reference.</dd>
             </dl>
 
 
 
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_simpleQualifiedClassifierName">u_simpleQualifiedClassifierName</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public rst_simpleQualifiedClassNameReference(aClass : uml::Class)]
-  :ref:`[aClass.package.name/]::[aClass.name/]&lt;[aClass.qualifiedName/]&gt;`[/template]</code></pre>
+  :ref:`[aClass.u_simpleQualifiedClassifierName()/]&lt;[aClass.qualifiedName/]&gt;`[/template]</code></pre>
     </details>
         </div>
         <div class="element-detail" id="rst_simpleQualifiedClassifierNameReference">
@@ -1860,19 +1962,36 @@
             </div>
 
 
+            <div class="description">Generates a RST :ref: cross-reference for a classifier, using the simple qualified classifier name as the visible label and the fully qualified name as the reference target.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML classifier to cross-reference.</dd>
             </dl>
 
 
 
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_simpleQualifiedClassifierName">u_simpleQualifiedClassifierName</a>
+        </div>
+
+
+
+
+
+
+        
+    </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public rst_simpleQualifiedClassifierNameReference(aClassifier : uml::Classifier)]
-  :ref:`[aClassifier.package.name/]::[aClassifier.name/]&lt;[aClassifier.qualifiedName/]&gt;`[/template]</code></pre>
+  :ref:`[aClassifier.u_simpleQualifiedClassifierName()/]&lt;[aClassifier.qualifiedName/]&gt;`[/template]</code></pre>
     </details>
         </div>
         <div class="element-detail" id="rst_classNameReference">
@@ -1889,11 +2008,12 @@
             </div>
 
 
+            <div class="description">Generates a RST :ref: cross-reference for a class using only the fully qualified name (no visible label override).</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML class to cross-reference.</dd>
             </dl>
 
 
@@ -1918,11 +2038,12 @@
             </div>
 
 
+            <div class="description">Generates a RST :ref: cross-reference for a classifier using only the fully qualified name (no visible label override).</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML classifier to cross-reference.</dd>
             </dl>
 
 
@@ -1947,11 +2068,12 @@
             </div>
 
 
+            <div class="description">Renders a class name in RST, wrapping it in italic emphasis markers when the class is abstract.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- A UML class.</dd>
             </dl>
 
 
@@ -1976,13 +2098,14 @@
             </div>
 
 
+            <div class="description">Post-processing template that prefixes every non-empty line of a multi-line string with a fixed number of spaces. Used to produce RST-indented include blocks when a generated diagram is embedded in an RST file.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>s</code> <span class="param-type">: String</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The string to indent.</dd>
                 <dt><code>indentAmount</code> <span class="param-type">: Integer</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The number of leading spaces to add per line.</dd>
             </dl>
 
 
@@ -2028,13 +2151,14 @@
             </div>
 
 
+            <div class="description">Post-processing template that inserts a fixed indentation string after every newline character in a string. Complementary to e_indent for use within a string value rather than on block boundaries.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>s</code> <span class="param-type">: String</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The string to indent.</dd>
                 <dt><code>indent</code> <span class="param-type">: Integer</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The number of leading spaces to insert after each newline.</dd>
             </dl>
 
 
@@ -2080,11 +2204,12 @@
             </div>
 
 
+            <div class="description">Generates the RST inheritance tree section for a classifier, rendered as a collapsible dropdown. The tree shows all superclass ancestors from the root downward to the focal class, followed by all direct and indirect subclasses.  When the classifier has superclasses, the root ancestor appears first without indentation and each subsequent ancestor is indented by 4 em-spaces per level, with the focal class shown in :focus:. When the classifier has no superclasses but does have subclasses, only the focal class and its subtree are shown.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- The UML classifier for which the inheritance tree is generated.</dd>
             </dl>
 
 
@@ -2160,8 +2285,7 @@
              [if (aSuperClassifier.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
           
              | [indent.first(aClassifier.u_allSuperClassifiers()-&gt;indexOf(aSuperClassifier) * 4)/]ᐊ── [aSuperClassifier.rst_simpleQualifiedClassifierNameReference()/]
-[comment] Acceleo 37:             | [indent.first(i * 4)/]ᐊ── [aSuperClassifier.rst_simpleQualifiedClassifierNameReference()/]
-[/comment]          
+          
         [/for]
            [if (aClassifier.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
         
@@ -2194,14 +2318,14 @@
             </div>
 
 
-            <div class="description">Creates a list of subclasses in restructuredText.</div>
+            <div class="description">Generates a recursive RST subclass/subtype list for the inheritance tree dropdown. Each entry is rendered with appropriate CSS class (abstract or regular) and indented by the given indent string. Recurses into each child&#39;s own subtree.  When &#39;profiles&#39; is true, only subclasses/subtypes that are members of the dependency-defined profile subset are shown (checked by object identity via u_profileSubsetClasses for classes and u_profileSubsetDataTypes for data types). When &#39;includeAllItems&#39; is true, all subclasses and subtypes are shown regardless of the subset.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
-                <dd>A classifier object.</dd>
+                <dd>- The classifier whose children are listed.</dd>
                 <dt><code>indent</code> <span class="param-type">: String</span></dt>
-                <dd>Number of characters for indentation.</dd>
+                <dd>- The current indentation prefix string.</dd>
             </dl>
 
 
@@ -2213,6 +2337,10 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="classifierQuery.html#u_subClassesOrSubDataTypes">u_subClassesOrSubDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_profileSubsetClasses">u_profileSubsetClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_profileSubsetDataTypes">u_profileSubsetDataTypes</a>
         </div>
 
         <div class="ref-section">
@@ -2226,28 +2354,50 @@
         <div class="ref-section">
             <span class="ref-label">AQL collection operations</span>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
         </div>
 
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-concat" target="_blank">concat()</a>
         </div>
 
 
 
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				</div>
         
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public rst_subClasses(aClassifier : uml::Classifier, indent : String)]
-  [for (c : uml::Classifier | aClassifier.u_subClassesOrSubDataTypes())]
+  [for (c : uml::Classifier | aClassifier.u_subClassesOrSubDataTypes()
+      -&gt;select(sub |
+        &#39;includeAllItems&#39;.isPropertyTrue()
+        or (sub.oclIsKindOf(uml::Class)
+            and aClassifier.u_profileSubsetClasses()-&gt;includes(sub.oclAsType(uml::Class)))
+        or (sub.oclIsKindOf(uml::DataType)
+            and aClassifier.u_profileSubsetDataTypes()-&gt;includes(sub.oclAsType(uml::DataType)))))]
        [if (c.isAbstract)].. cssclass:: abstract[else].. cssclass:: regular[/if]
     
        | [indent/]ᐊ── [c.rst_simpleQualifiedClassifierNameReference()/]
     
-    [if (c.u_subClassesOrSubDataTypes()-&gt;notEmpty())][c.rst_subClasses(indent.concat(&#39;|_| &#39;))/][/if][/for]
+    [if (c.u_subClassesOrSubDataTypes()-&gt;notEmpty())][c.rst_subClasses(indent.concat(&#39;|_| &#39;))/][/if]
+  [/for]
 [/template]</code></pre>
     </details>
         </div>
@@ -2265,11 +2415,12 @@
             </div>
 
 
+            <div class="description">Generates the opening HTML markup for the SVG diagram modal container. The modal allows the diagram to be enlarged and pan/zoomed in the browser. Must be paired with diagramModalPostCode.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- Any EObject; used only as receiver for dispatch.</dd>
             </dl>
 
 
@@ -2295,11 +2446,12 @@
             </div>
 
 
+            <div class="description">Generates the closing HTML markup for the SVG diagram modal, including the modal overlay, pan/zoom controls, and download buttons for PNG and SVG export.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>anOclAny</code> <span class="param-type">: ecore::EObject</span></dt>
-                <dd><span class="no-doc">No description.</span></dd>
+                <dd>- Any EObject; used only as receiver for dispatch.</dd>
             </dl>
 
 
@@ -2364,16 +2516,16 @@
             </div>
 
 
-            <div class="description">Adds a class reference in restructeredText code.</div>
+            <div class="description">Injects RST :ref: cross-references into a documentation string for every class in aClassSequence whose name appears as a word boundary followed by punctuation in the string. Recurses through the sequence one class at a time.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
                 <dt><code>s</code> <span class="param-type">: String</span></dt>
-                <dd>A string.</dd>
+                <dd>- The documentation string to process.</dd>
                 <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
-                <dd>A class object.</dd>
+                <dd>- The class being documented (excluded from self-reference injection).</dd>
                 <dt><code>aClassSequence</code> <span class="param-type">: Sequence(uml::Class)</span></dt>
-                <dd>A sequence of classes.</dd>
+                <dd>- The sequence of classes to inject as :ref:.</dd>
             </dl>
 
             <h4>Returns</h4>
@@ -2423,7 +2575,7 @@
     </div>
     <details class="source-dropdown">
         <summary>Show source</summary>
-        <pre class="source-code"><code>[query public rst_addClassReferencesToDocumentation(s : String, aClass : uml::Class, aClassSequence : Sequence(uml::Class)) : String = if aClassSequence-&gt;size() = 0 then s else if aClassSequence-&gt;first() &lt;&gt; aClass then s.replaceAll(&#39;(\\s)&#39;.concat(aClassSequence-&gt;first().name.concat(&#39;([\\.\\,\\s])&#39;)), &#39;$1&#39;.concat(aClassSequence-&gt;first().rst_classNameReference().concat(&#39;$2&#39;))).rst_addClassReferencesToDocumentation(aClass, aClassSequence-&gt;excluding(aClassSequence-&gt;first())) else s.rst_addClassReferencesToDocumentation(aClass, aClassSequence-&gt;excluding(aClassSequence-&gt;first())) endif endif/]</code></pre>
+        <pre class="source-code"><code>[query public rst_addClassReferencesToDocumentation(s : String, aClass : uml::Class, aClassSequence : Sequence(uml::Class)) : String = if aClassSequence-&gt;size() = 0 then s else if aClassSequence-&gt;first() &lt;&gt; aClass then s.replaceAll(&#39;(\\s)&#39;.concat(aClassSequence-&gt;first().name.concat(&#39;([\\.,\\s])&#39;)), &#39;$1&#39;.concat(aClassSequence-&gt;first().rst_classNameReference().concat(&#39;$2&#39;))).rst_addClassReferencesToDocumentation(aClass, aClassSequence-&gt;excluding(aClassSequence-&gt;first())) else s.rst_addClassReferencesToDocumentation(aClass, aClassSequence-&gt;excluding(aClassSequence-&gt;first())) endif endif/]</code></pre>
     </details>
         </div>
 

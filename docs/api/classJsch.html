@@ -287,6 +287,59 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classProfileJsch">
+                            <code>classProfileJsch(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates JSON Schema for a class in profile context. Only attributes passing u_isAttributeInProfile and associations where both ends are in the profile subset are included. The target-&lt;ClassName&gt; refs only reference subset classes.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genClassAttributesProfile">
+                            <code>genClassAttributesProfile(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genAssociationsProfile">
+                            <code>genAssociationsProfile(aClass, seen, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#genReverseAssociationsProfile">
+                            <code>genReverseAssociationsProfile(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -319,6 +372,28 @@
                     <td>
                         List-items of the names of the required associations in the returned string.
                         
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#requiredClassAttributesProfile">
+                            <code>requiredClassAttributesProfile(aClass, aProfilePackage) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#requiredAssociationsProfile">
+                            <code>requiredAssociationsProfile(aClass, aProfilePackage) : String</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
                     </td>
                 </tr>
             </tbody>
@@ -387,7 +462,7 @@
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public classJsch(aClass : uml::Class) post(self.trim())]
   &quot;cls-[aClass.name/]&quot;: {
-    &quot;description&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/][aClass.name/]&quot;,
+    &quot;description&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;,
     &quot;type&quot;: &quot;object&quot;,
     &quot;properties&quot;: {
       &quot;@context&quot;: {
@@ -411,7 +486,7 @@
     &quot;additionalProperties&quot;: false
   },
   &quot;target-[aClass.name/]&quot;: {
-    &quot;description&quot;: &quot;all subclasses of [&#39;RDF_NS&#39;.getPropertyValue()/][aClass.name/]&quot;,
+    &quot;description&quot;: &quot;all subclasses of [&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;,
     &quot;anyOf&quot;: [&#39;[&#39;/]
       { &quot;$ref&quot;: &quot;#/defs/cls-[aClass.name/]&quot; },
   [for (sc : uml::Class | aClass.u_subClasses())]
@@ -698,6 +773,446 @@
 [/template]</code></pre>
     </details>
         </div>
+        <div class="element-detail" id="classProfileJsch">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classProfileJsch
+            </h3>
+
+            <div class="signature">
+                <code>[template public classProfileJsch(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates JSON Schema for a class in profile context. Only attributes passing u_isAttributeInProfile and associations where both ends are in the profile subset are included. The target-&lt;ClassName&gt; refs only reference subset classes.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classJsch.html#requiredClassAttributesProfile">requiredClassAttributesProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classJsch.html#requiredAssociationsProfile">requiredAssociationsProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_subClasses">u_subClasses</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genClassAttributesProfile">genClassAttributesProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genAssociationsProfile">genAssociationsProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genReverseAssociationsProfile">genReverseAssociationsProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classProfileJsch(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    &quot;cls-[aClass.name/]&quot;: {
+      &quot;description&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;@context&quot;: {
+          &quot;$ref&quot;: &quot;#/defs/at-context&quot;
+        },
+        &quot;@id&quot;: {
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;format&quot;: &quot;iri-reference&quot;
+        },
+        &quot;@type&quot;: {
+          &quot;const&quot;: &quot;[aClass.name/]&quot;
+        },
+        [aClass.genClassAttributesProfile(aProfilePackage)/]
+        [aClass.genAssociationsProfile(OrderedSet{}, aProfilePackage)/]
+        [aClass.genReverseAssociationsProfile(aProfilePackage)/]
+        &quot;sameAs&quot;: {
+          &quot;$ref&quot;: &quot;#/defs/owl:sameAs&quot;
+        }
+      },
+      &quot;required&quot;: [&#39;[&#39;/][aClass.requiredClassAttributesProfile(aProfilePackage)/][aClass.requiredAssociationsProfile(aProfilePackage)/]&quot;@type&quot;],
+      &quot;additionalProperties&quot;: false
+    },
+    &quot;target-[aClass.name/]&quot;: {
+      &quot;description&quot;: &quot;all subclasses of [&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][aClass.name/]&quot;,
+      &quot;anyOf&quot;: [&#39;[&#39;/]
+        { &quot;$ref&quot;: &quot;#/defs/cls-[aClass.name/]&quot; },
+    [for (sc : uml::Class | aClass.u_subClasses()-&gt;select(s | subsetClasses-&gt;includes(s)))]
+          { &quot;$ref&quot;: &quot;#/defs/cls-[sc.name/]&quot; },
+    [/for]
+        { &quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;iri-reference&quot; }
+      ]
+    },
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genClassAttributesProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genClassAttributesProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genClassAttributesProfile(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#genAttributesProfile">genAttributesProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genClassAttributesProfile">genClassAttributesProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genClassAttributesProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) post(self.trim())]
+  [aClass.genAttributesProfile(aProfilePackage)/]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [if (aClass.superClass-&gt;notEmpty()
+      and subsetClasses-&gt;includes(aClass.superClass-&gt;first()))]
+    [aClass.superClass-&gt;first().genClassAttributesProfile(aProfilePackage)/]
+  [/if]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genAssociationsProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genAssociationsProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genAssociationsProfile(aClass : uml::Class, seen : OrderedSet(String), aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>seen</code> <span class="param-type">: OrderedSet(String)</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genAssociationsProfile">genAssociationsProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				            <span class="ref-badge ref-project-service">upperBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genAssociationsProfile(
+  aClass : uml::Class,
+  seen : OrderedSet(String),
+  aProfilePackage : uml::Package) post(self.trim())]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [let associations : OrderedSet(uml::Association) =
+      aClass.u_associations()
+        -&gt;select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses-&gt;includes(a.u_ownedEndClass())
+          and subsetClasses-&gt;includes(a.u_otherEndClass()))]
+    [for (anAssociation : uml::Association | associations
+        -&gt;select(a | seen-&gt;excludes(a.name)))]
+      [let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()]
+        [let targetEnd : uml::Property = sourceEnd.getOtherEnd()]
+          &quot;[anAssociation.shortName()/]&quot;: {
+            &quot;description&quot;: &quot;[anAssociation.name/]&quot;,
+            &quot;$comment&quot;: &quot;cardinality [targetEnd.lowerBound()/]..[targetEnd.upperBound()/]&quot;,
+          [if (targetEnd.upperBound() = 1)]
+               &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+          [else]
+              &quot;anyOf&quot;: [&#39;[&#39;/]
+                {
+                  &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+                },
+                {
+                  &quot;type&quot;: &quot;array&quot;,
+                  &quot;items&quot;: {
+                    &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_otherEndClass().name/]&quot;
+                  }
+                }
+              ]
+          [/if]
+          },
+        [/let]
+      [/let]
+    [/for]
+    [if (aClass.superClass-&gt;notEmpty()
+        and subsetClasses-&gt;includes(aClass.superClass-&gt;first()))]
+      [aClass.superClass-&gt;asSequence()-&gt;first()
+        .genAssociationsProfile(
+          seen + associations-&gt;asSequence()-&gt;collect(a | a.shortName()),
+          aProfilePackage)/]
+    [/if]
+  [/let]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genReverseAssociationsProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility protected">protected</span>
+                
+                
+                genReverseAssociationsProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template protected genReverseAssociationsProfile(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsch.html#genReverseAssociationsProfile">genReverseAssociationsProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				            <span class="ref-badge ref-project-service">upperBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template protected genReverseAssociationsProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) post(self.trim())]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [for (anAssociation : uml::Association | aClass.u_associations()
+      -&gt;select(a | a.u_otherEndClass() = aClass
+        and subsetClasses-&gt;includes(a.u_ownedEndClass())
+        and subsetClasses-&gt;includes(a.u_otherEndClass())))]
+    [let sourceEnd : uml::Property = anAssociation.ownedEnd-&gt;first()]
+      &quot;[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]&quot;: {
+        &quot;description&quot;: &quot;[anAssociation.name/]&quot;,
+        &quot;$comment&quot;: &quot;cardinality [sourceEnd.lowerBound()/]..[sourceEnd.upperBound()/]&quot;,
+      [if (sourceEnd.upperBound() = 1)]
+          &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+      [else]
+          &quot;anyOf&quot;: [&#39;[&#39;/]
+            {
+              &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+            },
+            {
+              &quot;type&quot;: &quot;array&quot;,
+              &quot;items&quot;: {
+                &quot;$ref&quot;: &quot;#/defs/target-[anAssociation.u_ownedEndClass().name/]&quot;
+              }
+            }
+          ]
+      [/if]
+      },
+    [/let]
+  [/for]
+  [if (aClass.superClass-&gt;notEmpty()
+      and subsetClasses-&gt;includes(aClass.superClass-&gt;first()))]
+    [aClass.superClass-&gt;asSequence()-&gt;first()
+      .genReverseAssociationsProfile(aProfilePackage)/]
+  [/if]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
 
         <!-- ═══════════════════════════════════ Query detail -->
         <h2>Query Detail</h2>
@@ -846,6 +1361,206 @@
     s
   else
     s + aClass.superClass-&gt;first().requiredAssociations()
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="requiredClassAttributesProfile">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                requiredClassAttributesProfile
+            </h3>
+
+            <div class="signature">
+                <code>[query public requiredClassAttributesProfile(aClass : uml::Class, aProfilePackage : uml::Package) : String = ...]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classJsch.html#requiredClassAttributesProfile">requiredClassAttributesProfile</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#object-tostring" target="_blank">toString()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public requiredClassAttributesProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : String =
+  let s : String =
+    aClass.u_attributes()
+      -&gt;select(p | p.lower &gt; 0
+        and p.u_isAttributeInProfile(aClass, aProfilePackage))
+      -&gt;collect(p2 | &#39;&quot;&#39; + p2.name + &#39;&quot;, &#39;)
+      -&gt;toString()
+  in
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  if aClass.superClass-&gt;isEmpty()
+    or not subsetClasses-&gt;includes(aClass.superClass-&gt;first())
+  then s
+  else s + aClass.superClass-&gt;first()
+              .requiredClassAttributesProfile(aProfilePackage)
+  endif
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="requiredAssociationsProfile">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                requiredAssociationsProfile
+            </h3>
+
+            <div class="signature">
+                <code>[query public requiredAssociationsProfile(aClass : uml::Class, aProfilePackage : uml::Package) : String = ...]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>String</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEnd">u_otherEnd</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classJsch.html#requiredAssociationsProfile">requiredAssociationsProfile</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#object-tostring" target="_blank">toString()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-isempty" target="_blank">isEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+                    <span class="ref-badge ref-aql-service">not()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public requiredAssociationsProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : String =
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  let s : String =
+    aClass.u_associations()
+      -&gt;select(a | a.u_ownedEndClass() = aClass
+        and subsetClasses-&gt;includes(a.u_ownedEndClass())
+        and subsetClasses-&gt;includes(a.u_otherEndClass())
+        and a.u_otherEnd().lower &gt; 0)
+      -&gt;collect(a3 | &#39;&quot;&#39; + a3.shortName() + &#39;&quot;, &#39;)
+      -&gt;toString()
+  in
+  if aClass.superClass-&gt;isEmpty()
+    or not subsetClasses-&gt;includes(aClass.superClass-&gt;first())
+  then s
+  else s + aClass.superClass-&gt;first()
+              .requiredAssociationsProfile(aProfilePackage)
   endif
 /]</code></pre>
     </details>

@@ -447,9 +447,7 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_model">u_model</a>
+                   href="elementQuery.html#u_jsonldElementFilePath">u_jsonldElementFilePath</a>
         </div>
 
         <div class="ref-section">
@@ -467,7 +465,7 @@
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public dataTypeJsonldFile(aDataType : uml::DataType) post(self.trim())]
-  [file (aDataType.u_model().u_modelShortName() + &#39;/encoding/json-ld/&#39; + aDataType.name + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
+  [file (aDataType.u_jsonldElementFilePath(), overwrite, &#39;UTF-8&#39;)]
     [aDataType.dataTypeJsonldModular()/]
   [/file]
 [/template]</code></pre>
@@ -504,6 +502,10 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfNamespace">u_modelRdfNamespace</a>
         </div>
 
         <div class="ref-section">
@@ -533,10 +535,6 @@
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
-				</div>
         
     </div>
     <details class="source-dropdown">
@@ -548,7 +546,8 @@
         &quot;[aDataType.general-&gt;asSequence()-&gt;collect(temp3 | temp3.name)/].jsonld&quot;,
   [/if]
       {
-        &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/]&quot;,
+        &quot;[aDataType.u_modelRdfPrefix()/]&quot;: &quot;[aDataType.u_modelRdfNamespace()/]&quot;,
+[comment]         &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&quot;,[/comment]
         &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
   
         [aDataType.dataTypeJsonldCore(true)/] 

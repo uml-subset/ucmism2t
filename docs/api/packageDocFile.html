@@ -247,6 +247,20 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#validateProfilePackage">
+                            <code>validateProfilePackage(aPackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Validates all @selected-attributes annotations in the given profile sub-package. For each dependency-supplier class, checks whether every listed attribute name exists on the class. Writes a warning to stdout for each unknown name via logWarning.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -294,6 +308,12 @@
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_commentBody">u_commentBody</a>
                 <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierDataTypes">u_childDependencySupplierDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierEnumerations">u_childDependencySupplierEnumerations</a>
+                <a class="ref-badge ref-internal-query"
                    href="packageQuery.html#u_childPackages">u_childPackages</a>
                 <a class="ref-badge ref-internal-query"
                    href="packageQuery.html#u_childClasses">u_childClasses</a>
@@ -316,13 +336,27 @@
                 <a class="ref-badge ref-internal-template"
                    href="rstUtilityDoc.html#rst_header">rst_header</a>
                 <a class="ref-badge ref-internal-template"
-                   href="packageDocFile.html#processPackageDoc">processPackageDoc</a>
+                   href="packageDocFile.html#validateProfilePackage">validateProfilePackage</a>
                 <a class="ref-badge ref-internal-template"
                    href="classDocFile.html#processClassDoc">processClassDoc</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelShaclFile.html#profileShaclFile">profileShaclFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelShexFile.html#profileShexFile">profileShexFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="processModelOnto.html#profileOntoFile">profileOntoFile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelJsonldFile.html#profileGenerateJsonld">profileGenerateJsonld</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelJschFile.html#profileGenerateJsonSchema">profileGenerateJsonSchema</a>
+                <a class="ref-badge ref-internal-template"
+                   href="modelXsdFile.html#profileProcessModelXsd">profileProcessModelXsd</a>
                 <a class="ref-badge ref-internal-template"
                    href="dataTypeDocFile.html#processDataTypeDoc">processDataTypeDoc</a>
                 <a class="ref-badge ref-internal-template"
                    href="enumerationDocFile.html#processEnumerationDoc">processEnumerationDoc</a>
+                <a class="ref-badge ref-internal-template"
+                   href="packageDocFile.html#processPackageDoc">processPackageDoc</a>
         </div>
 
         <div class="ref-section">
@@ -347,7 +381,11 @@
                        href="aql-reference.html#eobject-eclass" target="_blank">eClass()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-replaceall" target="_blank">replaceAll()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtainer" target="_blank">eContainer()</a>
                     <span class="ref-badge ref-aql-service">not()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-endswith" target="_blank">endsWith()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#object-oclisof" target="_blank">oclIsTypeOf()</a>
         </div>
@@ -363,6 +401,7 @@
 				    <span class="ref-label">Project services</span>
 				            <a class="ref-badge ref-project-service"
 				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
 				</div>
         
     </div>
@@ -372,36 +411,133 @@
   [if (&#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_model().u_subsetPackages()-&gt;includes(aPackage.name))]
     [if (aPackage.u_testPackages()-&gt;size()=0
       or (aPackage.u_testPackages()-&gt;size()&gt;0 and aPackage.u_testPackages()-&gt;includes(aPackage.name)))]
-  	  [file (aPackage.u_filePath(&#39;doc&#39;).concat(&#39;/index.rst&#39;), overwrite, &#39;UTF-8&#39;)]
-  	    [aPackage.rst_generationMessageDoc()/]
-  	    .. _[aPackage.qualifiedName/]:
-  	    
-  	    [aPackage.name.rst_header(&#39;*&#39;)/]
-  	    
-  	    | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
-  	    
-  	    [aPackage.u_commentBody().replaceAll(&#39;(=\\s)&#39;, &#39;$1\r&#39;)/]
-  	    
-  	    -----
-  	    
-  	    .. toctree::
-  	       :titlesonly:
-  	    
-  	    [for (childPackage : uml::Package | aPackage.u_childPackages()-&gt;select(p | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_model().u_subsetPackages()-&gt;includes(p.name)))]
-  	         [childPackage.name.concat(&#39;/index.rst&#39;)/]
-  	      [childPackage.processPackageDoc()/][/for]
-  	    [for (aClass : uml::Class | aPackage.u_childClasses()-&gt;select(c | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetAllClasses()-&gt;includes(c.name)))]
-  	         [aClass.name.concat(&#39;.rst&#39;)/]
-  	      [aClass.processClassDoc()/][/for]
-  	    [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()-&gt;select(d | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetDataTypes()-&gt;includes(d.name))-&gt;select(aDataType | not aDataType.oclIsTypeOf(uml::Enumeration)))]
-  	         [aDataType.name.concat(&#39;.rst&#39;)/]
-  	      [aDataType.processDataTypeDoc()/][/for]
-  	    [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()-&gt;select(e | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetEnumerations()-&gt;includes(e.name)))]
-  	         [anEnumeration.name.concat(&#39;.rst&#39;)/]
-  	      [anEnumeration.processEnumerationDoc()/][/for]
-  	  [/file]
+      [file (aPackage.u_filePath(&#39;doc&#39;).concat(&#39;/index.rst&#39;), overwrite, &#39;UTF-8&#39;)]
+        [aPackage.rst_generationMessageDoc()/]
+        .. _[aPackage.qualifiedName/]:
+        
+        [aPackage.name.rst_header(&#39;*&#39;)/]
+        
+        | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
+        
+        [aPackage.u_commentBody().replaceAll(&#39;(=\\s)&#39;, &#39;$1\r&#39;)/]
+
+        -----
+
+        .. toctree::
+           :titlesonly:
+
+        [if ( aPackage.eContainer(uml::Package).name = &#39;profiles_package&#39;.getRequiredPropertyValue() and &#39;profiles&#39;.isPropertyTrue())]
+          [aPackage.validateProfilePackage()/]
+          [for ( aClass | aPackage.u_childDependencySupplierClasses())]
+              [aClass.name.concat(&#39;.rst&#39;)/]
+            [aClass.processClassDoc(&#39;profiles&#39;, aPackage)/][/for]
+          [if (&#39;shacl&#39;.isPropertyTrue())]
+            [aPackage.profileShaclFile()/]
+          [/if]
+          [if (&#39;shex&#39;.isPropertyTrue())]
+            [aPackage.profileShexFile()/]
+          [/if]
+          [if (&#39;onto&#39;.isPropertyTrue())]
+            [aPackage.profileOntoFile()/]
+          [/if]
+          [if (&#39;jsonld&#39;.isPropertyTrue())]
+            [aPackage.profileGenerateJsonld()/]
+          [/if]
+          [if (&#39;jsonschema&#39;.isPropertyTrue())]
+            [aPackage.profileGenerateJsonSchema()/]
+          [/if]
+          [if (&#39;xsd&#39;.isPropertyTrue())]
+            [aPackage.profileProcessModelXsd()/]
+          [/if]
+[comment]
+              [aClass.qualifiedName
+                .replace(aClass.u_model().name, &#39;&#39;)
+                .replaceAll(&#39;::&#39;, &#39;/&#39;)
+                + &#39;.rst&#39;/]
+[/comment]
+          [for ( aDataType | aPackage.u_childDependencySupplierDataTypes())]
+              [aDataType.name.concat(&#39;.rst&#39;)/]
+            [aDataType.processDataTypeDoc()/][/for]
+          [for ( anEnumeration | aPackage.u_childDependencySupplierEnumerations())]
+              [anEnumeration.name.concat(&#39;.rst&#39;)/]
+            [anEnumeration.processEnumerationDoc()/][/for]
+        [else]
+          [for (childPackage : uml::Package | aPackage.u_childPackages()-&gt;select(p | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_model().u_subsetPackages()-&gt;includes(p.name)))]
+               [childPackage.name.concat(&#39;/index.rst&#39;)/]
+            [childPackage.processPackageDoc()/][/for]
+          [for (aClass : uml::Class | aPackage.u_childClasses()-&gt;select(c | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetAllClasses()-&gt;includes(c.name)))]
+               [aClass.name.concat(&#39;.rst&#39;)/]
+            [aClass.processClassDoc(&#39;universe&#39;, null)/][/for]
+          [for (aDataType : uml::DataType | aPackage.u_childrenDataTypes()
+              -&gt;select(d1 | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetDataTypes()-&gt;includes(d1.name))
+              -&gt;select(d2 | not d2.name.endsWith(&#39;PackageInformation&#39;))
+              -&gt;select(d3 | not d3.oclIsTypeOf(uml::Enumeration)))]
+               [aDataType.name.concat(&#39;.rst&#39;)/]
+            [aDataType.processDataTypeDoc()/][/for]
+          [for (anEnumeration : uml::Enumeration | aPackage.u_childrenEnumerations()-&gt;select(e | &#39;includeAllItems&#39;.isPropertyTrue() or aPackage.u_subsetEnumerations()-&gt;includes(e.name)))]
+               [anEnumeration.name.concat(&#39;.rst&#39;)/]
+            [anEnumeration.processEnumerationDoc()/][/for]
+        [/if]
+      [/file]
     [/if]
   [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="validateProfilePackage">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                validateProfilePackage
+            </h3>
+
+            <div class="signature">
+                <code>[template public validateProfilePackage(aPackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Validates all @selected-attributes annotations in the given profile sub-package. For each dependency-supplier class, checks whether every listed attribute name exists on the class. Writes a warning to stdout for each unknown name via logWarning.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- A profile sub-package whose @selected-attributes annotations are to be validated.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_unknownSelectedAttributes">u_unknownSelectedAttributes</a>
+        </div>
+
+
+
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">logWarning()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public validateProfilePackage(aPackage : uml::Package)]
+  [for (aClass : uml::Class | aPackage.u_childDependencySupplierClasses())]
+    [for (unknownName : String | aClass.u_unknownSelectedAttributes(aPackage))]
+      [aClass.logWarning(&#39;Profile &quot;&#39; + aPackage.name + &#39;&quot;: class &quot;&#39; + aClass.name + &#39;&quot; has no attribute named &quot;&#39; + unknownName + &#39;&quot; — check @selected-attributes annotation&#39;)/]
+    [/for]
+  [/for]
 [/template]</code></pre>
     </details>
         </div>

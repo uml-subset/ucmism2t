@@ -387,7 +387,7 @@
                         
                     </td>
                     <td>
-                        Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance.
+                        Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance. The tool is intended UCMIS models which use only single inheritance.
                         
                     </td>
                 </tr>
@@ -436,6 +436,18 @@
                     </td>
                     <td>
                         Returns an ordered set of all classes that are abstraction suppliers of the specified class. Navigates the model&#39;s cross-references to find all uml::Abstraction relationships that list aClass as a client, then returns their supplier elements filtered to uml::Class instances. --- AQL operations used: aClass.eInverse(uml::Abstraction) - Navigates cross-references to return all uml::Abstraction instances that reference aClass (i.e. where aClass appears as a client). eInverse() is an AQL operation on EObject that returns all objects holding a reference to the receiver, optionally filtered by type. -&gt;collect(a | a.supplier)         - For each Abstraction, collects its supplier NamedElements (the depended-upon side of the relationship). -&gt;filter(uml::Class)              - Retains only uml::Class instances, excluding other NamedElement subtypes (e.g. Interfaces). -&gt;asOrderedSet()                  - Deduplicates; a class may appear as supplier in multiple Abstraction relationships. -&gt;sortedBy(c | c.name)            - Sorts result alphabetically by name.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#Tu_associations">
+                            <code>Tu_associations(aClass) : OrderedSet(uml::Association)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns an ordered set of all associations in which aClass participates as a typed end, but only if every association end is typed by a UML Class.  Outgoing associations are those where aClass is the source/owned end participant; incoming associations are the remaining associations retrieved via eInverse(&#39;type&#39;).  Associations are sorted first by direction (outgoing before incoming) and then alphabetically by name within each group.  Distinct Association objects between the same two classes are preserved. The final asOrderedSet() only collapses duplicate references to the same Association object, which can happen for self-associations when both ends are typed by aClass.
                         
                     </td>
                 </tr>
@@ -569,6 +581,29 @@
                     <td>
                         Returns an ordered set of packages of the context classes of the specified class, excluding the class&#39;s own package, sorted by package name. See also: u_contextPackages(uml::DataType)
                         
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#u_isInProfile">
+                            <code>u_isInProfile(aClass, aPackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns whether aClass is a supplier of a dependency contained directly in aPackage.  The query examines the dependencies in the direct contents of aPackage, collects their supplier elements, and checks whether aClass is included among those suppliers.  Only dependencies directly contained by aPackage are considered. Dependencies contained in nested packages are not included unless this query is invoked separately for those packages.  The comparison is performed using the UML model element itself, not the class name. Therefore, two classes with the same name are distinguished correctly when they are different UML objects.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#OKu_isInProfile">
+                            <code>OKu_isInProfile(aClass, aPackage) : Boolean</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        <span class="no-doc">—</span>
                     </td>
                 </tr>
             </tbody>
@@ -1365,7 +1400,7 @@
             </div>
 
 
-            <div class="description">Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance.</div>
+            <div class="description">Returns an ordered set of all indirect superclasses of a class, i.e. the full superclass hierarchy excluding the direct parent. Delegates to u_allSuperClasses() and removes the direct parent. Note: Works only for single inheritance. The tool is intended UCMIS models which use only single inheritance.</div>
 
             <h4>Parameters</h4>
             <dl class="param-list">
@@ -1688,6 +1723,100 @@
     -&gt;filter(uml::Class)
     -&gt;asOrderedSet()
     -&gt;sortedBy(c | c.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="Tu_associations">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                Tu_associations
+            </h3>
+
+            <div class="signature">
+                <code>[query public Tu_associations(aClass : uml::Class) : OrderedSet(uml::Association) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns an ordered set of all associations in which aClass participates as a typed end, but only if every association end is typed by a UML Class.  Outgoing associations are those where aClass is the source/owned end participant; incoming associations are the remaining associations retrieved via eInverse(&#39;type&#39;).  Associations are sorted first by direction (outgoing before incoming) and then alphabetically by name within each group.  Distinct Association objects between the same two classes are preserved. The final asOrderedSet() only collapses duplicate references to the same Association object, which can happen for self-associations when both ends are typed by aClass.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class whose associations are being collected.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>OrderedSet(uml::Association)</code>
+                 — An ordered set of associations involving only UML classes.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-filter" target="_blank">filter()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-forall" target="_blank">forAll()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-union" target="_blank">union()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-exists" target="_blank">exists()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-reject" target="_blank">reject()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-einverse" target="_blank">eInverse()</a>
+                    <span class="ref-badge ref-aql-service">and()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-ocl iskindof" target="_blank">oclIsKindOf()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public Tu_associations(aClass : uml::Class) : OrderedSet(uml::Association) =
+  let all : OrderedSet(uml::Association) =
+    aClass.eInverse(&#39;type&#39;)
+      -&gt;filter(uml::Property)
+      -&gt;select(p | p.association &lt;&gt; null)
+      -&gt;collect(p | p.association)
+      -&gt;asOrderedSet()
+      -&gt;select(a |
+        a.ownedEnd-&gt;notEmpty()
+        and a.ownedEnd-&gt;forAll(e |
+          e.type &lt;&gt; null and e.type.oclIsKindOf(uml::Class)))
+  in
+    all
+      -&gt;select(a | a.ownedEnd-&gt;exists(e | e.type = aClass))
+      -&gt;sortedBy(a | if a.name &lt;&gt; null then a.name else &#39;&#39; endif)
+      -&gt;union(
+        all
+          -&gt;reject(a | a.ownedEnd-&gt;exists(e | e.type = aClass))
+          -&gt;sortedBy(a | if a.name &lt;&gt; null then a.name else &#39;&#39; endif))
 /]</code></pre>
     </details>
         </div>
@@ -2052,6 +2181,8 @@
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-asorderedset" target="_blank">asOrderedSet()</a>
                     <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-excludes" target="_blank">excludes()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#string-size" target="_blank">size()</a>
@@ -2080,13 +2211,14 @@
   aClass      : uml::Class) : OrderedSet(uml::Association) =
   let associations : OrderedSet(uml::Association) =
     aSuperClass.getAssociations()-&gt;asOrderedSet()
-      -&gt;select(a |
-        a.u_ownedEndClass() &lt;&gt; aClass
-        and a.u_otherEndClass() &lt;&gt; aClass)
-      -&gt;select(a |
-        aClass.u_allSuperClasses()-&gt;excludes(a.u_ownedEndClass())
-        or aClass.u_allSuperClasses()-&gt;excludes(a.u_otherEndClass()))
-      -&gt;sortedBy(a | a.name)
+      -&gt;select(a1 | a1.ownedEnd-&gt;notEmpty())
+      -&gt;select(a2 |
+        a2.u_ownedEndClass() &lt;&gt; aClass
+        and a2.u_otherEndClass() &lt;&gt; aClass)
+      -&gt;select(a3 |
+        aClass.u_allSuperClasses()-&gt;excludes(a3.u_ownedEndClass())
+        or aClass.u_allSuperClasses()-&gt;excludes(a3.u_otherEndClass()))
+      -&gt;sortedBy(a4 | a4.name)
   in
     if associations-&gt;size() &gt; 3 then
       associations-&gt;subOrderedSet(1, 3)
@@ -2464,6 +2596,132 @@
     -&gt;excluding(aClass.package)
     -&gt;asOrderedSet()
     -&gt;sortedBy(p | p.name)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="u_isInProfile">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_isInProfile
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_isInProfile(aClass : uml::Class, aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+            <div class="description">Returns whether aClass is a supplier of a dependency contained directly in aPackage.  The query examines the dependencies in the direct contents of aPackage, collects their supplier elements, and checks whether aClass is included among those suppliers.  Only dependencies directly contained by aPackage are considered. Dependencies contained in nested packages are not included unless this query is invoked separately for those packages.  The comparison is performed using the UML model element itself, not the class name. Therefore, two classes with the same name are distinguished correctly when they are different UML objects.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class whose profile membership is checked.</dd>
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The UML package whose directly contained dependencies are examined.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                 — true if aClass is a supplier of at least one dependency directly contained in aPackage; otherwise false.
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_isInProfile(
+  aClass : uml::Class,
+  aPackage : uml::Package) : Boolean =
+  aPackage.eContents(uml::Dependency)
+    -&gt;collect(d | d.supplier)
+    -&gt;includes(aClass)
+/]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="OKu_isInProfile">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                OKu_isInProfile
+            </h3>
+
+            <div class="signature">
+                <code>[query public OKu_isInProfile(aClass : uml::Class, aPackage : uml::Package) : Boolean = ...]</code>
+            </div>
+
+
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+                <dt><code>aPackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Boolean</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public OKu_isInProfile(
+  aClass : uml::Class, aPackage : uml::Package) : Boolean =
+  if (aPackage.eContents(uml::Dependency)-&gt;collect(d | d.supplier)-&gt;includes(aClass)) then true
+  else false
+  endif
 /]</code></pre>
     </details>
         </div>

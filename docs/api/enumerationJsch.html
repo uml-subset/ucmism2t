@@ -302,7 +302,7 @@
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public enumerationJsch(anEnumeration : uml::Enumeration) post(self.trim())]
   &quot;enum-[anEnumeration.name/]&quot;: {
-    &quot;description&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/][anEnumeration.name/]&quot;,
+    &quot;description&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/][anEnumeration.name/]&quot;,
     &quot;enum&quot;: [&#39;[&#39;/]
   [for (aLiteral : uml::EnumerationLiteral | anEnumeration.oclAsType(uml::Enumeration).ownedLiteral) separator(&#39;,&#39;)]
         &quot;[aLiteral.name/]&quot;

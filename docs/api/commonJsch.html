@@ -272,6 +272,34 @@
                         <span class="no-doc">—</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#genAttributesProfile">
+                            <code>genAttributesProfile(aClassifier, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates JSON Schema properties entries for attributes of a class in profile context. Only attributes passing u_isAttributeInProfile are included.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#arrayClassSchemasProfile">
+                            <code>arrayClassSchemasProfile(aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the anyOf dispatch entries for all profile subset classes, used in the root-object schema to dispatch on @type.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -489,6 +517,153 @@
   [else]
     &quot;$ref&quot;: &quot;#/defs/[anAttribute.type.iri()/]&quot;
   [/if]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="genAttributesProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                genAttributesProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public genAttributesProfile(aClassifier : uml::Classifier, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates JSON Schema properties entries for attributes of a class in profile context. Only attributes passing u_isAttributeInProfile are included.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClassifier</code> <span class="param-type">: uml::Classifier</span></dt>
+                <dd>- The classifier whose attributes are rendered.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#ref">ref</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#object-oclastype" target="_blank">oclAsType()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">lowerBound()</span>
+				            <span class="ref-badge ref-project-service">upperBound()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public genAttributesProfile(
+  aClassifier : uml::Classifier,
+  aProfilePackage : uml::Package) post(self.trim())]
+  [for (anAttribute : uml::Property | aClassifier.u_attributes()
+      -&gt;select(a | a.u_isAttributeInProfile(
+          aClassifier.oclAsType(uml::Class), aProfilePackage)))]
+    &quot;[anAttribute.name/]&quot;: {
+      &quot;$comment&quot;: &quot;cardinality [anAttribute.lowerBound()/]..[anAttribute.upperBound()/] – from [aClassifier.iri()/]&quot;,
+    [if (anAttribute.upperBound() = 1)]
+        [anAttribute.ref()/]
+    [else]
+        &quot;if&quot;: { &quot;type&quot;: &quot;array&quot; },
+        &quot;then&quot;: { &quot;items&quot;: { [anAttribute.ref()/] } },
+        &quot;else&quot;: { [anAttribute.ref()/] }
+    [/if]
+    },
+  [/for]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="arrayClassSchemasProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                arrayClassSchemasProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public arrayClassSchemasProfile(aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the anyOf dispatch entries for all profile subset classes, used in the root-object schema to dispatch on @type.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public arrayClassSchemasProfile(aProfilePackage : uml::Package)]
+  [for (aClass : uml::Class | aProfilePackage.u_childDependencySupplierClasses()
+      -&gt;sortedBy(c | c.name))]
+    {
+      &quot;if&quot;: { &quot;properties&quot;: { &quot;@type&quot;: { &quot;const&quot;: &quot;[aClass.name/]&quot; } } },
+      &quot;then&quot;: { &quot;$ref&quot;: &quot;#/defs/cls-[aClass.name/]&quot; },
+      &quot;else&quot;: false
+    },
+  [/for]
 [/template]</code></pre>
     </details>
         </div>

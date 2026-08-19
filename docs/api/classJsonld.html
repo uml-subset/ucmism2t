@@ -287,6 +287,48 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classJsonldCoreProfile">
+                            <code>classJsonldCoreProfile(aClass, modular, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the core of a type-scoped context for a class in profile context. Only attributes passing u_isAttributeInProfile and associations where both ends are in the profile subset are included. Reverse associations are also filtered to the subset.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#classJsonldSelfContainedProfile">
+                            <code>classJsonldSelfContainedProfile(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates a complete self-contained type-scoped context for a class in profile context, as a sequence of contexts for a JSON array. Superclass contexts are only included when the superclass is in the profile subset.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#classJsonldModularProfile">
+                            <code>classJsonldModularProfile(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates a modular standalone JSON-LD context for a class in profile context. Referenced class contexts use profile-specific paths when the referenced class is in the profile subset.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -490,9 +532,7 @@
         <div class="ref-section">
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
-                <a class="ref-badge ref-internal-query"
-                   href="elementQuery.html#u_model">u_model</a>
+                   href="elementQuery.html#u_jsonldElementFilePath">u_jsonldElementFilePath</a>
         </div>
 
         <div class="ref-section">
@@ -510,7 +550,7 @@
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public classJsonldFile(aClass : uml::Class)]
-  [file (aClass.u_model().u_modelShortName() + &#39;/encoding/json-ld/&#39; + aClass.name + &#39;.jsonld&#39;, overwrite, &#39;UTF-8&#39;)]
+  [file (aClass.u_jsonldElementFilePath(), overwrite, &#39;UTF-8&#39;)]
     [aClass.classJsonldModular()/]
   [/file]
 [/template]</code></pre>
@@ -547,6 +587,10 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfNamespace">u_modelRdfNamespace</a>
         </div>
 
         <div class="ref-section">
@@ -576,10 +620,6 @@
 
 
 
-				<div class="ref-section">
-				    <span class="ref-label">Project services</span>
-				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
-				</div>
         
     </div>
     <details class="source-dropdown">
@@ -591,7 +631,8 @@
         &quot;[aClass.superClass-&gt;asSequence()-&gt;collect(temp2 | temp2.name)/].jsonld&quot;,
   [/if]
       {
-        &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NS&#39;.getPropertyValue()/]&quot;,
+        &quot;[aClass.u_modelRdfPrefix()/]&quot;: &quot;[aClass.u_modelRdfNamespace()/]&quot;,
+[comment]         &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&quot;,[/comment]
         &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
   
         [aClass.classJsonldCore(true)/]
@@ -600,6 +641,305 @@
     &quot;generatedBy&quot;: &quot;[aClass.generationMessageJsonld()/]&quot;,
     &quot;basedOn&quot;: &quot;based on the UML data type [aClass.qualifiedName/]&quot;
   }[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classJsonldCoreProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classJsonldCoreProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public classJsonldCoreProfile(aClass : uml::Class, modular : Boolean, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the core of a type-scoped context for a class in profile context. Only attributes passing u_isAttributeInProfile and associations where both ends are in the profile subset are included. Reverse associations are also filtered to the subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>modular</code> <span class="param-type">: Boolean</span></dt>
+                <dd>- True for modular context output.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_associations">u_associations</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#shortName">shortName</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsch.html#genAttributesProfile">genAttributesProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#iri">iri</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classJsonldCoreProfile(
+  aClass : uml::Class,
+  modular : Boolean,
+  aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [aClass.genAttributesProfile(modular, aClass, aProfilePackage)/]
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        -&gt;select(a | a.u_ownedEndClass() = aClass
+          and subsetClasses-&gt;includes(a.u_ownedEndClass())
+          and subsetClasses-&gt;includes(a.u_otherEndClass()))
+        -&gt;sortedBy(a | a.shortName()))]
+      &quot;[anAssociation.shortName()/]&quot;: {
+        &quot;@id&quot;: &quot;[anAssociation.iri()/]&quot;,
+        &quot;@type&quot;: &quot;@id&quot;[if (modular)],[/if]
+      [if (modular)]
+          &quot;@context&quot;: &quot;[anAssociation.u_otherEndClass().name/].jsonld&quot;
+      [/if]
+      },
+    [/for]
+    [for (anAssociation : uml::Association | aClass.u_associations()
+        -&gt;select(a | a.u_otherEndClass() = aClass
+          and subsetClasses-&gt;includes(a.u_ownedEndClass())
+          and subsetClasses-&gt;includes(a.u_otherEndClass()))
+        -&gt;sortedBy(a | a.shortName())
+        -&gt;sortedBy(a | a.u_ownedEndClass().name))]
+      &quot;[anAssociation.shortName()/]_OF_[anAssociation.u_ownedEndClass().name/]&quot;: {
+        &quot;@reverse&quot;: &quot;[anAssociation.iri()/]&quot;,
+        &quot;@type&quot;: &quot;@id&quot;[if (modular)],[/if]
+      [if (modular)]
+          &quot;@context&quot;: &quot;[anAssociation.u_ownedEndClass().name/].jsonld&quot;
+      [/if]
+      },
+    [/for]
+    &quot; comment &quot;: &quot;tag:json-should-support-trailing-commas&quot;
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classJsonldSelfContainedProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classJsonldSelfContainedProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public classJsonldSelfContainedProfile(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates a complete self-contained type-scoped context for a class in profile context, as a sequence of contexts for a JSON array. Superclass contexts are only included when the superclass is in the profile subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldSelfContainedProfile">classJsonldSelfContainedProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldCoreProfile">classJsonldCoreProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classJsonldSelfContainedProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [if (aClass.superClass-&gt;notEmpty()
+        and aClass.superClass-&gt;asSequence()-&gt;first().isNotInMappedItems()
+        and subsetClasses-&gt;includes(aClass.superClass-&gt;asSequence()-&gt;first()))]
+      [aClass.superClass-&gt;asSequence()-&gt;first().classJsonldSelfContainedProfile(aProfilePackage)/],
+    [/if]
+    {
+      [aClass.classJsonldCoreProfile(false, aProfilePackage)/]
+    }
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classJsonldModularProfile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classJsonldModularProfile
+            </h3>
+
+            <div class="signature">
+                <code>[template public classJsonldModularProfile(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates a modular standalone JSON-LD context for a class in profile context. Referenced class contexts use profile-specific paths when the referenced class is in the profile subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonRdf.html#isNotInMappedItems">isNotInMappedItems</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfPrefix">u_modelRdfPrefix</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelRdfNamespace">u_modelRdfNamespace</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classJsonld.html#classJsonldCoreProfile">classJsonldCoreProfile</a>
+                <a class="ref-badge ref-internal-template"
+                   href="commonJsonld.html#generationMessageJsonld">generationMessageJsonld</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classJsonldModularProfile(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package)]
+  {
+    &quot;@context&quot;: [&#39;[&#39;/]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+    [if (aClass.superClass-&gt;notEmpty()
+        and aClass.superClass-&gt;asSequence()-&gt;first().isNotInMappedItems()
+        and subsetClasses-&gt;includes(aClass.superClass-&gt;asSequence()-&gt;first()))]
+          &quot;[aClass.superClass-&gt;asSequence()-&gt;collect(temp2 | temp2.name)/].jsonld&quot;,
+    [/if]
+        {
+          &quot;[aClass.u_modelRdfPrefix()/]&quot;: &quot;[aClass.u_modelRdfNamespace()/]&quot;,
+[comment]         &quot;[&#39;RDF_PREFIX&#39;.getPropertyValue()/]&quot;: &quot;[&#39;RDF_NAMESPACE&#39;.getPropertyValue()/]&quot;,[/comment]
+          &quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+    
+          [aClass.classJsonldCoreProfile(true, aProfilePackage)/]
+        }
+      ],
+      &quot;generatedBy&quot;: &quot;[aClass.generationMessageJsonld()/]&quot;,
+      &quot;basedOn&quot;: &quot;based on the UML data type [aClass.qualifiedName/]&quot;
+    }
+  [/let]
+[/template]</code></pre>
     </details>
         </div>
 

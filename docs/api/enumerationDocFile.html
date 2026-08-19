@@ -356,6 +356,7 @@
 				    <span class="ref-label">Project services</span>
 				            <a class="ref-badge ref-project-service"
 				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				            <span class="ref-badge ref-project-service">getPropertyValue()</span>
 				</div>
         
     </div>
@@ -381,7 +382,7 @@
 	    [anEnumeration.u_commentBody().replaceAll(&#39;(=\\s)&#39;, &#39;$1\r&#39;)/]
 	    
 	    [file (anEnumeration.u_filePath(&#39;doc&#39;).concat(&#39;.pu&#39;), overwrite, &#39;UTF-8&#39;)]
-	      [anEnumeration.pu_dataTypeDiagram(0)/]
+	      [anEnumeration.pu_dataTypeDiagram()/]
 	    [/file]
 	    Diagram
 	    =======
@@ -465,7 +466,7 @@
 	               .. tab-item:: Canonical XMI
 	                  :class-content: encoding
 	      
-	                  Fragment for the enumeration **[anEnumeration.name/]**
+	                  Fragment for the enumeration **[anEnumeration.name/]** (`entire model as XMI &lt;/encoding/xmi/[&#39;MODEL_FILE_NAME&#39;.getPropertyValue().replace(&#39;_eclipse&#39;, &#39;&#39;)/]&gt;`_)
 	      
 	                  .. literalinclude:: /xmi/[anEnumeration.name/].xmi 
 	                     :lines: 2-

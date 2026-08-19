@@ -354,6 +354,20 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classesByProfiles">
+                            <code>classesByProfiles(aModel)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        The documentation of the template allClassesList.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -417,6 +431,8 @@
                 <a class="ref-badge ref-internal-template"
                    href="appendicesDocFile.html#allPackagesList">allPackagesList</a>
                 <a class="ref-badge ref-internal-template"
+                   href="appendicesDocFile.html#classesByProfiles">classesByProfiles</a>
+                <a class="ref-badge ref-internal-template"
                    href="appendicesDocFile.html#exploratoryDiagramsIndex">exploratoryDiagramsIndex</a>
                 <a class="ref-badge ref-internal-template"
                    href="appendicesDocFile.html#modelItemListsIndex">modelItemListsIndex</a>
@@ -431,6 +447,11 @@
 
 
 
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				</div>
         
     </div>
     <details class="source-dropdown">
@@ -455,6 +476,9 @@
   [aModel.allDataTypesList()/]
   [aModel.allEnumerationsList()/]
   [aModel.allPackagesList()/]
+  [if (&#39;profiles&#39;.isPropertyTrue())]  
+    [aModel.classesByProfiles()/]
+  [/if]
   [aModel.exploratoryDiagramsIndex()/]
   [aModel.modelItemListsIndex()/][/template]</code></pre>
     </details>
@@ -577,6 +601,11 @@
 
 
 
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <a class="ref-badge ref-project-service"
+				               href="java/ucmism2t/services/PropertiesService.html#isPropertyTrue(java.lang.String)" target="_blank">isPropertyTrue()</a>
+				</div>
         
     </div>
     <details class="source-dropdown">
@@ -595,6 +624,7 @@
        AllDataTypesList.rst
        AllEnumerationsList.rst
        AllPackagesList.rst
+       [if (&#39;profiles&#39;.isPropertyTrue())]ClassesByProfilesTable.rst[/if]
     
   [/file]
 [/template]</code></pre>
@@ -779,15 +809,18 @@
         <div class="ref-section">
             <span class="ref-label">AQL collection operations</span>
                     <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#string-size" target="_blank">size()</a>
-                    <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-size" target="_blank">size()</a>
         </div>
 
         <div class="ref-section">
             <span class="ref-label">AQL services</span>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-endswith" target="_blank">endsWith()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#eobject-eclass" target="_blank">eClass()</a>
                     <a class="ref-badge ref-aql-service"
@@ -827,7 +860,7 @@
             - Uses in Datatypes
             - Own Attributes
             - Inherited Attributes
-    [for (aDataType : uml::DataType | aModel.u_allDataTypes())]
+    [for (aDataType : uml::DataType | aModel.u_allDataTypes()-&gt;select(d2 | not d2.name.endsWith(&#39;PackageInformation&#39;)))]
             * - [aDataType.rst_classifierNameReference()/]
               - :ref:`[aDataType.package.qualifiedName/]`
               - [aDataType.eClass().name/]
@@ -921,23 +954,25 @@
     
     [&#39;All Enumerations&#39;.rst_header(&#39;=&#39;)/]
     
-    .. container:: table-responsive
-    
-       .. list-table::
-          :header-rows: 1
-          :class: table table-striped table-hover main-table
-          :name: datatable-enumerations-list
-    
-          * - Name
-            - Package Name
-            - Uses in Classes
-            - Uses in Datatypes
-    [for (anEnumeration : uml::Enumeration | aModel.u_allEnumerations())]
-            * - [anEnumeration.rst_classifierNameReference()/]
-              - :ref:`[anEnumeration.package.qualifiedName/]`
-              - [anEnumeration.u_dataTypeUseProperties()-&gt;select(temp3 | temp3.owner.oclIsTypeOf(uml::Class))-&gt;size()/]
-              - [anEnumeration.u_dataTypeUseProperties()-&gt;select(temp4 | temp4.owner.oclIsKindOf(uml::DataType))-&gt;size()/]
-    [/for]
+    [if (aModel.u_allEnumerations()-&gt;size()&gt;0)]
+      .. container:: table-responsive
+      
+         .. list-table::
+            :header-rows: 1
+            :class: table table-striped table-hover main-table
+            :name: datatable-enumerations-list
+      
+            * - Name
+              - Package Name
+              - Uses in Classes
+              - Uses in Datatypes
+      [for (anEnumeration : uml::Enumeration | aModel.u_allEnumerations())]
+              * - [anEnumeration.rst_classifierNameReference()/]
+                - :ref:`[anEnumeration.package.qualifiedName/]`
+                - [anEnumeration.u_dataTypeUseProperties()-&gt;select(temp3 | temp3.owner.oclIsTypeOf(uml::Class))-&gt;size()/]
+                - [anEnumeration.u_dataTypeUseProperties()-&gt;select(temp4 | temp4.owner.oclIsKindOf(uml::DataType))-&gt;size()/]
+      [/for]
+    [/if]
   [/file]
 [/template]</code></pre>
     </details>
@@ -1081,6 +1116,8 @@
                 <a class="ref-badge ref-internal-query"
                    href="propertyQuery.html#u_docMultiplicity">u_docMultiplicity</a>
                 <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+                <a class="ref-badge ref-internal-query"
                    href="associationQuery.html#u_shortAssociationName">u_shortAssociationName</a>
         </div>
 
@@ -1100,12 +1137,6 @@
                        href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
                     <a class="ref-badge ref-aql-collection"
                        href="aql-reference.html#string-first" target="_blank">first()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#object-tostring" target="_blank">toString()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-collect" target="_blank">collect()</a>
-                    <a class="ref-badge ref-aql-collection"
-                       href="aql-reference.html#collection-assequence" target="_blank">asSequence()</a>
         </div>
 
         <div class="ref-section">
@@ -1116,8 +1147,6 @@
                        href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
                     <a class="ref-badge ref-aql-service"
                        href="aql-reference.html#string-size" target="_blank">size()</a>
-                    <a class="ref-badge ref-aql-service"
-                       href="aql-reference.html#string-trim" target="_blank">trim()</a>
         </div>
 
 
@@ -1166,7 +1195,8 @@
               - [if (anAssociation.ownedEnd-&gt;first().isNavigable())]yes[/if]
               - [anAssociation.ownedEnd-&gt;first().aggregation/]
               - [anAssociation.ownedEnd-&gt;first().u_docMultiplicity()/]
-              - [if (anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp7 | temp7.body)-&gt;toString().trim().size() &gt; 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp6 | temp6.body)-&gt;toString().trim()/])`[else][anAssociation.u_shortAssociationName()/][/if]
+              - [if (anAssociation.u_commentBody().size() &gt; 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.u_commentBody()/])`[else][anAssociation.u_shortAssociationName()/][/if]
+[comment]               - [if (anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp7 | temp7.body)-&gt;toString().trim().size() &gt; 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.ownedComment-&gt;asSequence()-&gt;collect(temp6 | temp6.body)-&gt;toString().trim()/])`[else][anAssociation.u_shortAssociationName()/][/if][/comment]
               - [anAssociation.ownedEnd-&gt;first().getOtherEnd().u_docMultiplicity()/]
               - [anAssociation.ownedEnd-&gt;first().getOtherEnd().aggregation/]
               - [if (anAssociation.ownedEnd-&gt;first().getOtherEnd().isNavigable())]yes[/if]
@@ -1315,6 +1345,113 @@
               - :ref:`[anAssociation.ownedEnd-&gt;first().getOtherEnd().type.qualifiedName/]`
               - [anAssociation.ownedEnd-&gt;first().getOtherEnd().type.package.name/]
     [/for]
+  [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="classesByProfiles">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classesByProfiles
+            </h3>
+
+            <div class="signature">
+                <code>[template public classesByProfiles(aModel : uml::Model)]</code>
+            </div>
+
+
+            <div class="description">The documentation of the template allClassesList.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aModel</code> <span class="param-type">: uml::Model</span></dt>
+                <dd><span class="no-doc">No description.</span></dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_filePath">u_filePath</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_profilesPackage">u_profilesPackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePackage">u_universePackage</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_isInProfile">u_isInProfile</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_generationMessageDoc">rst_generationMessageDoc</a>
+                <a class="ref-badge ref-internal-template"
+                   href="rstUtilityDoc.html#rst_header">rst_header</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-econtents" target="_blank">eContents()</a>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#eobject-eallcontents" target="_blank">eAllContents()</a>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classesByProfiles(aModel : uml::Model)]
+  [file (aModel.u_filePath(&#39;doc&#39;).concat(&#39;/Appendices/ModelItemLists/ClassesByProfilesTable.rst&#39;), overwrite, &#39;UTF-8&#39;)]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. classesByProfilesTable:
+    
+    [&#39;Classes by Profiles Table&#39;.rst_header(&#39;=&#39;)/]
+
+    [let profilePackages : Sequence(uml::Package) =
+      let up : uml::Package = aModel.u_profilesPackage() in
+      if up &lt;&gt; null then up.eContents(uml::Package)-&gt;sortedBy(p | p.name) else Sequence{} endif]
+      
+      .. container:: table-responsive
+      
+         .. list-table::
+            :header-rows: 1
+            :class: table table-striped table-hover main-table
+            :name: datatable-classes-by-profiles
+      
+            * - Package
+              - Class
+              [for (aPackage : uml::Package | profilePackages)]
+                - [aPackage.name/]
+              [/for]
+      [for (aClass : uml::Class |
+        let uni : uml::Package = aModel.u_universePackage() in
+        if uni &lt;&gt; null then uni.eAllContents(uml::Class)-&gt;sortedBy(c2 | c2.name)-&gt;sortedBy(c1 | c1.package.name) else Sequence{} endif)]
+              * - [aClass.package.name/]
+                - [aClass.name/]
+                [for (aPackage : uml::Package | profilePackages)]
+                  - [if (aClass.u_isInProfile(aPackage))]✔[/if]
+                [/for]
+      [/for]
+    [/let]
   [/file]
 [/template]</code></pre>
     </details>

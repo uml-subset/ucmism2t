@@ -246,6 +246,20 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#profileShaclFile">
+                            <code>profileShaclFile(aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates the whole-model SHACL file for a profile sub-package. Only classes and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/shacl/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.shacl.ttl  Called from packageDocFile.mtl in the profile branch, once per profile sub-package after all class fragments have been generated.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -284,6 +298,8 @@
             <span class="ref-label">Queries</span>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_universePathSegment">u_universePathSegment</a>
                 <a class="ref-badge ref-internal-query"
                    href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
                 <a class="ref-badge ref-internal-query"
@@ -328,7 +344,7 @@
     <details class="source-dropdown">
         <summary>Show source</summary>
         <pre class="source-code"><code>[template public packageShaclFile(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + &#39;/encoding/shacl/&#39; + aModel.u_modelAcronym().toLower() + &#39;.shacl.ttl&#39;, overwrite, &#39;UTF-8&#39;)]
+  [file (aModel.u_modelShortName() + &#39;/encoding/shacl/&#39; + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + &#39;.shacl.ttl&#39;, overwrite, &#39;UTF-8&#39;)]
     [aModel.u_model().ttl_prefixes()/]
     PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
     
@@ -339,6 +355,107 @@
       [aDataType.dataTypeShacl()/]
     [/for]
   [/file]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="profileShaclFile">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                profileShaclFile
+            </h3>
+
+            <div class="signature">
+                <code>[template public profileShaclFile(aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates the whole-model SHACL file for a profile sub-package. Only classes and data types in the profile subset are included. Written to: &lt;shortName&gt;/encoding/shacl/&lt;profiles_package&gt;/&lt;profileName&gt;/&lt;acronym&gt;.shacl.ttl  Called from packageDocFile.mtl in the profile branch, once per profile sub-package after all class fragments have been generated.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_model">u_model</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierDataTypes">u_childDependencySupplierDataTypes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelShortName">u_modelShortName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_modelAcronym">u_modelAcronym</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonRdf.html#ttl_prefixes">ttl_prefixes</a>
+                <a class="ref-badge ref-internal-template"
+                   href="classShacl.html#classProfileShacl">classProfileShacl</a>
+                <a class="ref-badge ref-internal-template"
+                   href="dataTypeShacl.html#dataTypeShacl">dataTypeShacl</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-sortedby" target="_blank">sortedBy()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-tolower" target="_blank">toLower()</a>
+                    <span class="ref-badge ref-aql-service">not()</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-contains" target="_blank">contains()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getRequiredPropertyValue()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public profileShaclFile(aProfilePackage : uml::Package)]
+  [let aModel : uml::Model = aProfilePackage.u_model()]
+    [let subsetClasses : OrderedSet(uml::Class) =
+        aProfilePackage.u_childDependencySupplierClasses()]
+    [let subsetDataTypes : OrderedSet(uml::DataType) =
+        aProfilePackage.u_childDependencySupplierDataTypes()]
+      [file (aModel.u_modelShortName() + &#39;/encoding/shacl/&#39; + &#39;profiles_package&#39;.getRequiredPropertyValue() + &#39;/&#39; + aProfilePackage.name + &#39;/&#39; + aModel.u_modelAcronym().toLower() + &#39;.shacl.ttl&#39;, overwrite, &#39;UTF-8&#39;)]
+        [aModel.ttl_prefixes()/]
+        PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+        
+        [for (aClass : uml::Class | subsetClasses-&gt;sortedBy(c | c.name))]
+          [aClass.classProfileShacl(aProfilePackage)/]
+        [/for]
+        [for (aDataType : uml::DataType | subsetDataTypes-&gt;sortedBy(d | d.name)-&gt;select(d | not d.qualifiedName.contains(&#39;XMLSchemaDataTypes&#39;)))]
+          [aDataType.dataTypeShacl()/]
+        [/for]
+      [/file]
+    [/let]
+    [/let]
+  [/let]
 [/template]</code></pre>
     </details>
         </div>

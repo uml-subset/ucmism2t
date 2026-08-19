@@ -260,10 +260,58 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <a href="#classProfileXsd">
+                            <code>classProfileXsd(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates XML Schema for a class in profile context. Superclass extension uses only the nearest superclass in the subset. Attribute and association filtering is handled by propertyProfileXsd.
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#propertyProfileXsd">
+                            <code>propertyProfileXsd(aClass, aProfilePackage)</code>
+                        </a>
+                        
+                        
+                        
+                    </td>
+                    <td>
+                        Generates XML Schema sequence elements for attributes and associations of a class in profile context. Attributes are filtered by u_isAttributeInProfile. Associations are filtered to those where both ends are in the subset.
+                        
+                    </td>
+                </tr>
             </tbody>
         </table>
 
         <!-- ═══════════════════════════════════ Query summary -->
+        <h2>Query Summary</h2>
+        <table class="summary-table">
+            <thead>
+                <tr><th>Name</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#u_associationEndPropertiesInSubset">
+                            <code>u_associationEndPropertiesInSubset(aClass, aProfilePackage) : Sequence(uml::Property)</code>
+                        </a>
+                        
+                    </td>
+                    <td>
+                        Returns association-end properties of the class where both the owned-end class and the other-end class are in the profile subset.
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         <!-- ═══════════════════════════════════ Template detail -->
         <h2>Template Detail</h2>
@@ -489,8 +537,332 @@
 [/template]</code></pre>
     </details>
         </div>
+        <div class="element-detail" id="classProfileXsd">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                classProfileXsd
+            </h3>
+
+            <div class="signature">
+                <code>[template public classProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates XML Schema for a class in profile context. Superclass extension uses only the nearest superclass in the subset. Attribute and association filtering is handled by propertyProfileXsd.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classQuery.html#u_allSuperClasses">u_allSuperClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classXsd.html#u_associationEndPropertiesInSubset">u_associationEndPropertiesInSubset</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="classXsd.html#propertyProfileXsd">propertyProfileXsd</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-notempty" target="_blank">notEmpty()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">or()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public classProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]
+  [let subsetClasses : OrderedSet(uml::Class) =
+      aProfilePackage.u_childDependencySupplierClasses()]
+  [let superInSubset : uml::Class =
+      aClass.u_allSuperClasses()-&gt;select(sc | subsetClasses-&gt;includes(sc))-&gt;first()]
+    &lt;xs:element name=&quot;[aClass.name/]&quot;
+                type=&quot;[aClass.name/]XsdType&quot;
+                xml:id=&quot;[aClass.name/]&quot;&gt;
+      &lt;!-- based on the UML class [aClass.qualifiedName/] --&gt;
+      &lt;xs:annotation&gt;
+  [&#39;      &lt;xs:documentation&gt;&#39; + aClass.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+      &lt;/xs:annotation&gt;
+    &lt;/xs:element&gt;
+    &lt;xs:complexType name=&quot;[aClass.name/]XsdType&quot;
+                    xml:id=&quot;[aClass.name/]XsdType&quot;&gt;
+      &lt;xs:annotation&gt;
+  [&#39;      &lt;xs:documentation&gt;&#39; + aClass.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+      &lt;/xs:annotation&gt;
+      [if (superInSubset &lt;&gt; null)]
+        &lt;xs:complexContent&gt;
+          &lt;xs:extension base=&quot;[superInSubset.name/]XsdType&quot;&gt;
+            [if (aClass.u_attributes()-&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage))-&gt;notEmpty()
+                or aClass.u_associationEndPropertiesInSubset(aProfilePackage)-&gt;notEmpty())]
+              [aClass.propertyProfileXsd(aProfilePackage)/]
+            [/if]
+          &lt;/xs:extension&gt;
+        &lt;/xs:complexContent&gt;
+      [else]
+        [if (aClass.u_attributes()-&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage))-&gt;notEmpty()
+            or aClass.u_associationEndPropertiesInSubset(aProfilePackage)-&gt;notEmpty())]
+          [aClass.propertyProfileXsd(aProfilePackage)/]
+        [/if]
+      [/if]
+    &lt;/xs:complexType&gt;
+  [/let]
+  [/let]
+[/template]</code></pre>
+    </details>
+        </div>
+        <div class="element-detail" id="propertyProfileXsd">
+            <h3>
+                <span class="kind-badge kind-template">template</span>
+                <span class="visibility public">public</span>
+                
+                
+                propertyProfileXsd
+            </h3>
+
+            <div class="signature">
+                <code>[template public propertyProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]</code>
+            </div>
+
+
+            <div class="description">Generates XML Schema sequence elements for attributes and associations of a class in profile context. Attributes are filtered by u_isAttributeInProfile. Associations are filtered to those where both ends are in the subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="classifierQuery.html#u_attributes">u_attributes</a>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_isAttributeInProfile">u_isAttributeInProfile</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_typeName">xsd_typeName</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_upperCardinality">xsd_upperCardinality</a>
+                <a class="ref-badge ref-internal-query"
+                   href="commonXsd.html#xsd_escapeXmlCharacters">xsd_escapeXmlCharacters</a>
+                <a class="ref-badge ref-internal-query"
+                   href="elementQuery.html#u_commentBody">u_commentBody</a>
+                <a class="ref-badge ref-internal-query"
+                   href="classXsd.html#u_associationEndPropertiesInSubset">u_associationEndPropertiesInSubset</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">Templates</span>
+                <a class="ref-badge ref-internal-template"
+                   href="commonXsd.html#xsd_referenceClass">xsd_referenceClass</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#string-first" target="_blank">first()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <a class="ref-badge ref-aql-service"
+                       href="aql-reference.html#string-concat" target="_blank">concat()</a>
+        </div>
+
+
+
+				<div class="ref-section">
+				    <span class="ref-label">Project services</span>
+				            <span class="ref-badge ref-project-service">getOtherEnd()</span>
+				</div>
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[template public propertyProfileXsd(aClass : uml::Class, aProfilePackage : uml::Package)]
+  &lt;xs:sequence&gt;
+    [for (anAttribute : uml::Property | aClass.u_attributes()
+        -&gt;select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+      &lt;xs:element name=&quot;[anAttribute.name/]&quot;
+                  type=&quot;[anAttribute.type.xsd_typeName()/]&quot;
+                  minOccurs=&quot;[anAttribute.lower/]&quot;
+                  maxOccurs=&quot;[anAttribute.xsd_upperCardinality()/]&quot;
+                  xml:id=&quot;[aClass.name.concat(&#39;-&#39;).concat(anAttribute.name)/]&quot;&gt;
+        &lt;xs:annotation&gt;
+    [&#39;    &lt;xs:documentation&gt;&#39; + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+        &lt;/xs:annotation&gt;
+      &lt;/xs:element&gt;
+    [/for]
+    [for (aProperty : uml::Property | aClass.u_associationEndPropertiesInSubset(aProfilePackage))]
+      [let sourceClass : uml::Property = aProperty.association.ownedEnd-&gt;first()]
+        [let targetClass : uml::Property = sourceClass.getOtherEnd()]
+          &lt;xs:element name=&quot;[aProperty.association.name/]&quot;
+                      minOccurs=&quot;[targetClass.lower/]&quot;
+                      maxOccurs=&quot;[targetClass.xsd_upperCardinality()/]&quot;
+                      xml:id=&quot;[aProperty.association.name/]&quot;&gt;
+            &lt;xs:annotation&gt;
+    [&#39;    &lt;xs:documentation&gt;&#39; + aProperty.u_commentBody().xsd_escapeXmlCharacters()/]&lt;/xs:documentation&gt;
+            &lt;/xs:annotation&gt;
+            &lt;xs:complexType&gt;
+              &lt;xs:complexContent&gt;
+                &lt;xs:restriction base=&quot;AssociationReferenceXsdType&quot;&gt;
+                  &lt;xs:sequence&gt;
+                    &lt;xs:element name=&quot;ddiReference&quot;
+                                type=&quot;InternationalRegistrationDataIdentifierXsdType&quot;
+                                minOccurs=&quot;0&quot;
+                                maxOccurs=&quot;1&quot;
+                                xml:id=&quot;[aProperty.association.name + &#39;-ddiReference&#39;/]&quot;/&gt;
+                    &lt;xs:element name=&quot;validType&quot;
+                                minOccurs=&quot;[sourceClass.lower/]&quot;
+                                maxOccurs=&quot;[sourceClass.xsd_upperCardinality()/]&quot;
+                                xml:id=&quot;[aProperty.association.name + &#39;-validType&#39;/]&quot;&gt;
+                      &lt;xs:simpleType&gt;
+                        &lt;xs:restriction base=&quot;xs:NMTOKEN&quot;&gt;
+                          [targetClass.type.xsd_referenceClass()/]
+                        &lt;/xs:restriction&gt;
+                      &lt;/xs:simpleType&gt;
+                    &lt;/xs:element&gt;
+                  &lt;/xs:sequence&gt;
+                &lt;/xs:restriction&gt;
+              &lt;/xs:complexContent&gt;
+            &lt;/xs:complexType&gt;
+          &lt;/xs:element&gt;
+        [/let]
+      [/let]
+    [/for]
+  &lt;/xs:sequence&gt;
+[/template]</code></pre>
+    </details>
+        </div>
 
         <!-- ═══════════════════════════════════ Query detail -->
+        <h2>Query Detail</h2>
+        <div class="element-detail" id="u_associationEndPropertiesInSubset">
+            <h3>
+                <span class="kind-badge kind-query">query</span>
+                <span class="visibility public">public</span>
+                u_associationEndPropertiesInSubset
+            </h3>
+
+            <div class="signature">
+                <code>[query public u_associationEndPropertiesInSubset(aClass : uml::Class, aProfilePackage : uml::Package) : Sequence(uml::Property) = ...]</code>
+            </div>
+
+
+            <div class="description">Returns association-end properties of the class where both the owned-end class and the other-end class are in the profile subset.</div>
+
+            <h4>Parameters</h4>
+            <dl class="param-list">
+                <dt><code>aClass</code> <span class="param-type">: uml::Class</span></dt>
+                <dd>- The UML class.</dd>
+                <dt><code>aProfilePackage</code> <span class="param-type">: uml::Package</span></dt>
+                <dd>- The profile sub-package defining the subset.</dd>
+            </dl>
+
+            <h4>Returns</h4>
+            <p>
+                <code>Sequence(uml::Property)</code>
+                
+            </p>
+
+
+
+    <div class="cross-refs">
+        <h4>References</h4>
+
+        <div class="ref-section">
+            <span class="ref-label">Queries</span>
+                <a class="ref-badge ref-internal-query"
+                   href="packageQuery.html#u_childDependencySupplierClasses">u_childDependencySupplierClasses</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_ownedEndClass">u_ownedEndClass</a>
+                <a class="ref-badge ref-internal-query"
+                   href="associationQuery.html#u_otherEndClass">u_otherEndClass</a>
+        </div>
+
+
+        <div class="ref-section">
+            <span class="ref-label">AQL collection operations</span>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-select" target="_blank">select()</a>
+                    <a class="ref-badge ref-aql-collection"
+                       href="aql-reference.html#collection-includes" target="_blank">includes()</a>
+        </div>
+
+        <div class="ref-section">
+            <span class="ref-label">AQL services</span>
+                    <span class="ref-badge ref-aql-service">and()</span>
+        </div>
+
+
+
+        
+    </div>
+    <details class="source-dropdown">
+        <summary>Show source</summary>
+        <pre class="source-code"><code>[query public u_associationEndPropertiesInSubset(
+  aClass : uml::Class,
+  aProfilePackage : uml::Package) : Sequence(uml::Property) =
+  let subsetClasses : OrderedSet(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()
+  in
+  aClass.ownedAttribute
+    -&gt;select(p | p.association &lt;&gt; null
+      and subsetClasses-&gt;includes(p.association.u_ownedEndClass())
+      and subsetClasses-&gt;includes(p.association.u_otherEndClass()))
+/]</code></pre>
+    </details>
+        </div>
 
     </main>
 </div>
