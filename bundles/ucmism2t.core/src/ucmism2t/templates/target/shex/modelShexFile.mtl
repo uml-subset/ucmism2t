@@ -8,6 +8,7 @@
   'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::eobjectQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::modelQuery/]
@@ -25,18 +26,24 @@
  * @param aModel a model
 */]
 [template public processModelShex(aModel : uml::Model)]
-  [file (aModel.u_modelShortName() + '/encoding/shex/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
-    [aModel.u_model().ttl_prefixes()/]
-    
-    start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
-    
-    [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
-      [aClass.classShex()/]
-    [/for]
-    [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)->sortedBy(temp2 | temp2.name)->select(temp3 | not temp3.oclIsTypeOf(uml::Enumeration))->select(temp4 | not temp4.qualifiedName.contains('XMLSchemaDataTypes')))]
-      [aDataType.dataTypeShex()/]
-    [/for]
-  [/file]
+  [let dynamicNamespaces : Sequence(String) = aModel.u_mainPackage().u_referencedNamespaces()]
+    [let staticNamespaces : Sequence(String) = aModel.u_staticNamespaces()]
+      [file (aModel.u_modelShortName() + '/encoding/shex/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
+        [aModel.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
+        [aModel.validateResolvedNamespaces(aModel.u_mainPackage().u_elementsWithUnresolvedNamespace())/]
+        [aModel.ttl_prefixesDynamic(aModel.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
+        
+        start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
+        
+        [for (aClass : uml::Class | aModel.u_mainPackage().eAllContents(uml::Class)->sortedBy(temp1 | temp1.name))]
+          [aClass.classShex()/]
+        [/for]
+        [for (aDataType : uml::DataType | aModel.u_mainPackage().eAllContents(uml::DataType)->sortedBy(temp2 | temp2.name)->select(temp3 | not temp3.oclIsTypeOf(uml::Enumeration))->select(temp4 | not temp4.qualifiedName.contains('XMLSchemaDataTypes')))]
+          [aDataType.dataTypeShex()/]
+        [/for]
+      [/file]
+    [/let]
+  [/let]
 [/template]
 
 [**
@@ -51,21 +58,27 @@ Written to:
   [let aModel : uml::Model = aProfilePackage.u_model()]
     [let subsetClasses : OrderedSet(uml::Class) =
         aProfilePackage.u_childDependencySupplierClasses()]
-    [let subsetDataTypes : OrderedSet(uml::DataType) =
-        aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/shex/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
-        [aModel.u_model().ttl_prefixes()/]
-        
-        start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
-        
-        [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name))]
-          [aClass.classProfileShex(aProfilePackage)/]
-        [/for]
-        [for (aDataType : uml::DataType | subsetDataTypes->sortedBy(d | d.name)->select(d | not d.oclIsTypeOf(uml::Enumeration))->select(d | not d.qualifiedName.contains('XMLSchemaDataTypes')))]
-          [aDataType.dataTypeShex()/]
-        [/for]
-      [/file]
-    [/let]
+      [let subsetDataTypes : OrderedSet(uml::DataType) =
+          aProfilePackage.u_childDependencySupplierDataTypes()]
+        [let dynamicNamespaces : Sequence(String) = aProfilePackage.u_referencedNamespacesForProfile()]
+          [let staticNamespaces : Sequence(String) = aProfilePackage.u_staticNamespaces()]
+            [file (aModel.u_modelShortName() + '/encoding/shex/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
+              [aProfilePackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
+              [aProfilePackage.validateResolvedNamespaces(aProfilePackage.u_elementsWithUnresolvedNamespaceForProfile())/]
+              [aProfilePackage.ttl_prefixesDynamic(aProfilePackage.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
+              
+              start = @['RDF_NAMESPACE'.getPropertyValue()/]:WideDataSetShape
+              
+              [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name))]
+                [aClass.classProfileShex(aProfilePackage)/]
+              [/for]
+              [for (aDataType : uml::DataType | subsetDataTypes->sortedBy(d | d.name)->select(d | not d.oclIsTypeOf(uml::Enumeration))->select(d | not d.qualifiedName.contains('XMLSchemaDataTypes')))]
+                [aDataType.dataTypeShex()/]
+              [/for]
+            [/file]
+          [/let]
+        [/let]
+      [/let]
     [/let]
   [/let]
 [/template]

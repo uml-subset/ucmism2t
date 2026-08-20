@@ -33,9 +33,8 @@
       ]
       {
         "@context": {
-          "[aModel.u_modelRdfPrefix()/]": "[aModel.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
-          "xsd": "http://www.w3.org/2001/XMLSchema#",
+          [if (aModel.u_modelRdfPrefix() <> 'NOT_SET' and aModel.u_modelRdfNamespace() <> 'NOT_SET')]"[aModel.u_modelRdfPrefix()/]": "[aModel.u_modelRdfNamespace()/]",
+          [/if]"xsd": "http://www.w3.org/2001/XMLSchema#",
           "[aModel.name/]": "@included",
           [for (aClass : uml::Class | classes) separator(',\n    ')]
             "[aClass.name/]": {
@@ -77,9 +76,8 @@ are included. Written to:
       [file (aModel.u_modelShortName() + '/encoding/json-ld/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
         {
           "@context": {
-            "[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
-            "xsd": "http://www.w3.org/2001/XMLSchema#",
+            [if (aProfilePackage.u_modelRdfPrefix() <> 'NOT_SET' and aProfilePackage.u_modelRdfNamespace() <> 'NOT_SET')]"[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",
+            [/if]"xsd": "http://www.w3.org/2001/XMLSchema#",
             "[aModel.name/]": "@included",
             [for (aClass : uml::Class | subsetClasses->sortedBy(c | c.name)) separator(',
     ')]

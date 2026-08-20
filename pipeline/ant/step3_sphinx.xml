@@ -14,7 +14,7 @@
 			<arg line="-b html" />
 			<arg line="-c ${ucmism2t_dir}/pipeline/sphinx/bookTheme" />
 			<!-- similar output as in terminal window -->
-			<arg line="-w ${log_folder}/step3_sphinx_error.log" />
+			<arg line="-w ${log_folder}/${MODEL_SHORTNAME}/step3_sphinx_error.log" />
 			<arg line="-n" />
 			<!-- suppresses terminal codes -->
 			<arg line="-q" />
@@ -26,8 +26,8 @@
 		</exec>
 		<echo message="----------" />				
 		<echo message="Step 3 - sphinx completed." />
-		<echo message="Files in: ${generated_folder}/${MODEL_SHORTNAME}" />
-		<echo message="Log files in: ${log_folder}" />
+		<echo message="Generated files in: ${generated_folder}/${MODEL_SHORTNAME}" />
+		<echo message="Log files in: ${log_folder}/${MODEL_SHORTNAME}" />
 	</target>
 
 </project>

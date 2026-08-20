@@ -11,6 +11,7 @@ Module contains queries with a UML package as receiver.
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
 
 [**
@@ -470,4 +471,235 @@ to all profile-specific pages for the class.
       and p.u_childDependencySupplierClasses()->includes(aClass))
     ->sortedBy(p | p.name)
     ->asOrderedSet()
+/]
+
+[**
+Returns the distinct dynamic RDF namespaces referenced by a Universe
+package's content, as "prefix>namespace" tokens (same delimited form
+as u_staticNamespaces — NOT Sequence{prefix, namespace} pairs, since
+building those inside a collect lambda triggers Acceleo's collect
+auto-flatten and corrupts the pair structure; see u_staticNamespaces'
+doc comment). Collected from: the package itself, every class and
+data type in its subtree (via eAllContents, so nested sub-packages
+are covered), and anything those reference from outside themselves:
+attribute types and supertypes. Subclass/subtype direction is
+intentionally excluded, since an rdfs:subClassOf-style triple is
+always written from the child's own file, never the parent's — the
+parent's file never needs the child's namespace.
+
+One level of reference is sufficient: Turtle/SHACL/ShEx only ever
+need a PREFIX declared for identifiers written directly into the
+file being generated (rdfs:range, sh:targetClass, etc.), never for
+something two hops removed.
+
+Deduplicated by distinct namespace value, keeping one representative
+token per distinct namespace. This query only collects — conflict
+filtering against the static namespace set and warning on prefix
+collisions is handled separately by u_combinedNamespaces /
+validateNamespaceConflicts.
+
+@param aPackage - The Universe package (or sub-package) whose
+                  content's referenced namespaces are collected.
+@return A sequence of "prefix>namespace" tokens, one per distinct
+        referenced namespace.
+/]
+[query public u_referencedNamespaces(aPackage : uml::Package) : Sequence(String) =
+  let classes : Sequence(uml::Class) =
+    aPackage.eAllContents(uml::Class)->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aPackage.eAllContents(uml::DataType)->asSequence()
+  in
+  let referencedElements : Sequence(uml::NamedElement) =
+    Sequence{aPackage}
+      ->union(classes->collect(c | c.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+  in
+  let inScopeElements : Sequence(uml::NamedElement) =
+    referencedElements
+      ->select(e | not e.qualifiedName.contains('XMLSchemaDataTypes'))
+      ->select(e | e.name <> 'PackageInformation')
+  in
+  let allTokens : Sequence(String) =
+    inScopeElements->collect(e | e.u_modelRdfPrefix() + '>' + e.u_modelRdfNamespace())
+      ->select(t | t.tokenize('>')->at(1) <> 'NOT_SET' and t.tokenize('>')->at(2) <> 'NOT_SET')
+  in
+  let uniqueNamespaces : OrderedSet(String) =
+    allTokens->collect(t | t.tokenize('>')->at(2))->asOrderedSet()
+  in
+  uniqueNamespaces->collect(ns | allTokens->select(t | t.tokenize('>')->at(2) = ns)->first())->asSequence()
+/]
+
+[**
+Same as u_referencedNamespaces, but for a profile sub-package.
+Profile packages don't own classes by containment — they reference
+them via uml::Dependency suppliers — so the source collections come
+from u_childDependencySupplierClasses / u_childDependencySupplierDataTypes
+instead of eAllContents. The profile package itself is deliberately
+excluded from the referenced-elements set: profile packages don't
+own an RDF namespace of their own, only the classes/data types they
+select from the Universe do.
+
+@param aProfilePackage - The profile sub-package defining the subset.
+@return A sequence of "prefix>namespace" tokens, one per distinct
+        referenced namespace.
+/]
+[query public u_referencedNamespacesForProfile(aProfilePackage : uml::Package) : Sequence(String) =
+  let classes : Sequence(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aProfilePackage.u_childDependencySupplierDataTypes()->asSequence()
+  in
+  let referencedElements : Sequence(uml::NamedElement) =
+    classes->collect(c | c.oclAsType(uml::NamedElement))
+      ->union(dataTypes->collect(d | d.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+  in
+  let inScopeElements : Sequence(uml::NamedElement) =
+    referencedElements
+      ->select(e | not e.qualifiedName.contains('XMLSchemaDataTypes'))
+      ->select(e | e.name <> 'PackageInformation')
+  in
+  let allTokens : Sequence(String) =
+    inScopeElements->collect(e | e.u_modelRdfPrefix() + '>' + e.u_modelRdfNamespace())
+      ->select(t | t.tokenize('>')->at(1) <> 'NOT_SET' and t.tokenize('>')->at(2) <> 'NOT_SET')
+  in
+  let uniqueNamespaces : OrderedSet(String) =
+    allTokens->collect(t | t.tokenize('>')->at(2))->asOrderedSet()
+  in
+  uniqueNamespaces->collect(ns | allTokens->select(t | t.tokenize('>')->at(2) = ns)->first())->asSequence()
+/]
+
+[**
+Combines a static namespace set with a package's dynamically
+referenced namespaces, filtering the dynamic set against the static
+one so the result is safe to render as a single, non-conflicting
+list of PREFIX declarations. Both inputs and the result are
+"prefix>namespace" tokens (see u_staticNamespaces):
+  - same prefix + same namespace as a static entry -> dropped (the
+    static entry already covers it; avoids a duplicate PREFIX line).
+    An exact token match captures "same prefix and same namespace"
+    in one comparison.
+  - same prefix + different namespace than a static entry -> KEPT
+    (the model's own namespace wins over the standard vocabulary
+    prefix it happens to reuse). Call validateNamespaceConflicts
+    alongside this to warn when that happens.
+  - distinct prefix -> always kept.
+
+IMPORTANT: aContext (not dynamicPairs) is the receiver — e.g.
+aModel.u_combinedNamespaces(dynamicPairs, staticPairs), never
+dynamicPairs.u_combinedNamespaces(staticPairs). See ttl_prefixes'
+doc comment (commonRdf.mtl) for why a collection can never safely be
+the receiver of a call like this.
+
+@param aContext - Only used as entry point (see note above).
+@param dynamicPairs - Referenced namespace tokens, from
+                       u_referencedNamespaces or
+                       u_referencedNamespacesForProfile.
+@param staticPairs - The fixed namespace set, from u_staticNamespaces.
+@return The combined "prefix>namespace" token list, ready to pass
+        to ttl_prefixes.
+/]
+[query public u_combinedNamespaces(
+  aContext : ecore::EObject,
+  dynamicPairs : Sequence(String),
+  staticPairs : Sequence(String)) : Sequence(String) =
+  staticPairs->union(
+    dynamicPairs->select(dp | staticPairs->excludes(dp))
+  )
+/]
+
+[**
+Identifies elements referenced from a package (see u_referencedNamespaces)
+whose RDF prefix or namespace could not be resolved from the model —
+meaning their nearest PackageInformation is missing rdfNamespacePrefix
+or rdfNamespaceUri, and no global RDF_PREFIX / RDF_NAMESPACE override
+is set either. Used to warn the modeler about which package needs
+fixing, rather than silently producing an unusable namespace entry.
+The result is deduplicated and preserves first-seen order.
+
+@param aPackage - The package whose referenced elements to check.
+@return The distinct elements with an unresolved namespace.
+/]
+[query public u_elementsWithUnresolvedNamespace(aPackage : uml::Package) : Sequence(uml::NamedElement) =
+  let classes : Sequence(uml::Class) =
+    aPackage.eAllContents(uml::Class)->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aPackage.eAllContents(uml::DataType)->asSequence()
+  in
+  let referencedElements : Sequence(uml::NamedElement) =
+    Sequence{aPackage}
+      ->union(classes->collect(c | c.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+  in
+  let inScopeElements : Sequence(uml::NamedElement) =
+    referencedElements
+      ->select(e | not e.qualifiedName.contains('XMLSchemaDataTypes'))
+      ->select(e | e.name <> 'PackageInformation')
+  in
+  inScopeElements
+    ->select(e | e.u_modelRdfPrefix() = 'NOT_SET' or e.u_modelRdfNamespace() = 'NOT_SET')
+    ->asOrderedSet()->asSequence()
+/]
+
+[**
+Same as u_elementsWithUnresolvedNamespace, but for a profile sub-package.
+Mirrors u_referencedNamespacesForProfile's source collections, and
+likewise excludes the profile package itself from consideration.
+
+@param aProfilePackage - The profile sub-package defining the subset.
+@return The distinct elements with an unresolved namespace.
+/]
+[query public u_elementsWithUnresolvedNamespaceForProfile(aProfilePackage : uml::Package) : Sequence(uml::NamedElement) =
+  let classes : Sequence(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aProfilePackage.u_childDependencySupplierDataTypes()->asSequence()
+  in
+  let referencedElements : Sequence(uml::NamedElement) =
+    classes->collect(c | c.oclAsType(uml::NamedElement))
+      ->union(dataTypes->collect(d | d.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.ownedAttribute->collect(a | a.type))
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(classes->collect(c | c.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+      ->union(dataTypes->collect(d | d.general)
+        ->select(t | t <> null and not t.u_isUmlPrimitive())->collect(t | t.oclAsType(uml::NamedElement)))
+  in
+  let inScopeElements : Sequence(uml::NamedElement) =
+    referencedElements
+      ->select(e | not e.qualifiedName.contains('XMLSchemaDataTypes'))
+      ->select(e | e.name <> 'PackageInformation')
+  in
+  inScopeElements
+    ->select(e | e.u_modelRdfPrefix() = 'NOT_SET' or e.u_modelRdfNamespace() = 'NOT_SET')
+    ->asOrderedSet()->asSequence()
 /]

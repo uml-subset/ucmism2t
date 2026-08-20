@@ -130,8 +130,10 @@ When aProfilePackage is not null (profile context):
         [aClass.rst_classOrDataTypeInheritance()/]
       [/if]
       
-      [let visibleAttrs : Sequence(uml::Property) = aClass.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage))]
-      [let visibleInheritedAttrs : Sequence(uml::Property) = aClass.u_allSuperClasses()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc.oclAsType(uml::Class)))->collect(sc | sc.u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))->asSequence()]
+      [let visibleAttrs : OrderedSet(uml::Property) =
+        aClass.u_attributes()
+          ->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage) )]
+      [let visibleInheritedAttrs : Sequence(uml::Property) = aClass.u_allSuperClasses()->asSequence()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc.oclAsType(uml::Class)))->collect(sc | sc.oclAsType(uml::Class).u_attributes()->select(p | aProfilePackage = null or p.u_isAttributeInProfile(aClass, aProfilePackage)))->asSequence()]
       [if (visibleAttrs->notEmpty() or visibleInheritedAttrs->notEmpty())]
         Attributes
         ==========

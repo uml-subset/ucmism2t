@@ -1,7 +1,7 @@
 <project name="all_steps" default="build">
     
-    <property name="pipeline.properties" value="pipeline.properties"/>
-    <property file="${pipeline.properties}"/>
+    <!-- <property name="pipeline.properties" value="pipeline.properties"/>
+    <property file="${pipeline.properties}"/> -->
     
     <target name="build">
         <ant antfile="${ucmism2t_dir}/pipeline/ant/step0_clean.xml" />

@@ -7,9 +7,9 @@ Includes queries for RDF URI mapping tokens
 (uml-map-rdf property) and test package names.
 /]
 [module eobjectQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::services::PropertiesService /]
@@ -21,10 +21,10 @@ property "uml-map-rdf", split by comma.
 @param anEObject - Only used as entry point.
 /]
 [query public u_mappedUcmisItemsRdfTokens(
-		anEObject : ecore::EObject) : Sequence(String) =
-	'uml-map-rdf'.getPropertyValue()
-		.replaceAll('\\s+', '')
-		.tokenize(',')
+    anEObject : ecore::EObject) : Sequence(String) =
+  'uml-map-rdf'.getPropertyValue()
+    .replaceAll('\\s+', '')
+    .tokenize(',')
 /]
 
 [**
@@ -34,10 +34,10 @@ tokens (the part before ">").
 @param anEObject - Only used as entry point.
 /]
 [query public u_mappedUcmisItemsRdf(
-		anEObject : ecore::EObject) : Sequence(String) =
-	anEObject.u_mappedUcmisItemsRdfTokens()
-	  ->select(s1 | s1.contains('>'))
-		->collect(s2 | s2.tokenize('>')->at(1))
+    anEObject : ecore::EObject) : Sequence(String) =
+  anEObject.u_mappedUcmisItemsRdfTokens()
+    ->select(s1 | s1.contains('>'))
+    ->collect(s2 | s2.tokenize('>')->at(1))
 /]
 
 [**
@@ -47,10 +47,10 @@ tokens (the part after ">").
 @param anEObject - Only used as entry point.
 /]
 [query public u_mappedUcmisItemsRdfTargets(
-		anEObject : ecore::EObject) : Sequence(String) =
-	anEObject.u_mappedUcmisItemsRdfTokens()
+    anEObject : ecore::EObject) : Sequence(String) =
+  anEObject.u_mappedUcmisItemsRdfTokens()
     ->select(s1 | s1.contains('>'))
-		->collect(s2 | s2.tokenize('>')->at(2))
+    ->collect(s2 | s2.tokenize('>')->at(2))
 /]
 
 [**
@@ -63,4 +63,37 @@ Returns an ordered set of package names defined in the property TEST_PACKAGE.
     .substituteAll(' ', '')
     .tokenize(',')
     ->asOrderedSet()
+/]
+
+[**
+Returns the standard RDF/OWL/UCMIS namespace pairs from the
+"rdf-static-namespaces" property, as "prefix>namespace" tokens —
+NOT split into Sequence{prefix, namespace} pairs, because Acceleo's
+collect auto-flattens whenever a lambda returns a collection per
+iteration, which silently corrupts a Sequence(Sequence(String))
+built this way. Each token is tokenized by '>' only at the point of
+use (see ttl_prefixes, validateNamespaceConflicts,
+u_combinedNamespaces), using the same "key > value" delimited-list
+syntax as uml-map-rdf. Example property value:
+
+  rdf-static-namespaces = \
+    rdf   > http://www.w3.org/1999/02/22-rdf-syntax-ns#  , \
+    rdfs  > http://www.w3.org/2000/01/rdf-schema#        , \
+    owl   > http://www.w3.org/2002/07/owl#               , \
+    xsd   > http://www.w3.org/2001/XMLSchema#            , \
+    dc    > http://purl.org/dc/elements/1.1/             , \
+    skos  > http://www.w3.org/2004/02/skos/core#         , \
+    ucmis > http://ddialliance.org/Specification/UCMIS/1.0/RDF/
+
+Adding, removing, or changing a static namespace is a configuration
+change only — no template or query needs to change as a result.
+
+@param anEObject - Only used as entry point.
+@return A sequence of "prefix>namespace" tokens.
+/]
+[query public u_staticNamespaces(anEObject : ecore::EObject) : Sequence(String) =
+  'rdf-static-namespaces'.getPropertyValue()
+    .replaceAll('\\s+', '')
+    .tokenize(',')
+    ->select(token | token.contains('>'))
 /]

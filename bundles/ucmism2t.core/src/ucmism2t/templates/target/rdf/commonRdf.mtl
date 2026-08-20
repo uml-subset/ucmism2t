@@ -280,3 +280,48 @@ Converts a UML comment into an RDFS comment.
 [query public isNotInMappedItems(aClassifier : uml::Classifier) : Boolean =
   aClassifier.u_mappedUcmisItemsRdf()->indexOf(aClassifier.name) = 0
 /]
+
+[**
+ Emits Turtle PREFIX declarations for a resolved sequence of
+ "prefix>namespace" tokens, one line per token. Purely a formatter.
+ IMPORTANT: aContext (not namespaceTokens) is the receiver in a dot-call
+ — e.g. aModel.ttl_prefixesDynamic(tokens) — never tokens.ttl_prefixesDynamic().
+/]
+[template public ttl_prefixesDynamic(aContext : ecore::EObject, namespaceTokens : Sequence(String)) post(self.trim())]
+  [for (t : String | namespaceTokens)]
+    PREFIX [t.tokenize('>')->at(1)/]: <[t.tokenize('>')->at(2)/]>
+  [/for]
+[/template]
+
+[**
+ Warns when a package's dynamically referenced namespaces reuse a
+ static namespace's prefix with a different namespace URI.
+ IMPORTANT: aContext is the receiver — e.g.
+ aModel.validateNamespaceConflicts(dynamicTokens, staticTokens).
+/]
+[template public validateNamespaceConflicts(
+  aContext : uml::NamedElement,
+  dynamicTokens : Sequence(String),
+  staticTokens : Sequence(String))]
+  [for (dt : String | dynamicTokens->select(d |
+      staticTokens->exists(st | st.tokenize('>')->at(1) = d.tokenize('>')->at(1) and st.tokenize('>')->at(2) <> d.tokenize('>')->at(2))))]
+    [aContext.logWarning('Namespace prefix "' + dt.tokenize('>')->at(1) + '" from the model conflicts with the standard prefix of the same name (namespace "' + dt.tokenize('>')->at(2) + '" from the model will be used instead of the standard one)')/]
+  [/for]
+[/template]
+
+[**
+Warns about each element (class, data type, attribute type, or
+superclass) whose RDF prefix or namespace could not be resolved,
+naming the element's qualified name so the modeler can add the
+missing rdfNamespacePrefix and rdfNamespaceUri to the PackageInformation
+of its containing package, or set the global RDF_PREFIX / RDF_NAMESPACE
+property. aContext is the receiver in the call, and unresolvedElements
+is the list from u_elementsWithUnresolvedNamespace or its profile variant.
+/]
+[template public validateResolvedNamespaces(
+  aContext : uml::NamedElement,
+  unresolvedElements : Sequence(uml::NamedElement))]
+  [for (e : uml::NamedElement | unresolvedElements)]
+    [aContext.logWarning('Could not resolve an RDF namespace/prefix for "' + e.qualifiedName + '" — add rdfNamespacePrefix and rdfNamespaceUri to the PackageInformation of its containing package, or set the global RDF_PREFIX/RDF_NAMESPACE property')/]
+  [/for]
+[/template]

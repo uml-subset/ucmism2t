@@ -32,16 +32,16 @@
     </target>
 
     <target name="generate_unix" if="isUnix">
-        <mkdir dir="${log_folder}" />
+        <mkdir dir="${log_folder}/${MODEL_SHORTNAME}" />
         <exec executable="${ucmism2t_dir}/pipeline/script/ucmism2t-wrapper.sh">
             <env key="LAUNCHER" value="${launcher}"/>
             <arg line="-input ${model_file_eclipse}" />
             <arg line="-output ${generated_folder}" />
-            <arg line="-log ${log_folder}/step1_ucmism2t_acceleo.log" />
+            <arg line="-log ${log_folder}/${MODEL_SHORTNAME}/step1_ucmism2t_acceleo.log" />
             <arg line="-config ${generic_properties},${model_properties}" />
             <!-- Split streams cleanly to both files and console logs -->
-            <redirector output="${log_folder}/step1_generate.log" 
-                        error="${log_folder}/step1_generate_error.log" 
+            <redirector output="${log_folder}/${MODEL_SHORTNAME}/step1_generate.log" 
+                        error="${log_folder}/${MODEL_SHORTNAME}/step1_generate_error.log" 
                         alwayslog="true" />
         </exec>
     </target>

@@ -51,9 +51,8 @@
         "[aDataType.general->asSequence()->collect(temp3 | temp3.name)/].jsonld",
   [/if]
       {
-        "[aDataType.u_modelRdfPrefix()/]": "[aDataType.u_modelRdfNamespace()/]",
-[comment]         "['RDF_PREFIX'.getPropertyValue()/]": "['RDF_NAMESPACE'.getPropertyValue()/]",[/comment]
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        [if (aDataType.u_modelRdfPrefix() <> 'NOT_SET' and aDataType.u_modelRdfNamespace() <> 'NOT_SET')]"[aDataType.u_modelRdfPrefix()/]": "[aDataType.u_modelRdfNamespace()/]",
+        [/if]"xsd": "http://www.w3.org/2001/XMLSchema#",
   
         [aDataType.dataTypeJsonldCore(true)/] 
       }

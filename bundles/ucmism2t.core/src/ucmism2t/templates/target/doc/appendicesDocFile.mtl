@@ -351,9 +351,12 @@
     
     ['Classes by Profiles Table'.rst_header('=')/]
 
+    [let up : uml::Package = aModel.u_profilesPackage()]
     [let profilePackages : Sequence(uml::Package) =
-      let up : uml::Package = aModel.u_profilesPackage() in
-      if up <> null then up.eContents(uml::Package)->sortedBy(p | p.name) else Sequence{} endif]
+      Sequence{up}->select(p1 | p1 <> null)
+        ->collect(p1 | p1.eContents(uml::Package))
+        ->select(p2 | p2 <> null)
+        ->asSequence()->sortedBy(p2 | p2.name)]
       
       .. container:: table-responsive
       
@@ -367,15 +370,20 @@
               [for (aPackage : uml::Package | profilePackages)]
                 - [aPackage.name/]
               [/for]
+      [let uni : uml::Package = aModel.u_universePackage()]
       [for (aClass : uml::Class |
-        let uni : uml::Package = aModel.u_universePackage() in
-        if uni <> null then uni.eAllContents(uml::Class)->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name) else Sequence{} endif)]
+        Sequence{uni}->select(p3 | p3 <> null)
+          ->collect(p3 | p3.eAllContents(uml::Class))
+          ->select(c0 | c0 <> null)
+          ->asSequence()->sortedBy(c2 | c2.name)->sortedBy(c1 | c1.package.name))]
               * - [aClass.package.name/]
                 - [aClass.name/]
                 [for (aPackage : uml::Package | profilePackages)]
                   - [if (aClass.u_isInProfile(aPackage))]✔[/if]
                 [/for]
       [/for]
+      [/let]
+    [/let]
     [/let]
   [/file]
 [/template]
