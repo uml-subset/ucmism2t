@@ -28,10 +28,15 @@ Related modules:
   receiver, since association ends are properties
 /]
 [module propertyQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::eobjectQuery/]
+[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::queries::stringQuery/]
 
 [**
 Returns the cardinality of a property in ShEx syntax:
@@ -85,4 +90,86 @@ runtime (regardless of the XMI serialization which can use the asterisk)
 [query public u_isUnlimited(
   upper : Integer) : Boolean =
   upper = -1
+/]
+
+[**
+Checks whether an attribute's name embeds an explicit namespace
+prefix, e.g. "cdif:displayLabel". This is a UML modeling workaround
+for the lack of a native attribute-level namespace concept: rather
+than the attribute being locally scoped to its owning class, the
+embedded prefix says this is an existing external term to reuse
+directly, not a new locally-scoped one.
+
+Note: assumes a single colon. A name with more than one colon is
+treated as prefix plus everything after the first colon combined,
+which is not separately validated here.
+
+@param aProperty - The attribute to check.
+@return True if the attribute's name contains a colon.
+/]
+[query public u_hasEmbeddedNamespacePrefix(aProperty : uml::Property) : Boolean =
+  aProperty.name.contains(':')
+/]
+
+[**
+Returns the prefix portion of an attribute name with an embedded
+namespace prefix (see u_hasEmbeddedNamespacePrefix), e.g. "cdif"
+from "cdif:displayLabel". Only meaningful when
+u_hasEmbeddedNamespacePrefix is true.
+
+@param aProperty - The attribute whose embedded prefix to extract.
+@return The prefix portion, i.e. everything before the first colon.
+/]
+[query public u_embeddedNamespacePrefix(aProperty : uml::Property) : String =
+  aProperty.name.tokenize(':')->at(1)
+/]
+
+[**
+Returns the local-name portion of an attribute name with an embedded
+namespace prefix (see u_hasEmbeddedNamespacePrefix), e.g.
+"displayLabel" from "cdif:displayLabel", escaped the same way as any
+other local identifier. Only meaningful when
+u_hasEmbeddedNamespacePrefix is true.
+
+@param aProperty - The attribute whose local name to extract.
+@return The escaped local-name portion, i.e. everything after the
+        first colon.
+/]
+[query public u_embeddedLocalName(aProperty : uml::Property) : String =
+  aProperty.name.tokenize(':')->at(2).u_iriEscape()
+/]
+
+[**
+Resolves the namespace URI for an attribute name's embedded namespace
+prefix (see u_hasEmbeddedNamespacePrefix), checking two sources in
+order: first the static namespace list (see u_staticNamespaces), then
+packages under Universe whose own resolved prefix matches (see
+u_packagesWithRdfPrefix). Returns the sentinel NOT_SET if neither
+source resolves the prefix.
+
+Callers are responsible for warning if the result is NOT_SET, and
+for warning separately if u_packagesWithRdfPrefix finds more than one
+matching package, which is a conflict rather than a resolution
+failure. Only meaningful when u_hasEmbeddedNamespacePrefix is true.
+
+@param aProperty - The attribute whose embedded prefix to resolve.
+@return The resolved namespace URI, or NOT_SET if unresolved.
+/]
+[query public u_resolvedEmbeddedNamespace(aProperty : uml::Property) : String =
+  let prefix : String = aProperty.u_embeddedNamespacePrefix() in
+  let staticMatch : Sequence(String) =
+    aProperty.u_staticNamespaces()
+      ->select(t | t.tokenize('>')->at(1) = prefix)
+  in
+  if staticMatch->notEmpty()
+  then staticMatch->first().tokenize('>')->at(2)
+  else
+    let packageMatches : Sequence(uml::Package) =
+      aProperty.u_model().u_packagesWithRdfPrefix(prefix)
+    in
+    if packageMatches->notEmpty()
+    then packageMatches->first().u_packageOwnRdfNamespace()
+    else 'NOT_SET'
+    endif
+  endif
 /]

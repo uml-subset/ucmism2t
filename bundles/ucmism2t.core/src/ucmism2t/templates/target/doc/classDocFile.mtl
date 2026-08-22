@@ -296,7 +296,7 @@ When aProfilePackage is not null (profile context):
             [if (aProfilePackage = null)][aClass.classOnto()/][else][aClass.classProfileOnto(aProfilePackage)/][/if]
           [/file]
           
-                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]main ontology </encoding/ontology/[aClass.u_model().u_modelAcronym()/].onto.ttl>[else]profile ontology </encoding/ontology/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aProfilePackage.name/].onto.ttl>[/if]`_)
+                   Fragment for the class **[aClass.name/]** (`[if (aProfilePackage = null)]main ontology </encoding/ontology/[aClass.u_model().name/].onto.ttl>[else]profile ontology </encoding/ontology/['profiles_package'.getRequiredPropertyValue()/]/[aProfilePackage.name/]/[aProfilePackage.name/].onto.ttl>[/if]`_)
               
                    .. literalinclude:: [if (aProfilePackage = null)][aClass.qualifiedName.replace(aClass.u_model().name, '').replaceAll('::', '/')/][else][aClass.name/][/if].onto.ttl 
                       :language: turtle

@@ -46,15 +46,11 @@
         </xslt>
     </target>
     
-    <target name="compile">
-        <echo message="Compiling source code..."/>
-    </target>
-    
-    <!-- TODO -->
+    <!-- optional -->
     <target name="provide_onto_file">
-        <copy file="${encoding}/ontology/DDICDIModels.onto.ttl"
-            tofile="${encoding}/ontology/ddi-cdi.onto.ttl"
-            failonerror="false" />
+        <!-- <copy file="${MODEL_SHORTNAME}/encoding/ontology/DDICDIModels.onto.ttl"
+            tofile="${MODEL_SHORTNAME}/encoding/ontology/ddi-cdi.onto.ttl"
+            failonerror="false" /> -->
     </target>
     
     <target name="copy_model_file">

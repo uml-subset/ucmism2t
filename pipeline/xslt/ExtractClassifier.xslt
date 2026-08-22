@@ -79,7 +79,7 @@
 						false() means path starts below the selected root.
 						true() means the selected root name becomes the first path segment.
 	-->
-	<xsl:param name="INCLUDE_ROOT_IN_PATH" as="xs:boolean" select="false()"/>
+	<xsl:param name="INCLUDE_ROOT_IN_PATH" as="xs:boolean" select="true()"/>
 	
 	<!--
 						f:safe-name

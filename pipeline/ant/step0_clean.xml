@@ -1,10 +1,22 @@
 <project name="step0_clean" default="clean">
-	
-    <target name="clean">
+    
+    <available file="${generated_folder}/${MODEL_SHORTNAME}" property="generated.folder"/>
+
+    <target name="clean" if="${generated.folder}">
         <echo message="--------------------" />				
         <echo message="Step 0 - clean started ..." />
-        <delete dir="${generated_folder}/${MODEL_SHORTNAME}" />
-        <delete dir="${log_folder}/${MODEL_SHORTNAME}" />
+        <delete dir="${generated_folder}/${MODEL_SHORTNAME}_backup" failonerror="false" />
+        <move file="${generated_folder}/${MODEL_SHORTNAME}" tofile="${generated_folder}/${MODEL_SHORTNAME}_backup" failonerror="false" />
+        <delete dir="${log_folder}/${MODEL_SHORTNAME}_backup" failonerror="false" />
+        <move file="${log_folder}/${MODEL_SHORTNAME}" tofile="${log_folder}/${MODEL_SHORTNAME}_backup" failonerror="false" />
+        <!-- <move todir="${generated_folder}/${MODEL_SHORTNAME}_backup" failonerror="false">
+            <fileset dir="${generated_folder}/${MODEL_SHORTNAME}"/>
+        </move>
+        <move todir="${log_folder}/${MODEL_SHORTNAME}_backup" failonerror="false">
+            <fileset dir="${log_folder}/${MODEL_SHORTNAME}"/>
+        </move> -->
+        <!-- <delete dir="${generated_folder}/${MODEL_SHORTNAME}" />
+        <delete dir="${log_folder}/${MODEL_SHORTNAME}" /> -->
         <echo message="----------" />				
         <echo message="Step 0 - clean completed" />				
         

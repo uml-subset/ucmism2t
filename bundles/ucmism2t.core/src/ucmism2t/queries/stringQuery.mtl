@@ -19,9 +19,9 @@ Related modules:
   and qualified names
 /]
 [module stringQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [**
@@ -45,8 +45,32 @@ Returns a string consisting of n repetitions of char.
 @param n The number of repetitions
 /]
 [query public u_repeatChar(char : String, n : Integer) : String =
-	if n <= 0
-	then ''
-	else char + char.u_repeatChar(n - 1)
-	endif
+  if n <= 0
+  then ''
+  else char + char.u_repeatChar(n - 1)
+  endif
+/]
+
+[**
+Ensures a string is valid and Turtle-friendly for use as the local
+part of a CURIE or IRI: trims leading/trailing whitespace, appends a
+hyphen if the trimmed result ends with a period (avoiding ambiguity
+with Turtle's statement terminator), then strips all remaining
+whitespace, including internal, matching the original template's
+noWhitespace post-processor exactly.
+
+Query equivalent of the iriEscape template in commonRdf.mtl, moved
+here since it is a pure string transformation with no dependency on
+template-specific machinery, and can then be called safely from
+other queries as well as from templates.
+
+@param txt - The text to escape.
+@return The escaped text.
+/]
+[query public u_iriEscape(txt : String) : String =
+  let trimmed : String = txt.trim() in
+  let withSuffix : String =
+    if trimmed.endsWith('.') then trimmed + '-' else trimmed endif
+  in
+  withSuffix.replaceAll('\\s+', '')
 /]

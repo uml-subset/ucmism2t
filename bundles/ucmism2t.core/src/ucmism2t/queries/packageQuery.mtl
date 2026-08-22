@@ -703,3 +703,136 @@ likewise excludes the profile package itself from consideration.
     ->select(e | e.u_modelRdfPrefix() = 'NOT_SET' or e.u_modelRdfNamespace() = 'NOT_SET')
     ->asOrderedSet()->asSequence()
 /]
+
+[**
+Searches Universe (including Universe itself) and its sub-packages
+for any package whose own resolved RDF prefix (see u_modelRdfPrefix)
+equals the given prefix string. Used to resolve an attribute name's
+embedded namespace prefix (e.g. "cdif" in "cdif:displayLabel")
+against another package's namespace, when the prefix isn't found in
+the static namespace list.
+
+Returns every matching package, not just one: if more than one
+package shares the same resolved prefix, that is a conflict for the
+caller to detect and warn about, not something this query silently
+resolves by picking a winner.
+
+@param aModel - The model whose Universe subtree is searched.
+@param prefix - The prefix string to match, e.g. "cdif".
+@return All packages under (and including) Universe whose resolved
+        prefix equals the given prefix. Empty if none match.
+/]
+[query public u_packagesWithRdfPrefix(aModel : uml::Model, prefix : String) : Sequence(uml::Package) =
+  let universe : uml::Package = aModel.u_universePackage() in
+  if universe = null
+  then Sequence{}
+  else
+    Sequence{universe}
+      ->union(universe.eAllContents(uml::Package)->asSequence())
+      ->select(p | p.u_packageOwnRdfPrefix() = prefix)
+  endif
+/]
+
+[**
+Gathers every ownedAttribute of the classes and data types in a
+package whose name embeds a namespace prefix (same check as
+propertyQuery's u_hasEmbeddedNamespacePrefix, inlined here rather
+than called, since propertyQuery already imports this module and
+importing it back would be circular). Used as the input to
+validateEmbeddedNamespacePrefixes, and reused by the token-list
+generation that adds these attributes' resolved namespaces to a
+file's PREFIX / @context declarations.
+
+@param aPackage - The package whose attributes to check.
+@return The attributes (ownedAttribute only) with an embedded prefix.
+/]
+[query public u_attributesWithEmbeddedPrefix(aPackage : uml::Package) : Sequence(uml::Property) =
+  let classes : Sequence(uml::Class) =
+    aPackage.eAllContents(uml::Class)->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aPackage.eAllContents(uml::DataType)->asSequence()
+  in
+  classes->collect(c | c.ownedAttribute->asSequence())
+    ->union(dataTypes->collect(d | d.ownedAttribute->asSequence()))
+    ->select(p | p.name.contains(':'))
+/]
+
+[**
+Same as u_attributesWithEmbeddedPrefix, but for a profile sub-package.
+Mirrors u_referencedNamespacesForProfile's source collections.
+
+@param aProfilePackage - The profile sub-package defining the subset.
+@return The attributes (ownedAttribute only) with an embedded prefix.
+/]
+[query public u_attributesWithEmbeddedPrefixForProfile(aProfilePackage : uml::Package) : Sequence(uml::Property) =
+  let classes : Sequence(uml::Class) =
+    aProfilePackage.u_childDependencySupplierClasses()->asSequence()
+  in
+  let dataTypes : Sequence(uml::DataType) =
+    aProfilePackage.u_childDependencySupplierDataTypes()->asSequence()
+  in
+  classes->collect(c | c.ownedAttribute->asSequence())
+    ->union(dataTypes->collect(d | d.ownedAttribute->asSequence()))
+    ->select(p | p.name.contains(':'))
+/]
+
+[**
+Returns a package's own directly-declared RDF prefix, read straight
+from a PackageInformation DataType owned directly by this package
+(if any) -- unlike u_modelRdfPrefix, which is designed to be called
+on an element within a package and walks up via u_nearestPackage
+(ancestors, which never include self) to find the nearest containing
+package's PackageInformation. Calling u_modelRdfPrefix directly on a
+package resolves that package's own PARENT, not the package itself.
+This query exists specifically to avoid that mistake when searching
+packages by their own declared prefix (see u_packagesWithRdfPrefix).
+
+Deliberately does not consider the global RDF_PREFIX override
+property, since the purpose here is to find a package's own distinct
+namespace, not whatever model-wide default might be in effect.
+
+@param aPackage - The package whose own PackageInformation to read.
+@return The declared rdfNamespacePrefix value, or '' if this package
+        has no own PackageInformation or the property isn't set.
+/]
+[query public u_packageOwnRdfPrefix(aPackage : uml::Package) : String =
+  let packageInformation : uml::DataType =
+    aPackage.eContents(uml::DataType)->select(d | d.name = 'PackageInformation')->first()
+  in
+  if packageInformation = null
+  then ''
+  else
+    let property : uml::Property =
+      packageInformation.eContents(uml::Property)->select(p | p.name = 'rdfNamespacePrefix')->first()
+    in
+    if property = null or property.default = null
+    then ''
+    else property.default
+    endif
+  endif
+/]
+
+[**
+Same as u_packageOwnRdfPrefix, but for the rdfNamespaceUri property.
+
+@param aPackage - The package whose own PackageInformation to read.
+@return The declared rdfNamespaceUri value, or '' if this package has
+        no own PackageInformation or the property isn't set.
+/]
+[query public u_packageOwnRdfNamespace(aPackage : uml::Package) : String =
+  let packageInformation : uml::DataType =
+    aPackage.eContents(uml::DataType)->select(d | d.name = 'PackageInformation')->first()
+  in
+  if packageInformation = null
+  then ''
+  else
+    let property : uml::Property =
+      packageInformation.eContents(uml::Property)->select(p | p.name = 'rdfNamespaceUri')->first()
+    in
+    if property = null or property.default = null
+    then ''
+    else property.default
+    endif
+  endif
+/]

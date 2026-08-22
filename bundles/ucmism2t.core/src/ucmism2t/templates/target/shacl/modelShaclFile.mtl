@@ -34,6 +34,7 @@
   [file (aModel.u_modelShortName() + '/encoding/shacl/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
     [aModel.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
     [aModel.validateResolvedNamespaces(mainPackage.u_elementsWithUnresolvedNamespace())/]
+    [aModel.validateEmbeddedNamespacePrefixes(mainPackage.u_attributesWithEmbeddedPrefix())/]
     [aModel.ttl_prefixesDynamic(aModel.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     
@@ -71,6 +72,7 @@ profile sub-package after all class fragments have been generated.
       [file (aModel.u_modelShortName() + '/encoding/shacl/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
         [aProfilePackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
         [aProfilePackage.validateResolvedNamespaces(aProfilePackage.u_elementsWithUnresolvedNamespaceForProfile())/]
+        [aProfilePackage.validateEmbeddedNamespacePrefixes(aProfilePackage.u_attributesWithEmbeddedPrefixForProfile())/]
         [aProfilePackage.ttl_prefixesDynamic(aProfilePackage.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
         PREFIX sh: <http://www.w3.org/ns/shacl#>
         

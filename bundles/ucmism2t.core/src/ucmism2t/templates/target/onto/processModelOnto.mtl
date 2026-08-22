@@ -30,6 +30,7 @@
           # based on the UML package [aPackage.qualifiedName/]
           [aPackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
           [aPackage.validateResolvedNamespaces(aPackage.u_elementsWithUnresolvedNamespace())/]
+          [aPackage.validateEmbeddedNamespacePrefixes(aPackage.u_attributesWithEmbeddedPrefix())/]
           [aPackage.ttl_prefixesDynamic(aPackage.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
           
           <[aPackage.name/].onto.ttl> a owl:Ontology;
@@ -86,6 +87,7 @@ profile subset are included. Written to:
               # Ontology for profile [aProfilePackage.name/]
               [aProfilePackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
               [aProfilePackage.validateResolvedNamespaces(aProfilePackage.u_elementsWithUnresolvedNamespaceForProfile())/]
+              [aProfilePackage.validateEmbeddedNamespacePrefixes(aProfilePackage.u_attributesWithEmbeddedPrefixForProfile())/]
               [aProfilePackage.ttl_prefixesDynamic(aProfilePackage.u_combinedNamespaces(dynamicNamespaces, staticNamespaces))/]
               
               <[aProfilePackage.name/].onto.ttl> a owl:Ontology;

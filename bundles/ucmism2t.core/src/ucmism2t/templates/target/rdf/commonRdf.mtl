@@ -10,6 +10,8 @@
 
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::eobjectQuery/]
+[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::services::PropertiesService /]
 
 [template public Ottl_prefixes(x : uml::NamedElement)]
@@ -92,7 +94,7 @@
 [template public fragment(x : uml::NamedElement) post(self.noWhitespace())]
   <#[if (x.ancestors()->notEmpty())]
       [if (x.oclIsTypeOf(uml::Property))]
-            [x.u_parent().oclAsType(uml::Classifier).name/]-[x.name/]
+            [x.u_parent().oclAsType(uml::Classifier).name/]-[if (x.oclAsType(uml::Property).u_hasEmbeddedNamespacePrefix())][x.oclAsType(uml::Property).u_embeddedLocalName()/][else][x.name/][/if]
       [else]
               [x.name/]
       [/if]
@@ -169,6 +171,9 @@ Converts a UML comment into an RDFS comment.
  *              use x's namespace at all.
 */]
 [template public cdiAdHoc(txt : String, x : uml::NamedElement) post(self.noWhitespace())]
+  [if (x.oclIsTypeOf(uml::Property) and x.oclAsType(uml::Property).u_hasEmbeddedNamespacePrefix())]
+        [x.oclAsType(uml::Property).u_embeddedNamespacePrefix()/]:[x.oclAsType(uml::Property).u_embeddedLocalName()/]
+  [else]
   [let iri : String = txt.iriEscape()]
     [if (txt.u_mappedUcmisItemsRdf()->indexOf(iri) = 0)]
           [x.u_modelRdfPrefix()/]:[iri/]
@@ -176,6 +181,7 @@ Converts a UML comment into an RDFS comment.
           [txt.u_mappedUcmisItemsRdfTargets()->at(txt.u_mappedUcmisItemsRdf()->indexOf(iri))/]
     [/if]
   [/let]
+  [/if]
 [/template]
 
 [comment JW: not used /]
@@ -323,5 +329,39 @@ is the list from u_elementsWithUnresolvedNamespace or its profile variant.
   unresolvedElements : Sequence(uml::NamedElement))]
   [for (e : uml::NamedElement | unresolvedElements)]
     [aContext.logWarning('Could not resolve an RDF namespace/prefix for "' + e.qualifiedName + '" — add rdfNamespacePrefix and rdfNamespaceUri to the PackageInformation of its containing package, or set the global RDF_PREFIX/RDF_NAMESPACE property')/]
+  [/for]
+[/template]
+
+[**
+Warns about each attribute whose name embeds a namespace prefix (see
+u_hasEmbeddedNamespacePrefix) that either could not be resolved
+against the static namespace list or any package under Universe, or
+resolved via the package search to more than one candidate package
+sharing the same prefix -- a conflict rather than a resolution
+failure. The static list is always checked first: a coincidental
+multiple-package match is only reported when the static list itself
+did not already resolve the prefix, since in that case the static
+result wins regardless and the package-level ambiguity is moot.
+
+aContext is the receiver in the call, and embeddedPrefixAttributes is
+the list from u_attributesWithEmbeddedPrefix or its profile variant.
+/]
+[template public validateEmbeddedNamespacePrefixes(
+  aContext : uml::NamedElement,
+  embeddedPrefixAttributes : Sequence(uml::Property))]
+  [for (p : uml::Property | embeddedPrefixAttributes)]
+    [let prefix : String = p.u_embeddedNamespacePrefix()]
+    [let staticMatch : Sequence(String) = p.u_staticNamespaces()->select(t | t.tokenize('>')->at(1) = prefix)]
+      [if (staticMatch->isEmpty())]
+        [let packageMatches : Sequence(uml::Package) = p.u_model().u_packagesWithRdfPrefix(prefix)]
+          [if (packageMatches->isEmpty())]
+            [aContext.logWarning('Attribute "' + p.qualifiedName + '" uses an unrecognized embedded namespace prefix "' + prefix + '" — add it to the rdf-static-namespaces property, or confirm a package under Universe resolves to this prefix')/]
+          [elseif (packageMatches->size() > 1)]
+            [aContext.logWarning('Attribute "' + p.qualifiedName + '" uses embedded namespace prefix "' + prefix + '", which matches more than one package under Universe — resolve the ambiguity by giving each package a distinct rdfNamespacePrefix')/]
+          [/if]
+        [/let]
+      [/if]
+    [/let]
+    [/let]
   [/for]
 [/template]
