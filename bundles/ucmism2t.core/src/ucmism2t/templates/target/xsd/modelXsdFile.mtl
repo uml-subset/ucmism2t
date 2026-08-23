@@ -183,7 +183,7 @@ The AllElementsDerivedFromClasses group references only subset classes.
         aProfilePackage.u_childDependencySupplierClasses()]
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.xsd', overwrite, 'UTF-8')]
         [aModel.xsdGenerationMessage()/]
         [aModel.xsdModelIdentificationComment()/]
         <xs:schema xmlns="['XSD_NS'.getPropertyValue()/]"

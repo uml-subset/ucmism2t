@@ -158,7 +158,7 @@ included. Written to:
         aProfilePackage.u_childDependencySupplierClasses()]
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/json-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.schema.json', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/json-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.schema.json', overwrite, 'UTF-8')]
         {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "title": "[aModel.name/] - [aProfilePackage.name/]",

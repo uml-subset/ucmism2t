@@ -73,7 +73,7 @@ are included. Written to:
         aProfilePackage.u_childDependencySupplierClasses()]
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
-      [file (aModel.u_modelShortName() + '/encoding/json-ld/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/json-ld/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.jsonld', overwrite, 'UTF-8')]
         {
           "@context": {
             [if (aProfilePackage.u_modelRdfPrefix() <> 'NOT_SET' and aProfilePackage.u_modelRdfNamespace() <> 'NOT_SET')]"[aProfilePackage.u_modelRdfPrefix()/]": "[aProfilePackage.u_modelRdfNamespace()/]",

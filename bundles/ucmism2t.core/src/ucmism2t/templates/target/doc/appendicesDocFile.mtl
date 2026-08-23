@@ -10,7 +10,7 @@
 [import ucmism2t::queries::modelQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::target::doc::inheritanceTreeDiagramDocFile/]
+[comment] [import ucmism2t::templates::target::doc::inheritanceTreeDiagramDocFile/][/comment]
 [import ucmism2t::templates::target::doc::inheritanceTreeVegaDiagramDocFile/]
 [import ucmism2t::templates::target::doc::associatedClassesVegaDiagramDocFile/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
@@ -35,7 +35,7 @@
   [/file]
   [aModel.associatedClassesVegaDiagram()/]
   [aModel.inheritanceTreeVegaDiagram()/]
-  [aModel.inheritanceTreeDiagram()/]
+[comment]   [aModel.inheritanceTreeDiagram()/][/comment]
   [aModel.allClassesList()/]
   [aModel.allAssociationsList()/]
   [aModel.allDataTypesList()/]
@@ -57,7 +57,6 @@
     
        AssociatedClassesVegaDiagram.rst
        InheritanceTreeVegaDiagram.rst
-       InheritanceTreeDiagram/index.rst
     
   [/file]
 [/template]
@@ -267,7 +266,7 @@
               - [if (anAssociation.ownedEnd->first().isNavigable())]yes[/if]
               - [anAssociation.ownedEnd->first().aggregation/]
               - [anAssociation.ownedEnd->first().u_docMultiplicity()/]
-              - [if (anAssociation.u_commentBody().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.u_commentBody()/])`[else][anAssociation.u_shortAssociationName()/][/if]
+              - [if (anAssociation.u_commentBody().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/] ([anAssociation.u_commentBody().replaceAll('\\n', ' ')/])`[else][anAssociation.u_shortAssociationName()/][/if]
 [comment]               - [if (anAssociation.ownedComment->asSequence()->collect(temp7 | temp7.body)->toString().trim().size() > 0)]:abbr:`[anAssociation.u_shortAssociationName()/]([anAssociation.ownedComment->asSequence()->collect(temp6 | temp6.body)->toString().trim()/])`[else][anAssociation.u_shortAssociationName()/][/if][/comment]
               - [anAssociation.ownedEnd->first().getOtherEnd().u_docMultiplicity()/]
               - [anAssociation.ownedEnd->first().getOtherEnd().aggregation/]

@@ -69,7 +69,7 @@ profile sub-package after all class fragments have been generated.
         aProfilePackage.u_childDependencySupplierDataTypes()]
     [let dynamicNamespaces : Sequence(String) = aProfilePackage.u_referencedNamespacesForProfile()]
     [let staticNamespaces : Sequence(String) = aProfilePackage.u_staticNamespaces()]
-      [file (aModel.u_modelShortName() + '/encoding/shacl/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shacl.ttl', overwrite, 'UTF-8')]
+      [file (aModel.u_modelShortName() + '/encoding/shacl/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.shacl.ttl', overwrite, 'UTF-8')]
         [aProfilePackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
         [aProfilePackage.validateResolvedNamespaces(aProfilePackage.u_elementsWithUnresolvedNamespaceForProfile())/]
         [aProfilePackage.validateEmbeddedNamespacePrefixes(aProfilePackage.u_attributesWithEmbeddedPrefixForProfile())/]

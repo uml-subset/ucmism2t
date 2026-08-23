@@ -63,7 +63,7 @@ Written to:
           aProfilePackage.u_childDependencySupplierDataTypes()]
         [let dynamicNamespaces : Sequence(String) = aProfilePackage.u_referencedNamespacesForProfile()]
           [let staticNamespaces : Sequence(String) = aProfilePackage.u_staticNamespaces()]
-            [file (aModel.u_modelShortName() + '/encoding/shex/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aModel.u_modelAcronym().toLower() + '.shexc', overwrite, 'UTF-8')]
+            [file (aModel.u_modelShortName() + '/encoding/shex/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.shexc', overwrite, 'UTF-8')]
               [aProfilePackage.validateNamespaceConflicts(dynamicNamespaces, staticNamespaces)/]
               [aProfilePackage.validateResolvedNamespaces(aProfilePackage.u_elementsWithUnresolvedNamespaceForProfile())/]
               [aProfilePackage.validateEmbeddedNamespacePrefixes(aProfilePackage.u_attributesWithEmbeddedPrefixForProfile())/]

@@ -560,7 +560,7 @@ type reference, multiplicity, and default value.
           - :ref:`[attributeClassifier.u_packageQualifiedName()/]<[attributeClassifier.qualifiedName/]>`
       [/if]
         -
-         [anAttribute.u_commentBody()/]
+         [anAttribute.u_commentBody().replaceAll('=', '')/]
         - [anAttribute.type.rst_refDataType()/] 
         - [anAttribute.u_docMultiplicity()/]
         - [anAttribute.default/]
