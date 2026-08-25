@@ -368,7 +368,7 @@ filtering via u_subsetDataTypeAttributes.
   together {
   [for (anAttribute : uml::Property | aDataType.u_dataTypeUseProperties())]
     [if ('includeAllItems'.isPropertyTrue() or aDataType.name.u_subsetDataTypeAttributes()->includes(anAttribute.name))]
-        [anAttribute.owner.oclAsType(uml::Classifier).qualifiedName/]::[anAttribute.name/] ---- [aDataType.qualifiedName/] #grey;line.dotted;
+        "[anAttribute.owner.oclAsType(uml::Classifier).qualifiedName/]::[anAttribute.name/]" ---- [aDataType.qualifiedName/] #grey;line.dotted;
     [/if]
   [/for]
   }

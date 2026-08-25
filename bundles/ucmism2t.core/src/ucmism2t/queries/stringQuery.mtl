@@ -74,3 +74,138 @@ other queries as well as from templates.
   in
   withSuffix.replaceAll('\\s+', '')
 /]
+
+[comment] Not use yet. Using this might be more robust. But the change is some work.[/comment]
+[**
+ * Returns a PlantUML-safe identifier for the supplied string.
+ *
+ * The identifier is normalized as follows:
+ *
+ * - null or empty input becomes 'unnamed';
+ * - every character other than a letter, digit, or underscore is
+ *   replaced with an underscore;
+ * - an underscore is prefixed if the resulting identifier starts
+ *   with a digit;
+ * - an underscore is also prefixed if the result starts with a
+ *   PlantUML-sensitive dollar sign or apostrophe after any future
+ *   changes to the allowed-character rules;
+ * - an identifier consisting only of underscores is retained as
+ *   syntactically safe, unless the input was empty or null.
+ *
+ * The returned value is intended for use as a PlantUML alias or
+ * internal reference. It is not intended to replace the human-readable
+ * label of the UML element; use a quoted PlantUML display name for that.
+ *
+ * @param aString - The string to convert into a PlantUML identifier.
+ * @return A normalized identifier suitable for use as a PlantUML alias.
+ */]
+[query public u_plantUmlIdentifier(
+  aString : String) : String =
+  if aString = null or aString = ''
+  then
+    'unnamed'
+  else
+    let normalized : String =
+      aString.replaceAll('[^A-Za-z0-9_]', '_')
+    in
+    if normalized = ''
+    then
+      'unnamed'
+    else
+      if normalized.substring(1, 1).matches('[0-9]')
+      then
+        '_'.concat(normalized)
+      else
+        normalized
+      endif
+    endif
+  endif
+/]
+
+[**
+ * Converts arbitrary text into plain text suitable for use inside a
+ * reStructuredText :abbr: role.
+ *
+ * The result deliberately removes reStructuredText inline-markup
+ * delimiters instead of attempting to preserve nested formatting.
+ * This prevents constructs such as ``text``, `*text*`, **text**, and
+ * :role:`text` from being parsed inside the abbreviation role.
+ *
+ * Processing rules:
+ *
+ * - null or blank input becomes 'unnamed';
+ * - backslashes are removed;
+ * - backticks are removed;
+ * - asterisks are removed;
+ * - role markers are neutralized by removing colons;
+ * - newlines and tabs become spaces;
+ * - repeated whitespace is collapsed;
+ * - leading and trailing whitespace is removed.
+ *
+ * @param aString
+ *     Arbitrary text to place inside :abbr:`...`.
+ *
+ * @return
+ *     Plain text that does not contain nested reStructuredText markup.
+ */]
+[query public u_rstAbbrText(
+  aString : String) : String =
+  if aString = null or aString.trim() = ''
+  then
+    'unnamed'
+  else
+    aString
+      .replaceAll('[\\r\\n\\t]+', ' ')
+      .replaceAll('\\\\', '')
+      .replaceAll('`', '')
+      .replaceAll('\\*', '')
+      .replaceAll(' +', ' ')
+      .replaceAll('=', ' ')
+      .replaceAll('\\s+', ' ')
+      .trim()
+  endif
+/]
+
+[**
+ * Converts arbitrary text into safe content for a reStructuredText
+ * :abbr: role.
+ *
+ * The returned value is intended to be inserted between the role
+ * delimiters, for example:
+ *
+ *     :abbr:`<result>`
+ *
+ * Processing rules:
+ *
+ * - null and empty input become 'unnamed';
+ * - carriage returns, line feeds, and tabs become spaces;
+ * - backslashes are escaped before other characters are escaped;
+ * - backticks are escaped so they cannot start interpreted text;
+ * - opening and closing parentheses are escaped so they remain literal
+ *   characters instead of being interpreted as the abbreviation
+ *   explanation delimiter;
+ * - repeated whitespace is collapsed;
+ * - leading and trailing whitespace is removed.
+ *
+ * @param aString
+ *     Arbitrary text to use inside a reStructuredText :abbr: role.
+ *
+ * @return
+ *     Text that can safely be placed inside :abbr:`...`.
+ */]
+[query public NOTOKu_rstAbbrText(
+  aString : String) : String =
+  if aString = null or aString.trim() = ''
+  then
+    'unnamed'
+  else
+    aString
+      .replaceAll('\\\\', '\\\\\\\\')
+      .replaceAll('[\\r\\n\\t]+', ' ')
+      .replaceAll('`', '\\`')
+      .replaceAll('\\(', '\\(')
+      .replaceAll('\\)', '\\)')
+      .replaceAll(' +', ' ')
+      .trim()
+  endif
+/]

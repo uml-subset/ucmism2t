@@ -77,9 +77,11 @@ When aProfilePackage is not null (profile context):
       [else]
         Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
       [/if]
-      [if (aClass.isAbstract)]   | Class is abstract.[/if]
+      [if (aClass.isAbstract)]
+           | Class is abstract.
+      [/if]
       [if (aProfilePackage <> null)]
-      
+
         Profile: **[aProfilePackage.name/]** | See also: :ref:`[aClass.qualifiedName/]` (full universe documentation)
       [/if]
       
@@ -87,7 +89,7 @@ When aProfilePackage is not null (profile context):
       [if (aProfilePackage = null)]
       [let profilePackages : OrderedSet(uml::Package) = aClass.u_profilePackagesForClass()]
         [if (profilePackages->notEmpty())]
-      
+
           Used in profiles
           ================
       
@@ -212,7 +214,7 @@ When aProfilePackage is not null (profile context):
                 [/if]
                            - [anAssociation.name.replaceAll('_', ' ')/]
                            - 
-                            [anAssociation.u_commentBody().replaceAll('=', '')/]
+                            [anAssociation.u_commentBody().replaceAll('=', '').replaceAll('``s', '``\\\\ s')/]
                 [if (c2 <> target.type.oclAsType(uml::Class))]
                              - [source.u_docMultiplicity()/]
                              - [if (aClass.package <> target.type.package)]:ref:`[target.type.package.qualifiedName/]`[else]\- *own package* \-[/if]

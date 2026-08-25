@@ -118,13 +118,96 @@ Returns the qualified name of the specified element in the form
   anElement.u_nearestPackage().name + '::' + anElement.name
 /]
 
+[**
+ * Returns the normalized documentation text for a UML element.
+ *
+ * The first owned comment is considered the element's documentation.
+ * The result is normalized before it is returned:
+ *
+ * - CRLF line endings are converted to LF line endings.
+ * - Unicode control characters are replaced with spaces, except for
+ *   carriage return, line feed, and horizontal tab.
+ * - Backticks are doubled.
+ * - Leading and trailing whitespace is removed.
+ *
+ * Documentation is considered missing when:
+ *
+ * - the element has no owned comments;
+ * - the first owned comment has a null body; or
+ * - the normalized body is empty.
+ *
+ * When documentation is missing, the
+ * WARNING_MISSING_DOCUMENTATION property controls the result:
+ *
+ * - If the property is true, the query returns:
+ *   'WARNING: element has no documentation!'
+ * - Otherwise, the query returns an empty string.
+ *
+ * Only the first owned comment is processed. Additional owned comments
+ * are ignored.
+ *
+ * @param anElement
+ *     The UML element whose documentation is requested.
+ *
+ * @return
+ *     The normalized documentation body; a warning when documentation
+ *     is missing and WARNING_MISSING_DOCUMENTATION is enabled; or an
+ *     empty string when documentation is missing and the warning is
+ *     disabled.
+ *
+ * @example
+ *     A comment body of '  Some text  ' returns 'Some text'.
+ *
+ * @example
+ *     A comment body containing CRLF line endings returns text with LF
+ *     line endings.
+ *
+ * @example
+ *     An element without documentation returns
+ *     'WARNING: element has no documentation!' when the warning property
+ *     is enabled.
+ */]
 [query public u_commentBody(
+  anElement : uml::Element) : String =
+  if anElement.ownedComment->notEmpty()
+  then
+    let body : String =
+      if anElement.ownedComment->first().body = null
+      then
+        ''
+      else
+        anElement.ownedComment->first().body
+          .replaceAll('\\r\\n', '\\n')
+          .replaceAll('[\\p{C}&&[^\\r\\n\\t]]', ' ')
+          .replaceAll('`', '``')
+          .trim()
+      endif
+    in
+      if body = ''
+         and 'WARNING_MISSING_DOCUMENTATION'.isPropertyTrue()
+      then
+        'WARNING: element has no documentation!'
+      else
+        body
+      endif
+  else
+    if 'WARNING_MISSING_DOCUMENTATION'.isPropertyTrue()
+    then
+      'WARNING: element has no documentation!'
+    else
+      ''
+    endif
+  endif
+/]
+
+[query public OKu_commentBody(
   anElement : uml::Element) : String =
   if anElement.ownedComment->notEmpty()
   then anElement.ownedComment->first().body
     .replaceAll('\\r\\n', '\\n')
     .replaceAll('[\\p{C}&&[^\\r\\n\\t]]', ' ')
     .replaceAll('[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]', ' ')
+    .replaceAll('`', '``')
     .replaceAll(' ', ' ')
     .trim()
   else
