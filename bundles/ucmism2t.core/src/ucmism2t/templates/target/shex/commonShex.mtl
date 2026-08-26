@@ -8,11 +8,13 @@
   'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::classifierQuery/]
 [import ucmism2t::queries::classQuery/]
+[import ucmism2t::queries::eobjectQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 [template public attributeShex(anAttribute : uml::Property)]
-  [anAttribute.iri()/]  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
+  [anAttribute.iri()/]  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][elseif (anAttribute.type.oclIsKindOf(uml::Classifier) and not anAttribute.type.oclAsType(uml::Classifier).isNotInMappedItems())][anAttribute.type.u_mappedUcmisItemsRdfTargets()->at(anAttribute.type.u_mappedUcmisItemsRdf()->indexOf(anAttribute.type.name))/][elseif (anAttribute.u_isPolymorphicAttributeType())][anAttribute.type.oclAsType(uml::Classifier).u_concreteRealizations()->collect(c | '@' + c.iri() + 'Shape')->sep(' OR ')/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
 
 [template public superClasses(aClass : uml::Class)]
   [let scs : Sequence(uml::Class) = aClass.superClass]

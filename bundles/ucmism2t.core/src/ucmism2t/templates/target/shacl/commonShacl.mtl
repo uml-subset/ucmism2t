@@ -3,11 +3,12 @@
 
 /]
 [module commonShacl(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
+[import ucmism2t::queries::classifierQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
@@ -56,7 +57,7 @@
         sh:node [anAttribute.type.subDatatypesShapes()/];
   [else]
         sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
-          [anAttribute.type.allSubDataTypes()/]
+          [if (anAttribute.u_isPolymorphicAttributeType())][anAttribute.type.oclAsType(uml::Classifier).allSubDataTypesConcrete()/][else][anAttribute.type.allSubDataTypes()/][/if]
         ) ]];
   [/if]
   [if (anAttribute.lower > 0)]
@@ -66,3 +67,17 @@
         sh:maxCount [anAttribute.upper/];
   [/if]
   .[/template]
+[**
+Same purpose as allSubDataTypes, but for a classifier whose type is
+abstract: lists only concrete realizations (see u_concreteRealizations),
+never the abstract type itself, since no real instance can ever have
+the abstract type as its rdf:type. Kept separate from allSubDataTypes
+rather than folded into it, so that non-abstract types are completely
+unaffected -- both output ordering and content stay identical to
+before for every case that was already working.
+
+@param aClassifier - The class or data type whose concrete
+                      realizations to list.
+/]
+[template public allSubDataTypesConcrete(aClassifier : uml::Classifier)]
+  [for (c : uml::Classifier | aClassifier.u_concreteRealizations())][c.iri()/] [/for][/template]

@@ -11,6 +11,7 @@ Module contains templates for JSON Schema.
 [import ucmism2t::queries::classifierQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
 [template public arrayClassSchemas(aModel : uml::Model)]
@@ -47,9 +48,31 @@ Module contains templates for JSON Schema.
   [/for]
 [/template]
 
+[**
+Renders the $ref key-value pair for a single concrete classifier,
+using the same enum/complex/other distinction as ref(). Used to build
+one entry of an anyOf array for a polymorphic attribute (see
+u_isPolymorphicAttributeType) -- kept as a separate template rather
+than folded into ref() itself, so ref()'s existing three branches
+stay completely unchanged for every non-polymorphic attribute.
+
+@param aClassifier - A single concrete realization to render.
+/]
+[template protected refForClassifier(aClassifier : uml::Classifier) post(self.trim())]
+  [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
+    "$ref": "#/defs/enum-[aClassifier.name/]"
+  [elseif (aClassifier.isComplex())]
+    "$ref": "#/defs/dt-[aClassifier.name/]"
+  [else]
+    "$ref": "#/defs/[aClassifier.iri()/]"
+  [/if]
+[/template]
+
 [template protected ref(anAttribute : uml::Property) post(self.trim())]
   [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
     "$ref": "#/defs/enum-[anAttribute.type.name/]"
+  [elseif (anAttribute.u_isPolymorphicAttributeType())]
+    "anyOf": ['['/][anAttribute.type.oclAsType(uml::Classifier).u_concreteRealizations()->collect(c | '{ ' + c.refForClassifier() + ' }')->sep(', ')/] ]
   [elseif (anAttribute.type.isComplex())]
     "$ref": "#/defs/dt-[anAttribute.type.name/]"
   [else]

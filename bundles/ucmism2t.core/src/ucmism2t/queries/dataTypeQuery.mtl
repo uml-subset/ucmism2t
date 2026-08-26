@@ -15,9 +15,9 @@ Related modules:
   applicable to both classes and data types
 /]
 [module dataTypeQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [**
@@ -27,11 +27,11 @@ sorted by datatype name.
 AQL operations used:
   eInverse(uml::Generalization) - Finds all Generalization elements that
                                   cross-reference aDataType; requires all
-																	resources to be loaded in the same
-																	resource set. Returns both generalizations
-																	where aDataType is the general end AND
-																	where aDataType is the specific end —
-																	hence the guard below is mandatory.
+                                  resources to be loaded in the same
+                                  resource set. Returns both generalizations
+                                  where aDataType is the general end AND
+                                  where aDataType is the specific end —
+                                  hence the guard below is mandatory.
   ->select(g1 | g1.general      - Retains only Generalization elements where
               = aDataType)        aDataType is the general (parent) end,
                                   excluding generalizations where aDataType
@@ -52,10 +52,10 @@ AQL operations used:
 /]
 [query public u_subDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
   aDataType.eInverse(uml::Generalization)
-	  ->select(g1 | g1.general = aDataType)
-	  ->collect(g2 | g2.specific)
-	  ->filter(uml::DataType)
-	  ->sortedBy(c | c.name)
+    ->select(g1 | g1.general = aDataType)
+    ->collect(g2 | g2.specific)
+    ->filter(uml::DataType)
+    ->sortedBy(c | c.name)
 /]
 
 [**
@@ -79,7 +79,33 @@ AQL operations used:
 /]
 [query public u_allSubDataTypes(aDataType : uml::DataType) : OrderedSet(uml::DataType) =
   aDataType->closure(c | c.u_subDataTypes())
-  	->sortedBy(c | c.name)
+    ->sortedBy(c | c.name)
+/]
+
+[**
+Returns an ordered set of all subtypes of the specified data type
+including the data type itself, sorted by name.
+
+@param aDataType - A UML data type.
+/]
+[query public u_allSubDataTypesPlusSelf(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.u_allSubDataTypes()
+  ->including(aDataType)
+  ->sortedBy(d | d.name)
+/]
+
+[**
+Returns an ordered set of all non-abstract subtypes of the specified
+data type including the data type itself if non-abstract, sorted by
+name. Mirrors u_allConcreteSubClassesPlusSelf for the DataType case.
+
+@param aDataType - A UML data type.
+/]
+[query public u_allConcreteSubDataTypesPlusSelf(
+  aDataType : uml::DataType) : OrderedSet(uml::DataType) =
+  aDataType.u_allSubDataTypesPlusSelf()
+  ->reject(d | d.isAbstract)
 /]
 
 [**
@@ -231,11 +257,11 @@ classifiers that reference this data type.
 @param aDataType - The data type to find usages of.
 /]
 [query public u_dataTypeUseProperties(
-		aDataType : uml::DataType) : OrderedSet(uml::Property) =
-	aDataType.eInverse(uml::Property)
-		->select(p |
-			p.association = null
-			and p.owner <> aDataType)
+    aDataType : uml::DataType) : OrderedSet(uml::Property) =
+  aDataType.eInverse(uml::Property)
+    ->select(p |
+      p.association = null
+      and p.owner <> aDataType)
 /]
 
 [**

@@ -9,6 +9,7 @@ Module contains templates for JSON Schema.
 )/]
 
 [import ucmism2t::queries::associationQuery/]
+[import ucmism2t::queries::classifierQuery/]
 [import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::services::PropertiesService /]
@@ -47,10 +48,16 @@ Module contains templates for JSON Schema.
   "target-[aClass.name/]": {
     "description": "all subclasses of ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
     "anyOf": ['['/]
+  [if (aClass.isAbstract)]
+    [for (c : uml::Classifier | aClass.u_concreteRealizations())]
+        { "$ref": "#/defs/cls-[c.name/]" },
+    [/for]
+  [else]
       { "$ref": "#/defs/cls-[aClass.name/]" },
   [for (sc : uml::Class | aClass.u_subClasses())]
         { "$ref": "#/defs/cls-[sc.name/]" },
   [/for]
+  [/if]
       { "type": "string", "format": "iri-reference" }
     ]
   },[/template]
@@ -199,10 +206,16 @@ The target-<ClassName> refs only reference subset classes.
     "target-[aClass.name/]": {
       "description": "all subclasses of ['RDF_NAMESPACE'.getPropertyValue()/][aClass.name/]",
       "anyOf": ['['/]
+  [if (aClass.isAbstract)]
+    [for (c : uml::Classifier | aClass.u_concreteRealizations()->select(r | subsetClasses->includes(r)))]
+          { "$ref": "#/defs/cls-[c.name/]" },
+    [/for]
+  [else]
         { "$ref": "#/defs/cls-[aClass.name/]" },
     [for (sc : uml::Class | aClass.u_subClasses()->select(s | subsetClasses->includes(s)))]
           { "$ref": "#/defs/cls-[sc.name/]" },
     [/for]
+  [/if]
         { "type": "string", "format": "iri-reference" }
       ]
     },

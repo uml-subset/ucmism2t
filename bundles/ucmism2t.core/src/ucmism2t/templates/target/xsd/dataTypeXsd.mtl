@@ -10,6 +10,7 @@
 
 [import ucmism2t::queries::dataTypeQuery/]
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::stringQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::xsd::commonXsd/]
 
@@ -28,7 +29,7 @@
     ['      <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:complexType name="[aDataType.name/]XsdType"
+      <xs:complexType name="[aDataType.name/]XsdType"[if (aDataType.isAbstract)] abstract="true"[/if]
                       xml:id="[aDataType.name/]XsdType">
         <xs:annotation>
     ['      <xs:documentation>' + aDataType.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
@@ -94,11 +95,11 @@
 [template public attributeXsd(aDataType : uml::DataType, itemName : String)]
   <xs:sequence>
     [for (anAttribute : uml::Property | aDataType.u_attributes())]
-      <xs:element name="[anAttribute.name/]"
+      <xs:element name="[anAttribute.name.u_xsdElementName()/]"
                   type="[anAttribute.type.xsd_typeName()/]"
                   minOccurs="[anAttribute.lower/]"
                   maxOccurs="[anAttribute.xsd_upperCardinality()/]"
-                  xml:id="[itemName.concat('-').concat(anAttribute.name)/]">
+                  xml:id="[itemName.concat('-').concat(anAttribute.name.u_xsdElementName())/]">
         <xs:annotation>
     ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>

@@ -5,9 +5,9 @@ Module contains queries with a UML classifier as receiver,
 applicable to both classes and data types.
 /]
 [module classifierQuery(
-	'http://www.eclipse.org/uml2/5.0.0/UML',
-	'http://www.eclipse.org/uml2/5.0.0/Types',
-	'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
 )/]
 
 [import ucmism2t::queries::classQuery/]
@@ -22,17 +22,17 @@ Not tested with other classifier types.
 @param aClassifier A UML classifier
 /]
 [comment] [query public Xu_subClassesOrSubDataTypes(
-		aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
-	if aClassifier.oclIsTypeOf(uml::Class)
-	then
-		aClassifier.u_subClasses()
-	else
-		if aClassifier.oclIsKindOf(uml::DataType)
-		then
-		 aClassifier.u_subDataTypes()
-		else OrderedSet{}
-		endif
-	endif
+    aClassifier : uml::Classifier) : OrderedSet(uml::Classifier) =
+  if aClassifier.oclIsTypeOf(uml::Class)
+  then
+    aClassifier.u_subClasses()
+  else
+    if aClassifier.oclIsKindOf(uml::DataType)
+    then
+     aClassifier.u_subDataTypes()
+    else OrderedSet{}
+    endif
+  endif
 /]
 [/comment]
 [**
@@ -110,4 +110,38 @@ Returns the simple qualified name of a classifier in the form
 [query public u_simpleQualifiedClassifierName(
   aClassifier : uml::Classifier) : String =
   aClassifier.package.name + '::' + aClassifier.name
+/]
+
+[**
+Returns the concrete realizations of a classifier: if the classifier
+is not abstract, just itself; if it is abstract, every concrete
+subclass or sub-data-type in its full descendant hierarchy. Used to
+render a polymorphic attribute reference (an attribute typed by an
+abstract class or data type) as a union across everything that could
+actually appear in that position, since the abstract type itself is
+never a valid concrete value.
+
+Dispatches explicitly between Class and DataType rather than relying
+on a single overload, since Classifier itself has no isAbstract-aware
+subclass-enumeration query of its own — only Class and DataType do,
+separately, matching this codebase's existing query organization.
+
+@param aClassifier - The class or data type to resolve.
+@return The concrete classifiers that can appear wherever aClassifier
+        is used as an attribute's type.
+/]
+[query public u_concreteRealizations(aClassifier : uml::Classifier) : Sequence(uml::Classifier) =
+  if aClassifier.oclIsKindOf(uml::Class)
+  then
+    aClassifier.oclAsType(uml::Class).u_allConcreteSubClassesPlusSelf()
+      ->asSequence()->collect(c | c.oclAsType(uml::Classifier))
+  else
+    if aClassifier.oclIsKindOf(uml::DataType)
+    then
+      aClassifier.oclAsType(uml::DataType).u_allConcreteSubDataTypesPlusSelf()
+        ->asSequence()->collect(d | d.oclAsType(uml::Classifier))
+    else
+      Sequence{}
+    endif
+  endif
 /]

@@ -175,7 +175,7 @@ When aProfilePackage is not null (profile context):
       [/let]
       [/let]
 
-      [if (aClass.u_allSuperClasses()->union(OrderedSet{aClass})->collect(c | c.u_associations())->size() > 0)]
+      [if (aClass.u_allSuperClasses()->select(sc | aProfilePackage = null or aProfilePackage.u_childDependencySupplierClasses()->includes(sc))->union(OrderedSet{aClass})->collect(c | c.u_associations()->select(a | a.ownedEnd->notEmpty() and (aProfilePackage = null or (aProfilePackage.u_childDependencySupplierClasses()->includes(a.u_ownedEndClass()) and aProfilePackage.u_childDependencySupplierClasses()->includes(a.u_otherEndClass())))))->size() > 0)]
         Associations
         ============
         

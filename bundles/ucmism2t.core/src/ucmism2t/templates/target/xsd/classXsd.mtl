@@ -12,6 +12,7 @@
 [import ucmism2t::queries::classQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::queries::packageQuery/]
+[import ucmism2t::queries::stringQuery/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
 [import ucmism2t::templates::target::xsd::dataTypeXsd/]
 
@@ -28,7 +29,7 @@
   ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
     </xs:element>
-    <xs:complexType name="[aClass.name/]XsdType"
+    <xs:complexType name="[aClass.name/]XsdType"[if (aClass.isAbstract)] abstract="true"[/if]
                     xml:id="[aClass.name/]XsdType">
       <xs:annotation>
   ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
@@ -57,11 +58,11 @@
 [template public propertyXsd(aClass : uml::Class)]
   <xs:sequence>
     [for (anAttribute : uml::Property | aClass.u_attributes())]
-      <xs:element name="[anAttribute.name/]"
+      <xs:element name="[anAttribute.name.u_xsdElementName()/]"
                   type="[anAttribute.type.xsd_typeName()/]"
                   minOccurs="[anAttribute.lower/]"
                   maxOccurs="[anAttribute.xsd_upperCardinality()/]"
-                  xml:id="[aClass.name.concat('-').concat(anAttribute.name)/]">
+                  xml:id="[aClass.name.concat('-').concat(anAttribute.name.u_xsdElementName())/]">
         <xs:annotation>
     ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>
@@ -128,7 +129,7 @@ Attribute and association filtering is handled by propertyProfileXsd.
   ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
       </xs:annotation>
     </xs:element>
-    <xs:complexType name="[aClass.name/]XsdType"
+    <xs:complexType name="[aClass.name/]XsdType"[if (aClass.isAbstract)] abstract="true"[/if]
                     xml:id="[aClass.name/]XsdType">
       <xs:annotation>
   ['      <xs:documentation>' + aClass.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
@@ -166,11 +167,11 @@ Associations are filtered to those where both ends are in the subset.
   <xs:sequence>
     [for (anAttribute : uml::Property | aClass.u_attributes()
         ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
-      <xs:element name="[anAttribute.name/]"
+      <xs:element name="[anAttribute.name.u_xsdElementName()/]"
                   type="[anAttribute.type.xsd_typeName()/]"
                   minOccurs="[anAttribute.lower/]"
                   maxOccurs="[anAttribute.xsd_upperCardinality()/]"
-                  xml:id="[aClass.name.concat('-').concat(anAttribute.name)/]">
+                  xml:id="[aClass.name.concat('-').concat(anAttribute.name.u_xsdElementName())/]">
         <xs:annotation>
     ['    <xs:documentation>' + anAttribute.u_commentBody().xsd_escapeXmlCharacters()/]</xs:documentation>
         </xs:annotation>

@@ -173,3 +173,17 @@ failure. Only meaningful when u_hasEmbeddedNamespacePrefix is true.
     endif
   endif
 /]
+
+[**
+Checks whether an attribute's type is polymorphic in the sense that
+matters for rendering: the type is abstract, meaning any actual value
+must be one of its concrete subclasses/sub-data-types rather than an
+instance of the declared type itself.
+
+@param aProperty - The attribute to check.
+@return True if the attribute's type is a Classifier and is abstract.
+/]
+[query public u_isPolymorphicAttributeType(aProperty : uml::Property) : Boolean =
+  aProperty.type.oclIsKindOf(uml::Classifier)
+  and aProperty.type.oclAsType(uml::Classifier).isAbstract
+/]
