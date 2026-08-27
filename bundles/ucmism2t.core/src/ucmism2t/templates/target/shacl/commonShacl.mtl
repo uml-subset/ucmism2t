@@ -48,6 +48,27 @@
     [aDataType.iri()/]
   [for (sc : uml::DataType | aDataType.eInverse(uml::DataType)->sortedBy(temp2 | temp2.name))][sc.allSubDataTypes()/][/for][/template]
 
+[**
+Renders the sh:or union shape for an attribute whose type is
+configured in "uml-union-types" (see u_isUnionTypeAttribute). Each
+configured type name gets its own branch, mirroring
+unionTypeShape's dispatch-by-name approach for JSON Schema.
+
+Validates only at the same depth the existing complex-type branch
+already uses for other types -- an rdf:type check, not a full
+property-by-property validation -- for consistency with how this
+codebase already treats complex datatypes in SHACL.
+
+@param anAttribute - The union-typed attribute to render.
+/]
+[template public unionTypeShacl(anAttribute : uml::Property)]
+  [if (anAttribute.type.name = 'Identifier')]
+    sh:or ( ['['/] sh:datatype xsd:string ] ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in ( schema:PropertyValue ) ] ] ) ;
+  [elseif (anAttribute.type.name = 'ObjectReference')]
+    sh:or ( ['['/] sh:nodeKind sh:IRI ] ['['/] sh:datatype xsd:string ] ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in ( schema:PropertyValue ) ] ] ) ;
+  [/if]
+[/template]
+
 [template public attributeShape(anAttribute : uml::Property)]
   [anAttribute.fragment()/] a sh:PropertyShape ;
       sh:path [anAttribute.iri()/];
@@ -55,6 +76,8 @@
         sh:datatype [anAttribute.type.iri()/];
   [elseif (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
         sh:node [anAttribute.type.subDatatypesShapes()/];
+  [elseif (anAttribute.u_isUnionTypeAttribute())]
+        [anAttribute.unionTypeShacl()/]
   [else]
         sh:node ['['/] sh:property ['['/] sh:path rdf:type; sh:minCount 1; sh:in (
           [if (anAttribute.u_isPolymorphicAttributeType())][anAttribute.type.oclAsType(uml::Classifier).allSubDataTypesConcrete()/][else][anAttribute.type.allSubDataTypes()/][/if]

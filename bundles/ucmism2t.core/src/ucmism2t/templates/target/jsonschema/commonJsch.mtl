@@ -58,6 +58,36 @@ stay completely unchanged for every non-polymorphic attribute.
 
 @param aClassifier - A single concrete realization to render.
 /]
+[**
+Renders the dedicated string-or-object union shape for an attribute
+whose type is configured in "uml-union-types" (see
+u_isUnionTypeAttribute). Each configured type name gets its own
+branch here, since the actual target shape (e.g. Identifier's
+schema:PropertyValue structure) is hand-authored per type, not
+derivable generically from the DataType's own UML attributes --
+Identifier's own attributes are named "value"/"url", which do not
+match the target vocabulary's "schema:propertyID"/"schema:value"
+terms at all.
+
+Grounded directly in schema.org's own official definitions (not just
+the CDIF-authored reference schema's interpretation of them):
+schema:identifier's rangeIncludes is [PropertyValue, Text, URL],
+which collapses to this string-or-object union; schema:propertyID's
+own rangeIncludes is [Text, URL], giving the same union one level
+deeper. Does not yet encode Identifier's own :choiceConstraints:
+comment (at least one of value/url required) -- deferred as a
+separate, later step.
+
+@param anAttribute - The union-typed attribute to render.
+/]
+[template protected unionTypeShape(anAttribute : uml::Property) post(self.trim())]
+  [if (anAttribute.type.name = 'Identifier')]
+    "anyOf": ['['/] { "type": "string" }, { "type": "object", "properties": { "@type": { "type": "array", "items": { "type": "string" }, "contains": { "const": "schema:PropertyValue" }, "minItems": 1 }, "schema:propertyID": { "anyOf": ['['/] { "type": "string" }, { "type": "object", "additionalProperties": false, "required": ['['/] "@id" ], "properties": { "@id": { "type": "string" } } } ] }, "schema:value": { "type": "string" }, "schema:url": { "type": "string", "format": "uri" } } } ]
+  [elseif (anAttribute.type.name = 'ObjectReference')]
+    "anyOf": ['['/] { "type": "object", "properties": { "@id": { "type": "string" } }, "required": ['['/] "@id" ], "additionalProperties": false }, { "type": "string" }, { "type": "object", "properties": { "@type": { "type": "array", "items": { "type": "string" }, "contains": { "const": "schema:PropertyValue" }, "minItems": 1 }, "schema:propertyID": { "anyOf": ['['/] { "type": "string" }, { "type": "object", "additionalProperties": false, "required": ['['/] "@id" ], "properties": { "@id": { "type": "string" } } } ] }, "schema:value": { "type": "string" }, "schema:url": { "type": "string", "format": "uri" } } } ]
+  [/if]
+[/template]
+
 [template protected refForClassifier(aClassifier : uml::Classifier) post(self.trim())]
   [if (aClassifier.oclIsTypeOf(uml::Enumeration))]
     "$ref": "#/defs/enum-[aClassifier.name/]"
@@ -71,6 +101,8 @@ stay completely unchanged for every non-polymorphic attribute.
 [template protected ref(anAttribute : uml::Property) post(self.trim())]
   [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
     "$ref": "#/defs/enum-[anAttribute.type.name/]"
+  [elseif (anAttribute.u_isUnionTypeAttribute())]
+    [anAttribute.unionTypeShape()/]
   [elseif (anAttribute.u_isLangStringMapped())]
     "type": "object", "description": "Keys are BCP-47 language tags (e.g. \"en\", \"fr-CA\").", "propertyNames": { "pattern": "^['['/]a-zA-Z]{2,3}(-['['/]a-zA-Z0-9]{2,8})*$" }, "additionalProperties": { "type": "string" }
   [elseif (anAttribute.u_isPolymorphicAttributeType())]

@@ -10,6 +10,7 @@
 
 [import ucmism2t::queries::classifierQuery/]
 [import ucmism2t::queries::packageQuery/]
+[import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
 
 [**
@@ -22,6 +23,9 @@
 */]
 [template public genAttributes(aClassifier : uml::Classifier, modular : Boolean)]
   [for (anAttribute : uml::Property | aClassifier.u_attributes())]
+  [if (anAttribute.u_isUnionTypeAttribute())]
+    "[anAttribute.name/]": "[anAttribute.iri()/]",
+  [else]
     "[anAttribute.name/]": {
       "@id": "[anAttribute.iri()/]",
     [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
@@ -41,6 +45,7 @@
         "@type": "[anAttribute.type.iri()/]"
     [/if]
     },
+  [/if]
   [/for]
 [/template]
 
@@ -61,6 +66,9 @@ for the given class and profile package are included.
   aProfilePackage : uml::Package)]
   [for (anAttribute : uml::Property | aClassifier.u_attributes()
       ->select(a | a.u_isAttributeInProfile(aClass, aProfilePackage)))]
+  [if (anAttribute.u_isUnionTypeAttribute())]
+    "[anAttribute.name/]": "[anAttribute.iri()/]",
+  [else]
     "[anAttribute.name/]": {
       "@id": "[anAttribute.iri()/]",
     [if (anAttribute.type.oclIsTypeOf(uml::Enumeration))]
@@ -80,5 +88,6 @@ for the given class and profile package are included.
         "@type": "[anAttribute.type.iri()/]"
     [/if]
     },
+  [/if]
   [/for]
 [/template]

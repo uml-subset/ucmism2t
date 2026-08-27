@@ -54,6 +54,23 @@ tokens (the part after ">").
 /]
 
 [**
+Returns a sequence of type names from the "uml-union-types"
+property, split by comma. Each named type is understood to have
+its own dedicated string-or-object union handling in the target
+formats (e.g. Identifier), configured explicitly rather than
+detected structurally, since nothing in a UML DataType's own
+attributes signals that it should also accept a bare scalar value.
+
+@param anEObject - Only used as entry point.
+/]
+[query public u_unionTypeNames(
+    anEObject : ecore::EObject) : Sequence(String) =
+  'uml-union-types'.getPropertyValue()
+    .replaceAll('\\s+', '')
+    .tokenize(',')
+/]
+
+[**
 Returns an ordered set of package names defined in the property TEST_PACKAGE.
 
 @param anEObject - Only used as entry point.

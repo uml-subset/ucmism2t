@@ -13,8 +13,25 @@
 [import ucmism2t::queries::eobjectQuery/]
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::templates::target::rdf::commonRdf/]
+[**
+Renders the ShEx alternation for an attribute whose type is
+configured in "uml-union-types" (see u_isUnionTypeAttribute). Each
+configured type name gets its own branch, mirroring unionTypeShape
+(JSON Schema) and unionTypeShacl (SHACL).
+
+Validates only at the same depth those two already use for other
+types -- an "a [...]" type constraint, not a full property-by-property
+shape -- for consistency with how this codebase treats complex
+datatypes elsewhere.
+
+@param anAttribute - The union-typed attribute to render.
+/]
+[template public unionTypeShex(anAttribute : uml::Property)]
+  [if (anAttribute.type.name = 'Identifier')](xsd:string OR { a ['['/]schema:PropertyValue] })[elseif (anAttribute.type.name = 'ObjectReference')](IRI OR xsd:string OR { a ['['/]schema:PropertyValue] })[/if]
+[/template]
+
 [template public attributeShex(anAttribute : uml::Property)]
-  [anAttribute.iri()/]  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][elseif (anAttribute.type.oclIsKindOf(uml::Classifier) and not anAttribute.type.oclAsType(uml::Classifier).isNotInMappedItems())][anAttribute.type.u_mappedUcmisItemsRdfTargets()->at(anAttribute.type.u_mappedUcmisItemsRdf()->indexOf(anAttribute.type.name))/][elseif (anAttribute.u_isPolymorphicAttributeType())][anAttribute.type.oclAsType(uml::Classifier).u_concreteRealizations()->collect(c | '@' + c.iri() + 'Shape')->sep(' OR ')/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
+  [anAttribute.iri()/]  [if (anAttribute.type.oclIsTypeOf(uml::PrimitiveType))][anAttribute.type.iri()/][elseif (anAttribute.u_isUnionTypeAttribute())][anAttribute.unionTypeShex()/][elseif (anAttribute.type.oclIsKindOf(uml::Classifier) and not anAttribute.type.oclAsType(uml::Classifier).isNotInMappedItems())][anAttribute.type.u_mappedUcmisItemsRdfTargets()->at(anAttribute.type.u_mappedUcmisItemsRdf()->indexOf(anAttribute.type.name))/][elseif (anAttribute.u_isPolymorphicAttributeType())][anAttribute.type.oclAsType(uml::Classifier).u_concreteRealizations()->collect(c | '@' + c.iri() + 'Shape')->sep(' OR ')/][else]@[anAttribute.type.iri()/]Shape[/if][anAttribute.u_shexCardinality()/];[/template]
 
 [template public superClasses(aClass : uml::Class)]
   [let scs : Sequence(uml::Class) = aClass.superClass]

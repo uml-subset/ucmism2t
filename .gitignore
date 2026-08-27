@@ -87,3 +87,6 @@ generated/
 
 # Local backup
 z_backup/
+
+# temp files
+_modelInformation.js

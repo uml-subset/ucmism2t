@@ -187,3 +187,18 @@ instance of the declared type itself.
   aProperty.type.oclIsKindOf(uml::Classifier)
   and aProperty.type.oclAsType(uml::Classifier).isAbstract
 /]
+
+[**
+Checks whether an attribute's type is one of the names configured
+in the "uml-union-types" property (see u_unionTypeNames) -- a type
+with its own dedicated string-or-object union handling in the
+target formats (e.g. Identifier), configured explicitly since
+nothing in the UML model structurally signals this on its own.
+
+@param aProperty - The attribute to check.
+@return True if the attribute's type name is a configured union type.
+/]
+[query public u_isUnionTypeAttribute(aProperty : uml::Property) : Boolean =
+  aProperty.type.oclIsKindOf(uml::Classifier)
+  and aProperty.u_unionTypeNames()->includes(aProperty.type.oclAsType(uml::Classifier).name)
+/]
