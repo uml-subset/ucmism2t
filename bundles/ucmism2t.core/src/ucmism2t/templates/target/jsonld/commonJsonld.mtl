@@ -30,6 +30,8 @@
         [for (aLiteral : uml::EnumerationLiteral | anAttribute.type.oclAsType(uml::Enumeration).ownedLiteral) separator(',\n  ')]
             "[aLiteral.name/]": "[aLiteral.iri()/]"[/for]
         }
+    [elseif (anAttribute.u_isLangStringMapped())]
+        "@container": "@language"
     [elseif (anAttribute.type.isComplex())]
         "@type": "@id"[if (modular)],[/if]
       [if (modular)]
@@ -67,6 +69,8 @@ for the given class and profile package are included.
         [for (aLiteral : uml::EnumerationLiteral | anAttribute.type.oclAsType(uml::Enumeration).ownedLiteral) separator(',\n  ')]
             "[aLiteral.name/]": "[aLiteral.iri()/]"[/for]
         }
+    [elseif (anAttribute.u_isLangStringMapped())]
+        "@container": "@language"
     [elseif (anAttribute.type.isComplex())]
         "@type": "@id"[if (modular)],[/if]
       [if (modular)]

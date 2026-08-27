@@ -288,6 +288,25 @@ Converts a UML comment into an RDFS comment.
 /]
 
 [**
+Checks whether an attribute's type is specifically mapped (see
+isNotInMappedItems / u_mappedUcmisItemsRdf) to the RDF literal
+datatype rdf:langString -- as distinct from being mapped to anything
+else (xsd:string, xsd:integer, etc.). Used to trigger the JSON-LD
+"@container": "@language" language-map representation and its
+corresponding JSON Schema shape, which are only correct for this one
+specific target, not for mapped items generally.
+
+@param aProperty - The attribute to check.
+@return True if the attribute's type maps to rdf:langString.
+/]
+[query public u_isLangStringMapped(aProperty : uml::Property) : Boolean =
+  aProperty.type.oclIsKindOf(uml::Classifier)
+  and not aProperty.type.oclAsType(uml::Classifier).isNotInMappedItems()
+  and aProperty.type.u_mappedUcmisItemsRdfTargets()
+        ->at(aProperty.type.u_mappedUcmisItemsRdf()->indexOf(aProperty.type.name)) = 'rdf:langString'
+/]
+
+[**
  Emits Turtle PREFIX declarations for a resolved sequence of
  "prefix>namespace" tokens, one line per token. Purely a formatter.
  IMPORTANT: aContext (not namespaceTokens) is the receiver in a dot-call
