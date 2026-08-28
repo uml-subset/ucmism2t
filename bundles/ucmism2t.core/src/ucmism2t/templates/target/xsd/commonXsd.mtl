@@ -99,9 +99,10 @@ Returns the XSD built-in type name for the specified UML type
 name string. Returns 'UNRESOLVED TYPE' if no mapping exists.
 
 Supported mappings:
-  'XsdAnyUri'  → 'xs:anyURI'
-  'XsdDate'    → 'xs:date'
-  'XsdLanguage'→ 'xs:language'
+  'XsdAnyUri'   → 'xs:anyURI'
+  'XsdDate'     → 'xs:date'
+  'XsdDateTime' → 'xs:dateTime'
+  'XsdLanguage' → 'xs:language'
 
 @param aTypeName - The name of the UML primitive type to map.
 /]
@@ -109,8 +110,10 @@ Supported mappings:
   aTypeName : String) : String =
   if aTypeName = 'XsdAnyUri' then 'xs:anyURI'
   else if aTypeName = 'XsdDate' then 'xs:date'
+  else if aTypeName = 'XsdDateTime' then 'xs:dateTime'
   else if aTypeName = 'XsdLanguage' then 'xs:language'
   else 'WARNING: unresolved type'
+  endif
   endif
   endif
   endif

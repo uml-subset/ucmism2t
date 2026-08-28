@@ -9,8 +9,9 @@ All templates in the *Xsd.mtl modules generate XML Schema.
 )/]
 
 [import ucmism2t::queries::elementQuery/]
-[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::queries::stringQuery/]
 [import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::xsd::classXsd/]
 [import ucmism2t::templates::target::xsd::commonXsd/]
@@ -23,8 +24,33 @@ All templates in the *Xsd.mtl modules generate XML Schema.
  * Creates a file for the model.
  * @param aModel a model
 */]
+[**
+Logs an informational message for each attribute in scope whose name
+embeds a namespace prefix (see u_hasEmbeddedNamespacePrefix), noting
+that XSD substitutes an underscore for the colon (see
+u_xsdElementName) -- e.g. "cdif:displayLabel" becomes
+"cdif_displayLabel" in the generated XSD element name. Fires once per
+attribute regardless of whether the embedded prefix itself resolves
+successfully elsewhere -- the substitution happens either way, since
+it is purely a syntactic accommodation for XSD's naming rules,
+unrelated to whether the prefix has a valid namespace (see
+validateEmbeddedNamespacePrefixes in commonRdf.mtl, which handles
+that separate concern for the RDF-target formats).
+
+aContext is the receiver in the call, and embeddedPrefixAttributes is
+the list from u_attributesWithEmbeddedPrefix or its profile variant.
+/]
+[template public validateXsdEmbeddedPrefixNames(
+  aContext : uml::NamedElement,
+  embeddedPrefixAttributes : Sequence(uml::Property))]
+  [for (p : uml::Property | embeddedPrefixAttributes)]
+    [aContext.logWarning('Attribute "' + p.qualifiedName + '" is named "' + p.name + '" -- in the generated XSD, this becomes "' + p.name.u_xsdElementName() + '"')/]
+  [/for]
+[/template]
+
 [template public processModelXsd(aModel : uml::Model)]
   [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.xsd', overwrite, 'UTF-8')]
+    [aModel.validateXsdEmbeddedPrefixNames(aModel.u_mainPackage().u_attributesWithEmbeddedPrefix())/]
     [aModel.xsdHeader()/]
     [if ('DDI-CDI'.isPropertyTrue())]
       [aModel.xsdWrapper()/]
@@ -184,6 +210,7 @@ The AllElementsDerivedFromClasses group references only subset classes.
     [let subsetDataTypes : OrderedSet(uml::DataType) =
         aProfilePackage.u_childDependencySupplierDataTypes()]
       [file (aModel.u_modelShortName() + '/encoding/xml-schema/' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aProfilePackage.name + '.xsd', overwrite, 'UTF-8')]
+        [aProfilePackage.validateXsdEmbeddedPrefixNames(aProfilePackage.u_attributesWithEmbeddedPrefixForProfile())/]
         [aModel.xsdGenerationMessage()/]
         [aModel.xsdModelIdentificationComment()/]
         <xs:schema xmlns="['XSD_NS'.getPropertyValue()/]"

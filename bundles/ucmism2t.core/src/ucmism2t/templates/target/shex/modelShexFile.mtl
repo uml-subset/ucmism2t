@@ -24,6 +24,28 @@
  * See {@https://bitbucket.org/ddi-alliance/ucmis/}.
  * Creates a file for the model.
  * @param aModel a model
+
+This generates one file for the entire universe, deliberately not
+split per sub-package. Two prior decisions inform this:
+
+Modular, per-type JSON-LD files were tried first and abandoned as
+impractical to work with in real applications -- splitting further,
+by sub-package, would reintroduce the same problem at a coarser
+grain.
+
+A sub-package boundary (e.g. Schema, SKOS, DCAT) rarely matches what
+a real consumer wants: each is just the CDIF-relevant subset of an
+external vocabulary, and cross-sub-package references are the norm
+in this model, not the exception, so splitting would turn most
+references into cross-file ones with no established linking
+mechanism for SHACL/ShEx to match JSON-LD's own @context chaining.
+
+Applications should use the profile-scoped files instead, which
+already provide the combined, consumption-ready view a real
+integration needs. This whole-universe file exists primarily as a
+completeness/reference artifact, not as something on any
+application's critical path, so its size is a lesser concern than
+it would be for the profile files.
 */]
 [template public processModelShex(aModel : uml::Model)]
   [let dynamicNamespaces : Sequence(String) = aModel.u_mainPackage().u_referencedNamespaces()]

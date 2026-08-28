@@ -224,6 +224,28 @@ embedded namespace prefix.
 @param rawName - The raw attribute name to sanitize.
 @return The name with any '@' characters removed.
 /]
+[**
+Sanitizes a raw attribute name for use as an XML element name or
+xml:id value, both of which must be a valid NCName. Two characters
+are not legal anywhere in an NCName and get substituted:
+
+- '@' is stripped entirely -- needed for attributes named after
+  JSON-LD reserved keywords (e.g. "@value", "@language"), where the
+  leading character is a pure JSON-LD marker carrying no information
+  worth preserving (see u_hasEmbeddedNamespacePrefix's own doc
+  comment for the contrast with the ':' case below).
+- ':' is replaced with '_' -- needed for attributes using the
+  embedded-namespace-prefix convention (e.g. "cdif:displayLabel",
+  see u_hasEmbeddedNamespacePrefix). Unlike '@', the prefix here
+  carries real information, so it is preserved (as "cdif_displayLabel")
+  rather than stripped -- this is XSD's own pragmatic substitute for
+  the CURIE the RDF-target formats produce for the same attribute,
+  since XSD has no native namespace mechanism suited to per-attribute
+  namespacing the way RDF's prefix:local syntax does.
+
+@param rawName - The raw attribute name to sanitize.
+@return The name with '@' removed and ':' replaced by '_'.
+/]
 [query public u_xsdElementName(rawName : String) : String =
-  rawName.replace('@', '')
+  rawName.replace('@', '').replace(':', '_')
 /]

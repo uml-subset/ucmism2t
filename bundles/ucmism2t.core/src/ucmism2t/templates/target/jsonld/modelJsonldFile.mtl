@@ -21,6 +21,23 @@
  * As this creates a lot of contexts, this does not scale very well when the contexts are loaded from the Web.
  * An external script can be used to *inline* most of the class- and datatype-contexts in the root context,
  * (this proved much more flexible than trying to generate the inline context directly).
+
+For the same reason noted above, this also generates one file for
+the entire universe, deliberately not split per sub-package. A
+sub-package boundary (e.g. Schema, SKOS, DCAT) rarely matches what a
+real consumer wants: each is just the CDIF-relevant subset of an
+external vocabulary, and cross-sub-package references are the norm
+in this model, not the exception, so splitting would turn most
+references into cross-file ones -- reintroducing the same scaling
+problem the per-type contexts above already ran into, at a coarser
+grain.
+
+Applications should use the profile-scoped files instead, which
+already provide the combined, consumption-ready view a real
+integration needs. This whole-universe file exists primarily as a
+completeness/reference artifact, not as something on any
+application's critical path, so its size is a lesser concern than
+it would be for the profile files.
 */]
 [template public generateJsonld(aModel : uml::Model)]
   [file (aModel.u_modelShortName() + '/encoding/json-ld/' + aModel.u_universePathSegment() + aModel.u_modelAcronym().toLower() + '.jsonld', overwrite, 'UTF-8')]
