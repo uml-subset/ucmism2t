@@ -237,7 +237,7 @@ public class Main implements IApplication {
             "\u2551                                                   "
             + "          \u2551");
         System.out.println(
-            "\u2551  Eclipse 2026-03 | Acceleo 4.2 | Tycho 5 | Java 21"
+            "\u2551  Eclipse 2025-09 | Acceleo 4.2 | Tycho 5 | Java 21"
             + "          \u2551");
         System.out.println(
             "\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550"
