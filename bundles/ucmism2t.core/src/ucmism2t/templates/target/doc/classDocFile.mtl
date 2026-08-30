@@ -67,18 +67,20 @@ When aProfilePackage is not null (profile context):
       [elseif (aProfilePackage <> null)]
         .. _[aProfilePackage.name/]-[aClass.qualifiedName/]:
       [/if]
-      
+
       [aClass.rst_className().rst_header('*')/]
-      
+
       .. index:: [aClass.name/]
-      
+
+      [if (aClass.isAbstract)]
+
+        Class is *abstract*.
+      [/if]
+
       [if (aClass.u_isChildOfMainPackage())]
         Fully qualified [aClass.eClass().name.toLower()/] name of the UML model [aClass.u_model().u_modelAcronym()/] [aClass.u_model().u_modelMajorVersion()/].[aClass.u_model().u_modelMinorVersion()/]: **[aClass.qualifiedName/]**
       [else]
         Fully qualified [aClass.eClass().name.toLower()/] name: **[aClass.qualifiedName/]**
-      [/if]
-      [if (aClass.isAbstract)]
-           | Class is abstract.
       [/if]
       [if (aProfilePackage <> null)]
 
@@ -87,25 +89,24 @@ When aProfilePackage is not null (profile context):
       
       [aClass.u_commentBody().replaceAll('(=\\s)', '$1\r').rst_addClassReferencesToDocumentation(aClass, aClass.u_model().u_allClasses())/]
       [if (aProfilePackage = null)]
-      [let profilePackages : OrderedSet(uml::Package) = aClass.u_profilePackagesForClass()]
-        [if (profilePackages->notEmpty())]
+        [let profilePackages : OrderedSet(uml::Package) = aClass.u_profilePackagesForClass()]
+          [if (profilePackages->notEmpty())]
 
-          Used in profiles
-          ================
-      
-      [for (profilePkg : uml::Package | profilePackages)]
-        * :ref:`[profilePkg.name/]-[aClass.qualifiedName/]` ([profilePkg.name/])
-      [/for]
-        [/if]
-      [/let]
+            ----
+
+            **Used in profile(s):** 
+            [for (profilePkg : uml::Package | profilePackages) separator(',\n')]
+              :ref:`[profilePkg.name/] <[profilePkg.name/]-[aClass.qualifiedName/]>`[/for]
+          [/if]
+        [/let]
       [/if]
-      
+
       [file ((if aProfilePackage = null then aClass.u_filePath('doc') else aClass.u_profileFilePath('doc', aProfilePackage) endif).concat('.pu'), overwrite, 'UTF-8')]
         [aClass.pu_classDiagram(aProfilePackage)/]
       [/file]
       Diagram
       =======
-      
+
       .. dropdown:: Diagram
          :class-container: diagram-dropdown
          :open:

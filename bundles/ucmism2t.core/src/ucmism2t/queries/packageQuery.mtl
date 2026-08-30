@@ -663,7 +663,13 @@ The result is deduplicated and preserves first-seen order.
       ->select(e | e.name <> 'PackageInformation')
   in
   inScopeElements
-    ->select(e | e.u_modelRdfPrefix() = 'NOT_SET' or e.u_modelRdfNamespace() = 'NOT_SET')
+    ->select(e |
+      if e.oclIsKindOf(uml::Package)
+      then e.oclAsType(uml::Package).u_packageOwnRdfPrefix() = ''
+        or e.oclAsType(uml::Package).u_packageOwnRdfNamespace() = ''
+      else e.u_modelRdfPrefix() = 'NOT_SET'
+        or e.u_modelRdfNamespace() = 'NOT_SET'
+      endif)
     ->asOrderedSet()->asSequence()
 /]
 
