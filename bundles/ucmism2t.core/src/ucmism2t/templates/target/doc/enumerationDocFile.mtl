@@ -1,163 +1,168 @@
+[comment encoding = UTF-8 /]
+
 [**
  * The documentation of the module aDataTypeFile.
  */]
-[module enumerationDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+[module enumerationDocFile(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+  )/]
 
+[import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::elementQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 [import ucmism2t::templates::target::onto::enumerationOnto/]
 [import ucmism2t::templates::target::xsd::enumerationXsd/]
 
-[comment encoding = UTF-8 /]
 [**
  * The documentation of the template processDataType.
  * @param aDataType - a data type
 */]
 [template public processEnumerationDoc(anEnumeration : uml::Enumeration)]
-	[comment] subset condition [/comment]
+  [comment] subset condition [/comment]
   [if ('includeAllItems'.isPropertyTrue() or anEnumeration.u_subsetEnumerations()->includes(anEnumeration.name))]
-	  [file (anEnumeration.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
-	    [anEnumeration.rst_generationMessageDoc()/]
-	    .. _[anEnumeration.qualifiedName/]:
-	    
-	    [anEnumeration.name.rst_header('*')/]
-	    
-	    .. index:: [anEnumeration.name/]
-	    
-	    [if (anEnumeration.u_isChildOfMainPackage())]
-	      Fully qualified [anEnumeration.eClass().name.toLower()/] name of the UML model [anEnumeration.u_model().u_modelAcronym()/] [anEnumeration.u_model().u_modelMajorVersion()/].[anEnumeration.u_model().u_modelMinorVersion()/]: **[anEnumeration.qualifiedName/]**
-	    [else]
-	      Fully qualified [anEnumeration.eClass().name.toLower()/] name: **[anEnumeration.qualifiedName/]**
-	    [/if]
-	    
-	    [anEnumeration.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
-	    
-	    [file (anEnumeration.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-	      [anEnumeration.pu_dataTypeDiagram()/]
-	    [/file]
-	    Diagram
-	    =======
-	    
-	    .. dropdown:: Diagram
-	       :class-container: diagram-dropdown
-	       :open:
-	    
-	       .. raw:: html
-	    
-	          [anEnumeration.diagramModalPreCode()/]
-	    
-	       .. uml:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].pu
-	    
-	       .. raw:: html
-	    
-	          [anEnumeration.diagramModalPostCode()/]
-	    
-	    Enumeration literals
-	    ====================
-	    
-	    .. dropdown:: Enumeration literals
-	       :class-container: enumeration-literals-dropdown
-	       :open:
-	    
-	       .. container::
-	          :name: enumeration-literals-responsive
-	    
-	          .. list-table:: Enumeration Literals
-	             :widths: 20 80
-	             :header-rows: 1
-	             :class: table table-striped table-hover main-table
-	    
-	             * - Name
-	               - Description
-	    [for (aLiteral : uml::EnumerationLiteral | anEnumeration.ownedLiteral)]
-	               * - [aLiteral.name/]
-	                 - [aLiteral.ownedComment->asSequence()->collect(temp1 | temp1.body)/]
-	    [/for]
-	    
-	    Usage
-	    =====
-	    
-	    .. dropdown:: Usage
-	       :class-container: usage-dropdown
-	    
-	       .. container::
-	          :name: usage-responsive
-	    
-	          .. list-table:: Usage
-	             :widths: 25 25 25 25
-	             :header-rows: 1
-	             :class: table table-striped table-hover main-table
-	    
-	             * - Type
-	               - Package
-	               - Classifier
-	               - Attribute
-	    [for (aProperty : uml::Property | anEnumeration.eInverse(uml::Property))]
-	               * - [aProperty.u_parent().eClass().name/]
-	                 - [aProperty.u_parent().oclAsType(uml::Classifier).package.name/]
-	                 - :ref:`[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`
-	                 - [aProperty.name/]
-	    [/for]
-	    
-	    [if (anEnumeration.u_isChildOfMainPackage())]
-	      Encodings
-	      =========
-	      
-	      .. container::
-	         :name: encodings
-	      
-	         .. dropdown:: Syntax representations / encodings
-	            :class-container: encodings-dropdown
-	      
-	            All syntax representations except the Canonical XMI are provided as reference points
-	            for specific implementations, or for use as defaults if sufficient in the form presented.
-	      
-	            .. tab-set::
-	      
-	               .. tab-item:: Canonical XMI
-	                  :class-content: encoding
-	      
-	                  Fragment for the enumeration **[anEnumeration.name/]** (`entire model as XMI </encoding/xmi/['MODEL_FILE_NAME'.getPropertyValue().replace('_eclipse', '')/]>`_)
-	      
+    [file (anEnumeration.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+      [anEnumeration.rst_generationMessageDoc()/]
+      .. _[anEnumeration.qualifiedName/]:
+
+      [anEnumeration.name.rst_header('*')/]
+
+      .. index:: [anEnumeration.name/]
+
+      [if (anEnumeration.u_isChildOfMainPackage())]
+        Fully qualified [anEnumeration.eClass().name.toLower()/] name of the UML model [anEnumeration.u_model().u_modelAcronym()/] [anEnumeration.u_model().u_modelMajorVersion()/].[anEnumeration.u_model().u_modelMinorVersion()/]: **[anEnumeration.qualifiedName/]**
+      [else]
+        Fully qualified [anEnumeration.eClass().name.toLower()/] name: **[anEnumeration.qualifiedName/]**
+      [/if]
+
+      [anEnumeration.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
+
+      [file (anEnumeration.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
+        [anEnumeration.pu_dataTypeDiagram()/]
+      [/file]
+      Diagram
+      =======
+
+      .. dropdown:: Diagram
+         :class-container: diagram-dropdown
+         :open:
+
+         .. raw:: html
+
+            [anEnumeration.diagramModalPreCode()/]
+
+         .. uml:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].pu
+
+         .. raw:: html
+
+            [anEnumeration.diagramModalPostCode()/]
+
+      Enumeration literals
+      ====================
+
+      .. dropdown:: Enumeration literals
+         :class-container: enumeration-literals-dropdown
+         :open:
+
+         .. container::
+            :name: enumeration-literals-responsive
+
+            .. list-table:: Enumeration Literals
+               :widths: 20 80
+               :header-rows: 1
+               :class: table table-striped table-hover main-table
+
+               * - Name
+                 - Description
+      [for (aLiteral : uml::EnumerationLiteral | anEnumeration.ownedLiteral)]
+                 * - [aLiteral.name/]
+                   - [aLiteral.ownedComment->asSequence()->collect(temp1 | temp1.body)/]
+      [/for]
+
+      Usage
+      =====
+
+      .. dropdown:: Usage
+         :class-container: usage-dropdown
+
+         .. container::
+            :name: usage-responsive
+
+            .. list-table:: Usage
+               :widths: 25 25 25 25
+               :header-rows: 1
+               :class: table table-striped table-hover main-table
+
+               * - Type
+                 - Package
+                 - Classifier
+                 - Attribute
+      [for (aProperty : uml::Property | anEnumeration.eInverse(uml::Property))]
+                 * - [aProperty.u_parent().eClass().name/]
+                   - [aProperty.u_parent().oclAsType(uml::Classifier).package.name/]
+                   - :ref:`[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`
+                   - [aProperty.name/]
+      [/for]
+
+      [if (anEnumeration.u_isChildOfMainPackage())]
+        Encodings
+        =========
+
+        .. container::
+           :name: encodings
+
+           .. dropdown:: Syntax representations / encodings
+              :class-container: encodings-dropdown
+
+              All syntax representations except the Canonical XMI are provided as reference points
+              for specific implementations, or for use as defaults if sufficient in the form presented.
+
+              .. tab-set::
+
+                 .. tab-item:: Canonical XMI
+                    :class-content: encoding
+
+                    Fragment for the enumeration **[anEnumeration.name/]** (`entire model as XMI </encoding/xmi/['MODEL_FILE_NAME'.getPropertyValue().replace('_eclipse', '')/]>`_)
+
                     .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].xmi
-	                     :lines: 2-
-	                     :language: xml
-	                     :linenos:
-	                     :emphasize-lines: 4
-	      
+                       :lines: 2-
+                       :language: xml
+                       :linenos:
+                       :emphasize-lines: 4
+
         [if ('xsd'.isPropertyTrue())]
-                  .. tab-item:: XML Schema
-                     :class-content: encoding
+                   .. tab-item:: XML Schema
+                      :class-content: encoding
           [file (anEnumeration.u_filePath('doc').concat('_xsd.txt'), overwrite, 'UTF-8')]
             [anEnumeration.enumerationXsd()/]
           [/file]
-          
-                     Fragment for the enumeration **[anEnumeration.name/]** (`entire XML Schema </encoding/xml-schema/[anEnumeration.u_model().u_modelAcronym().toLower()/].xsd>`_)
-          
-                     .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
-                       :language: xml
-                       :linenos:
-                       :emphasize-lines: 1
-                       :dedent: 0
+
+                      Fragment for the enumeration **[anEnumeration.name/]** (`entire XML Schema </encoding/xml-schema/[anEnumeration.u_model().u_modelAcronym().toLower()/].xsd>`_)
+
+                      .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/]_xsd.txt 
+                         :language: xml
+                         :linenos:
+                         :emphasize-lines: 1
+                         :dedent: 0
         [/if]
-        
-	      [if ('onto'.isPropertyTrue())]
-	                 .. tab-item:: Ontology (Turtle)
-	                    :class-content: encoding
-	        [file (anEnumeration.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
-	          [anEnumeration.enumerationOnto()/]
-	        [/file]
-	        
-	                    Fragment for the enumeration **[anEnumeration.name/]** (`main ontology </encoding/ontology/[anEnumeration.u_model().name/].onto.ttl>`_)
-	        
-	                    .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
-	                       :language: turtle
-	                       :linenos:
-	                       :emphasize-lines: 3
-	      [/if]
-	    [/if]
-	  [/file]
+
+        [if ('onto'.isPropertyTrue())]
+                   .. tab-item:: Ontology (Turtle)
+                      :class-content: encoding
+          [file (anEnumeration.u_filePath('doc').concat('.onto.ttl'), overwrite, 'UTF-8')]
+            [anEnumeration.enumerationOnto()/]
+          [/file]
+
+                      Fragment for the enumeration **[anEnumeration.name/]** (`main ontology </encoding/ontology/[anEnumeration.u_model().name/].onto.ttl>`_)
+
+                      .. literalinclude:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].onto.ttl 
+                         :language: turtle
+                         :linenos:
+                         :emphasize-lines: 3
+        [/if]
+      [/if]
+    [/file]
   [/if][comment] subset condition [/comment]
 [/template]

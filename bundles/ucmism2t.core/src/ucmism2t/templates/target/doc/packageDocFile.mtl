@@ -36,11 +36,11 @@ The documentation of the module packageDocFile.
       [file (aPackage.u_filePath('doc').concat('/index.rst'), overwrite, 'UTF-8')]
         [aPackage.rst_generationMessageDoc()/]
         .. _[aPackage.qualifiedName/]:
-        
+
         [aPackage.name.rst_header('*')/]
-        
+
         | **Fully qualified [aPackage.eClass().name.toLower()/] name**: [aPackage.getQualifiedName()/]
-        
+
         [aPackage.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
 
         -----
