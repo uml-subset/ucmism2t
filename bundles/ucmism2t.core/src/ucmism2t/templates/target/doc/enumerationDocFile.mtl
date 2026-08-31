@@ -11,6 +11,7 @@
 
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 [import ucmism2t::templates::target::onto::enumerationOnto/]
@@ -18,14 +19,20 @@
 
 [**
  * The documentation of the template processDataType.
- * @param aDataType - a data type
+ * @param anEnumeration - an enumeration
+ * @param aProfilePackage - The profile sub-package context, or null
+ *                          for universe generation.
 */]
-[template public processEnumerationDoc(anEnumeration : uml::Enumeration)]
+[template public processEnumerationDoc(anEnumeration : uml::Enumeration, aProfilePackage : uml::Package)]
   [comment] subset condition [/comment]
-  [if ('includeAllItems'.isPropertyTrue() or anEnumeration.u_subsetEnumerations()->includes(anEnumeration.name))]
-    [file (anEnumeration.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+  [if ('includeAllItems'.isPropertyTrue() or (aProfilePackage <> null and aProfilePackage.u_childDependencySupplierEnumerations()->includes(anEnumeration)) or (aProfilePackage = null and anEnumeration.u_subsetEnumerations()->includes(anEnumeration.name)))]
+    [file ((if aProfilePackage = null then anEnumeration.u_filePath('doc') else anEnumeration.u_profileFilePath('doc', aProfilePackage) endif).concat('.rst'), overwrite, 'UTF-8')]
       [anEnumeration.rst_generationMessageDoc()/]
-      .. _[anEnumeration.qualifiedName/]:
+      [if (aProfilePackage = null)]
+        .. _[anEnumeration.qualifiedName/]:
+      [else]
+        .. _[aProfilePackage.name/]-[anEnumeration.qualifiedName/]:
+      [/if]
 
       [anEnumeration.name.rst_header('*')/]
 

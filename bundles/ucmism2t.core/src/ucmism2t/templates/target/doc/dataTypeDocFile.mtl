@@ -13,6 +13,7 @@
 [import ucmism2t::queries::configurationQuery/]
 [import ucmism2t::queries::dataTypeQuery/]
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::doc::puDiagram/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
@@ -26,13 +27,19 @@
 [**
  * The documentation of the template processDataType.
  * @param aDataType - a data type
+ * @param aProfilePackage - The profile sub-package context, or null
+ *                          for universe generation.
 */]
-[template public processDataTypeDoc(aDataType : uml::DataType)]
+[template public processDataTypeDoc(aDataType : uml::DataType, aProfilePackage : uml::Package)]
   [comment] subset condition [/comment]
-  [if ('includeAllItems'.isPropertyTrue() or aDataType.u_subsetDataTypes()->includes(aDataType.name))]
-    [file (aDataType.u_filePath('doc').concat('.rst'), overwrite, 'UTF-8')]
+  [if ('includeAllItems'.isPropertyTrue() or (aProfilePackage <> null and aProfilePackage.u_childDependencySupplierDataTypes()->includes(aDataType)) or (aProfilePackage = null and aDataType.u_subsetDataTypes()->includes(aDataType.name)))]
+    [file ((if aProfilePackage = null then aDataType.u_filePath('doc') else aDataType.u_profileFilePath('doc', aProfilePackage) endif).concat('.rst'), overwrite, 'UTF-8')]
       [aDataType.rst_generationMessageDoc()/]
-      .. _[aDataType.qualifiedName/]:
+      [if (aProfilePackage = null)]
+        .. _[aDataType.qualifiedName/]:
+      [else]
+        .. _[aProfilePackage.name/]-[aDataType.qualifiedName/]:
+      [/if]
 
       [aDataType.name.rst_header('*')/]
 
