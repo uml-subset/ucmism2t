@@ -179,7 +179,6 @@ Returns the qualified name of the specified element in the form
         anElement.ownedComment->first().body
           .replaceAll('\\r\\n', '\\n')
           .replaceAll('[\\p{C}&&[^\\r\\n\\t]]', ' ')
-          .replaceAll('`', '``')
           .trim()
       endif
     in

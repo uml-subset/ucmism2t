@@ -544,10 +544,22 @@ or data type attribute. The row is subject to subset filtering.
 Columns: attribute name, owning classifier reference, description,
 type reference, multiplicity, and default value.
 
+Within a profile, every referenced element (an inherited-from class
+here, or an attribute's type via rst_refDataType) is expected to
+itself be a declared dependency of that same profile -- a profile
+is meant to be a self-contained, coherent subset, so a reference to
+something outside it is a modeling gap, not something to silently
+paper over with a link to the universe page. When the owning class
+of an inherited attribute isn't itself in the profile's own
+dependency-defined subset, this logs a warning and renders the
+plain class name instead of a link.
+
 @param anAttribute  - The UML property (attribute) to render.
 @param aClassifier  - The classifier owning the attribute's diagram.
+@param aProfilePackage - The profile sub-package context, or null
+        for universe generation.
 /]
-[template public rst_processAttributeInTable(anAttribute : uml::Property, aClassifier : uml::Classifier)]
+[template public rst_processAttributeInTable(anAttribute : uml::Property, aClassifier : uml::Classifier, aProfilePackage : uml::Package)]
   [if ('includeAllItems'.isPropertyTrue() 
       or aClassifier.name.u_subsetDataTypeAttributes()->includes(anAttribute.name)
       or aClassifier.name.u_subsetClassAttributes()->includes(anAttribute.name)
@@ -556,12 +568,16 @@ type reference, multiplicity, and default value.
       * - [anAttribute.name/]
       [if (attributeClassifier = aClassifier)]
           - \- *own [aClassifier.eClass().name.toLower()/]* \-
-      [else]
+      [elseif (aProfilePackage = null)]
           - :ref:`[attributeClassifier.u_packageQualifiedName()/]<[attributeClassifier.qualifiedName/]>`
+      [elseif (attributeClassifier.oclIsKindOf(uml::Class) and aProfilePackage.u_childDependencySupplierClasses()->includes(attributeClassifier.oclAsType(uml::Class)))]
+          - :ref:`[attributeClassifier.u_packageQualifiedName()/]<[aProfilePackage.name/]-[attributeClassifier.qualifiedName/]>`
+      [else]
+          - [anAttribute.logWarning('Attribute "' + aProfilePackage.name + '::' + aClassifier.name + '::' + anAttribute.name + '" is inherited from "' + attributeClassifier.qualifiedName + '", which is not a dependency of profile "' + aProfilePackage.name + '"')/][attributeClassifier.name/]
       [/if]
         -
          [anAttribute.u_commentBody().replaceAll('=', '')/]
-        - [anAttribute.type.rst_refDataType()/] 
+        - [anAttribute.type.rst_refDataType(aProfilePackage, anAttribute, if aProfilePackage = null then '' else aProfilePackage.name + '::' + aClassifier.name + '::' + anAttribute.name endif)/] 
         - [anAttribute.u_docMultiplicity()/]
         - [anAttribute.default/]
     [/let]
@@ -570,16 +586,47 @@ type reference, multiplicity, and default value.
 
 [**
 Generates a RST :ref: link for a UML type. UML primitive types
-(Boolean, Integer, Real, String) are rendered as plain text;
-all other types are rendered as a :ref: cross-reference.
+(Boolean, Integer, Real, String) and XMLSchemaDataTypes members
+(e.g. XsdAnyUri, XsdDateTime) are rendered as plain text -- the
+latter are treated as quasi-primitives throughout this codebase and
+are never part of any profile's own dependency-defined subset by
+design, so their absence from a profile's dependencies is expected,
+not a gap.
+
+All other types are rendered as a :ref: cross-reference to the
+calling page's own profile-scoped copy of the target type, but only
+when that type is actually part of the profile's own
+dependency-defined subset (matching the same convention used for
+association-end target/source links). A type used by an attribute
+within a profile is not always itself a declared dependency of that
+same profile -- when it isn't, this is a genuine modeling gap in
+the profile's own dependency declaration, so this logs a warning
+naming both the attribute and the type, and renders the type's
+plain name rather than a link to the universe page, which would
+otherwise silently paper over the gap.
 
 @param aType - A UML type to reference.
+@param aProfilePackage - The profile sub-package context, or null
+        for universe generation.
+@param anAttribute - The attribute referencing aType, used only as
+        the receiver for a missing-dependency warning.
+@param attributeDisplayName - Precomputed "profile::classifier::
+        attribute" identifier, used in the warning message so it
+        reflects the profile-scoped page the attribute is actually
+        being shown on, not the attribute's universe-wide qualified
+        name. Unused when aProfilePackage is null.
 /]
-[template public rst_refDataType(aType : uml::Type) post(self.trim())]
-  [if (aType.u_isUmlPrimitive())]
+[template public rst_refDataType(aType : uml::Type, aProfilePackage : uml::Package, anAttribute : uml::Property, attributeDisplayName : String) post(self.trim())]
+  [if (aType.u_isUmlPrimitive() or aType.qualifiedName.contains('XMLSchemaDataTypes'))]
     [aType.name/]
-  [else]
+  [elseif (aProfilePackage = null)]
     :ref:`[aType.qualifiedName/]`
+  [elseif (aType.oclIsKindOf(uml::DataType) and aProfilePackage.u_childDependencySupplierDataTypes()->includes(aType.oclAsType(uml::DataType)))]
+    :ref:`[aProfilePackage.name/]-[aType.qualifiedName/]`
+  [elseif (aType.oclIsKindOf(uml::Enumeration) and aProfilePackage.u_childDependencySupplierEnumerations()->includes(aType.oclAsType(uml::Enumeration)))]
+    :ref:`[aProfilePackage.name/]-[aType.qualifiedName/]`
+  [else]
+    [anAttribute.logWarning('Attribute "' + attributeDisplayName + '" uses type "' + aType.qualifiedName + '", which is not a dependency of profile "' + aProfilePackage.name + '"')/][aType.name/]
   [/if]
 [/template]
 

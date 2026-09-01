@@ -474,6 +474,91 @@ to all profile-specific pages for the class.
 /]
 
 [**
+Returns all profile sub-packages (packages directly owned by the
+package named per the 'profiles_package' property) whose
+dependency-defined subset includes
+the given data type.
+
+Used in the universe data type documentation to generate
+back-references to all profile-specific pages for the data type.
+
+@param aDataType - The UML data type to find profile packages for.
+@return OrderedSet of profile sub-packages containing the data
+        type, sorted by package name.
+/]
+[query public u_profilePackagesForDataType(
+  aDataType : uml::DataType) : OrderedSet(uml::Package) =
+  aDataType.u_model().eAllContents(uml::Package)
+    ->select(p | p.eContainer(uml::Package) <> null
+      and p.eContainer(uml::Package).name = 'profiles_package'.getRequiredPropertyValue()
+      and p.u_childDependencySupplierDataTypes()->includes(aDataType))
+    ->sortedBy(p | p.name)
+    ->asOrderedSet()
+/]
+
+[**
+Returns all profile sub-packages (packages directly owned by the
+package named per the 'profiles_package' property) whose
+dependency-defined subset includes
+the given enumeration.
+
+Used in the universe enumeration documentation to generate
+back-references to all profile-specific pages for the enumeration.
+
+@param anEnumeration - The UML enumeration to find profile packages for.
+@return OrderedSet of profile sub-packages containing the
+        enumeration, sorted by package name.
+/]
+[query public u_profilePackagesForEnumeration(
+  anEnumeration : uml::Enumeration) : OrderedSet(uml::Package) =
+  anEnumeration.u_model().eAllContents(uml::Package)
+    ->select(p | p.eContainer(uml::Package) <> null
+      and p.eContainer(uml::Package).name = 'profiles_package'.getRequiredPropertyValue()
+      and p.u_childDependencySupplierEnumerations()->includes(anEnumeration))
+    ->sortedBy(p | p.name)
+    ->asOrderedSet()
+/]
+
+[**
+Returns the attributes elsewhere in the model that use the given
+data type or enumeration as their own type -- the "Usage" table's
+row source in the data type/enumeration documentation.
+
+For the universe page (aProfilePackage = null), returns every such
+attribute across the whole model, unfiltered -- unchanged, existing
+behavior. For a profile page, restricts to attributes whose owning
+class is actually in that profile's dependency-defined subset, and
+where the attribute itself is selected for the profile (matching
+the same two-part check u_isAttributeInProfile already applies to
+this codebase's other profile-scoped attribute tables), so a
+profile's Usage table only ever lists classes genuinely part of
+that profile.
+
+@param aClassifier - The data type or enumeration to find usages of.
+@param aProfilePackage - The profile sub-package context, or null
+        for unfiltered, universe-wide usage.
+@return Sequence of attributes using aClassifier as their type,
+        filtered to the given profile when one is provided.
+/]
+[query public u_usagePropertiesForProfile(
+  aClassifier : uml::Classifier,
+  aProfilePackage : uml::Package) : Sequence(uml::Property) =
+  let allUsages : Sequence(uml::Property) =
+    aClassifier.eInverse(uml::Property)
+      ->select(p | p.u_parent() <> aClassifier)
+      ->asSequence()
+  in
+  if aProfilePackage = null
+  then allUsages
+  else allUsages
+    ->select(p | p.u_parent().oclIsKindOf(uml::Class)
+      and aProfilePackage.u_childDependencySupplierClasses()
+        ->includes(p.u_parent().oclAsType(uml::Class))
+      and p.u_isAttributeInProfile(p.u_parent().oclAsType(uml::Class), aProfilePackage))
+  endif
+/]
+
+[**
 Returns the distinct dynamic RDF namespaces referenced by a Universe
 package's content, as "prefix>namespace" tokens (same delimited form
 as u_staticNamespaces — NOT Sequence{prefix, namespace} pairs, since

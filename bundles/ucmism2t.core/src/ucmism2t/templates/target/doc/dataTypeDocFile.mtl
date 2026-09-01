@@ -50,8 +50,24 @@
       [else]
         Fully qualified [aDataType.eClass().name.toLower()/] name: **[aDataType.qualifiedName/]**
       [/if]
+      [if (aProfilePackage <> null)]
+
+        Profile: **[aProfilePackage.name/]** | See also: :ref:`[aDataType.qualifiedName/]` (full universe documentation)
+      [/if]
 
       [aDataType.u_commentBody().replaceAll('(=\\s)', '$1\r')/]
+      [if (aProfilePackage = null)]
+        [let profilePackages : OrderedSet(uml::Package) = aDataType.u_profilePackagesForDataType()]
+          [if (profilePackages->notEmpty())]
+
+            ----
+
+            **Used in profile(s):** 
+            [for (profilePkg : uml::Package | profilePackages) separator(',\n')]
+              :ref:`[profilePkg.name/] <[profilePkg.name/]-[aDataType.qualifiedName/]>`[/for]
+          [/if]
+        [/let]
+      [/if]
 
 
       [file (aDataType.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
@@ -100,13 +116,13 @@
                    - Multiplicity
                    - Default value
                  [for (p : uml::Property | aDataType.u_attributes())]
-                   [p.rst_processAttributeInTable(aDataType)/][/for]
+                   [p.rst_processAttributeInTable(aDataType, aProfilePackage)/][/for]
                  [for (aClassifier : uml::Classifier | aDataType.u_allSuperDataTypes())]
                    [for (p : uml::Property | aClassifier.u_attributes())]
-                     [p.rst_processAttributeInTable(aDataType)/][/for][/for]
+                     [p.rst_processAttributeInTable(aDataType, aProfilePackage)/][/for][/for]
       [/if]
 
-      [if (aDataType.eInverse(uml::Property)->select(d | d.u_parent() <> aDataType)->size() > 0)]
+      [if (aDataType.u_usagePropertiesForProfile(aProfilePackage)->size() > 0)]
         Usage
         =====
 
@@ -125,10 +141,10 @@
                    - Package
                    - Classifier
                    - Attribute
-        [for (aProperty : uml::Property | aDataType.eInverse(uml::Property)->select(temp1 | temp1.u_parent() <> aDataType))]
+        [for (aProperty : uml::Property | aDataType.u_usagePropertiesForProfile(aProfilePackage))]
                    * - [aProperty.u_parent().eClass().name/]
                      - [aProperty.u_parent().oclAsType(uml::Classifier).package.name/]
-                     - :ref:`[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`
+                     - [if (aProfilePackage <> null)]:ref:`[aProfilePackage.name/]-[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`[else]:ref:`[aProperty.u_parent().oclAsType(uml::Classifier).qualifiedName/]`[/if]
                      - [aProperty.name/]
         [/for]
       [/if]
