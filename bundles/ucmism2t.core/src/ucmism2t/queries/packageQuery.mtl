@@ -559,6 +559,43 @@ that profile.
 /]
 
 [**
+Checks whether a classifier (Class, DataType, or Enumeration) is a
+declared dependency of the given profile package, dispatching to
+the appropriate u_childDependencySupplierX query based on the
+classifier's own kind. Used to filter which context nodes a
+PlantUML diagram shows for a given profile -- a diagram generated
+for a profile should only show classifiers actually part of that
+profile's own dependency-defined subset, the same principle already
+applied to every RST cross-reference in this codebase.
+
+Enumeration is checked before DataType deliberately, since
+Enumeration is itself a specialization of DataType -- checking
+DataType first would silently misclassify every enumeration.
+
+@param aClassifier - The classifier to check.
+@param aProfilePackage - The profile sub-package context, or null
+        for universe generation.
+@return True unconditionally when aProfilePackage is null, since
+        universe scope has no such restriction. Otherwise true only
+        if aClassifier is confirmed to be a dependency of
+        aProfilePackage.
+/]
+[query public u_isClassifierInProfile(
+  aClassifier : uml::Classifier,
+  aProfilePackage : uml::Package) : Boolean =
+  if aProfilePackage = null
+  then true
+  else if aClassifier.oclIsKindOf(uml::Enumeration)
+  then aProfilePackage.u_childDependencySupplierEnumerations()->includes(aClassifier.oclAsType(uml::Enumeration))
+  else if aClassifier.oclIsKindOf(uml::DataType)
+  then aProfilePackage.u_childDependencySupplierDataTypes()->includes(aClassifier.oclAsType(uml::DataType))
+  else if aClassifier.oclIsKindOf(uml::Class)
+  then aProfilePackage.u_childDependencySupplierClasses()->includes(aClassifier.oclAsType(uml::Class))
+  else false
+  endif endif endif endif
+/]
+
+[**
 Returns the distinct dynamic RDF namespaces referenced by a Universe
 package's content, as "prefix>namespace" tokens (same delimited form
 as u_staticNamespaces — NOT Sequence{prefix, namespace} pairs, since

@@ -62,8 +62,8 @@
         [/let]
       [/if]
 
-      [file (anEnumeration.u_filePath('doc').concat('.pu'), overwrite, 'UTF-8')]
-        [anEnumeration.pu_dataTypeDiagram()/]
+      [file ((if aProfilePackage = null then anEnumeration.u_filePath('doc') else anEnumeration.u_profileFilePath('doc', aProfilePackage) endif).concat('.pu'), overwrite, 'UTF-8')]
+        [anEnumeration.pu_dataTypeDiagram(aProfilePackage)/]
       [/file]
       Diagram
       =======
@@ -76,7 +76,7 @@
 
             [anEnumeration.diagramModalPreCode()/]
 
-         .. uml:: [anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/].pu
+         .. uml:: [if (aProfilePackage = null)][anEnumeration.qualifiedName.replace(anEnumeration.u_model().name, '').replaceAll('::', '/')/][else][anEnumeration.name/][/if].pu
 
          .. raw:: html
 

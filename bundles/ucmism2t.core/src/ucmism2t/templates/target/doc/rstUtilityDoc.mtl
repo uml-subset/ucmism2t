@@ -62,7 +62,7 @@ Indentation utilities:
 [import ucmism2t::queries::stringQuery/]
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
-[import ucmism2t::templates::target::doc::puDiagram/]
+[comment] [import ucmism2t::templates::target::doc::puDiagram/][/comment]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 
 [**
@@ -156,7 +156,7 @@ standalone PlantUML file.
   [aClass.pu_options()/]
   
   title UML Diagram: Class [aClass.name/] in Context\n
-  [let url : String = '../' + aClass.u_path() + '.html']
+  [let url : String = if aSubsetPackage = null then '../' + aClass.u_path() + '.html' else '../' + 'profiles_package'.getRequiredPropertyValue() + '/' + aSubsetPackage.name + '/' + aClass.name + '.html' endif]
     [let label : String =
         aClass.u_model().u_modelTitle()
         + ' (' + aClass.u_model().u_modelAcronym() + ') '
@@ -184,7 +184,7 @@ standalone PlantUML file.
   [for (anAttribute : uml::Property | aClass.ownedAttribute->select(temp1 | temp1.association = null)
     ->select(a | (aSubsetPackage <> null and a.u_isAttributeInProfile(aClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue())))
     ->sortedBy(a | a.name))]
-      [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
+      [anAttribute.name/] : [anAttribute.type.pu_typeWithLink(aSubsetPackage)/]
   [/for]
   }
   
@@ -198,7 +198,7 @@ standalone PlantUML file.
       together {
       [for (contextClass : uml::Class | directAssocClasses)]
         [let inSubset1 : Boolean = (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(contextClass)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())]
-          [if (inSubset1)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/][/if]
+          [if (inSubset1)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n', aSubsetPackage)/][/if]
         [/let]
       [/for]
       }
@@ -212,12 +212,12 @@ standalone PlantUML file.
         ->collect(temp5 | temp5.oclAsType(uml::Class))
         ->sortedBy(temp6 | temp6.package.name)
         ->sortedBy(temp7 | temp7.name)
-        ->select(c | 'includeAllItems'.isPropertyTrue())
+        ->select(c | (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(c)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue()))
         ->asOrderedSet()]
     [if (abstractionSuppliers->notEmpty())]
       together {
       [for (contextClass : uml::Class | abstractionSuppliers)]
-        [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/]
+        [if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n', aSubsetPackage)/]
       [/for]
       }
     [/if]
@@ -234,7 +234,7 @@ standalone PlantUML file.
             ->sortedBy(temp10 | temp10.package.name)
             ->sortedBy(temp11 | temp11.name))]
     [let inSubset2 : Boolean = (aSubsetPackage <> null and aSubsetPackage.u_childDependencySupplierClasses()->includes(contextClass)) or (aSubsetPackage = null and 'includeAllItems'.isPropertyTrue())]
-      [if (inSubset2)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n')/][/if]
+      [if (inSubset2)][if (contextClass.isAbstract)]abstract [/if]class [contextClass.pu_elementWithLink('blue', '<size:10>' + contextClass.package.name + ':\\n', aSubsetPackage)/][/if]
     [/let]
   [/for]
   
@@ -299,14 +299,14 @@ filtering via u_subsetDataTypeAttributes.
 
 @param aDataType - The UML data type for which the diagram is generated.
 /]
-[template public pu_dataTypeDiagram(aDataType : uml::DataType)]
+[template public pu_dataTypeDiagram(aDataType : uml::DataType, aProfilePackage : uml::Package)]
   @startuml
   [aDataType.pu_generationMessageDoc()/]
   left to right direction
   [aDataType.pu_options()/]
   
   title UML Diagram: [aDataType.eClass().name/] [aDataType.name/] in Context\n
-  [let url : String = '../' + aDataType.u_path() + '.html']
+  [let url : String = if aProfilePackage = null then '../' + aDataType.u_path() + '.html' else '../' + 'profiles_package'.getRequiredPropertyValue() + '/' + aProfilePackage.name + '/' + aDataType.name + '.html' endif]
     [let label : String =
         aDataType.u_model().u_modelTitle()
         + ' (' + aDataType.u_model().u_modelAcronym() + ') '
@@ -335,17 +335,17 @@ filtering via u_subsetDataTypeAttributes.
     ['uml-diagram-class-emphasis-color'.getPropertyValue()/] {
   [for (anAttribute : uml::Property | aDataType.ownedAttribute->select(temp20 | temp20.association = null))]
     [if ('includeAllItems'.isPropertyTrue() or aDataType.name.u_subsetDataTypeAttributes()->includes(anAttribute.name))]
-        [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
+        [anAttribute.name/] : [anAttribute.type.pu_typeWithLink(aProfilePackage)/]
     [/if]
   [/for]
   }
   
   ' Data type definitions in own package
-  [for (contextClassifier : uml::Classifier | aDataType.u_contextClassesOrDataTypes()->select(temp22 | temp22.package = aDataType.package))]
-    [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink('blue', '<size:10> \\n')/] {
+  [for (contextClassifier : uml::Classifier | aDataType.u_contextClassesOrDataTypes()->select(temp22 | temp22.package = aDataType.package and temp22.u_isClassifierInProfile(aProfilePackage)))]
+    [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink('blue', '<size:10> \\n', aProfilePackage)/] {
     [for (anAttribute : uml::Property | contextClassifier.attribute->select(temp21 | temp21.association = null))]
       [if ('includeAllItems'.isPropertyTrue() or contextClassifier.name.u_subsetDataTypeAttributes()->includes(anAttribute.name))]
-          [anAttribute.name/] : [if (aDataType = anAttribute.type)][anAttribute.type.name/][else][anAttribute.type.pu_typeWithLink()/][/if]
+          [anAttribute.name/] : [if (aDataType = anAttribute.type)][anAttribute.type.name/][else][anAttribute.type.pu_typeWithLink(aProfilePackage)/][/if]
       [/if]
     [/for]
     }
@@ -353,11 +353,11 @@ filtering via u_subsetDataTypeAttributes.
   
   ' Data type definitions in other packages
   [for (aPackage : uml::Package | aDataType.u_contextPackages())]
-    [for (contextClassifier : uml::Classifier | aDataType.u_contextClassesOrDataTypes()->select(temp24 | temp24.package = aPackage))]
-        [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink('blue', '<size:10><color:grey>' + contextClassifier.package.name + ':\\n')/] {
+    [for (contextClassifier : uml::Classifier | aDataType.u_contextClassesOrDataTypes()->select(temp24 | temp24.package = aPackage and temp24.u_isClassifierInProfile(aProfilePackage)))]
+        [if (contextClassifier.isAbstract)]abstract [/if]class [contextClassifier.pu_elementWithLink('blue', '<size:10><color:grey>' + contextClassifier.package.name + ':\\n', aProfilePackage)/] {
       [for (anAttribute : uml::Property | contextClassifier.attribute->select(temp23 | temp23.association = null))]
         [if ('includeAllItems'.isPropertyTrue() or contextClassifier.name.u_subsetDataTypeAttributes()->includes(anAttribute.name))]
-            [anAttribute.name/] : [if (aDataType = anAttribute.type)][anAttribute.type.name/][else][anAttribute.type.pu_typeWithLink()/][/if]
+            [anAttribute.name/] : [if (aDataType = anAttribute.type)][anAttribute.type.name/][else][anAttribute.type.pu_typeWithLink(aProfilePackage)/][/if]
         [/if]
       [/for]
       }
@@ -366,7 +366,7 @@ filtering via u_subsetDataTypeAttributes.
   
   ' Usage connections (dotted lines, non-formal UML)
   together {
-  [for (anAttribute : uml::Property | aDataType.u_dataTypeUseProperties())]
+  [for (anAttribute : uml::Property | aDataType.u_dataTypeUseProperties()->select(temp29 | temp29.owner.oclAsType(uml::Classifier).u_isClassifierInProfile(aProfilePackage)))]
     [if ('includeAllItems'.isPropertyTrue() or aDataType.name.u_subsetDataTypeAttributes()->includes(anAttribute.name))]
         "[anAttribute.owner.oclAsType(uml::Classifier).qualifiedName/]::[anAttribute.name/]" ---- [aDataType.qualifiedName/] #grey;line.dotted;
     [/if]
@@ -386,12 +386,24 @@ filtering via u_subsetDataTypeAttributes.
   together {
   [if (aDataType.u_model().u_allAbstractionClients()->includes(aDataType))]
     [for (anAbstraction : uml::Abstraction | aDataType.eInverse(uml::Abstraction))]
-        [aDataType.qualifiedName/] .....> [anAbstraction.supplier->asSequence()->collect(temp25 | temp25.oclAsType(uml::Classifier))->collect(temp26 | temp26.qualifiedName)/] : [anAbstraction.abstractionType()/] 
+      [let inProfileSuppliers : Sequence(String) = anAbstraction.supplier->asSequence()->collect(temp25 | temp25.oclAsType(uml::Classifier))->select(temp30 | temp30.u_isClassifierInProfile(aProfilePackage))->collect(temp26 | temp26.qualifiedName)]
+        [if (inProfileSuppliers->notEmpty())]
+        [aDataType.qualifiedName/] .....> [inProfileSuppliers/] : [anAbstraction.abstractionType()/] 
+        [elseif (aProfilePackage <> null)]
+        [anAbstraction.logWarning('Abstraction "' + anAbstraction.qualifiedName + '" (client "' + aDataType.name + '") has no suppliers that are dependencies of profile "' + aProfilePackage.name + '"; omitted from the diagram')/]
+        [/if]
+      [/let]
     [/for]
   [/if]
   [if (aDataType.u_model().u_allAbstractionSuppliers()->includes(aDataType))]
     [for (anAbstraction : uml::Abstraction | aDataType.eInverse(uml::Abstraction))]
-        [aDataType.qualifiedName/] <..... [anAbstraction.client->asSequence()->collect(temp27 | temp27.oclAsType(uml::Classifier))->collect(temp28 | temp28.qualifiedName)/] : [anAbstraction.abstractionType()/] 
+      [let inProfileClients : Sequence(String) = anAbstraction.client->asSequence()->collect(temp27 | temp27.oclAsType(uml::Classifier))->select(temp31 | temp31.u_isClassifierInProfile(aProfilePackage))->collect(temp28 | temp28.qualifiedName)]
+        [if (inProfileClients->notEmpty())]
+        [aDataType.qualifiedName/] <..... [inProfileClients/] : [anAbstraction.abstractionType()/] 
+        [elseif (aProfilePackage <> null)]
+        [anAbstraction.logWarning('Abstraction "' + anAbstraction.qualifiedName + '" (supplier "' + aDataType.name + '") has no clients that are dependencies of profile "' + aProfilePackage.name + '"; omitted from the diagram')/]
+        [/if]
+      [/let]
     [/for]
   [/if]
   }
@@ -478,9 +490,9 @@ many associations.
       [/let]
     [/let]
     
-    [if (aSuperClass.isAbstract)]abstract [/if]class [aSuperClass.pu_elementWithLink('blue', '<size:10> \\n')/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
+    [if (aSuperClass.isAbstract)]abstract [/if]class [aSuperClass.pu_elementWithLink('blue', '<size:10> \\n', aSubsetPackage)/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
     [for (anAttribute : uml::Property | aSuperClass.ownedAttribute->select(temp33 | temp33.association = null)->select(a | (aSubsetPackage <> null and a.u_isAttributeInProfile(aSuperClass, aSubsetPackage)) or (aSubsetPackage = null and (aClass.name.u_subsetClassAttributes()->includes(a.name) or 'includeAllItems'.isPropertyTrue())))->sortedBy(a | a.name))]
-        [anAttribute.name/] : [anAttribute.type.pu_typeWithLink()/]
+        [anAttribute.name/] : [anAttribute.type.pu_typeWithLink(aSubsetPackage)/]
     [/for]
     }
     

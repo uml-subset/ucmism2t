@@ -73,40 +73,40 @@
 
 [template public subClassesForAll(aClass : uml::Class)]
   [if (aClass.eInverse(uml::Class)->notEmpty())]
-	  [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
-	          package [aClass.package.name/] [('../Appendices/InheritanceTreeDiagram/' + aClass.package.name + '.html').pu_link('Inheritance tree of super classes starting from package '.concat(aClass.package.name).concat(' without leaf classes'))/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
-	            [if (aClass.isAbstract)]abstract [/if]class [aClass.qualifiedName/] as "[aClass.name/]"
-	          }
-	  [/if]
-	  [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp1 | temp1.name))]
-	    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
-	            package [subClass.package.name/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
-	              [if (subClass.isAbstract)]abstract [/if]class [subClass.qualifiedName/] as "[subClass.name/]"
-	            }
-	      [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
-	              [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
-	      [/let]
-	    [/if]
-	  [/for]
+    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
+            package [aClass.package.name/] [('../Appendices/InheritanceTreeDiagram/' + aClass.package.name + '.html').pu_link('Inheritance tree of super classes starting from package '.concat(aClass.package.name).concat(' without leaf classes'))/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
+              [if (aClass.isAbstract)]abstract [/if]class [aClass.qualifiedName/] as "[aClass.name/]"
+            }
+    [/if]
+    [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp1 | temp1.name))]
+      [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
+              package [subClass.package.name/] ['uml-diagram-package-default-color'.getPropertyValue()/] {
+                [if (subClass.isAbstract)]abstract [/if]class [subClass.qualifiedName/] as "[subClass.name/]"
+              }
+        [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
+                [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
+        [/let]
+      [/if]
+    [/for]
   [/if]
 [/template]
 
 [template public subClasses(aClass : uml::Class, aPackage : uml::Package)]
   [if (aClass.eInverse(uml::Class)->notEmpty())]
-	  [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
-	          package [aClass.package.name/] [if (aPackage = aClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
-	            [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_elementWithLink('blue', '')/]
-	          }
-	  [/if]
-	  [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp2 | temp2.name))]
-	    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
-	            package [subClass.package.name/] [if (aPackage = subClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
-	              [if (subClass.isAbstract)]abstract [/if]class [subClass.pu_elementWithLink('blue', '')/]
-	            }
-	      [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
-	              [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
-	      [/let]
-	    [/if]
-	  [/for]
+    [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable')]
+            package [aClass.package.name/] [if (aPackage = aClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
+              [if (aClass.isAbstract)]abstract [/if]class [aClass.pu_elementWithLink('blue', '', null)/]
+            }
+    [/if]
+    [for (subClass : uml::Class | aClass.eInverse(uml::Class)->sortedBy(temp2 | temp2.name))]
+      [if (aClass.name <> 'Identifiable' and aClass.name <> 'AnnotatedIdentifiable' and subClass.name <> 'Identifiable' and subClass.name <> 'AnnotatedIdentifiable')]
+              package [subClass.package.name/] [if (aPackage = subClass.package)]['uml-diagram-package-emphasis-color'.getPropertyValue()/][else]['uml-diagram-package-default-color'.getPropertyValue()/][/if] {
+                [if (subClass.isAbstract)]abstract [/if]class [subClass.pu_elementWithLink('blue', '', null)/]
+              }
+        [let label : String = if aClass.package.name <> subClass.package.name then ' : '.concat(aClass.u_packageQualifiedName()).concat(' generalizes ').concat(subClass.u_packageQualifiedName()) else '' endif]
+                [aClass.qualifiedName/] <|-- [subClass.qualifiedName/]
+        [/let]
+      [/if]
+    [/for]
   [/if]
 [/template]

@@ -17,7 +17,7 @@
 [import ucmism2t::queries::propertyQuery/]
 [import ucmism2t::services::PropertiesService /]
 [import ucmism2t::templates::target::doc::associationDoc/]
-[import ucmism2t::templates::target::doc::puDiagram/]
+[comment] [import ucmism2t::templates::target::doc::puDiagram/][/comment]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
 [import ucmism2t::templates::target::jsonld::commonJsonld/]

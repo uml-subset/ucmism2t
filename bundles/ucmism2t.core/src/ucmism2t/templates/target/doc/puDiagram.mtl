@@ -2,6 +2,12 @@
 
 [**
 Module contains templates for generating the PlantUml code for UML diagrams.
+
+MODULE IS NOT USED. THE IMPORTS IN OTHER FILES ARE SET ON COMMENT.
+DEAD CODE.
+
+SEE LINES 37, 43
+
 /]
 [module puDiagram(
 	'http://www.eclipse.org/uml2/5.0.0/UML',
@@ -28,13 +34,13 @@ Module contains templates for generating the PlantUml code for UML diagrams.
   [if (item.isAbstract)]abstract [/if]class [item.qualifiedName/] as \
     "<size:12>[if (packageName <> 'none')]<color:[fontColor/]>[item.package.name/]::[/if]\n<u><color:[fontColor/]><size:17>[item.name/]" \
     [if (item.oclIsKindOf(uml::DataType))][item.oclAsType(uml::DataType).pu_dataTypeNotation()/] \[/if]
-    [item.pu_internalLink()/] \
-    [color/]
+[comment]     [item.pu_internalLink()/] \
+[/comment]    [color/]
   [if (attributes <> 'none' and item.u_attributes()->size() > 0)]
       {
     [for (anAttribute : uml::Property | item.u_attributes())]
           <color:[fontColor/]>[anAttribute.name/] : [if (not(anAttribute.type.oclIsTypeOf(uml::PrimitiveType)))]<u>[/if][anAttribute.type.name/][if (multiplicity)]<plain> ['['/][anAttribute.u_docMultiplicity()/]][/if][if (not(anAttribute.type.oclIsTypeOf(uml::PrimitiveType)))] \
-						[anAttribute.type.pu_internalLinkType()/][/if]
+[comment] 						[anAttribute.type.pu_internalLinkType()/][/comment][/if]
       
     [/for]
       }[/if]

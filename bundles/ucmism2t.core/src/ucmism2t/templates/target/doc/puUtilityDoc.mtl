@@ -22,6 +22,7 @@ pu_dataTypeDiagram and cover:
 )/]
 
 [import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::packageQuery/]
 [import ucmism2t::queries::typeQuery/]
 [import ucmism2t::services::PropertiesService /]
 
@@ -139,9 +140,11 @@ and first sentence of its documentation.
 
 @param anNamedElement - A named UML element to link to.
 /]
+[comment]
+NOT USED. DEAD CODE.
 [template public pu_internalLink(anNamedElement : uml::NamedElement)]
   [('../' + anNamedElement.u_path() + '.html#diagram').pu_link(' <U+2022> ' + anNamedElement.name + ':\\n' + anNamedElement.u_onlyDefinition())/][/template]
-
+[/comment]
 [**
 Generates the internal diagram hyperlink for an association.
 Produces an empty-URL hyperlink containing only the tooltip with
@@ -149,9 +152,11 @@ the association name and its first-sentence documentation.
 
 @param anAssociation - A UML association to link.
 /]
+[comment]
+NOT USED. DEAD CODE.
 [template public pu_internalLink(anAssociation : uml::Association)]
   [''.pu_link(' <U+2022> ' + anAssociation.name + ':\\n' + anAssociation.u_onlyDefinition())/][/template]
-
+[/comment]
 [**
 Generates a three-bracket attribute type hyperlink for use in class
 body attribute lines. Only emits the link when the type has a
@@ -160,13 +165,16 @@ The link points to the type's #diagram anchor with a tooltip.
 
 @param aType - A UML type used as an attribute type.
 /]
+[comment]
+NOT USED.
+DEAD CODE.
 [template public pu_internalLinkType(aType : uml::Type)]
   [if (aType.ancestors()->notEmpty())]
     [('../' + aType.u_path() + '.html#diagram')
       .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
   [/if]
 [/template]
-
+[/comment]
 [**
 Generates an attribute type name with an optional hyperlink for use
 in class body attribute lines in the diagram. When the type is not a UML
@@ -175,20 +183,44 @@ attribute hyperlink pointing to the type's diagram page.
 When the type is a primitive, only the plain name
 is emitted.
 
-The multi-line AQL expression inside the single block is
-wrapped purely for source readability; it produces a single unbroken
+The multi-line AQL expression inside each single block is wrapped
+purely for source readability; each one produces a single unbroken
 output line, avoiding the Acceleo prefix-repetition issue that would
-arise if the call were split across multiple template lines.
+arise if a call were split across multiple template lines.
+
+The hyperlink follows the same profile-scoping convention already
+used for pu_elementWithLink and RST cross-references: universe
+diagrams (aProfilePackage = null) link to the type's universe page,
+unchanged. Profile diagrams link to the type's own profile-scoped
+page only when it's confirmed to be a dependency of that profile
+(checked against DataTypes or Enumerations depending on aType's own
+kind); otherwise this logs a warning and omits the hyperlink,
+keeping just the plain type name. XMLSchemaDataTypes members
+(e.g. XsdAnyUri, XsdDateTime) are treated as plain text with no
+warning, same as genuine primitives, since they are never a
+dependency of any profile by design.
 
 @param aType - A UML type used as an attribute type in a class body.
+@param aProfilePackage - The profile sub-package context, or null
+        for universe generation.
 /]
-[template public pu_typeWithLink(aType : uml::Type) post(self.trim())]
-  [if (aType.u_isUmlPrimitive())]
+[template public pu_typeWithLink(aType : uml::Type, aProfilePackage : uml::Package) post(self.trim())]
+  [if (aType.u_isUmlPrimitive() or aType.qualifiedName.contains('XMLSchemaDataTypes'))]
     [aType.name/]
-  [else]
+  [elseif (aProfilePackage = null)]
     <color:blue> [aType.name/] [
       '../'.concat(aType.u_path()).concat('.html#diagram')
       .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+  [elseif (aType.oclIsKindOf(uml::DataType) and aProfilePackage.u_childDependencySupplierDataTypes()->includes(aType.oclAsType(uml::DataType)))]
+    <color:blue> [aType.name/] [
+      '../'.concat('profiles_package'.getRequiredPropertyValue()).concat('/').concat(aProfilePackage.name).concat('/').concat(aType.name).concat('.html#diagram')
+      .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+  [elseif (aType.oclIsKindOf(uml::Enumeration) and aProfilePackage.u_childDependencySupplierEnumerations()->includes(aType.oclAsType(uml::Enumeration)))]
+    <color:blue> [aType.name/] [
+      '../'.concat('profiles_package'.getRequiredPropertyValue()).concat('/').concat(aProfilePackage.name).concat('/').concat(aType.name).concat('.html#diagram')
+      .pu_attributeLink(' <U+2022> ' + aType.name + ':\\n' + aType.u_onlyDefinition())/]
+  [else]
+    [aType.logWarning('Type "' + aProfilePackage.name + '::' + aType.name + '" is referenced in a diagram, but is not a dependency of profile "' + aProfilePackage.name + '"')/][aType.name/]
   [/if]
 [/template]
 
@@ -198,13 +230,32 @@ an inheritance-tree hyperlink. Rendered in the specified color and
 with the specified prefix before the classifier name. Used for
 super- and sub-classifier nodes in context diagrams.
 
+The hyperlink follows the same profile-scoping convention already
+used for RST cross-references: universe diagrams (aSubsetPackage =
+null) link to the classifier's universe page, unchanged. Profile
+diagrams link to the classifier's own profile-scoped page only when
+the classifier is confirmed to be a dependency of that profile;
+otherwise this logs a warning (a modeling gap, not something to
+paper over with a link outside the profile's own scope) and omits
+the hyperlink, keeping just the plain classifier label.
+
+Confirmed against a real build: PlantUML diagram images always
+render into a single, site-root-level "_images/" folder regardless
+of where the embedding page lives, so the "../" prefix is constant
+in both the universe and profile cases -- only the target path
+itself needs to branch. Profile pages are flat siblings named
+"[profiles_package]/[profile name]/[classifier name].html", unlike
+universe pages, which nest by package.
+
 @param aClassifier - A UML classifier to render.
 @param color       - The font color string for the classifier name.
 @param prefix      - A prefix string prepended before the name,
                      typically used for the package name annotation.
+@param aSubsetPackage - The profile sub-package context, or null
+        for universe generation.
 /]
-[template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String) post(self.trim())]
-  [aClassifier.pu_classifierNameWithLabel(color, prefix)/] [('../' + aClassifier.u_path() + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][/template]
+[template public pu_elementWithLink(aClassifier : uml::Classifier, color : String, prefix : String, aSubsetPackage : uml::Package) post(self.trim())]
+  [aClassifier.pu_classifierNameWithLabel(color, prefix)/] [if (aSubsetPackage = null)][('../' + aClassifier.u_path() + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][elseif (aClassifier.u_isClassifierInProfile(aSubsetPackage))][('../' + 'profiles_package'.getRequiredPropertyValue() + '/' + aSubsetPackage.name + '/' + aClassifier.name + '.html#super-class-hierarchy-generalization').pu_link(' <U+2022> ' + aClassifier.name + ':\\n' + aClassifier.u_onlyDefinition())/][else][aClassifier.logWarning('Classifier "' + aSubsetPackage.name + '::' + aClassifier.name + '" is referenced in a diagram, but is not a dependency of profile "' + aSubsetPackage.name + '"')/][/if][/template]
 
 [**
 Generates the PlantUML classifier name with package prefix
