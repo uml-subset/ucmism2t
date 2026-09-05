@@ -1,0 +1,103 @@
+[comment encoding = UTF-8 /]
+[module sankeyQuery(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+[import ucmism2t::queries::packageQuery/]
+[import ucmism2t::services::PropertiesService/]
+
+[**
+Returns every profile sub-package (a package directly owned by the
+package named per the 'profiles_package' property), sorted by name.
+
+@param aModel - The UML model to search.
+@return OrderedSet of profile sub-packages, sorted by name.
+/]
+[query public u_allProfilePackages(
+  aModel : uml::Model) : OrderedSet(uml::Package) =
+  aModel.eAllContents(uml::Package)
+    ->select(p | p.eContainer(uml::Package) <> null
+      and p.eContainer(uml::Package).name = 'profiles_package'.getRequiredPropertyValue())
+    ->sortedBy(p | p.name)
+    ->asOrderedSet()
+/]
+
+[**
+Returns the distinct set of package names ("specifications") owning
+at least one of the given profile's dependency-supplier classes,
+data types, or enumerations, sorted by name. XMLSchemaDataTypes
+members are excluded, since they are treated as quasi-primitives
+throughout this codebase and are never a meaningful "borrowed
+specification" in this diagram's sense.
+
+@param aProfilePackage - The profile sub-package to inspect.
+@return OrderedSet of distinct package names, sorted.
+/]
+[query public u_specificationNamesForProfile(
+  aProfilePackage : uml::Package) : OrderedSet(String) =
+  let classNames : Sequence(String) =
+    aProfilePackage.u_childDependencySupplierClasses()->asSequence()
+      ->collect(c | c.package.name)
+  in
+  let dataTypeNames : Sequence(String) =
+    aProfilePackage.u_childDependencySupplierDataTypes()->asSequence()
+      ->reject(d | d.package.name = 'XMLSchemaDataTypes')
+      ->collect(d | d.package.name)
+  in
+  let enumerationNames : Sequence(String) =
+    aProfilePackage.u_childDependencySupplierEnumerations()->asSequence()
+      ->collect(e | e.package.name)
+  in
+  classNames->union(dataTypeNames)->union(enumerationNames)
+    ->asOrderedSet()
+    ->sortedBy(n | n)
+    ->asOrderedSet()
+/]
+
+[**
+Returns the distinct set of package names ("specifications") that
+supply at least one dependency class, data type, or enumeration to
+at least one profile across the whole model, sorted by name. Drives
+the outer, left-hand-side axis of the profile-dependency Sankey
+diagram, so specifications group together in the generated output
+rather than repeating once per profile.
+
+@param aModel - The UML model to search.
+@return OrderedSet of distinct package names, sorted.
+/]
+[query public u_allProfileDependencySpecificationNames(
+  aModel : uml::Model) : OrderedSet(String) =
+  aModel.u_allProfilePackages()->asSequence()
+    ->collect(p | p.u_specificationNamesForProfile()->asSequence())
+    ->asOrderedSet()
+    ->sortedBy(n | n)
+    ->asOrderedSet()
+/]
+
+[**
+Counts how many of the given profile's dependency-supplier classes,
+data types, and enumerations together belong to the given
+specification (source package name). XMLSchemaDataTypes members are
+excluded from the data type count, matching
+u_specificationNamesForProfile above.
+
+@param aSpecificationName - The source package name to match.
+@param aProfilePackage - The profile sub-package to inspect.
+@return The combined number of matching classes, data types, and
+        enumerations.
+/]
+[query public u_itemCountForSpecificationAndProfile(
+  aSpecificationName : String,
+  aProfilePackage : uml::Package) : Integer =
+  aProfilePackage.u_childDependencySupplierClasses()->asSequence()
+    ->select(c | c.package.name = aSpecificationName)->size()
+  +
+  aProfilePackage.u_childDependencySupplierDataTypes()->asSequence()
+    ->reject(d | d.package.name = 'XMLSchemaDataTypes')
+    ->select(d | d.package.name = aSpecificationName)->size()
+  +
+  aProfilePackage.u_childDependencySupplierEnumerations()->asSequence()
+    ->select(e | e.package.name = aSpecificationName)->size()
+/]

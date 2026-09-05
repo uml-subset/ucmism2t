@@ -35,13 +35,14 @@ author = ''
 # ones.
 extensions = [
     # 'hoverxref.extension',
-	'sphinx.ext.graphviz',
+    'sphinx.ext.graphviz',
     'sphinx_copybutton',
     'sphinx_design', # also used by pydata which is used by book theme
 #	'sphinxcontrib.contentui',
-#	'sphinxcontrib.excel', # geht nicht
-#	'sphinxcontrib.exceltable', geht nicht
-	'sphinxcontrib.plantuml',
+#	'sphinxcontrib.excel', # does not work
+#	'sphinxcontrib.exceltable', does not work
+    'sphinxcontrib.plantuml',
+    'sphinxcontrib.mermaid',
     'sphinxcontrib.jquery', # This way jquery is loaded before custom.js
 #	'sphinx_panels',
 #	'sphinx_rtd_theme',

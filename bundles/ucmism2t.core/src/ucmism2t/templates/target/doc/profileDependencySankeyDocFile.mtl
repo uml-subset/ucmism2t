@@ -1,0 +1,83 @@
+[**
+ * Generates the profile-dependency Sankey diagram: its Mermaid
+ * data file and the RST page embedding it.
+ */]
+[module profileDependencySankeyDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::sankeyQuery/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+
+[**
+Generates the Mermaid Sankey data file (sankey.mmd) showing, for
+each profile, how many dependency-supplier classes, data types, and
+enumerations come from each source specification (package) -- e.g.
+Schema, SKOS, CDIF itself. Left-hand nodes are specifications;
+right-hand nodes are profiles; link values are combined item
+counts.
+
+Rows are sorted by specification name first, then by profile name,
+so that all links from a given specification group together in the
+generated source, matching the diagram's left-to-right reading
+order. Rows with a zero count are never emitted -- Mermaid's sankey
+diagram requires a strictly positive value on every link, and would
+reject or misrender a zero-count row.
+
+Written alongside the RST page that embeds it (same directory),
+since the page's ".. mermaid:: sankey.mmd" reference is relative.
+
+@param aModel - The UML model to generate the diagram data for.
+/]
+[template public generateProfileDependencySankey(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/sankey.mmd'), overwrite, 'UTF-8')]
+    sankey
+    %% Base Specifications (Left) -> [aModel.u_modelAcronym()/] Profiles (Right), Item Count
+    %% source,target,value
+    [for (aSpecificationName : String | aModel.u_allProfileDependencySpecificationNames())]
+      [for (aProfilePackage : uml::Package | aModel.u_allProfilePackages())]
+        [let aCount : Integer = aSpecificationName.u_itemCountForSpecificationAndProfile(aProfilePackage)]
+          [if (aCount > 0)]
+            [aSpecificationName/],[aProfilePackage.name/],[aCount/]
+          [/if]
+        [/let]
+      [/for]
+    [/for]
+  [/file]
+[/template]
+
+[**
+Generates the RST page embedding the profile-dependency Sankey
+diagram, listed in the ExploratoryDiagrams toctree right after
+InheritanceTreeVegaDiagram.rst. Mirrors
+inheritanceTreeVegaDiagramDocFile.mtl's own structure (generation
+message, anchor label, rst_header title), with an explaining
+paragraph between the title and the diagram itself.
+
+@param aModel - The UML model to generate the page for.
+/]
+[template public profileDependencyArchitecture(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/ProfileDependencyArchitecture.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. _profileDependencyArchitecture:
+    
+    ['Profile Composition'.rst_header('=')/]
+    
+    This Sankey diagram illustrates the architectural alignment between the underlying metadata specifications (on the left) and
+    the functional [aModel.u_modelAcronym()/] [aModel.u_modelMajorVersion()/].[aModel.u_modelMinorVersion()/] profiles
+    that implement them (on the right).The thickness of the flowing bands directly corresponds to the volume of
+    the distinct items borrowed from the base standards, visually emphasizing which specifications serve as
+    the primary structural pillars for each profile.
+    
+    .. mermaid:: sankey.mmd
+       :name: sankey
+       :zoom:
+       
+    .. title is ignored
+    .. :title: Structural Composition of [aModel.u_modelAcronym()/] [aModel.u_modelMajorVersion()/].[aModel.u_modelMinorVersion()/] Profiles
+    .. only in sphinxcontrib.mermaid v2.x
+    .. :mermaid_fullscreen:
+  [/file]
+[/template]

@@ -13,6 +13,7 @@
 [import ucmism2t::services::PropertiesService /]
 [comment] [import ucmism2t::templates::target::doc::inheritanceTreeDiagramDocFile/][/comment]
 [import ucmism2t::templates::target::doc::inheritanceTreeVegaDiagramDocFile/]
+[import ucmism2t::templates::target::doc::profileDependencySankeyDocFile/]
 [import ucmism2t::templates::target::doc::associatedClassesVegaDiagramDocFile/]
 [import ucmism2t::templates::target::doc::puUtilityDoc/]
 [import ucmism2t::templates::target::doc::rstUtilityDoc/]
@@ -37,6 +38,10 @@
   [aModel.associatedClassesVegaDiagram()/]
   [aModel.inheritanceTreeVegaDiagram()/]
 [comment]   [aModel.inheritanceTreeDiagram()/][/comment]
+  [if ('profiles'.isPropertyTrue())]
+    [aModel.generateProfileDependencySankey()/]
+    [aModel.profileDependencyArchitecture()/]
+  [/if]
   [aModel.allClassesList()/]
   [aModel.allAssociationsList()/]
   [aModel.allDataTypesList()/]
@@ -58,6 +63,7 @@
     
        AssociatedClassesVegaDiagram.rst
        InheritanceTreeVegaDiagram.rst
+       [if ('profiles'.isPropertyTrue())]ProfileDependencyArchitecture.rst[/if]
     
   [/file]
 [/template]
