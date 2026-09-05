@@ -88,6 +88,8 @@ for linking a generated data file into inline script content.
            order: "cardinality:desc"
          });
          const upsetContainer = document.getElementById("upset");
+         let pinnedSelection = null;
+         let hoverSelection = null;
          function renderUpset() {
            UpSetJS.render(upsetContainer, {
              sets: sets,
@@ -97,7 +99,18 @@ for linking a generated data file into inline script content.
                axisTick: "10px"
              },
              width: upsetContainer.clientWidth,
-             height: 500
+             height: 500,
+             selection: pinnedSelection !== null ? pinnedSelection : hoverSelection,
+             onHover: function(selected) {
+               if (pinnedSelection === null) {
+                 hoverSelection = selected;
+                 renderUpset();
+               }
+             },
+             onClick: function(selected) {
+               pinnedSelection = (pinnedSelection === selected || selected === null) ? null : selected;
+               renderUpset();
+             }
            });
          }
          renderUpset();
