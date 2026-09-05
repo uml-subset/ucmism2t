@@ -1,0 +1,107 @@
+[**
+ * Generates the profile-membership UpSet plot: its JSON data file
+ * and the RST page embedding it.
+ */]
+[module profileMembershipUpsetDocFile('http://www.eclipse.org/uml2/5.0.0/Types', 'http://www.eclipse.org/uml2/5.0.0/UML', 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard')/]
+
+[import ucmism2t::queries::elementQuery/]
+[import ucmism2t::queries::upsetQuery/]
+[import ucmism2t::templates::target::doc::rstUtilityDoc/]
+
+[comment encoding = UTF-8 /]
+
+[**
+Generates the UpSet plot's JSON data file
+(ProfileMembershipUpsetData.json): one entry per class, data type,
+or enumeration that belongs to at least one profile, each carrying
+its element identifier ("name") and the list of profile names it
+belongs to ("sets") -- the element-centric input shape UpSet.js's
+own extractSets/generateCombinations pair expects.
+
+A single, unified loop is used across all three classifier kinds
+(via u_allProfileMemberClassifiers), rather than three separate
+loops joined by a literal comma, specifically to avoid a dangling
+comma in the generated JSON if any one kind contributed zero
+elements.
+
+Written alongside the RST page that embeds it (same directory),
+since that page's ".. raw:: html :file:" reference is relative.
+
+@param aModel - The UML model to generate the plot data for.
+/]
+[template public generateProfileMembershipUpsetData(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/ProfileMembershipUpsetData.json'), overwrite, 'UTF-8')]
+    ['['/]
+      [for (aClassifier : uml::Classifier | aModel.u_allProfileMemberClassifiers()) separator(',\n')]
+        {"name": "[aClassifier.u_upsetElementId()/]", "sets": ['['/][for (aProfileName : String | aClassifier.u_profileNamesForClassifier()) separator(', ')]"[aProfileName/]"[/for]]}
+      [/for]
+    ]
+  [/file]
+[/template]
+
+[**
+Generates the RST page embedding the profile-membership UpSet
+plot, listed in the ExploratoryDiagrams toctree right after
+ProfileDependencyArchitecture.rst. Mirrors
+inheritanceTreeVegaDiagramDocFile.mtl's own raw::html structure --
+splitting the embedded <script> block across multiple raw:: html
+directives so the generated JSON data file can be spliced in via
+its own ":file:" include, matching that file's established pattern
+for linking a generated data file into inline script content.
+
+@param aModel - The UML model to generate the page for.
+/]
+[template public profileMembershipUpset(aModel : uml::Model)]
+  [file (aModel.u_filePath('doc').concat('/Appendices/ExploratoryDiagrams/ProfileMembershipUpset.rst'), overwrite, 'UTF-8')]
+    [aModel.rst_generationMessageDoc()/]
+    
+    .. _profileMembershipUpset:
+    
+    ['Profile Membership'.rst_header('=')/]
+    
+    This UpSet plot shows, for every class, data type, and enumeration that is part of at least one [aModel.u_modelAcronym()/] [aModel.u_modelMajorVersion()/].[aModel.u_modelMinorVersion()/] profile, which combination of profiles it belongs to.
+    
+    An UpSet plot reads differently from a Venn diagram, but shows the same kind of information for cases -- like this one -- with too many overlapping sets to draw cleanly as circles. Each horizontal bar on the left shows the total number of items in one profile, regardless of overlap with any other profile. Each vertical bar on the right shows one specific *combination* of profiles -- the connected dots directly below a bar mark exactly which profiles that combination involves, and a single dot with no connecting line means "items that belong to this profile and no other profile in the plot." The height of each vertical bar is the number of items shared by exactly that combination of profiles, so taller bars mark the most significant overlaps between profiles, while shorter bars mark rarer, more specific overlaps.
+    
+    Since the number of possible profile combinations grows quickly as more profiles are involved, only the 15 largest combinations are shown here, sorted by size -- smaller, less common combinations are omitted so the plot stays readable. Each profile is shown in a consistent color across both the left-hand set-size bars and the connector dots, making it easier to trace a single profile's contribution across the different combinations.
+    
+    .. raw:: html
+    
+       <div id="upset"></div>
+       <script src="https://cdn.jsdelivr.net/npm/@upsetjs/bundle@1.11.0/dist/upsetjs.umd.production.min.js"></script>
+         <script>
+         const elems = 
+    
+    .. raw:: html
+       :file: ProfileMembershipUpsetData.json
+    
+    .. raw:: html
+    
+         ;
+         const category20 = ['['/]"#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
+         const sets = UpSetJS.extractSets(elems);
+         sets.forEach((s, i) => { s.color = category20['['/]i % category20.length]; });
+         const combinations = UpSetJS.generateCombinations(sets, {
+           type: "intersection",
+           min: 1,
+           limit: 15,
+           order: "cardinality:desc"
+         });
+         const upsetContainer = document.getElementById("upset");
+         function renderUpset() {
+           UpSetJS.render(upsetContainer, {
+             sets: sets,
+             combinations: combinations,
+             fontSizes: {
+               setLabel: "10px",
+               axisTick: "10px"
+             },
+             width: upsetContainer.clientWidth,
+             height: 500
+           });
+         }
+         renderUpset();
+         new ResizeObserver(renderUpset).observe(upsetContainer);
+       </script>
+  [/file]
+[/template]

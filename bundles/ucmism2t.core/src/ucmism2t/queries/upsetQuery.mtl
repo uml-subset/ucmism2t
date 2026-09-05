@@ -1,0 +1,86 @@
+[comment encoding = UTF-8 /]
+[module upsetQuery(
+  'http://www.eclipse.org/uml2/5.0.0/UML',
+  'http://www.eclipse.org/uml2/5.0.0/Types',
+  'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+)/]
+
+
+[import ucmism2t::queries::modelQuery/]
+[import ucmism2t::queries::packageQuery/]
+
+[**
+Returns the names of every profile containing the given classifier
+(a Class, DataType, or Enumeration), dispatching to the appropriate
+u_profilePackagesForX query based on the classifier's own kind.
+Enumeration is checked before DataType deliberately, since
+Enumeration is itself a specialization of DataType.
+
+Used as the "sets" list for a single element in the profile-
+membership UpSet plot's data file -- each classifier becomes one
+element, and this query gives the set names it belongs to.
+
+@param aClassifier - The Class, DataType, or Enumeration to inspect.
+@return OrderedSet of profile names, empty if aClassifier belongs
+        to no profile at all.
+/]
+[query public u_profileNamesForClassifier(
+  aClassifier : uml::Classifier) : OrderedSet(String) =
+  if aClassifier.oclIsKindOf(uml::Enumeration)
+  then aClassifier.oclAsType(uml::Enumeration).u_profilePackagesForEnumeration()
+    ->asSequence()->collect(p | p.name)->asOrderedSet()
+  else if aClassifier.oclIsKindOf(uml::DataType)
+  then aClassifier.oclAsType(uml::DataType).u_profilePackagesForDataType()
+    ->asSequence()->collect(p | p.name)->asOrderedSet()
+  else if aClassifier.oclIsKindOf(uml::Class)
+  then aClassifier.oclAsType(uml::Class).u_profilePackagesForClass()
+    ->asSequence()->collect(p | p.name)->asOrderedSet()
+  else OrderedSet{}
+  endif endif endif
+/]
+
+[**
+Returns every Class, DataType, and Enumeration in the whole model
+that belongs to at least one profile, as a single, unified sequence
+of Classifier. Data types with no profile membership at all --
+including every XMLSchemaDataTypes member, which is never a
+dependency of any profile by design -- are naturally excluded here
+without needing a separate check, since "belongs to no profile" and
+"is a quasi-primitive type" happen to coincide for that package.
+
+Deliberately returns one unified sequence across all three kinds,
+rather than three separate ones, so the template generating the
+UpSet plot's JSON data can use a single loop with a single
+separator -- avoiding the risk of a dangling comma in the generated
+JSON if any one of the three kinds happened to contribute zero
+elements.
+
+@param aModel - The UML model to search.
+@return Sequence of classifiers with at least one profile.
+/]
+[query public u_allProfileMemberClassifiers(
+  aModel : uml::Model) : Sequence(uml::Classifier) =
+  let allClassifiers : Sequence(uml::Classifier) =
+    aModel.u_allClasses()->asSequence()->collect(c | c.oclAsType(uml::Classifier))
+      ->union(aModel.u_allDataTypes()->asSequence()->collect(d | d.oclAsType(uml::Classifier)))
+      ->union(aModel.u_allEnumerations()->asSequence()->collect(e | e.oclAsType(uml::Classifier)))
+  in
+  allClassifiers->select(c | c.u_profileNamesForClassifier()->notEmpty())
+/]
+
+[**
+Returns the given classifier's fully-qualified name with every
+colon replaced by an underscore, used as its element identifier in
+the UpSet plot's data file. A qualified name is used rather than
+the classifier's own simple name specifically to avoid identity
+collisions -- UpSet.js compares elements by strict equality, and
+this model does have distinct classifiers (in different packages,
+or of different kinds) sharing the same simple name.
+
+@param aClassifier - The classifier to build an identifier for.
+@return The qualified name with colons replaced by underscores.
+/]
+[query public u_upsetElementId(
+  aClassifier : uml::Classifier) : String =
+  aClassifier.qualifiedName.replaceAll(':', '_')
+/]
